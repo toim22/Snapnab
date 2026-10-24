@@ -3,7 +3,7 @@
 ; Ao mudar a versão no CMakeLists.txt, atualize AppVersion abaixo.
 
 #define AppName      "Snapnab"
-#define AppVersion   "1.0.0"
+#define AppVersion   "0.1.0"
 #define AppPublisher "Antonio Rezende"
 #define SrcDir       "..\..\dist\Snapnab"
 

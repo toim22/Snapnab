@@ -3,9 +3,9 @@
 O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e as versões seguem o
 [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [1.0.0] — 2026-10-24
+## [0.1.0] — 2026-10-24
 
-Primeira versão.
+Primeira versão de pré-lançamento: os recursos principais já funcionam, mas o programa ainda está em desenvolvimento.
 
 ### Captura (Snapnab.exe)
 - Captura de região, janela, tela inteira, monitor, região fixa, mão livre, várias áreas, objeto, rolagem,
