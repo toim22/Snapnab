@@ -1,0 +1,14 @@
+# Normaliza fim de linha no repositório; scripts do Windows sempre com CRLF
+* text=auto
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.iss  text eol=crlf
+*.rc   text eol=crlf
+*.sln  text eol=crlf
+
+# Binários
+*.ico  binary
+*.png  binary
+*.jpg  binary
+*.docx binary
+*.zip  binary

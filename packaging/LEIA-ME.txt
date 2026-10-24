@@ -1,0 +1,38 @@
+Snapnab — captura de tela, gravação de vídeo e editor de imagens
+===================================================================
+
+REQUISITOS
+  Windows 10 versão 2004 ou mais novo, ou Windows 11 (64 bits).
+  Não precisa instalar nada além desta pasta.
+
+COMO USAR
+  1. Abra Snapnab.exe. Ele fica na área de notificação (ao lado do relógio).
+  2. Print Screen          captura uma imagem
+     Shift+Print Screen    grava um vídeo
+     Shift+F9 / Shift+F10  pausa / para a gravação
+  3. A captura abre no Snapnab Editor (SnapnabEditor.exe), onde dá para
+     anotar, aplicar efeitos, cortar vídeos e salvar em PNG, JPG, GIF, PDF etc.
+
+  Os três arquivos (Snapnab.exe, SnapnabEditor.exe e SnapEx64.dll) precisam
+  ficar juntos na mesma pasta.
+
+ONDE FICAM SEUS DADOS
+  Capturas e vídeos:   %LOCALAPPDATA%\Snapnab\Library
+  Presets:             %LOCALAPPDATA%\Snapnab\Presets1.xml
+  Registros (logs):    %LOCALAPPDATA%\Snapnab\Logs
+  Configurações:       HKEY_CURRENT_USER\Software\Snapnab
+
+LINHA DE COMANDO
+  Snapnab.exe /capture | /video | /preset "nome" | /clipboard | /hide | /exit | /help
+  SnapnabEditor.exe /Open "arquivo" | /NewFromClipboard | /help
+
+LICENÇA
+  Copyright © 2026 Antonio Rezende.
+  Snapnab é software livre, distribuído sob a GNU General Public License
+  versão 3 (arquivo LICENSE). Sem garantia de qualquer tipo.
+
+DESINSTALAR
+  1. Clique com o botão direito no ícone da bandeja e escolha "Sair".
+  2. Se marcou "Iniciar com o Windows" nas Opções, desmarque antes de sair.
+  3. Apague esta pasta. Para apagar também as capturas e configurações,
+     apague %LOCALAPPDATA%\Snapnab e a chave HKEY_CURRENT_USER\Software\Snapnab.

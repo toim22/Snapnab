@@ -1,0 +1,22 @@
+# Documentos de referência do autor (privados, nunca versionar)
+/project_architecture/
+
+# Saídas de build (geradas por build.bat / CMake)
+/out/
+/dist/
+/build/
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+CMakeUserPresets.json
+*.user
+*.suo
+
+# Python
+__pycache__/
+
+# Sistema
+Thumbs.db
+desktop.ini

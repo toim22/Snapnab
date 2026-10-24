@@ -1,0 +1,30 @@
+#pragma code_page(65001)
+#include <winres.h>
+#include "Version.h"
+1 ICON "../resources/SnapnabEditor.ico"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "../resources/app.manifest"
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION SNAPNAB_VERSION_RC
+ PRODUCTVERSION SNAPNAB_VERSION_RC
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "041604B0"
+    BEGIN
+      VALUE "CompanyName", "Antonio Rezende"
+      VALUE "FileDescription", "Snapnab Editor"
+      VALUE "FileVersion", SNAPNAB_VERSION_RC_STR
+      VALUE "InternalName", "SnapnabEditor"
+      VALUE "OriginalFilename", "SnapnabEditor.exe"
+      VALUE "LegalCopyright", SNAPNAB_COPYRIGHT
+      VALUE "ProductName", "Snapnab"
+      VALUE "ProductVersion", SNAPNAB_VERSION_RC_STR
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x416, 1200
+  END
+END

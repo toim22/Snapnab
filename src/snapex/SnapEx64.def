@@ -1,0 +1,4 @@
+LIBRARY SnapEx64
+EXPORTS
+    Snap5000
+    Snap5001
