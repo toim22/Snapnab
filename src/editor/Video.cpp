@@ -8,6 +8,7 @@
 #include <mferror.h>
 #include <wrl/client.h>
 #include <cmath>
+#include <deque>
 
 using Microsoft::WRL::ComPtr;
 
@@ -41,22 +42,39 @@ static std::vector<Interval> Normalize(std::vector<Interval> cuts) {
     return out;
 }
 
-// copia o quadro (2D, qualquer sinal de pitch) para Image de cima para baixo
+// copia o quadro (2D, qualquer sinal de pitch) para Image de cima para baixo. O decodificador costuma entregar linhas
+// mais largas que o vídeo (largura alinhada a 16/32/64 px), então o passo entre linhas nunca é suposto igual a w * 4.
 static bool SampleToImage(IMFSample* s, int w, int h, Image& out) {
-    ComPtr<IMFMediaBuffer> buf;
-    if (FAILED(s->ConvertToContiguousBuffer(&buf))) return false;
     out = Image(w, h);
-    ComPtr<IMF2DBuffer> b2;
-    if (SUCCEEDED(buf.As(&b2))) {
+    auto copy2d = [&](IMFMediaBuffer* b) {
+        ComPtr<IMF2DBuffer> b2;
         BYTE* scan0; LONG pitch;
-        if (FAILED(b2->Lock2D(&scan0, &pitch))) return false;
-        for (int y = 0; y < h; y++) memcpy(out.row(y), scan0 + (LONGLONG)pitch * y, (size_t)w * 4);
+        if (FAILED(b->QueryInterface(IID_PPV_ARGS(&b2))) || FAILED(b2->Lock2D(&scan0, &pitch))) return false;
+        bool ok = std::abs(pitch) >= w * 4;
+        if (ok) for (int y = 0; y < h; y++) memcpy(out.row(y), scan0 + (LONGLONG)pitch * y, (size_t)w * 4);
         b2->Unlock2D();
-    } else {
+        return ok;
+    };
+    DWORD n = 0;
+    ComPtr<IMFMediaBuffer> buf;
+    if (SUCCEEDED(s->GetBufferCount(&n)) && n == 1 && SUCCEEDED(s->GetBufferByIndex(0, &buf)) && copy2d(buf.Get())) {
+        out.MakeOpaque();
+        return true;
+    }
+    buf.Reset();
+    if (FAILED(s->ConvertToContiguousBuffer(&buf))) return false;
+    if (!copy2d(buf.Get())) {
         BYTE* p; DWORD len;
         if (FAILED(buf->Lock(&p, nullptr, &len))) return false;
-        if (len >= (DWORD)w * h * 4) for (int y = 0; y < h; y++) memcpy(out.row(y), p + (size_t)y * w * 4, (size_t)w * 4);
+        // buffer linear: o passo sai do tamanho (altura também pode vir alinhada)
+        DWORD pitch = 0;
+        for (int a : { 1, 2, 8, 16, 32, 64 }) {
+            DWORD hh = (DWORD)((h + a - 1) / a * a);
+            if (len % hh == 0 && len / hh >= (DWORD)w * 4 && len / hh < (DWORD)w * 4 + 512) { pitch = len / hh; break; }
+        }
+        if (pitch) for (int y = 0; y < h; y++) memcpy(out.row(y), p + (size_t)y * pitch, (size_t)w * 4);
         buf->Unlock();
+        if (!pitch) return false;
     }
     out.MakeOpaque();
     return true;
@@ -132,13 +150,13 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         // leitores separados para vídeo e áudio (ler os dois num só leitor com ANY_STREAM falha de forma intermitente
         // quando o processamento de vídeo está ativo); as amostras são intercaladas por timestamp na escrita
         ComPtr<IMFSourceReader> rd, rdA;
-        if (FAILED(MFCreateSourceReaderFromURL(src.c_str(), ra.Get(), &rd))) { err = L"Não foi possível abrir o vídeo."; break; }
+        if (FAILED(MFCreateSourceReaderFromURL(src.c_str(), ra.Get(), &rd))) { err = Tr(L"Não foi possível abrir o vídeo."); break; }
         rd->SetStreamSelection((DWORD)MF_SOURCE_READER_ALL_STREAMS, FALSE);
         rd->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, TRUE);
         // vídeo → RGB32
         ComPtr<IMFMediaType> vt; MFCreateMediaType(&vt);
         vt->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video); vt->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_RGB32);
-        if (FAILED(rd->SetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, nullptr, vt.Get()))) { err = L"Formato de vídeo não suportado."; break; }
+        if (FAILED(rd->SetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, nullptr, vt.Get()))) { err = Tr(L"Formato de vídeo não suportado."); break; }
         ComPtr<IMFMediaType> vcur; rd->GetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, &vcur);
         UINT32 w, h, fn = 30, fd = 1; MFGetAttributeSize(vcur.Get(), MF_MT_FRAME_SIZE, &w, &h);
         MFGetAttributeRatio(vcur.Get(), MF_MT_FRAME_RATE, &fn, &fd);
@@ -167,7 +185,7 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         ComPtr<IMFAttributes> wa; MFCreateAttributes(&wa, 1);
         wa->SetUINT32(MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, FALSE);
         ComPtr<IMFSinkWriter> wr;
-        if (FAILED(MFCreateSinkWriterFromURL(dst.c_str(), nullptr, wa.Get(), &wr))) { err = L"Não foi possível criar o arquivo de saída."; break; }
+        if (FAILED(MFCreateSinkWriterFromURL(dst.c_str(), nullptr, wa.Get(), &wr))) { err = Tr(L"Não foi possível criar o arquivo de saída."); break; }
         DWORD vs = 0, as = 0;
         UINT32 ow = w & ~1u, oh = h & ~1u;
         ComPtr<IMFMediaType> vo; MFCreateMediaType(&vo);
@@ -177,14 +195,14 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         MFSetAttributeSize(vo.Get(), MF_MT_FRAME_SIZE, ow, oh);
         MFSetAttributeRatio(vo.Get(), MF_MT_FRAME_RATE, fn, fd);
         MFSetAttributeRatio(vo.Get(), MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-        if (FAILED(wr->AddStream(vo.Get(), &vs))) { err = L"Codificador H.264 indisponível."; break; }
+        if (FAILED(wr->AddStream(vo.Get(), &vs))) { err = Tr(L"Codificador H.264 indisponível."); break; }
         ComPtr<IMFMediaType> vi; MFCreateMediaType(&vi);
         vi->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video); vi->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_RGB32);
         vi->SetUINT32(MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive);
         MFSetAttributeSize(vi.Get(), MF_MT_FRAME_SIZE, ow, oh);
         MFSetAttributeRatio(vi.Get(), MF_MT_FRAME_RATE, fn, fd);
         MFSetAttributeRatio(vi.Get(), MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-        if (FAILED(wr->SetInputMediaType(vs, vi.Get(), nullptr))) { err = L"Entrada de vídeo recusada."; break; }
+        if (FAILED(wr->SetInputMediaType(vs, vi.Get(), nullptr))) { err = Tr(L"Entrada de vídeo recusada."); break; }
         if (hasAudio) {
             ComPtr<IMFMediaType> ao; MFCreateMediaType(&ao);
             ao->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio); ao->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_AAC);
@@ -195,9 +213,9 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
             ai->SetUINT32(MF_MT_AUDIO_BITS_PER_SAMPLE, 16); ai->SetUINT32(MF_MT_AUDIO_SAMPLES_PER_SECOND, rate);
             ai->SetUINT32(MF_MT_AUDIO_NUM_CHANNELS, ch); ai->SetUINT32(MF_MT_AUDIO_BLOCK_ALIGNMENT, ch * 2);
             ai->SetUINT32(MF_MT_AUDIO_AVG_BYTES_PER_SECOND, rate * ch * 2);
-            if (FAILED(wr->AddStream(ao.Get(), &as)) || FAILED(wr->SetInputMediaType(as, ai.Get(), nullptr))) { err = L"Codificador AAC indisponível."; break; }
+            if (FAILED(wr->AddStream(ao.Get(), &as)) || FAILED(wr->SetInputMediaType(as, ai.Get(), nullptr))) { err = Tr(L"Codificador AAC indisponível."); break; }
         }
-        if (FAILED(wr->BeginWriting())) { err = L"Falha ao iniciar a gravação."; break; }
+        if (FAILED(wr->BeginWriting())) { err = Tr(L"Falha ao iniciar a gravação."); break; }
 
         bool videoDone = false, audioDone = !hasAudio, canceled = false;
         std::vector<BYTE> flip((size_t)ow * oh * 4);
@@ -209,7 +227,7 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
             while (!done && !p.have) {
                 DWORD idx, flags; LONGLONG ts; ComPtr<IMFSample> s;
                 HRESULT rhr = r->ReadSample(stream, 0, &idx, &flags, &ts, &s);
-                if (FAILED(rhr)) { err = Format(L"Falha ao ler o vídeo (0x%08X).", rhr); return false; }
+                if (FAILED(rhr)) { err = Format(Tr(L"Falha ao ler o vídeo (0x%08X)."), rhr); return false; }
                 if (flags & MF_SOURCE_READERF_ENDOFSTREAM) { done = true; break; }
                 if (s) { p.s = s; p.ts = ts; p.have = true; }
             }
@@ -242,18 +260,18 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
                 b->SetCurrentLength((DWORD)flip.size());
                 ComPtr<IMFSample> o; MFCreateSample(&o); o->AddBuffer(b.Get());
                 o->SetSampleTime(ts - removed); o->SetSampleDuration(dur);
-                if (FAILED(wr->WriteSample(vs, o.Get()))) { err = L"Falha ao codificar quadro."; break; }
+                if (FAILED(wr->WriteSample(vs, o.Get()))) { err = Tr(L"Falha ao codificar quadro."); break; }
                 if (duration > 0 && progress) {
                     int pct = (int)(ts * 100 / duration);
                     if (pct != lastPct) { lastPct = pct; if (!progress(pct)) { canceled = true; break; } }
                 }
             } else {
                 s->SetSampleTime(ts - removed);
-                if (FAILED(wr->WriteSample(as, s.Get()))) { err = L"Falha ao codificar áudio."; break; }
+                if (FAILED(wr->WriteSample(as, s.Get()))) { err = Tr(L"Falha ao codificar áudio."); break; }
             }
         }
-        if (!err.empty() || canceled) { wr.Reset(); DeleteFileW(dst.c_str()); if (canceled) err = L"Cancelado."; break; }
-        if (FAILED(wr->Finalize())) { err = L"Falha ao finalizar o MP4."; break; }
+        if (!err.empty() || canceled) { wr.Reset(); DeleteFileW(dst.c_str()); if (canceled) err = Tr(L"Cancelado."); break; }
+        if (FAILED(wr->Finalize())) { err = Tr(L"Falha ao finalizar o MP4."); break; }
         ok = true;
     } while (false);
     MFShutdown();
@@ -267,13 +285,13 @@ bool CreateGifFromVideo(const std::wstring& src, const std::wstring& dst, LONGLO
     bool ok = false;
     {
         VideoReader rd;
-        if (!rd.Open(src)) { err = L"Não foi possível abrir o vídeo."; }
+        if (!rd.Open(src)) { err = Tr(L"Não foi possível abrir o vídeo."); }
         else {
             if (to <= from) to = rd.duration;
             int ow = std::clamp(width, 16, rd.width);
             int oh = std::max(16, (int)std::lround((double)rd.height * ow / rd.width));
             GifWriter gw;
-            if (!gw.Open(dst, ow, oh, fps, bpp, dither, delta)) err = L"Não foi possível criar o GIF.";
+            if (!gw.Open(dst, ow, oh, fps, bpp, dither, delta)) err = Tr(L"Não foi possível criar o GIF.");
             else {
                 rd.Seek(from);
                 LONGLONG step = kHns / std::max(1, fps), next = from;
@@ -292,8 +310,8 @@ bool CreateGifFromVideo(const std::wstring& src, const std::wstring& dst, LONGLO
                     if (progress && to > from && !progress((int)((ts - from) * 100 / (to - from)))) { canceled = true; break; }
                 }
                 ok = gw.Close() && frames > 0 && !canceled;
-                if (canceled) { err = L"Cancelado."; DeleteFileW(dst.c_str()); }
-                else if (!frames) err = L"Nenhum quadro no intervalo.";
+                if (canceled) { err = Tr(L"Cancelado."); DeleteFileW(dst.c_str()); }
+                else if (!frames) err = Tr(L"Nenhum quadro no intervalo.");
             }
         }
     }
@@ -316,7 +334,7 @@ bool RunWithProgress(HWND owner, const std::wstring& title, std::function<bool(P
                              (orc.left + orc.right - W) / 2, (orc.top + orc.bottom - H) / 2, W, H, owner, nullptr, GetModuleHandleW(nullptr), nullptr);
     HWND bar = CreateWindowExW(0, PROGRESS_CLASSW, nullptr, WS_CHILD | WS_VISIBLE, ui::Scale(16, dpi), ui::Scale(20, dpi), W - ui::Scale(48, dpi),
                                ui::Scale(20, dpi), h, nullptr, GetModuleHandleW(nullptr), nullptr);
-    HWND cancel = CreateWindowExW(0, L"BUTTON", L"Cancelar", WS_CHILD | WS_VISIBLE, W - ui::Scale(130, dpi), ui::Scale(56, dpi),
+    HWND cancel = CreateWindowExW(0, L"BUTTON", Tr(L"Cancelar"), WS_CHILD | WS_VISIBLE, W - ui::Scale(130, dpi), ui::Scale(56, dpi),
                                   ui::Scale(100, dpi), ui::Scale(28, dpi), h, (HMENU)2, GetModuleHandleW(nullptr), nullptr);
     SendMessageW(cancel, WM_SETFONT, (WPARAM)ui::UiFont(dpi), TRUE);
     SendMessageW(bar, PBM_SETRANGE32, 0, 100);
@@ -345,6 +363,85 @@ bool RunWithProgress(HWND owner, const std::wstring& title, std::function<bool(P
     return result;
 }
 
+// ---------------------------------------------------------------- áudio da prévia (waveOut)
+// Lê a faixa de áudio em PCM 16 bits numa thread própria e toca pelo waveOut, pulando os trechos cortados.
+struct VideoView::AudioPlayer {
+    std::thread th;
+    std::atomic<bool> run{ false };
+
+    void Start(const std::wstring& path, LONGLONG from, std::vector<Interval> cuts) {
+        run = true;
+        th = std::thread([this, path, from, cuts = std::move(cuts)] {
+            CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+            MFStartup(MF_VERSION, MFSTARTUP_LITE);
+            Play(path, from, cuts);
+            MFShutdown();
+            CoUninitialize();
+        });
+    }
+    void Stop() { run = false; if (th.joinable()) th.join(); }
+    ~AudioPlayer() { Stop(); }
+
+    void Play(const std::wstring& path, LONGLONG from, const std::vector<Interval>& cuts) {
+        ComPtr<IMFSourceReader> rd;
+        if (FAILED(MFCreateSourceReaderFromURL(path.c_str(), nullptr, &rd))) return;
+        rd->SetStreamSelection((DWORD)MF_SOURCE_READER_ALL_STREAMS, FALSE);
+        if (FAILED(rd->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, TRUE))) return;   // vídeo sem áudio
+        ComPtr<IMFMediaType> mt;
+        MFCreateMediaType(&mt);
+        mt->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio); mt->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_PCM);
+        mt->SetUINT32(MF_MT_AUDIO_BITS_PER_SAMPLE, 16);
+        if (FAILED(rd->SetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, nullptr, mt.Get()))) return;
+        ComPtr<IMFMediaType> cur;
+        rd->GetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, &cur);
+        WAVEFORMATEX wf{};
+        wf.wFormatTag = WAVE_FORMAT_PCM;
+        wf.nChannels = (WORD)MFGetAttributeUINT32(cur.Get(), MF_MT_AUDIO_NUM_CHANNELS, 2);
+        wf.nSamplesPerSec = MFGetAttributeUINT32(cur.Get(), MF_MT_AUDIO_SAMPLES_PER_SECOND, 48000);
+        wf.wBitsPerSample = 16;
+        wf.nBlockAlign = wf.nChannels * 2;
+        wf.nAvgBytesPerSec = wf.nSamplesPerSec * wf.nBlockAlign;
+        PROPVARIANT pv; PropVariantInit(&pv);
+        pv.vt = VT_I8; pv.hVal.QuadPart = from;
+        rd->SetCurrentPosition(GUID_NULL, pv);
+        HANDLE ev = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+        HWAVEOUT wo = nullptr;
+        if (waveOutOpen(&wo, WAVE_MAPPER, &wf, (DWORD_PTR)ev, 0, CALLBACK_EVENT) != MMSYSERR_NOERROR) { CloseHandle(ev); return; }
+        std::deque<WAVEHDR*> queue;
+        auto recycle = [&](bool all) {
+            while (!queue.empty() && (all || (queue.front()->dwFlags & WHDR_DONE))) {
+                WAVEHDR* h = queue.front(); queue.pop_front();
+                waveOutUnprepareHeader(wo, h, sizeof *h);
+                delete[] h->lpData; delete h;
+            }
+        };
+        bool eos = false;
+        while (run && !(eos && queue.empty())) {
+            recycle(false);
+            if (eos || queue.size() >= 10) { WaitForSingleObject(ev, 30); continue; }
+            DWORD idx, flags; LONGLONG ts; ComPtr<IMFSample> s;
+            if (FAILED(rd->ReadSample((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, 0, &idx, &flags, &ts, &s)) ||
+                (flags & MF_SOURCE_READERF_ENDOFSTREAM)) { eos = true; continue; }
+            if (!s || ts < from - kHns / 20 || IsInsideAnyCut(cuts, ts)) continue;
+            ComPtr<IMFMediaBuffer> b;
+            BYTE* p; DWORD len;
+            if (FAILED(s->ConvertToContiguousBuffer(&b)) || FAILED(b->Lock(&p, nullptr, &len))) continue;
+            auto* h = new WAVEHDR{};
+            h->lpData = new char[len];
+            memcpy(h->lpData, p, len);
+            h->dwBufferLength = len;
+            b->Unlock();
+            waveOutPrepareHeader(wo, h, sizeof *h);
+            waveOutWrite(wo, h, sizeof *h);
+            queue.push_back(h);
+        }
+        waveOutReset(wo);
+        recycle(true);
+        waveOutClose(wo);
+        CloseHandle(ev);
+    }
+};
+
 // ---------------------------------------------------------------- vista de vídeo
 enum { B_PLAY = 1, B_PREV, B_NEXT, B_MARKIN, B_MARKOUT, B_CUT, B_UNDOCUT, B_SAVEMP4, B_SAVEFRAME, B_GIF, B_PLAYER };
 
@@ -364,9 +461,9 @@ void VideoView::Create(HWND parent) {
     hwnd = CreateWindowExW(0, L"SnapnabVideoView", nullptr, WS_CHILD | WS_CLIPCHILDREN, 0, 0, 10, 10, parent, nullptr,
                            GetModuleHandleW(nullptr), this);
     struct B { int id; const wchar_t* t; } bs[] = {
-        { B_PLAY, L"▶ Reproduzir" }, { B_PREV, L"◀ Quadro" }, { B_NEXT, L"Quadro ▶" }, { B_MARKIN, L"[ Início" }, { B_MARKOUT, L"Fim ]" },
-        { B_CUT, L"✂ Cortar seleção" }, { B_UNDOCUT, L"Desfazer corte" }, { B_SAVEFRAME, L"Salvar quadro" }, { B_GIF, L"Criar GIF…" },
-        { B_SAVEMP4, L"Salvar MP4…" }, { B_PLAYER, L"Abrir no player" } };
+        { B_PLAY, Tr(L"▶ Reproduzir") }, { B_PREV, Tr(L"◀ Quadro") }, { B_NEXT, Tr(L"Quadro ▶") }, { B_MARKIN, Tr(L"[ Início") }, { B_MARKOUT, Tr(L"Fim ]") },
+        { B_CUT, Tr(L"✂ Cortar seleção") }, { B_UNDOCUT, Tr(L"Desfazer corte") }, { B_SAVEFRAME, Tr(L"Salvar quadro") }, { B_GIF, Tr(L"Criar GIF…") },
+        { B_SAVEMP4, Tr(L"Salvar MP4…") }, { B_PLAYER, Tr(L"Abrir no player") } };
     int dpi = DpiForWindow(parent);
     for (auto& b : bs) {
         HWND h = CreateWindowExW(0, L"BUTTON", b.t, WS_CHILD | WS_VISIBLE | WS_TABSTOP, 0, 0, 10, 10, hwnd, (HMENU)(INT_PTR)b.id,
@@ -444,15 +541,30 @@ void VideoView::TogglePlay() {
     if (pos_ >= reader_.duration - kHns / 10) ShowAt(0);
     playing_ = true;
     reader_.Seek(pos_);
-    SetWindowTextW(btn_[B_PLAY], L"❚❚ Pausar");
-    SetTimer(hwnd, 1, std::max(10, (int)(1000 / reader_.fps)), nullptr);
+    pending_ = Image(); pendingTs_ = -1;
+    playFrom_ = pos_;
+    playTick_ = GetTickCount64();
+    audio_ = { new AudioPlayer, [](AudioPlayer* a) { delete a; } };
+    audio_->Start(path, pos_, Normalize(cuts_));
+    SetWindowTextW(btn_[B_PLAY], Tr(L"❚❚ Pausar"));
+    SetTimer(hwnd, 1, std::max(10, (int)(500 / reader_.fps)), nullptr);
 }
 
 void VideoView::StopPlay() {
     if (!playing_) return;
     playing_ = false;
     KillTimer(hwnd, 1);
-    SetWindowTextW(btn_[B_PLAY], L"▶ Reproduzir");
+    audio_.reset();
+    pending_ = Image(); pendingTs_ = -1;
+    SetWindowTextW(btn_[B_PLAY], Tr(L"▶ Reproduzir"));
+}
+
+// relógio de parede convertido para o tempo do vídeo-fonte, pulando os trechos cortados (como o áudio)
+LONGLONG VideoView::PlayClock() const {
+    LONGLONG t = playFrom_ + (LONGLONG)(GetTickCount64() - playTick_) * 10000;
+    for (auto& c : Normalize(cuts_))
+        if (c.end > playFrom_ && c.start <= t) t += c.end - std::max(c.start, playFrom_);
+    return t;
 }
 
 void VideoView::Paint(HDC hdc) {
@@ -465,7 +577,7 @@ void VideoView::Paint(HDC hdc) {
     RECT tl = TimelineRect();
     RECT area{ ui::Scale(16, dpi), ui::Scale(12, dpi), cr.right - ui::Scale(16, dpi), tl.top - ui::Scale(26, dpi) };
     if (!open_) {
-        ui::DrawTextCentered(mem, L"Não foi possível abrir o vídeo (somente MP4).", cr, RGB(220, 220, 220), ui::UiFont(dpi, 11));
+        ui::DrawTextCentered(mem, Tr(L"Não foi possível abrir o vídeo (somente MP4)."), cr, RGB(220, 220, 220), ui::UiFont(dpi, 11));
     } else {
         if (!frame_.empty() && area.right > area.left && area.bottom > area.top) {
             double s = std::min((double)(area.right - area.left) / frame_.w, (double)(area.bottom - area.top) / frame_.h);
@@ -474,7 +586,7 @@ void VideoView::Paint(HDC hdc) {
             if (IsInsideAnyCut(cuts_, pos_)) {
                 RECT tag{ area.left + 8, area.top + 8, area.left + ui::Scale(160, dpi), area.top + ui::Scale(34, dpi) };
                 ui::FillRoundRect(mem, tag, 8, RGB(200, 40, 40), RGB(200, 40, 40));
-                ui::DrawTextCentered(mem, L"trecho cortado", tag, RGB(255, 255, 255), ui::UiFont(dpi, 9, true));
+                ui::DrawTextCentered(mem, Tr(L"trecho cortado"), tag, RGB(255, 255, 255), ui::UiFont(dpi, 9, true));
             }
         }
         // linha do tempo
@@ -498,9 +610,9 @@ void VideoView::Paint(HDC hdc) {
         RECT tt{ tl.left, tl.bottom + 2, tl.right, tl.bottom + ui::Scale(20, dpi) };
         LONGLONG kept = reader_.duration;
         for (auto& c : Normalize(cuts_)) kept -= c.end - c.start;
-        std::wstring info = FmtTime(pos_) + L" / " + FmtTime(reader_.duration) + Format(L"   •   %d×%d @ %.0f qps", reader_.width, reader_.height, reader_.fps);
-        if (!cuts_.empty()) info += L"   •   duração após cortes: " + FmtTime(kept);
-        if (selA_ >= 0 || selB_ >= 0) info += L"   •   seleção: " + FmtTime(std::max<LONGLONG>(0, selA_)) + L" – " + FmtTime(selB_ >= 0 ? selB_ : reader_.duration);
+        std::wstring info = FmtTime(pos_) + L" / " + FmtTime(reader_.duration) + Format(Tr(L"   •   %d×%d @ %.0f qps"), reader_.width, reader_.height, reader_.fps);
+        if (!cuts_.empty()) info += Tr(L"   •   duração após cortes: ") + FmtTime(kept);
+        if (selA_ >= 0 || selB_ >= 0) info += Tr(L"   •   seleção: ") + FmtTime(std::max<LONGLONG>(0, selA_)) + L" – " + FmtTime(selB_ >= 0 ? selB_ : reader_.duration);
         HGDIOBJ of = SelectObject(mem, ui::UiFont(dpi, 9));
         SetBkMode(mem, TRANSPARENT); SetTextColor(mem, RGB(220, 220, 220));
         DrawTextW(mem, info.c_str(), -1, &tt, DT_LEFT | DT_SINGLELINE | DT_VCENTER);
@@ -512,40 +624,40 @@ void VideoView::Paint(HDC hdc) {
 
 void VideoView::SaveVideo() {
     StopPlay();
-    std::wstring f = L"Vídeo MP4 (*.mp4)|*.mp4|"; std::replace(f.begin(), f.end(), L'|', L'\0');
+    std::wstring f = Tr(L"Vídeo MP4 (*.mp4)|*.mp4|"); std::replace(f.begin(), f.end(), L'|', L'\0');
     std::wstring out = StripExt(path) + L"_editado.mp4"; int fi = 1;
-    if (!ui::SaveFileDialog(GetAncestor(hwnd, GA_ROOT), f, out, fi, L"mp4", L"Salvar vídeo")) return;
-    if (ToLower(out) == ToLower(path)) { MessageBoxW(hwnd, L"Escolha um arquivo diferente do original.", L"Snapnab", MB_ICONWARNING); return; }
+    if (!ui::SaveFileDialog(GetAncestor(hwnd, GA_ROOT), f, out, fi, L"mp4", Tr(L"Salvar vídeo"))) return;
+    if (ToLower(out) == ToLower(path)) { MessageBoxW(hwnd, Tr(L"Escolha um arquivo diferente do original."), L"Snapnab", MB_ICONWARNING); return; }
     std::wstring src = path, err;
     auto cuts = cuts_;
-    bool ok = RunWithProgress(GetAncestor(hwnd, GA_ROOT), L"Salvando vídeo…", [&](Progress p) { return TranscodeWithCuts(src, out, cuts, p, err); });
-    if (!ok) { MessageBoxW(hwnd, (L"Não foi possível salvar o vídeo.\n" + err).c_str(), L"Snapnab", MB_ICONWARNING); return; }
+    bool ok = RunWithProgress(GetAncestor(hwnd, GA_ROOT), Tr(L"Salvando vídeo…"), [&](Progress p) { return TranscodeWithCuts(src, out, cuts, p, err); });
+    if (!ok) { MessageBoxW(hwnd, (Tr(L"Não foi possível salvar o vídeo.\n") + err).c_str(), L"Snapnab", MB_ICONWARNING); return; }
     if (onNewVideo) onNewVideo(out);
 }
 
 void VideoView::SaveGif() {
     StopPlay();
     std::vector<ui::Field> f = {
-        ui::Field::MakeLabel(selA_ >= 0 || selB_ >= 0 ? L"Intervalo: a seleção marcada." : L"Intervalo: o vídeo inteiro (marque início/fim para limitar)."),
-        ui::Field::MakeInt(L"Quadros por segundo", 10, 1, 30),
-        ui::Field::MakeInt(L"Largura (px)", std::min(640, reader_.width), 32, reader_.width),
-        ui::Field::MakeCombo(L"Cores", { L"256 cores", L"16 cores (arquivo menor)" }, 0),
-        ui::Field::MakeCheck(L"Pontilhado (dithering)", true),
-        ui::Field::MakeCheck(L"Quadros delta (só o que mudou)", true),
+        ui::Field::MakeLabel(selA_ >= 0 || selB_ >= 0 ? Tr(L"Intervalo: a seleção marcada.") : Tr(L"Intervalo: o vídeo inteiro (marque início/fim para limitar).")),
+        ui::Field::MakeInt(Tr(L"Quadros por segundo"), 10, 1, 30),
+        ui::Field::MakeInt(Tr(L"Largura (px)"), std::min(640, reader_.width), 32, reader_.width),
+        ui::Field::MakeCombo(Tr(L"Cores"), { Tr(L"256 cores"), Tr(L"16 cores (arquivo menor)") }, 0),
+        ui::Field::MakeCheck(Tr(L"Pontilhado (dithering)"), true),
+        ui::Field::MakeCheck(Tr(L"Quadros delta (só o que mudou)"), true),
     };
-    if (!ui::RunForm(GetAncestor(hwnd, GA_ROOT), L"Criar GIF animado", f)) return;
-    std::wstring flt = L"GIF animado (*.gif)|*.gif|"; std::replace(flt.begin(), flt.end(), L'|', L'\0');
+    if (!ui::RunForm(GetAncestor(hwnd, GA_ROOT), Tr(L"Criar GIF animado"), f)) return;
+    std::wstring flt = Tr(L"GIF animado (*.gif)|*.gif|"); std::replace(flt.begin(), flt.end(), L'|', L'\0');
     std::wstring out = StripExt(path) + L".gif"; int fi = 1;
-    if (!ui::SaveFileDialog(GetAncestor(hwnd, GA_ROOT), flt, out, fi, L"gif", L"Salvar GIF")) return;
+    if (!ui::SaveFileDialog(GetAncestor(hwnd, GA_ROOT), flt, out, fi, L"gif", Tr(L"Salvar GIF"))) return;
     LONGLONG a = selA_ >= 0 ? selA_ : 0, b = selB_ >= 0 ? selB_ : reader_.duration;
     if (b < a) std::swap(a, b);
     std::wstring src = path, err;
     int fps = f[1].value, w = f[2].value, bpp = f[3].value == 1 ? 4 : 8;
     bool dither = f[4].value, delta = f[5].value;
-    bool ok = RunWithProgress(GetAncestor(hwnd, GA_ROOT), L"Criando GIF…", [&](Progress p) {
+    bool ok = RunWithProgress(GetAncestor(hwnd, GA_ROOT), Tr(L"Criando GIF…"), [&](Progress p) {
         return CreateGifFromVideo(src, out, a, b, fps, w, bpp, dither, delta, p, err);
     });
-    if (!ok) MessageBoxW(hwnd, (L"Não foi possível criar o GIF.\n" + err).c_str(), L"Snapnab", MB_ICONWARNING);
+    if (!ok) MessageBoxW(hwnd, (Tr(L"Não foi possível criar o GIF.\n") + err).c_str(), L"Snapnab", MB_ICONWARNING);
     else ShellExecuteW(nullptr, L"open", L"explorer.exe", (L"/select,\"" + out + L"\"").c_str(), nullptr, SW_SHOWNORMAL);
 }
 
@@ -566,13 +678,24 @@ LRESULT VideoView::Handle(UINT m, WPARAM w, LPARAM l) {
     case WM_PAINT: { PAINTSTRUCT ps; HDC dc = BeginPaint(hwnd, &ps); Paint(dc); EndPaint(hwnd, &ps); return 0; }
     case WM_TIMER: {
         if (!playing_) return 0;
-        Image img; LONGLONG ts;
-        if (!reader_.ReadFrame(img, ts)) { StopPlay(); return 0; }
-        // pula os trechos cortados na prévia
-        for (auto& c : Normalize(cuts_))
-            if (ts >= c.start && ts < c.end) { reader_.Seek(c.end); if (!reader_.ReadFrame(img, ts)) { StopPlay(); return 0; } }
-        frame_ = std::move(img); pos_ = ts;
-        InvalidateRect(hwnd, nullptr, FALSE);
+        // mostra o quadro mais recente que o relógio já alcançou (o áudio segue o mesmo relógio)
+        LONGLONG clock = PlayClock();
+        bool shown = false;
+        for (int i = 0; i < 16; i++) {
+            if (pendingTs_ < 0) {
+                Image img; LONGLONG ts;
+                if (!reader_.ReadFrame(img, ts)) { if (!shown) StopPlay(); break; }
+                bool skipped = false;
+                for (auto& c : Normalize(cuts_))      // pula os trechos cortados na prévia
+                    if (ts >= c.start && ts < c.end) { reader_.Seek(c.end); skipped = true; break; }
+                if (skipped) continue;
+                pending_ = std::move(img); pendingTs_ = ts;
+            }
+            if (pendingTs_ > clock) break;
+            frame_ = std::move(pending_); pos_ = pendingTs_; pendingTs_ = -1;
+            shown = true;
+        }
+        if (shown) InvalidateRect(hwnd, nullptr, FALSE);
         return 0;
     }
     case WM_LBUTTONDOWN: {
@@ -607,7 +730,7 @@ LRESULT VideoView::Handle(UINT m, WPARAM w, LPARAM l) {
         case B_MARKOUT: selB_ = pos_; if (selA_ > selB_) selA_ = -1; InvalidateRect(hwnd, nullptr, FALSE); break;
         case B_CUT: {      // CVidOpCreateCut
             LONGLONG a = selA_ >= 0 ? selA_ : 0, b = selB_ >= 0 ? selB_ : -1;
-            if (b <= a) { MessageBoxW(hwnd, L"Marque o início e o fim do trecho a remover.", L"Snapnab", MB_ICONINFORMATION); break; }
+            if (b <= a) { MessageBoxW(hwnd, Tr(L"Marque o início e o fim do trecho a remover."), L"Snapnab", MB_ICONINFORMATION); break; }
             cutUndo_.push_back(cuts_);
             cuts_.push_back({ a, b });
             cuts_ = Normalize(cuts_);

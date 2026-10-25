@@ -1,13 +1,16 @@
 // Snapnab.exe — processo de captura (≙ Snagit32.exe): bandeja, janela de captura, atalhos globais,
-// motor de captura, gravação de vídeo, saídas nativas e canal IPC com o Editor (ds_pseudocode §1–§4)
+// motor de captura, gravação de vídeo, saídas nativas, One Click e canal IPC com o Editor (ds_pseudocode §1–§4)
 #include "Common.h"
 #include "CaptureEngine.h"
 #include "Hotkeys.h"
 #include "Icons.h"
 #include "Ipc.h"
 #include "Library.h"
+#include "OneClick.h"
 #include "Presets.h"
+#include "CaptionBar.h"
 #include "Ui.h"
+#include "Webcam.h"
 #include "Widgets.h"
 #include <dwmapi.h>
 
@@ -16,23 +19,26 @@ using namespace snap;
 namespace {
 
 enum : int {
-    IDC_PRESETS = 100, IDC_PRESET_NEW, IDC_PRESET_DUP, IDC_PRESET_DEL, IDC_PRESET_RENAME, IDC_PRESET_HOTKEY,
-    IDC_TAB_IMAGE, IDC_TAB_VIDEO, IDC_SELECTION, IDC_SEL_CFG, IDC_EFFECTS, IDC_EFFECTS_LABEL,
-    IDC_PREVIEW, IDC_CLIPBOARD, IDC_SAVEFILE, IDC_SAVEFILE_CFG, IDC_CURSOR, IDC_DELAY, IDC_DELAY_UD, IDC_DELAY_LABEL,
-    IDC_MIC, IDC_SYS, IDC_FPS, IDC_FPS_LABEL, IDC_QUALITY, IDC_QUALITY_LABEL, IDC_DOWNSCALE, IDC_HW,
-    IDC_CAPTURE, IDC_HINT, IDC_OPEN_EDITOR, IDC_OPTIONS, IDC_SEL_LABEL, IDC_SHARE_LABEL, IDC_PRESETS_LABEL,
-    IDC_EFFECTS_TITLE, IDC_FILE_SUMMARY,
+    IDC_PRESETS = 100, IDC_TAB_IMAGE, IDC_TAB_VIDEO, IDC_SEL_LABEL, IDC_SELECTION, IDC_EFFECTS_TITLE, IDC_EFFECTS,
+    IDC_SHARE_LABEL, IDC_SHARE, IDC_QUALITY_LABEL, IDC_QUALITY, IDC_WEBCAM_LABEL, IDC_WEBCAM,
+    IDC_PREVIEW, IDC_CLIPBOARD, IDC_CURSOR, IDC_DELAY, IDC_MIC, IDC_SYS, IDC_CAPTURE,
+    IDC_PRESETS_LABEL, IDC_PRESET_ADD, IDC_OPEN_EDITOR,
     // menu
     IDM_EXIT = 1000, IDM_OPEN_EDITOR, IDM_CAPTURE_IMAGE, IDM_CAPTURE_VIDEO, IDM_CAPTURE_CLIPBOARD, IDM_CAPTURE_FILE,
     IDM_REPEAT, IDM_OPTIONS, IDM_PRESET_IMPORT, IDM_PRESET_EXPORT, IDM_ABOUT, IDM_LIBRARY_FOLDER, IDM_LOGS,
-    IDM_SHOW, IDM_PRESET_BASE = 2000,
+    IDM_SHOW, IDM_ONECLICK, IDM_SHOW_PRESETS, IDM_PRESET_FROM_CURRENT, IDM_PRESET_NEW, IDM_PRESET_HELP,
+    IDM_PRESET_RUN, IDM_PRESET_RENAME, IDM_PRESET_DUP, IDM_PRESET_HOTKEY, IDM_PRESET_DEL,
+    IDM_PRESET_BASE = 2000, IDM_DELAY_BASE = 3000, IDM_WEBCAM_OFF = 3100, IDM_WEBCAM_BASE = 3101,
+    IDM_WEBCAM_SHAPE = 3200, IDM_WEBCAM_CHROMA = 3300,
 };
-constexpr UINT WM_FX_ADD = WM_APP + 0x60;     // reabrir a lista de efeitos em "adicionar outro"
+constexpr UINT WM_FX_ADD = WM_APP + 0x60;       // reabrir a lista de efeitos em "adicionar outro"
+constexpr UINT WM_PRESET_ZONE = WM_APP + 0x62;  // clique no atalho/engrenagem de uma linha de preset
 enum : int { HK_IMAGE = 1, HK_VIDEO = 2, HK_VIDEO_PAUSE = 4, HK_VIDEO_STOP = 5, HK_PRESET_BASE = 100 };
+enum Share { ShareNone, ShareFile, ShareProgram, ShareText };
 
 struct App {
     HINSTANCE hi = nullptr;
-    HWND frame = nullptr;
+    HWND frame = nullptr, tip = nullptr;
     HICON iconBig = nullptr, iconSmall = nullptr;
     NOTIFYICONDATAW nid{};
     UINT taskbarCreated = 0;
@@ -40,6 +46,7 @@ struct App {
     CaptureEngine engine;
     ipc::Notify ipc;
     HotkeyManager hk;
+    OneClick oneClick;
     HANDLE mutex = nullptr;
     int dpi = 96;
     std::map<int, HWND> ctl;
@@ -51,98 +58,53 @@ struct App {
     bool presetsOpen = false;      // lista de presets expandida abaixo da barra inferior
     int fxCurrent = -1;            // efeito mostrado na caixa "Efeitos" (alvo de "Remover este efeito")
     bool fxAddMode = false;        // a lista de efeitos aberta é a de "Adicionar outro efeito"
+    HMENU menuBar = nullptr;       // menus da barra de título (Arquivo, Captura, Exibir, Ajuda)
+    ui::CaptionBar caption;        // barra de título própria (ícone + menus), a mesma do Editor
+    int presetHot = -1, presetZone = 0;
+    std::vector<CameraInfo> cams;  // webcams listadas no último menu
+    bool trayIgnoreUp = false;     // segundo clique de um duplo clique no ícone da bandeja
 } g;
+constexpr UINT_PTR kTrayClickTimer = 8;
 
 // medidas da janela compacta (calculadas pelo texto dos controles, em pixels do DPI atual)
 struct Metrics {
-    int pad, rowP, ch, tabW, tabH;
-    int ax, labW, fieldX, fieldW, cfgX, cfgW;     // coluna de seleção/efeitos/arquivo
-    int bx, bw;                                   // coluna de opções (caixas de seleção)
-    int capX, capW;                               // botão de captura
+    int capH, pad, rowP, ch, tabW, tabH;
+    int ax, labW, fieldX, fieldW;                 // coluna de seleção/efeitos/compartilhar
+    int bx, bw;                                   // coluna de opções (chaves)
+    int capX, capW, capD;                         // botão de captura
     int contentH, barH, panelH, clientW;
 } lay;
 
-// cores derivadas da cor de destaque do Windows (Personalização > Cores)
-struct Theme {
-    COLORREF accent = RGB(0, 120, 215), accentDark = RGB(0, 90, 158), accentText = RGB(0, 84, 150);
-    COLORREF bgMain = RGB(250, 250, 252), bgSide = RGB(240, 241, 244), bgBar = RGB(245, 246, 248);
-    COLORREF bgCaption = RGB(243, 243, 245), line = RGB(222, 224, 228);
-    HBRUSH brMain = nullptr, brSide = nullptr, brBar = nullptr, brCaption = nullptr;
+// cores derivadas da cor de destaque do Windows (Personalização > Cores), as mesmas do Editor (common/Theme)
+struct Theme : ui::ThemeColors {
+    HBRUSH brMain = nullptr, brSide = nullptr, brBar = nullptr;
 } th;
+
+using ui::Mix;
+using ui::Luma;
+using ui::kCaptureRed;
 
 HWND C(int id) { return g.ctl[id]; }
 Preset& Cur() { return g.store.presets[g.store.selected]; }
 int S(int v) { return ui::Scale(v, g.dpi); }
 
 // ---------------------------------------------------------------- tema
-COLORREF Mix(COLORREF a, COLORREF b, double t) {
-    auto ch = [t](int x, int y) { return (BYTE)std::lround(x + (y - x) * t); };
-    return RGB(ch(GetRValue(a), GetRValue(b)), ch(GetGValue(a), GetGValue(b)), ch(GetBValue(a), GetBValue(b)));
-}
-
-double Luma(COLORREF c) { return (0.299 * GetRValue(c) + 0.587 * GetGValue(c) + 0.114 * GetBValue(c)) / 255.0; }
-
-bool ReadHkcuDword(const wchar_t* key, const wchar_t* name, DWORD& v) {
-    DWORD cb = sizeof v;
-    return RegGetValueW(HKEY_CURRENT_USER, key, name, RRF_RT_REG_DWORD, nullptr, &v, &cb) == ERROR_SUCCESS;
-}
-
 void LoadTheme() {
-    // AccentPalette = 8 cores RGBA (Light3, Light2, Light1, Accent, Dark1, Dark2, Dark3, …)
-    BYTE pal[32]; DWORD cb = sizeof pal;
-    DWORD v;
-    if (RegGetValueW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent", L"AccentPalette",
-                     RRF_RT_REG_BINARY, nullptr, pal, &cb) == ERROR_SUCCESS && cb >= 24) {
-        th.accent = RGB(pal[12], pal[13], pal[14]);
-        th.accentDark = RGB(pal[16], pal[17], pal[18]);
-        th.accentText = RGB(pal[20], pal[21], pal[22]);
-    } else if (ReadHkcuDword(L"Software\\Microsoft\\Windows\\DWM", L"AccentColor", v)) {   // 0xAABBGGRR
-        th.accent = v & 0xFFFFFF;
-        th.accentDark = Mix(th.accent, 0, 0.25);
-        th.accentText = Mix(th.accent, 0, 0.4);
-    } else {
-        BOOL opaque; DWORD argb;
-        if (SUCCEEDED(DwmGetColorizationColor(&argb, &opaque))) th.accent = RGB((argb >> 16) & 255, (argb >> 8) & 255, argb & 255);
-        th.accentDark = Mix(th.accent, 0, 0.25);
-        th.accentText = Mix(th.accent, 0, 0.4);
-    }
-    while (Luma(th.accentText) > 0.42) th.accentText = Mix(th.accentText, 0, 0.15);   // legível sobre fundo claro
-    // fundos neutros puxados de leve para a cor de destaque
-    th.bgMain = Mix(RGB(251, 251, 252), th.accent, 0.05);
-    th.bgBar = Mix(RGB(246, 246, 248), th.accent, 0.09);
-    th.bgSide = Mix(RGB(238, 239, 241), th.accent, 0.13);
-    th.bgCaption = Mix(RGB(243, 243, 245), th.accent, 0.11);
-    th.line = Mix(RGB(220, 221, 225), th.accent, 0.18);
-    for (HBRUSH* b : { &th.brMain, &th.brSide, &th.brBar, &th.brCaption }) if (*b) DeleteObject(*b);
+    static_cast<ui::ThemeColors&>(th) = ui::LoadThemeColors();
+    for (HBRUSH* b : { &th.brMain, &th.brSide, &th.brBar }) if (*b) DeleteObject(*b);
     th.brMain = CreateSolidBrush(th.bgMain);
     th.brSide = CreateSolidBrush(th.bgSide);
     th.brBar = CreateSolidBrush(th.bgBar);
-    th.brCaption = CreateSolidBrush(th.bgCaption);
-    mui::Palette p;
-    p.accent = Luma(th.accent) > 0.55 ? th.accentDark : th.accent;
-    p.accentText = th.accentText;
-    p.line = th.line;
-    mui::SetPalette(p);
-}
-
-COLORREF CaptureColor() {   // botão de captura de imagem na cor de destaque (escurecida se for clara demais)
-    return Luma(th.accent) > 0.55 ? th.accentDark : th.accent;
+    ui::ApplyThemeToWidgets(th);
+    g.caption.SetTheme(th);
+    OneClickTheme ot;
+    ot.accent = th.control; ot.bg = th.bgMain; ot.line = th.line; ot.capture = kCaptureRed;
+    g.oneClick.SetTheme(ot);
 }
 
 void ApplyFrameTheme() {
-    // barra de título: se o usuário pediu a cor de destaque nas barras de título, o Windows já pinta;
-    // senão usa o mesmo tom suave do menu (DWMWA_CAPTION_COLOR, Windows 11)
-    DWORD prevalence = 0;
-    ReadHkcuDword(L"Software\\Microsoft\\Windows\\DWM", L"ColorPrevalence", prevalence);
-    COLORREF cap = prevalence ? 0xFFFFFFFF /*DWMWA_COLOR_DEFAULT*/ : th.bgCaption;
-    DwmSetWindowAttribute(g.frame, 35 /*DWMWA_CAPTION_COLOR*/, &cap, sizeof cap);
-    COLORREF border = prevalence ? 0xFFFFFFFF : th.line;
+    COLORREF border = th.captionAccent ? 0xFFFFFFFF /*DWMWA_COLOR_DEFAULT*/ : th.line;
     DwmSetWindowAttribute(g.frame, 34 /*DWMWA_BORDER_COLOR*/, &border, sizeof border);
-    MENUINFO mi{ sizeof mi };
-    mi.fMask = MIM_BACKGROUND;
-    mi.hbrBack = th.brCaption;
-    SetMenuInfo(GetMenu(g.frame), &mi);
-    DrawMenuBar(g.frame);
     RedrawWindow(g.frame, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN | RDW_FRAME);
 }
 
@@ -155,7 +117,7 @@ void TrayAdd() {
     g.nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     g.nid.uCallbackMessage = WM_SNAP_TRAY;
     g.nid.hIcon = g.iconSmall;
-    wcscpy_s(g.nid.szTip, L"Snapnab — clique para capturar");
+    wcscpy_s(g.nid.szTip, Tr(L"Snapnab — clique para capturar"));
     Shell_NotifyIconW(NIM_ADD, &g.nid);
     g.nid.uVersion = NOTIFYICON_VERSION_4;
     Shell_NotifyIconW(NIM_SETVERSION, &g.nid);
@@ -182,7 +144,7 @@ void RegisterHotkeys() {
         auto& p = g.store.presets[i];
         if (!p.hotkeyVk) continue;
         if (g.hk.Set(HK_PRESET_BASE + (int)i, p.hotkeyMods, p.hotkeyVk) == HotkeyManager::InternalConflict)
-            TrayNotify(L"Conflito de atalho", L"O atalho do preset \"" + p.name + L"\" já está em uso por outra ação.");
+            TrayNotify(Tr(L"Conflito de atalho"), Format(Tr(L"O atalho do preset \"%s\" já está em uso por outra ação."), Tr(p.name).c_str()));
     }
 }
 
@@ -199,13 +161,11 @@ void SetVideoHotkeys(bool on) {
     }
 }
 
-std::wstring HotkeyHint() {
+std::wstring HotkeyFor(bool video) {
     UINT m, v;
-    UnpackHotkey(RegGetDword(L"ImageHotkey", PackHotkey(0, VK_SNAPSHOT)), m, v);
-    std::wstring s = L"Imagem: " + HotkeyToText(m, v);
-    UnpackHotkey(RegGetDword(L"VideoHotkey", PackHotkey(MOD_SHIFT, VK_SNAPSHOT)), m, v);
-    s += L"\nVídeo: " + HotkeyToText(m, v);
-    return s;
+    if (video) UnpackHotkey(RegGetDword(L"VideoHotkey", PackHotkey(MOD_SHIFT, VK_SNAPSHOT)), m, v);
+    else UnpackHotkey(RegGetDword(L"ImageHotkey", PackHotkey(0, VK_SNAPSHOT)), m, v);
+    return HotkeyToText(m, v);
 }
 
 // ---------------------------------------------------------------- captura
@@ -221,13 +181,12 @@ Preset FirstOfKind(CaptureKind k) {
     return p;
 }
 
-// ---------------------------------------------------------------- UI: preset ↔ controles
 // ---------------------------------------------------------------- efeitos (lista "Efeitos" da janela de captura)
 enum Fx { FxBorder, FxFilter, FxShadow, FxCaption, FxReplace, FxScale, FxEdge, FxTrim, FxAdjust, FxRotate, FxWatermark, FxResolution, FxCount };
 enum : LPARAM { FxNone = -1, FxSep = -2, FxAdd = -3, FxRemove = -4 };   // itens de ação da lista
 const wchar_t* const kFxNames[FxCount] = {
-    L"Borda", L"Filtros", L"Sombra", L"Informações da captura", L"Substituição de cor", L"Redimensionar imagem",
-    L"Bordas especiais", L"Cortar bordas", L"Ajuste de cor", L"Girar imagem", L"Marca d'água", L"Resolução da imagem",
+    Tr(L"Borda"), Tr(L"Filtros"), Tr(L"Sombra"), Tr(L"Informações da captura"), Tr(L"Substituição de cor"), Tr(L"Redimensionar imagem"),
+    Tr(L"Bordas especiais"), Tr(L"Cortar bordas"), Tr(L"Ajuste de cor"), Tr(L"Girar imagem"), Tr(L"Marca d'água"), Tr(L"Resolução da imagem"),
 };
 
 bool& FxOn(fx::CaptureEffects& e, int k) {
@@ -246,44 +205,44 @@ bool EditFx(int k) {
     using F = ui::Field;
     std::vector<F> f;
     switch (k) {
-    case FxBorder: f = { F::MakeInt(L"Largura (px)", e.borderWidth, 1, 100), F::MakeColor(L"Cor", e.borderColor) }; break;
-    case FxFilter: f = { F::MakeCombo(L"Filtro", { L"Tons de cinza", L"Sépia", L"Inverter cores", L"Preto e branco" }, e.filterKind) }; break;
+    case FxBorder: f = { F::MakeInt(Tr(L"Largura (px)"), e.borderWidth, 1, 100), F::MakeColor(Tr(L"Cor"), e.borderColor) }; break;
+    case FxFilter: f = { F::MakeCombo(Tr(L"Filtro"), { Tr(L"Tons de cinza"), Tr(L"Sépia"), Tr(L"Inverter cores"), Tr(L"Preto e branco") }, e.filterKind) }; break;
     case FxShadow:
-        f = { F::MakeInt(L"Deslocamento (px)", e.shadowOffset, 0, 50), F::MakeInt(L"Desfoque (px)", e.shadowBlur, 0, 50),
-              F::MakeInt(L"Opacidade (%)", e.shadowOpacity, 0, 100) };
+        f = { F::MakeInt(Tr(L"Deslocamento (px)"), e.shadowOffset, 0, 50), F::MakeInt(Tr(L"Desfoque (px)"), e.shadowBlur, 0, 50),
+              F::MakeInt(Tr(L"Opacidade (%)"), e.shadowOpacity, 0, 100) };
         break;
     case FxCaption:
-        f = { F::MakeText(L"Texto", e.captionText), F::MakeLabel(L"Campos: {date} {time} {computer} {user}"),
-              F::MakeCombo(L"Posição", { L"Embaixo", L"Em cima" }, e.captionTop ? 1 : 0) };
+        f = { F::MakeText(Tr(L"Texto"), e.captionText), F::MakeLabel(Tr(L"Campos: {date} {time} {computer} {user}")),
+              F::MakeCombo(Tr(L"Posição"), { Tr(L"Embaixo"), Tr(L"Em cima") }, e.captionTop ? 1 : 0) };
         break;
     case FxReplace:
-        f = { F::MakeColor(L"Cor a substituir", e.replaceFrom), F::MakeColor(L"Nova cor", e.replaceTo),
-              F::MakeInt(L"Tolerância", e.replaceTolerance, 0, 100) };
+        f = { F::MakeColor(Tr(L"Cor a substituir"), e.replaceFrom), F::MakeColor(Tr(L"Nova cor"), e.replaceTo),
+              F::MakeInt(Tr(L"Tolerância"), e.replaceTolerance, 0, 100) };
         break;
-    case FxScale: f = { F::MakeInt(L"Escala (%)", e.scalePercent, 10, 400) }; break;
+    case FxScale: f = { F::MakeInt(Tr(L"Escala (%)"), e.scalePercent, 10, 400) }; break;
     case FxEdge:
-        f = { F::MakeCombo(L"Estilo", { L"Rasgada", L"Onda", L"Dente de serra", L"Dente de tubarão", L"Esmaecer" }, e.edgeStyle),
-              F::MakeInt(L"Tamanho (px)", e.edgeSize, 4, 60),
-              F::MakeCheck(L"Em cima", (e.edgeSides & fx::Top) != 0), F::MakeCheck(L"Direita", (e.edgeSides & fx::Right) != 0),
-              F::MakeCheck(L"Embaixo", (e.edgeSides & fx::Bottom) != 0), F::MakeCheck(L"Esquerda", (e.edgeSides & fx::Left) != 0) };
+        f = { F::MakeCombo(Tr(L"Estilo"), { Tr(L"Rasgada"), Tr(L"Onda"), Tr(L"Dente de serra"), Tr(L"Dente de tubarão"), Tr(L"Esmaecer"), Tr(L"Chanfrada") }, e.edgeStyle),
+              F::MakeInt(Tr(L"Tamanho (px)"), e.edgeSize, 4, 60),
+              F::MakeCheck(Tr(L"Em cima"), (e.edgeSides & fx::Top) != 0), F::MakeCheck(Tr(L"Direita"), (e.edgeSides & fx::Right) != 0),
+              F::MakeCheck(Tr(L"Embaixo"), (e.edgeSides & fx::Bottom) != 0), F::MakeCheck(Tr(L"Esquerda"), (e.edgeSides & fx::Left) != 0) };
         break;
     case FxTrim:
-        f = { F::MakeLabel(L"Remove as faixas de cor uniforme em volta da captura."), F::MakeInt(L"Tolerância", e.trimTolerance, 0, 100) };
+        f = { F::MakeLabel(Tr(L"Remove as faixas de cor uniforme em volta da captura.")), F::MakeInt(Tr(L"Tolerância"), e.trimTolerance, 0, 100) };
         break;
     case FxAdjust:
-        f = { F::MakeInt(L"Brilho", e.brightness, -100, 100), F::MakeInt(L"Contraste", e.contrast, -100, 100),
-              F::MakeInt(L"Matiz (graus)", e.hue, -180, 180), F::MakeInt(L"Saturação", e.saturation, -100, 100) };
+        f = { F::MakeInt(Tr(L"Brilho"), e.brightness, -100, 100), F::MakeInt(Tr(L"Contraste"), e.contrast, -100, 100),
+              F::MakeInt(Tr(L"Matiz (graus)"), e.hue, -180, 180), F::MakeInt(Tr(L"Saturação"), e.saturation, -100, 100) };
         break;
     case FxRotate:
-        f = { F::MakeCombo(L"Girar", { L"90° à direita", L"90° à esquerda", L"180°", L"Espelhar na horizontal", L"Espelhar na vertical" },
+        f = { F::MakeCombo(Tr(L"Girar"), { Tr(L"90° à direita"), Tr(L"90° à esquerda"), L"180°", Tr(L"Espelhar na horizontal"), Tr(L"Espelhar na vertical") },
                            e.rotateKind) };
         break;
     case FxWatermark:
-        f = { F::MakeText(L"Texto", e.watermarkText), F::MakeInt(L"Opacidade (%)", e.watermarkOpacity, 5, 100),
-              F::MakeCheck(L"Repetir por toda a imagem", e.watermarkTiled) };
+        f = { F::MakeText(Tr(L"Texto"), e.watermarkText), F::MakeInt(Tr(L"Opacidade (%)"), e.watermarkOpacity, 5, 100),
+              F::MakeCheck(Tr(L"Repetir por toda a imagem"), e.watermarkTiled) };
         break;
     case FxResolution:
-        f = { F::MakeInt(L"Resolução (DPI)", e.dpi, 36, 2400), F::MakeLabel(L"Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP).") };
+        f = { F::MakeInt(Tr(L"Resolução (DPI)"), e.dpi, 36, 2400), F::MakeLabel(Tr(L"Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP).")) };
         break;
     default: return false;
     }
@@ -316,7 +275,7 @@ bool EditFx(int k) {
 void UpdateEffectsText() {
     auto& e = Cur().effects;
     if (g.fxCurrent < 0 || !FxOn(e, g.fxCurrent)) g.fxCurrent = FxFirstOn(e);
-    std::wstring t = L"Nenhum";
+    std::wstring t = Tr(L"Nenhum");
     if (g.fxCurrent >= 0) {
         t = kFxNames[g.fxCurrent];
         int others = FxCountOn(e) - 1;
@@ -338,11 +297,11 @@ void FillEffectsList() {
         for (int k = 0; k < FxCount; k++) if (!FxOn(e, k)) add(kFxNames[k], k);
         return;
     }
-    add(L"Nenhum", FxNone);
+    add(Tr(L"Nenhum"), FxNone);
     for (int k = 0; k < FxCount; k++) add(kFxNames[k], k, FxOn(e, k) ? mui::ItemChecked : 0);
     add(L"", FxSep, mui::ItemSeparator);
-    add(L"Adicionar outro efeito", FxAdd);
-    add(L"Remover este efeito", FxRemove);
+    add(Tr(L"Adicionar outro efeito"), FxAdd);
+    add(Tr(L"Remover este efeito"), FxRemove);
 }
 
 void OnEffectPicked(LPARAM item) {
@@ -363,11 +322,21 @@ void OnEffectPicked(LPARAM item) {
     UpdateEffectsText();
 }
 
-std::wstring FileSummary(const Preset& p) {
-    static const wchar_t* fmt[] = { L"PNG", L"JPEG", L"BMP", L"GIF", L"TIFF" };
-    std::wstring dir = p.folder.empty() ? DefaultSaveDir() : p.folder;
-    return Format(L"%s em %s", fmt[std::clamp((int)p.fileFormat, 0, 4)], PathFindFileNameW(dir.c_str()));
+// ---------------------------------------------------------------- compartilhar (destino da captura)
+Share ShareOf(const Preset& p) {
+    if (p.grabText) return ShareText;
+    if (p.saveToFile) return ShareFile;
+    if (p.openInProgram) return ShareProgram;
+    return ShareNone;
 }
+
+void SetShare(Preset& p, Share s) {
+    p.saveToFile = s == ShareFile;
+    p.openInProgram = s == ShareProgram;
+    p.grabText = s == ShareText;
+}
+
+std::wstring DelayText(int s) { return s <= 0 ? Tr(L"Desligado") : Format(Tr(L"%d s"), s); }
 
 void FillPresetList() {
     HWND lb = C(IDC_PRESETS);
@@ -380,6 +349,15 @@ void FillPresetList() {
 }
 
 void Layout();
+void ComputeMetrics();
+void ResizeToContent();
+
+// a engrenagem da Seleção vale para a Região (escolher na captura ou região fixa); a caixa mostra "Região fixa"
+void UpdateSelectionGear(const Preset& p) {
+    bool region = p.selection == Selection::Region;
+    SendMessageW(C(IDC_SELECTION), mui::MUI_SETGEAR, region, 0);
+    SendMessageW(C(IDC_SELECTION), mui::MUI_SETDISPLAYTEXT, 0, (LPARAM)(region && p.regionFixed ? Tr(L"Região fixa") : nullptr));
+}
 
 void LoadControls() {
     g.loading = true;
@@ -388,49 +366,29 @@ void LoadControls() {
     HWND sel = C(IDC_SELECTION);
     ComboBox_ResetContent(sel);
     auto list = SelectionsFor(p.kind);
-    int idx = 0;
+    if (std::find(list.begin(), list.end(), p.selection) == list.end()) p.selection = list[0];
     for (size_t i = 0; i < list.size(); i++) {
         ComboBox_AddString(sel, SelectionName(list[i]));
-        if (list[i] == p.selection) idx = (int)i;
+        if (list[i] == p.selection) ComboBox_SetCurSel(sel, (int)i);
     }
-    if (std::find(list.begin(), list.end(), p.selection) == list.end()) p.selection = list[0];
-    ComboBox_SetCurSel(sel, idx);
-    EnableWindow(C(IDC_SEL_CFG), p.selection == Selection::FixedRegion);
+    UpdateSelectionGear(p);
     g.fxCurrent = -1;
     UpdateEffectsText();
-    SetWindowTextW(C(IDC_FILE_SUMMARY), FileSummary(p).c_str());
+    Share sh = ShareOf(p);
+    ComboBox_SetCurSel(C(IDC_SHARE), sh);
+    SendMessageW(C(IDC_SHARE), mui::MUI_SETGEAR, sh == ShareFile || sh == ShareProgram, 0);
     Button_SetCheck(C(IDC_PREVIEW), p.previewInEditor);
     Button_SetCheck(C(IDC_CLIPBOARD), p.copyToClipboard);
-    Button_SetCheck(C(IDC_SAVEFILE), p.saveToFile);
     Button_SetCheck(C(IDC_CURSOR), p.captureCursor);
-    {
-        HWND d = C(IDC_DELAY);
-        ComboBox_ResetContent(d);
-        std::vector<int> secs = { 0, 1, 2, 3, 5, 10, 15, 30, 60 };
-        if (std::find(secs.begin(), secs.end(), p.delaySeconds) == secs.end()) {
-            secs.push_back(p.delaySeconds);
-            std::sort(secs.begin(), secs.end());
-        }
-        for (int s : secs) {
-            int i = ComboBox_AddString(d, s == 0 ? L"Desligado" : s == 1 ? L"1 segundo" : Format(L"%d segundos", s).c_str());
-            ComboBox_SetItemData(d, i, s);
-            if (s == p.delaySeconds) ComboBox_SetCurSel(d, i);
-        }
-    }
+    SendMessageW(C(IDC_DELAY), mui::MUI_SETDISPLAYTEXT, 0, (LPARAM)DelayText(p.delaySeconds).c_str());
+    SendMessageW(C(IDC_WEBCAM), mui::MUI_SETDISPLAYTEXT, 0, (LPARAM)(p.webcam ? Tr(L"Ligada") : Tr(L"Desligada")));
     Button_SetCheck(C(IDC_MIC), p.microphone);
     Button_SetCheck(C(IDC_SYS), p.systemAudio);
-    static const int fpsList[] = { 10, 15, 24, 30, 60 };
-    int fi = 3;
-    for (int i = 0; i < 5; i++) if (fpsList[i] == p.fps) fi = i;
-    ComboBox_SetCurSel(C(IDC_FPS), fi);
     ComboBox_SetCurSel(C(IDC_QUALITY), p.quality);
-    Button_SetCheck(C(IDC_DOWNSCALE), p.downscale1080);
-    Button_SetCheck(C(IDC_HW), p.hardwareEncode);
     // visibilidade por modo
-    for (int id : { IDC_EFFECTS, IDC_EFFECTS_TITLE, IDC_CLIPBOARD, IDC_SAVEFILE, IDC_SAVEFILE_CFG, IDC_SHARE_LABEL,
-                    IDC_FILE_SUMMARY, IDC_DELAY, IDC_DELAY_LABEL })
+    for (int id : { IDC_EFFECTS, IDC_EFFECTS_TITLE, IDC_SHARE, IDC_SHARE_LABEL, IDC_CLIPBOARD, IDC_DELAY })
         ShowWindow(C(id), video ? SW_HIDE : SW_SHOW);
-    for (int id : { IDC_MIC, IDC_SYS, IDC_FPS, IDC_FPS_LABEL, IDC_QUALITY, IDC_QUALITY_LABEL, IDC_DOWNSCALE, IDC_HW })
+    for (int id : { IDC_QUALITY, IDC_QUALITY_LABEL, IDC_WEBCAM, IDC_WEBCAM_LABEL, IDC_MIC, IDC_SYS })
         ShowWindow(C(id), video ? SW_SHOW : SW_HIDE);
     InvalidateRect(C(IDC_TAB_IMAGE), nullptr, TRUE);
     InvalidateRect(C(IDC_TAB_VIDEO), nullptr, TRUE);
@@ -444,22 +402,14 @@ void SaveControls() {
     auto list = SelectionsFor(p.kind);
     int si = ComboBox_GetCurSel(C(IDC_SELECTION));
     if (si >= 0 && si < (int)list.size()) p.selection = list[si];
-    EnableWindow(C(IDC_SEL_CFG), p.selection == Selection::FixedRegion);
+    UpdateSelectionGear(p);
     p.previewInEditor = Button_GetCheck(C(IDC_PREVIEW)) == BST_CHECKED;
     p.copyToClipboard = Button_GetCheck(C(IDC_CLIPBOARD)) == BST_CHECKED;
-    p.saveToFile = Button_GetCheck(C(IDC_SAVEFILE)) == BST_CHECKED;
     p.captureCursor = Button_GetCheck(C(IDC_CURSOR)) == BST_CHECKED;
-    int di = ComboBox_GetCurSel(C(IDC_DELAY));
-    if (di >= 0) p.delaySeconds = std::clamp((int)ComboBox_GetItemData(C(IDC_DELAY), di), 0, 60);
     p.microphone = Button_GetCheck(C(IDC_MIC)) == BST_CHECKED;
     p.systemAudio = Button_GetCheck(C(IDC_SYS)) == BST_CHECKED;
-    static const int fpsList[] = { 10, 15, 24, 30, 60 };
-    int fi = ComboBox_GetCurSel(C(IDC_FPS));
-    if (fi >= 0) p.fps = fpsList[fi];
     int qi = ComboBox_GetCurSel(C(IDC_QUALITY));
     if (qi >= 0) p.quality = qi;
-    p.downscale1080 = Button_GetCheck(C(IDC_DOWNSCALE)) == BST_CHECKED;
-    p.hardwareEncode = Button_GetCheck(C(IDC_HW)) == BST_CHECKED;
     g.store.Save();
 }
 
@@ -467,60 +417,144 @@ void SaveControls() {
 void EditFileOutput() {
     auto& p = Cur();
     std::vector<ui::Field> f = {
-        ui::Field::MakeCombo(L"Formato", { L"PNG", L"JPEG", L"BMP", L"GIF", L"TIFF" }, (int)p.fileFormat),
-        ui::Field::MakeText(L"Prefixo do nome", p.filePrefix),
-        ui::Field::MakeText(L"Pasta", p.folder.empty() ? DefaultSaveDir() : p.folder),
-        ui::Field::MakeLabel(L"Nome automático: <Prefixo><Número>, ex.: Captura001.png"),
-        ui::Field::MakeCheck(L"Abrir também em um programa externo", p.openInProgram),
-        ui::Field::MakeText(L"Programa", p.programPath),
+        ui::Field::MakeCombo(Tr(L"Formato"), { L"PNG", L"JPEG", L"BMP", L"GIF", L"TIFF" }, (int)p.fileFormat),
+        ui::Field::MakeText(Tr(L"Prefixo do nome"), p.filePrefix),
+        ui::Field::MakeText(Tr(L"Pasta"), p.folder.empty() ? DefaultSaveDir() : p.folder),
+        ui::Field::MakeLabel(Tr(L"Nome automático: <Prefixo><Número>, ex.: Captura001.png")),
     };
     auto validate = [](std::vector<ui::Field>& f) -> std::wstring {
         const std::wstring& pre = f[1].text;
-        if (pre.empty() || pre.find_first_of(L"\\/:*?\"<>|") != std::wstring::npos) return L"O prefixo contém caracteres inválidos.";
+        if (pre.empty() || pre.find_first_of(L"\\/:*?\"<>|") != std::wstring::npos) return Tr(L"O prefixo contém caracteres inválidos.");
         return L"";
     };
-    if (!ui::RunForm(g.frame, L"Salvar em arquivo", f, validate)) return;
+    if (!ui::RunForm(g.frame, Tr(L"Salvar em arquivo"), f, validate)) return;
     p.fileFormat = (FileFormat)f[0].value; p.filePrefix = f[1].text; p.folder = f[2].text;
-    p.openInProgram = f[4].value; p.programPath = f[5].text;
     g.store.Save();
-    SetWindowTextW(C(IDC_FILE_SUMMARY), FileSummary(p).c_str());
 }
 
-void EditFixedSize() {
+void EditProgramOutput() {
     auto& p = Cur();
-    std::vector<ui::Field> f = { ui::Field::MakeInt(L"Largura", p.fixedW, 16, 10000), ui::Field::MakeInt(L"Altura", p.fixedH, 16, 10000) };
-    if (!ui::RunForm(g.frame, L"Região com tamanho fixo", f)) return;
+    std::vector<ui::Field> f = { ui::Field::MakeText(Tr(L"Programa"), p.programPath),
+                                 ui::Field::MakeLabel(Tr(L"A captura é aberta nesse programa (ex.: mspaint.exe).")) };
+    if (!ui::RunForm(g.frame, Tr(L"Abrir em um programa externo"), f) || Trim(f[0].text).empty()) return;
+    p.programPath = Trim(f[0].text);
+    g.store.Save();
+}
+
+// região fixa: tamanho e, opcionalmente, a posição na tela (sem posição, o retângulo é posicionado na captura)
+bool EditFixedRegion() {
+    auto& p = Cur();
+    RECT vs = VirtualScreenRect();
+    std::vector<ui::Field> f = {
+        ui::Field::MakeInt(Tr(L"Largura (px)"), p.fixedW, 16, 20000),
+        ui::Field::MakeInt(Tr(L"Altura (px)"), p.fixedH, 16, 20000),
+        ui::Field::MakeCheck(Tr(L"Capturar sempre na mesma posição"), p.regionUsePos),
+        ui::Field::MakeInt(Tr(L"Esquerda (X)"), p.regionX, vs.left, vs.right - 16),
+        ui::Field::MakeInt(Tr(L"Topo (Y)"), p.regionY, vs.top, vs.bottom - 16),
+        ui::Field::MakeLabel(Tr(L"Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura.")),
+    };
+    if (!ui::RunForm(g.frame, Tr(L"Região fixa"), f)) return false;
     p.fixedW = f[0].value; p.fixedH = f[1].value;
+    p.regionUsePos = f[2].value != 0;
+    p.regionX = f[3].value; p.regionY = f[4].value;
+    return true;
+}
+
+enum : int { IDM_REGION_INTERACTIVE = 3400, IDM_REGION_FIXED };
+
+void RegionMenu() {
+    Preset& p = Cur();
+    HMENU m = CreatePopupMenu();
+    AppendMenuW(m, MF_STRING, IDM_REGION_INTERACTIVE, Tr(L"Selecionar a região na captura"));
+    AppendMenuW(m, MF_STRING, IDM_REGION_FIXED, Tr(L"Região fixa…"));
+    CheckMenuRadioItem(m, IDM_REGION_INTERACTIVE, IDM_REGION_FIXED, p.regionFixed ? IDM_REGION_FIXED : IDM_REGION_INTERACTIVE, MF_BYCOMMAND);
+    // abre embaixo da engrenagem, alinhado pela esquerda dela (como na referência)
+    RECT r; GetWindowRect(C(IDC_SELECTION), &r);
+    RECT ex = r;
+    TPMPARAMS tp{ sizeof tp, ex };
+    int id = (int)TrackPopupMenuEx(m, TPM_RETURNCMD | TPM_LEFTALIGN | TPM_TOPALIGN | TPM_VERTICAL, r.right - S(30), r.bottom, g.frame, &tp);
+    DestroyMenu(m);
+    if (id == IDM_REGION_INTERACTIVE) p.regionFixed = false;
+    else if (id == IDM_REGION_FIXED) { if (!EditFixedRegion()) return; p.regionFixed = true; }
+    else return;
+    g.store.Save();
+    UpdateSelectionGear(p);
+}
+
+void EditVideoOptions() {
+    auto& p = Cur();
+    static const int fpsList[] = { 10, 15, 24, 30, 60 };
+    int fi = 3;
+    for (int i = 0; i < 5; i++) if (fpsList[i] == p.fps) fi = i;
+    std::vector<ui::Field> f = {
+        ui::Field::MakeCombo(Tr(L"Quadros por segundo"), { L"10", L"15", L"24", L"30", L"60" }, fi),
+        ui::Field::MakeCheck(Tr(L"Reduzir para 1080p"), p.downscale1080),
+        ui::Field::MakeCheck(Tr(L"Codificação por hardware"), p.hardwareEncode),
+    };
+    if (!ui::RunForm(g.frame, Tr(L"Opções de vídeo"), f)) return;
+    p.fps = fpsList[std::clamp(f[0].value, 0, 4)];
+    p.downscale1080 = f[1].value != 0;
+    p.hardwareEncode = f[2].value != 0;
     g.store.Save();
 }
 
 void EditPresetHotkey() {
     auto& p = Cur();
-    std::vector<ui::Field> f = { ui::Field::MakeHotkey(L"Atalho do preset", p.hotkeyMods, p.hotkeyVk),
-                                 ui::Field::MakeLabel(L"Deixe vazio (Backspace) para remover.") };
-    if (!ui::RunForm(g.frame, L"Atalho — " + p.name, f)) return;
+    std::vector<ui::Field> f = { ui::Field::MakeHotkey(Tr(L"Atalho do preset"), p.hotkeyMods, p.hotkeyVk),
+                                 ui::Field::MakeLabel(Tr(L"Deixe vazio (Backspace) para remover.")) };
+    if (!ui::RunForm(g.frame, Tr(L"Atalho — ") + Tr(p.name), f)) return;
     UINT oldM = p.hotkeyMods, oldV = p.hotkeyVk;
     p.hotkeyMods = f[0].hkMods; p.hotkeyVk = f[0].hkVk;
     int id = HK_PRESET_BASE + g.store.selected;
     auto r = g.hk.Set(id, p.hotkeyMods, p.hotkeyVk);
     if (r == HotkeyManager::InternalConflict) {
-        MessageBoxW(g.frame, L"Esse atalho já está em uso por outra ação do Snapnab.", L"Conflito de atalho", MB_ICONWARNING);
+        MessageBoxW(g.frame, Tr(L"Esse atalho já está em uso por outra ação do Snapnab."), Tr(L"Conflito de atalho"), MB_ICONWARNING);
         p.hotkeyMods = oldM; p.hotkeyVk = oldV;
         return;
     }
     if (r == HotkeyManager::HookedFallback)
-        MessageBoxW(g.frame, L"Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado.",
-                    L"Atalho", MB_ICONINFORMATION);
+        MessageBoxW(g.frame, Tr(L"Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."),
+                    Tr(L"Atalho"), MB_ICONINFORMATION);
     g.store.Save();
     FillPresetList();
 }
 
+bool AskPresetName(std::wstring& name, const wchar_t* title) {
+    std::vector<ui::Field> f = { ui::Field::MakeText(Tr(L"Nome do preset"), name) };
+    if (!ui::RunForm(g.frame, title, f) || Trim(f[0].text).empty()) return false;
+    name = Trim(f[0].text);
+    return true;
+}
+
 void RenamePreset() {
-    std::vector<ui::Field> f = { ui::Field::MakeText(L"Nome do preset", Cur().name) };
-    if (!ui::RunForm(g.frame, L"Renomear preset", f) || Trim(f[0].text).empty()) return;
-    Cur().name = Trim(f[0].text);
+    std::wstring n = Cur().name;
+    if (!AskPresetName(n, Tr(L"Renomear preset"))) return;
+    Cur().name = n;
     g.store.Save();
     FillPresetList();
+}
+
+void ShowPresetList(bool open);
+
+void AddPreset(Preset p, const wchar_t* title) {
+    if (!AskPresetName(p.name, title)) return;
+    p.hotkeyMods = p.hotkeyVk = 0;
+    p.builtin.clear();
+    g.store.presets.push_back(p);
+    g.store.selected = (int)g.store.presets.size() - 1;
+    g.store.Save(); FillPresetList(); LoadControls(); Layout();
+    ShowPresetList(true);
+}
+
+void PresetHelp() {
+    MessageBoxW(g.frame,
+        Tr(L"Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, "
+        L"destino e opções de gravação.\n\n"
+        L"•  Clique em um preset para carregá-lo na janela; clique duas vezes para capturar com ele.\n"
+        L"•  \"Adicionar atalho\" dá a ele uma tecla de atalho global.\n"
+        L"•  A engrenagem da linha renomeia, duplica ou exclui o preset.\n"
+        L"•  \"Novo preset com as configurações atuais\" salva o que está na janela agora."),
+        Tr(L"Presets"), MB_ICONINFORMATION);
 }
 
 bool StartupEnabled() {
@@ -538,36 +572,48 @@ void SetStartup(bool on) {
     RegCloseKey(k);
 }
 
+// reinicia o capturador e o Editor (troca de idioma): as instâncias novas esperam as atuais fecharem (/restartwait)
+void RestartApps() {
+    if (FindWindowW(kEditorWndClass, nullptr)) g.ipc.SendInt(ipc::kEditor, ipc::RestartEditor, 0, true);
+    if (LaunchSibling(kCaptureExe, RestartArgs())) SendMessageW(g.frame, WM_COMMAND, IDM_EXIT, 0);
+}
+
 void ShowOptions() {
     UINT im, iv, vm, vv, pm, pv, sm, sv;
     UnpackHotkey(RegGetDword(L"ImageHotkey", PackHotkey(0, VK_SNAPSHOT)), im, iv);
     UnpackHotkey(RegGetDword(L"VideoHotkey", PackHotkey(MOD_SHIFT, VK_SNAPSHOT)), vm, vv);
     UnpackHotkey(RegGetDword(L"VideoStartPauseResumeKey", PackHotkey(MOD_SHIFT, VK_F9)), pm, pv);
     UnpackHotkey(RegGetDword(L"VideoStopKey", PackHotkey(MOD_SHIFT, VK_F10)), sm, sv);
+    // idioma: "Automático" segue o Windows (inglês se o idioma dele não tiver tradução); os outros pelo nome próprio
+    std::vector<std::wstring> langCodes = { L"" }, langNames = { Tr(L"Automático (idioma do Windows)") };
+    for (auto& l : i18n::Languages())
+        if (i18n::Available(l.code)) { langCodes.push_back(l.code); langNames.push_back(l.name); }
+    int langIndex = (int)(std::find(langCodes.begin(), langCodes.end(), i18n::Configured()) - langCodes.begin());
     std::vector<ui::Field> f = {
-        ui::Field::MakeSeparator(L"Atalhos globais"),
-        ui::Field::MakeHotkey(L"Capturar imagem", im, iv),
-        ui::Field::MakeHotkey(L"Gravar vídeo", vm, vv),
-        ui::Field::MakeHotkey(L"Pausar/retomar vídeo", pm, pv),
-        ui::Field::MakeHotkey(L"Parar vídeo", sm, sv),
-        ui::Field::MakeSeparator(L"Geral"),
-        ui::Field::MakeText(L"Pasta de saída", DefaultSaveDir()),
-        ui::Field::MakeCombo(L"Monitorar área de transferência", { L"Desligado", L"Só a Ferramenta de Captura do Windows", L"Qualquer aplicativo" },
+        ui::Field::MakeSeparator(Tr(L"Atalhos globais")),
+        ui::Field::MakeHotkey(Tr(L"Capturar imagem"), im, iv),
+        ui::Field::MakeHotkey(Tr(L"Gravar vídeo"), vm, vv),
+        ui::Field::MakeHotkey(Tr(L"Pausar/retomar vídeo"), pm, pv),
+        ui::Field::MakeHotkey(Tr(L"Parar vídeo"), sm, sv),
+        ui::Field::MakeSeparator(Tr(L"Geral")),
+        ui::Field::MakeText(Tr(L"Pasta de saída"), DefaultSaveDir()),
+        ui::Field::MakeCombo(Tr(L"Monitorar área de transferência"), { Tr(L"Desligado"), Tr(L"Só a Ferramenta de Captura do Windows"), Tr(L"Qualquer aplicativo") },
                              (int)RegGetDword(L"ClipboardMonitor", 1)),
-        ui::Field::MakeCheck(L"Iniciar com o Windows", StartupEnabled()),
-        ui::Field::MakeCheck(L"Mostrar a janela de captura ao iniciar", RegGetDword(L"ShowCaptureWindow", 1) != 0),
-        ui::Field::MakeLabel(L"Biblioteca: " + LibraryDir()),
+        ui::Field::MakeCheck(Tr(L"Iniciar com o Windows"), StartupEnabled()),
+        ui::Field::MakeCheck(Tr(L"Mostrar a janela de captura ao iniciar"), RegGetDword(L"ShowCaptureWindow", 1) != 0),
+        ui::Field::MakeCombo(Tr(L"Idioma"), langNames, langIndex < (int)langCodes.size() ? langIndex : 0),
+        ui::Field::MakeLabel(Tr(L"Biblioteca: ") + LibraryDir()),
     };
     auto validate = [](std::vector<ui::Field>& f) -> std::wstring {
         std::vector<std::pair<UINT, UINT>> keys;
         for (int i = 1; i <= 4; i++) {
             if (!f[i].hkVk) continue;
-            for (auto& k : keys) if (k == std::make_pair(f[i].hkMods, f[i].hkVk)) return L"Dois atalhos iguais: " + HotkeyToText(f[i].hkMods, f[i].hkVk);
+            for (auto& k : keys) if (k == std::make_pair(f[i].hkMods, f[i].hkVk)) return Tr(L"Dois atalhos iguais: ") + HotkeyToText(f[i].hkMods, f[i].hkVk);
             keys.push_back({ f[i].hkMods, f[i].hkVk });
         }
         return L"";
     };
-    if (!ui::RunForm(g.frame, L"Opções do Snapnab", f, validate, 480)) return;
+    if (!ui::RunForm(g.frame, Tr(L"Opções do Snapnab"), f, validate, 480)) return;
     RegSetDword(L"ImageHotkey", PackHotkey(f[1].hkMods, f[1].hkVk));
     RegSetDword(L"VideoHotkey", PackHotkey(f[2].hkMods, f[2].hkVk));
     RegSetDword(L"VideoStartPauseResumeKey", PackHotkey(f[3].hkMods, f[3].hkVk));
@@ -577,8 +623,16 @@ void ShowOptions() {
     SetStartup(f[8].value != 0);
     RegSetDword(L"ShowCaptureWindow", f[9].value);
     RegisterHotkeys();
-    SetWindowTextW(C(IDC_HINT), HotkeyHint().c_str());
     g.ipc.SendInt(ipc::kEditor, ipc::ReloadConfig, 0);
+    std::wstring lang = langCodes[std::clamp(f[10].value, 0, (int)langCodes.size() - 1)];
+    if (lang != i18n::Configured()) {
+        i18n::SetConfigured(lang);
+        // os textos são carregados no início de cada programa (como a DLL de recursos da referência)
+        if (i18n::Resolve() != i18n::Current() &&
+            MessageBoxW(g.frame, Tr(L"O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"), L"Snapnab",
+                        MB_YESNO | MB_ICONQUESTION) == IDYES)
+            RestartApps();
+    }
 }
 
 void OpenEditor() {
@@ -598,11 +652,38 @@ void ShowFrame() {
 }
 
 void About() {
-    std::wstring text = L"Snapnab " + std::wstring(kAppVersion) + L" — captura de tela e gravação de vídeo\n" SNAPNAB_COPYRIGHT_W L"\n"
-        L"Software livre sob a GNU General Public License versão 3.\n\n" + std::wstring(
-        L"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
-        L"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n") + LibraryDir();
-    MessageBoxW(g.frame, text.c_str(), L"Sobre o Snapnab", MB_ICONINFORMATION);
+    std::wstring text = L"Snapnab " + std::wstring(kAppVersion) + Tr(L" — captura de tela e gravação de vídeo") +
+        L"\n" SNAPNAB_COPYRIGHT_W L"\n" + Tr(L"Software livre sob a GNU General Public License versão 3.") + L"\n\n" +
+        Tr(L"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
+           L"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n") + LibraryDir();
+    MessageBoxW(g.frame, text.c_str(), Tr(L"Sobre o Snapnab"), MB_ICONINFORMATION);
+}
+
+// ---------------------------------------------------------------- One Click
+void SetOneClick(bool on) {
+    RegSetDword(L"OneClickEnabled", on);
+    g.oneClick.Show(on);
+}
+
+void PresetsSubmenu(HMENU m) {
+    for (size_t i = 0; i < g.store.presets.size(); i++)
+        AppendMenuW(m, MF_STRING, IDM_PRESET_BASE + i, Tr(g.store.presets[i].name).c_str());   // os de fábrica traduzidos
+}
+
+void OneClickMenu(POINT pt) {
+    HMENU m = CreatePopupMenu();
+    AppendMenuW(m, MF_STRING, IDM_CAPTURE_IMAGE, Tr(L"Capturar imagem"));
+    AppendMenuW(m, MF_STRING, IDM_CAPTURE_VIDEO, Tr(L"Gravar vídeo"));
+    HMENU pre = CreatePopupMenu();
+    PresetsSubmenu(pre);
+    AppendMenuW(m, MF_POPUP, (UINT_PTR)pre, Tr(L"Presets"));
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(m, MF_STRING, IDM_SHOW, Tr(L"Abrir a janela de captura"));
+    AppendMenuW(m, MF_STRING, IDM_ONECLICK, Tr(L"Ocultar o One Click"));
+    SetForegroundWindow(g.frame);
+    TrackPopupMenu(m, TPM_RIGHTBUTTON | TPM_CENTERALIGN, pt.x, pt.y, 0, g.frame, nullptr);
+    PostMessageW(g.frame, WM_NULL, 0, 0);
+    DestroyMenu(m);
 }
 
 // ---------------------------------------------------------------- monitor da área de transferência (A13)
@@ -651,13 +732,13 @@ void ProcessCommandLine(const std::wstring& cmdLine, bool startup) {
         } else if (a == L"/clipboard") { Preset p = Cur(); p.kind = CaptureKind::Image; p.selection = Selection::Clipboard; StartCapture(p); handled = true; }
         else if (a == L"/exit") { PostMessageW(g.frame, WM_COMMAND, IDM_EXIT, 0); handled = true; }
         else if (a == L"/help" || a == L"/?") {
-            MessageBoxW(nullptr, L"Snapnab.exe [opções]\n\n"
+            MessageBoxW(nullptr, Tr(L"Snapnab.exe [opções]\n\n"
                 L"/hide            inicia só na bandeja\n"
                 L"/capture         captura imagem com o preset de imagem atual\n"
                 L"/video           grava vídeo com o preset de vídeo atual\n"
                 L"/preset \"nome\"   executa um preset pelo nome\n"
                 L"/clipboard       captura a imagem da área de transferência\n"
-                L"/exit            encerra o Snapnab em execução", L"Snapnab — linha de comando", MB_ICONINFORMATION);
+                L"/exit            encerra o Snapnab em execução"), Tr(L"Snapnab — linha de comando"), MB_ICONINFORMATION);
             handled = true;
         }
     }
@@ -672,6 +753,13 @@ HWND MakeCtl(int id, const wchar_t* cls, const wchar_t* text, DWORD style, DWORD
     return h;
 }
 
+LRESULT CALLBACK PresetListProc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR);
+
+void SetFonts() {
+    for (auto& [id, hw] : g.ctl) SendMessageW(hw, WM_SETFONT, (WPARAM)ui::UiFont(g.dpi), TRUE);
+    SendMessageW(C(IDC_PRESET_ADD), WM_SETFONT, (WPARAM)ui::UiFont(g.dpi, 16), TRUE);    // "+" maior
+}
+
 void CreateControls() {
     using namespace mui;
     auto style = [](int id, UINT st, int icon = -1) {
@@ -679,134 +767,127 @@ void CreateControls() {
         if (icon >= 0) SendMessageW(C(id), MUI_SETICON, icon + 1, 0);
     };
     // criados na ordem do Tab
-    MakeCtl(IDC_TAB_IMAGE, L"BUTTON", L"Imagem", BS_OWNERDRAW | WS_TABSTOP);
-    MakeCtl(IDC_TAB_VIDEO, L"BUTTON", L"Vídeo", BS_OWNERDRAW | WS_TABSTOP);
-    MakeCtl(IDC_SEL_LABEL, L"STATIC", L"Seleção:", SS_LEFT | SS_CENTERIMAGE);
+    MakeCtl(IDC_TAB_IMAGE, L"BUTTON", Tr(L"Imagem"), BS_OWNERDRAW | WS_TABSTOP);
+    MakeCtl(IDC_TAB_VIDEO, L"BUTTON", Tr(L"Vídeo"), BS_OWNERDRAW | WS_TABSTOP);
+    MakeCtl(IDC_SEL_LABEL, L"STATIC", Tr(L"Seleção:"), SS_LEFT | SS_CENTERIMAGE);
     MakeCtl(IDC_SELECTION, kCombo, nullptr, WS_TABSTOP);
-    MakeCtl(IDC_SEL_CFG, kButton, L"Tamanho da região…", WS_TABSTOP);
-    style(IDC_SEL_CFG, ButtonIconOnly, icons::Gear);
-    MakeCtl(IDC_EFFECTS_TITLE, L"STATIC", L"Efeitos:", SS_LEFT | SS_CENTERIMAGE);
+    style(IDC_SELECTION, ComboGear);
+    MakeCtl(IDC_EFFECTS_TITLE, L"STATIC", Tr(L"Efeitos:"), SS_LEFT | SS_CENTERIMAGE);
     MakeCtl(IDC_EFFECTS, kCombo, nullptr, WS_TABSTOP);
     style(IDC_EFFECTS, ComboMenu);
-    MakeCtl(IDC_SHARE_LABEL, L"STATIC", L"Arquivo:", SS_LEFT | SS_CENTERIMAGE);
-    MakeCtl(IDC_FILE_SUMMARY, L"STATIC", L"", SS_LEFT | SS_ENDELLIPSIS | SS_CENTERIMAGE);
-    MakeCtl(IDC_SAVEFILE_CFG, kButton, L"Configurar o arquivo…", WS_TABSTOP);
-    style(IDC_SAVEFILE_CFG, ButtonIconOnly, icons::Gear);
-    MakeCtl(IDC_DELAY_LABEL, L"STATIC", L"Atraso:", SS_LEFT | SS_CENTERIMAGE);
-    MakeCtl(IDC_DELAY, kCombo, nullptr, WS_TABSTOP);
-    MakeCtl(IDC_FPS_LABEL, L"STATIC", L"Quadros/s:", SS_LEFT | SS_CENTERIMAGE);
-    HWND fps = MakeCtl(IDC_FPS, kCombo, nullptr, WS_TABSTOP);
-    for (auto s : { L"10", L"15", L"24", L"30", L"60" }) ComboBox_AddString(fps, s);
-    MakeCtl(IDC_QUALITY_LABEL, L"STATIC", L"Qualidade:", SS_LEFT | SS_CENTERIMAGE);
+    MakeCtl(IDC_SHARE_LABEL, L"STATIC", Tr(L"Compartilhar:"), SS_LEFT | SS_CENTERIMAGE);
+    HWND sh = MakeCtl(IDC_SHARE, kCombo, nullptr, WS_TABSTOP);
+    style(IDC_SHARE, ComboGear);
+    for (auto s : { Tr(L"Nenhum"), Tr(L"Arquivo"), Tr(L"Programa externo"), Tr(L"Texto (OCR)") }) ComboBox_AddString(sh, s);
+    MakeCtl(IDC_QUALITY_LABEL, L"STATIC", Tr(L"Qualidade:"), SS_LEFT | SS_CENTERIMAGE);
     HWND q = MakeCtl(IDC_QUALITY, kCombo, nullptr, WS_TABSTOP);
-    for (auto s : { L"Muito baixa", L"Baixa", L"Média", L"Alta" }) ComboBox_AddString(q, s);
-    MakeCtl(IDC_DOWNSCALE, kToggle, L"Reduzir para 1080p", WS_TABSTOP);
-    MakeCtl(IDC_HW, kToggle, L"Codificação por hardware", WS_TABSTOP);
-    MakeCtl(IDC_PREVIEW, kToggle, L"Visualizar no Editor", WS_TABSTOP);
-    MakeCtl(IDC_CLIPBOARD, kToggle, L"Copiar para a área de transferência", WS_TABSTOP);
-    MakeCtl(IDC_SAVEFILE, kToggle, L"Salvar em arquivo (nome automático)", WS_TABSTOP);
-    MakeCtl(IDC_CURSOR, kToggle, L"Capturar o cursor", WS_TABSTOP);
-    MakeCtl(IDC_MIC, kToggle, L"Gravar microfone", WS_TABSTOP);
-    MakeCtl(IDC_SYS, kToggle, L"Gravar áudio do sistema", WS_TABSTOP);
-    MakeCtl(IDC_CAPTURE, L"BUTTON", L"Capturar", BS_OWNERDRAW | WS_TABSTOP);
-    MakeCtl(IDC_HINT, L"STATIC", HotkeyHint().c_str(), SS_CENTER);
+    style(IDC_QUALITY, ComboGear);
+    for (auto s : { Tr(L"Muito baixa"), Tr(L"Baixa"), Tr(L"Média"), Tr(L"Alta") }) ComboBox_AddString(q, s);
+    MakeCtl(IDC_WEBCAM_LABEL, L"STATIC", Tr(L"Webcam:"), SS_LEFT | SS_CENTERIMAGE);
+    MakeCtl(IDC_WEBCAM, kButton, L"", WS_TABSTOP);
+    style(IDC_WEBCAM, ButtonLink);
+    MakeCtl(IDC_PREVIEW, kToggle, Tr(L"Visualizar no Editor"), WS_TABSTOP);
+    MakeCtl(IDC_CLIPBOARD, kToggle, Tr(L"Copiar para a área de transferência"), WS_TABSTOP);
+    MakeCtl(IDC_CURSOR, kToggle, Tr(L"Capturar o cursor"), WS_TABSTOP);
+    MakeCtl(IDC_DELAY, kButton, Tr(L"Atraso"), WS_TABSTOP);
+    style(IDC_DELAY, ButtonLink);
+    MakeCtl(IDC_MIC, kToggle, Tr(L"Gravar microfone"), WS_TABSTOP);
+    MakeCtl(IDC_SYS, kToggle, Tr(L"Gravar áudio do sistema"), WS_TABSTOP);
+    MakeCtl(IDC_CAPTURE, L"BUTTON", Tr(L"Capturar"), BS_OWNERDRAW | WS_TABSTOP);
     // barra inferior
-    MakeCtl(IDC_PRESETS_LABEL, kButton, L"Presets", WS_TABSTOP);
-    style(IDC_PRESETS_LABEL, ButtonFlat);
-    MakeCtl(IDC_PRESET_NEW, kButton, L"+  Novo", WS_TABSTOP);
-    style(IDC_PRESET_NEW, ButtonFlat);
-    MakeCtl(IDC_OPTIONS, kButton, L"Opções", WS_TABSTOP);
-    style(IDC_OPTIONS, ButtonFlat, icons::Gear);
-    MakeCtl(IDC_OPEN_EDITOR, kButton, L"Abrir Editor", WS_TABSTOP);
+    MakeCtl(IDC_PRESETS_LABEL, kButton, Tr(L"Presets"), WS_TABSTOP);
+    style(IDC_PRESETS_LABEL, ButtonFlat | ButtonAccent, icons::Gear);
+    MakeCtl(IDC_PRESET_ADD, kButton, L"+", WS_TABSTOP);
+    style(IDC_PRESET_ADD, ButtonFlat | ButtonMenu | ButtonAccent);
+    MakeCtl(IDC_OPEN_EDITOR, kButton, Tr(L"Abrir Editor"), WS_TABSTOP);
     style(IDC_OPEN_EDITOR, ButtonFlat, icons::Editor);
     // lista de presets (abre abaixo da barra)
-    MakeCtl(IDC_PRESETS, L"LISTBOX", nullptr, WS_TABSTOP | LBS_NOTIFY | WS_VSCROLL | LBS_NOINTEGRALHEIGHT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS);
-    MakeCtl(IDC_PRESET_DUP, kButton, L"Duplicar", WS_TABSTOP);
-    MakeCtl(IDC_PRESET_RENAME, kButton, L"Renomear", WS_TABSTOP);
-    MakeCtl(IDC_PRESET_HOTKEY, kButton, L"Atalho…", WS_TABSTOP);
-    MakeCtl(IDC_PRESET_DEL, kButton, L"Excluir", WS_TABSTOP);
+    HWND lb = MakeCtl(IDC_PRESETS, L"LISTBOX", nullptr, WS_TABSTOP | LBS_NOTIFY | WS_VSCROLL | LBS_NOINTEGRALHEIGHT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS);
+    SetWindowSubclass(lb, PresetListProc, 1, 0);
+    SetFonts();
+    // dica do botão de captura (o atalho fica aqui, não embaixo do botão)
+    g.tip = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, nullptr, WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX, 0, 0, 0, 0,
+                            g.frame, nullptr, g.hi, nullptr);
+    TOOLINFOW ti{ sizeof ti };
+    ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
+    ti.hwnd = g.frame; ti.uId = (UINT_PTR)C(IDC_CAPTURE);
+    ti.lpszText = LPSTR_TEXTCALLBACKW;
+    SendMessageW(g.tip, TTM_ADDTOOLW, 0, (LPARAM)&ti);
 }
 
-int TextW(int id) {   // largura do texto do controle (a linha mais longa, se tiver várias)
-    wchar_t b[256]; GetWindowTextW(C(id), b, 256);
+int TextW(const std::wstring& t, HFONT f = nullptr) {
     HDC dc = GetDC(g.frame);
-    HGDIOBJ o = SelectObject(dc, ui::UiFont(g.dpi));
+    HGDIOBJ o = SelectObject(dc, f ? f : ui::UiFont(g.dpi));
     RECT r{};
-    DrawTextW(dc, b, -1, &r, DT_CALCRECT | DT_NOPREFIX);
+    DrawTextW(dc, t.c_str(), -1, &r, DT_CALCRECT | DT_NOPREFIX);
     SelectObject(dc, o); ReleaseDC(g.frame, dc);
     return r.right;
 }
 
+int TextW(int id) { wchar_t b[256]; GetWindowTextW(C(id), b, 256); return TextW(b); }
+
 int MaxTextW(std::initializer_list<int> ids) { int w = 0; for (int id : ids) w = std::max(w, TextW(id)); return w; }
 
+const wchar_t* const kMenuNames[] = { TR_NOOP(L"Arquivo"), TR_NOOP(L"Captura"), TR_NOOP(L"Exibir"), TR_NOOP(L"Ajuda") };   // Tr() ao usar
+
 // Disposição (como a janela de captura de referência):
-//   abas verticais | rótulos + campos (seleção, efeitos, arquivo, atraso) | opções | botão de captura
-//   barra inferior: Presets, Novo … Opções, Abrir Editor; a lista de presets abre abaixo dela
+//   barra de título: ícone + menus | minimizar, fechar
+//   abas verticais | rótulos + campos | chaves e opções | botão redondo de captura
+//   barra inferior: ⚙ Presets  + ……… Abrir Editor; a lista de presets abre abaixo dela
 void ComputeMetrics() {
-    lay.pad = S(12); lay.rowP = S(30); lay.ch = S(26);
-    lay.tabW = S(78); lay.tabH = S(62);
+    lay.pad = S(14); lay.rowP = S(34); lay.ch = S(28);
+    lay.tabW = S(70); lay.tabH = S(66);
     lay.ax = lay.tabW + S(16);
-    lay.labW = MaxTextW({ IDC_SEL_LABEL, IDC_EFFECTS_TITLE, IDC_SHARE_LABEL, IDC_DELAY_LABEL, IDC_FPS_LABEL, IDC_QUALITY_LABEL }) + S(10);
+    lay.labW = MaxTextW({ IDC_SEL_LABEL, IDC_EFFECTS_TITLE, IDC_SHARE_LABEL, IDC_QUALITY_LABEL, IDC_WEBCAM_LABEL }) + S(10);
     lay.fieldX = lay.ax + lay.labW;
-    lay.fieldW = S(170);
-    lay.cfgW = S(28);                                                   // botão de engrenagem
-    lay.cfgX = lay.fieldX + lay.fieldW + S(4);
-    lay.bx = lay.cfgX + lay.cfgW + S(26);
-    lay.bw = MaxTextW({ IDC_PREVIEW, IDC_CLIPBOARD, IDC_SAVEFILE, IDC_CURSOR, IDC_MIC, IDC_SYS }) + S(16) + S(46);   // texto + chave
-    lay.capW = std::max(S(112), TextW(IDC_HINT) + S(8));
-    lay.capX = lay.bx + lay.bw + S(12);
-    lay.clientW = lay.capX + lay.capW + lay.pad;
-    lay.contentH = lay.pad * 2 + 4 * lay.rowP + lay.ch;                // 5 linhas (o modo vídeo usa todas)
+    lay.fieldW = S(160);
+    lay.bx = lay.fieldX + lay.fieldW + S(24);
+    lay.bw = std::max(MaxTextW({ IDC_PREVIEW, IDC_CLIPBOARD, IDC_CURSOR, IDC_MIC, IDC_SYS }) + S(12) + S(44),
+                      TextW(Tr(L"Atraso")) + TextW(Tr(L"Desligado")) + S(48));
+    lay.capD = S(84);
+    lay.capW = lay.capD + S(8);
+    lay.capX = lay.bx + lay.bw + S(18);
+    lay.clientW = lay.capX + lay.capW + S(12);
+    lay.contentH = lay.pad * 2 + 3 * lay.rowP + lay.ch;               // 4 linhas
     lay.barH = S(40);
-    lay.panelH = lay.pad * 2 + 4 * S(31) - S(5);
+    g.caption.Layout(lay.clientW, g.dpi);
+    lay.capH = g.caption.Height();
 }
 
-SIZE ClientSizeWanted() { return { lay.clientW, lay.contentH + lay.barH + (g.presetsOpen ? lay.panelH : 0) }; }
+int PresetRows() { return std::clamp((int)g.store.presets.size(), 2, 6); }
+
+SIZE ClientSizeWanted() {
+    lay.panelH = PresetRows() * S(30) + S(10);
+    return { lay.clientW, lay.capH + lay.contentH + lay.barH + (g.presetsOpen ? lay.panelH : 0) };
+}
 
 void ResizeToContent() {
-    SIZE c = ClientSizeWanted();
-    RECT wr{ 0, 0, c.cx, c.cy };
-    AdjustWindowRectExForDpi(&wr, GetWindowLongW(g.frame, GWL_STYLE), TRUE, GetWindowLongW(g.frame, GWL_EXSTYLE), g.dpi);
-    SetWindowPos(g.frame, nullptr, 0, 0, wr.right - wr.left, wr.bottom - wr.top, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-    // a barra de menu pode quebrar em duas linhas e roubar altura: corrige pelo cliente real
-    RECT cr; GetClientRect(g.frame, &cr);
-    if (cr.bottom != c.cy || cr.right != c.cx) {
-        RECT w; GetWindowRect(g.frame, &w);
-        SetWindowPos(g.frame, nullptr, 0, 0, w.right - w.left + c.cx - cr.right, w.bottom - w.top + c.cy - cr.bottom,
-                     SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-    }
+    SIZE c = ClientSizeWanted();       // sem moldura do sistema: janela = área cliente
+    SetWindowPos(g.frame, nullptr, 0, 0, c.cx, c.cy, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 void Layout() {
     auto mv = [](int id, int x, int y, int w, int h) { MoveWindow(C(id), x, y, w, h, TRUE); };
     bool video = Cur().kind == CaptureKind::Video;
-    SetWindowTextW(C(IDC_PRESETS_LABEL), g.presetsOpen ? L"Presets  ▴" : L"Presets  ▾");
-    int ch = lay.ch, lw = lay.labW, fx = lay.fieldX;
-    int colAEnd = lay.cfgX + lay.cfgW;
-    auto row = [](int i) { return lay.pad + i * lay.rowP; };
+    int ch = lay.ch, lw = lay.labW, fx = lay.fieldX, T = lay.capH;
+    auto row = [T](int i) { return T + lay.pad + i * lay.rowP; };
     // abas verticais
-    mv(IDC_TAB_IMAGE, 0, 0, lay.tabW, lay.tabH);
-    mv(IDC_TAB_VIDEO, 0, lay.tabH, lay.tabW, lay.tabH);
+    mv(IDC_TAB_IMAGE, 0, T, lay.tabW, lay.tabH);
+    mv(IDC_TAB_VIDEO, 0, T + lay.tabH, lay.tabW, lay.tabH);
     // coluna de campos
     mv(IDC_SEL_LABEL, lay.ax, row(0), lw, ch);
     mv(IDC_SELECTION, fx, row(0), lay.fieldW, ch);
-    SendMessageW(C(IDC_SELECTION), CB_SETDROPPEDWIDTH, S(240), 0);
-    mv(IDC_SEL_CFG, lay.cfgX, row(0), lay.cfgW, ch);
+    SendMessageW(C(IDC_SELECTION), CB_SETDROPPEDWIDTH, S(230), 0);
     // imagem
     mv(IDC_EFFECTS_TITLE, lay.ax, row(1), lw, ch);
     mv(IDC_EFFECTS, fx, row(1), lay.fieldW, ch);
     mv(IDC_SHARE_LABEL, lay.ax, row(2), lw, ch);
-    mv(IDC_FILE_SUMMARY, fx + S(10), row(2), lay.fieldW - S(10), ch);
-    mv(IDC_SAVEFILE_CFG, lay.cfgX, row(2), lay.cfgW, ch);
-    mv(IDC_DELAY_LABEL, lay.ax, row(3), lw, ch);
-    mv(IDC_DELAY, fx, row(3), S(130), ch);
+    mv(IDC_SHARE, fx, row(2), lay.fieldW, ch);
     // vídeo
-    mv(IDC_FPS_LABEL, lay.ax, row(1), lw, ch);
-    mv(IDC_FPS, fx, row(1), S(90), ch);
-    mv(IDC_QUALITY_LABEL, lay.ax, row(2), lw, ch);
-    mv(IDC_QUALITY, fx, row(2), lay.fieldW, ch);
-    mv(IDC_DOWNSCALE, lay.ax, row(3), colAEnd - lay.ax, ch);
-    mv(IDC_HW, lay.ax, row(4), colAEnd - lay.ax, ch);
+    mv(IDC_QUALITY_LABEL, lay.ax, row(1), lw, ch);
+    mv(IDC_QUALITY, fx, row(1), lay.fieldW, ch);
+    mv(IDC_WEBCAM_LABEL, lay.ax, row(2), lw, ch);
+    mv(IDC_WEBCAM, fx, row(2), TextW(Cur().webcam ? Tr(L"Ligada") : Tr(L"Desligada")) + S(26), ch);
     // coluna de opções
     mv(IDC_PREVIEW, lay.bx, row(0), lay.bw, ch);
     if (video) {
@@ -815,89 +896,85 @@ void Layout() {
         mv(IDC_SYS, lay.bx, row(3), lay.bw, ch);
     } else {
         mv(IDC_CLIPBOARD, lay.bx, row(1), lay.bw, ch);
-        mv(IDC_SAVEFILE, lay.bx, row(2), lay.bw, ch);
-        mv(IDC_CURSOR, lay.bx, row(3), lay.bw, ch);
+        mv(IDC_CURSOR, lay.bx, row(2), lay.bw, ch);
+        mv(IDC_DELAY, lay.bx, row(3), lay.bw, ch);
     }
-    // botão de captura + atalhos
-    int capH = S(104);
-    mv(IDC_CAPTURE, lay.capX, lay.pad - S(2), lay.capW, capH);
-    mv(IDC_HINT, lay.capX, lay.pad - S(2) + capH + S(2), lay.capW, S(34));
-    // barra inferior
-    int by = lay.contentH + (lay.barH - ch) / 2;
-    int pw = TextW(IDC_PRESETS_LABEL) + S(24);
-    mv(IDC_PRESETS_LABEL, lay.pad - S(4), by, pw, ch);
-    mv(IDC_PRESET_NEW, lay.pad - S(4) + pw + S(4), by, TextW(IDC_PRESET_NEW) + S(24), ch);
-    int ew = TextW(IDC_OPEN_EDITOR) + S(46), ow = TextW(IDC_OPTIONS) + S(46);    // texto + ícone
-    mv(IDC_OPEN_EDITOR, lay.clientW - lay.pad + S(4) - ew, by, ew, ch);
-    mv(IDC_OPTIONS, lay.clientW - lay.pad + S(4) - ew - S(4) - ow, by, ow, ch);
-    // lista de presets (expandida)
-    int py = lay.contentH + lay.barH + lay.pad;
-    int bw = MaxTextW({ IDC_PRESET_DUP, IDC_PRESET_DEL, IDC_PRESET_RENAME, IDC_PRESET_HOTKEY }) + S(36);
-    int bx = lay.clientW - lay.pad - bw;
-    mv(IDC_PRESETS, lay.pad, py, bx - S(10) - lay.pad, lay.panelH - lay.pad * 2);
+    // botão redondo de captura, centrado na faixa de conteúdo
+    mv(IDC_CAPTURE, lay.capX, T + (lay.contentH - lay.capW) / 2, lay.capW, lay.capW);
+    // barra inferior: ⚙ Presets  +   …   Abrir Editor
+    int by = T + lay.contentH + (lay.barH - ch) / 2;
+    int pw = TextW(IDC_PRESETS_LABEL) + S(16) + S(6) + S(16);
+    mv(IDC_PRESETS_LABEL, S(8), by, pw, ch);
+    mv(IDC_PRESET_ADD, S(8) + pw, by, TextW(L"+", ui::UiFont(g.dpi, 16)) + S(24), ch);
+    int ew = TextW(IDC_OPEN_EDITOR) + S(16) + S(6) + S(16);
+    mv(IDC_OPEN_EDITOR, lay.clientW - S(8) - ew, by, ew, ch);
+    // lista de presets (expandida): linhas de largura total
+    int py = T + lay.contentH + lay.barH + S(5);
+    ClientSizeWanted();
+    mv(IDC_PRESETS, 0, py, lay.clientW, lay.panelH - S(10));
     SendMessageW(C(IDC_PRESETS), LB_SETITEMHEIGHT, 0, S(30));
-    int i = 0;
-    for (int id : { IDC_PRESET_DUP, IDC_PRESET_RENAME, IDC_PRESET_HOTKEY, IDC_PRESET_DEL }) mv(id, bx, py + S(31) * i++, bw, ch);
-    for (int id : { IDC_PRESETS, IDC_PRESET_DUP, IDC_PRESET_RENAME, IDC_PRESET_HOTKEY, IDC_PRESET_DEL })
-        ShowWindow(C(id), g.presetsOpen ? SW_SHOW : SW_HIDE);
+    ShowWindow(C(IDC_PRESETS), g.presetsOpen ? SW_SHOW : SW_HIDE);
 }
 
-void TogglePresets() {
-    g.presetsOpen = !g.presetsOpen;
+void ShowPresetList(bool open) {
+    if (g.presetsOpen == open) return;
+    g.presetsOpen = open;
     RegSetDword(L"CapturePresetsOpen", g.presetsOpen);
     bool l = g.loading; g.loading = true;
     Layout();
     ResizeToContent();
     g.loading = l;
-    if (g.presetsOpen) {
-        ListBox_SetCurSel(C(IDC_PRESETS), g.store.selected);     // rola até o preset atual
-        SetFocus(C(IDC_PRESETS));
-    }
+    if (g.presetsOpen) ListBox_SetCurSel(C(IDC_PRESETS), g.store.selected);     // rola até o preset atual
 }
 
 HMENU BuildMenu() {
     HMENU bar = CreateMenu();
     HMENU file = CreatePopupMenu();
-    AppendMenuW(file, MF_STRING, IDM_OPEN_EDITOR, L"Abrir o &Editor");
-    AppendMenuW(file, MF_STRING, IDM_LIBRARY_FOLDER, L"Abrir a pasta da &biblioteca");
-    AppendMenuW(file, MF_STRING, IDM_LOGS, L"Abrir a pasta de &logs");
+    AppendMenuW(file, MF_STRING, IDM_OPEN_EDITOR, Tr(L"Abrir o &Editor"));
+    AppendMenuW(file, MF_STRING, IDM_LIBRARY_FOLDER, Tr(L"Abrir a pasta da &biblioteca"));
+    AppendMenuW(file, MF_STRING, IDM_LOGS, Tr(L"Abrir a pasta de &logs"));
     AppendMenuW(file, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(file, MF_STRING, IDM_OPTIONS, L"&Opções…");
+    AppendMenuW(file, MF_STRING, IDM_PRESET_IMPORT, Tr(L"&Importar presets…"));
+    AppendMenuW(file, MF_STRING, IDM_PRESET_EXPORT, Tr(L"E&xportar presets…"));
     AppendMenuW(file, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(file, MF_STRING, IDM_EXIT, L"&Sair do Snapnab");
+    AppendMenuW(file, MF_STRING, IDM_OPTIONS, Tr(L"&Opções…"));
+    AppendMenuW(file, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(file, MF_STRING, IDM_EXIT, Tr(L"&Sair do Snapnab"));
     HMENU cap = CreatePopupMenu();
-    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_IMAGE, L"Capturar &imagem");
-    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_VIDEO, L"Gravar &vídeo");
-    AppendMenuW(cap, MF_STRING, IDM_REPEAT, L"&Repetir a última captura");
+    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_IMAGE, Tr(L"Capturar &imagem"));
+    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_VIDEO, Tr(L"Gravar &vídeo"));
+    AppendMenuW(cap, MF_STRING, IDM_REPEAT, Tr(L"&Repetir a última captura"));
     AppendMenuW(cap, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_CLIPBOARD, L"Da área de &transferência");
-    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_FILE, L"De um &arquivo gráfico…");
-    HMENU pre = CreatePopupMenu();
-    AppendMenuW(pre, MF_STRING, IDM_PRESET_IMPORT, L"&Importar presets…");
-    AppendMenuW(pre, MF_STRING, IDM_PRESET_EXPORT, L"&Exportar presets…");
+    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_CLIPBOARD, Tr(L"Da área de &transferência"));
+    AppendMenuW(cap, MF_STRING, IDM_CAPTURE_FILE, Tr(L"De um &arquivo gráfico…"));
+    HMENU view = CreatePopupMenu();
+    AppendMenuW(view, MF_STRING, IDM_ONECLICK, Tr(L"Mostrar o &One Click"));
+    AppendMenuW(view, MF_STRING, IDM_SHOW_PRESETS, Tr(L"Lista de &presets"));
     HMENU help = CreatePopupMenu();
-    AppendMenuW(help, MF_STRING, IDM_ABOUT, L"&Sobre o Snapnab");
-    AppendMenuW(bar, MF_POPUP, (UINT_PTR)file, L"&Arquivo");
-    AppendMenuW(bar, MF_POPUP, (UINT_PTR)cap, L"&Captura");
-    AppendMenuW(bar, MF_POPUP, (UINT_PTR)pre, L"&Presets");
-    AppendMenuW(bar, MF_POPUP, (UINT_PTR)help, L"A&juda");
+    AppendMenuW(help, MF_STRING, IDM_PRESET_HELP, Tr(L"Como usar os &presets"));
+    AppendMenuW(help, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(help, MF_STRING, IDM_ABOUT, Tr(L"&Sobre o Snapnab"));
+    AppendMenuW(bar, MF_POPUP, (UINT_PTR)file, Tr(kMenuNames[0]));
+    AppendMenuW(bar, MF_POPUP, (UINT_PTR)cap, Tr(kMenuNames[1]));
+    AppendMenuW(bar, MF_POPUP, (UINT_PTR)view, Tr(kMenuNames[2]));
+    AppendMenuW(bar, MF_POPUP, (UINT_PTR)help, Tr(kMenuNames[3]));
     return bar;
 }
 
 void TrayMenu() {
     HMENU m = CreatePopupMenu();
-    AppendMenuW(m, MF_STRING, IDM_CAPTURE_IMAGE, L"Capturar imagem");
-    AppendMenuW(m, MF_STRING, IDM_CAPTURE_VIDEO, L"Gravar vídeo");
+    AppendMenuW(m, MF_STRING, IDM_CAPTURE_IMAGE, Tr(L"Capturar imagem"));
+    AppendMenuW(m, MF_STRING, IDM_CAPTURE_VIDEO, Tr(L"Gravar vídeo"));
     HMENU pre = CreatePopupMenu();
-    for (size_t i = 0; i < g.store.presets.size(); i++)
-        AppendMenuW(pre, MF_STRING, IDM_PRESET_BASE + i, g.store.presets[i].name.c_str());
-    AppendMenuW(m, MF_POPUP, (UINT_PTR)pre, L"Presets");
+    PresetsSubmenu(pre);
+    AppendMenuW(m, MF_POPUP, (UINT_PTR)pre, Tr(L"Presets"));
     AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(m, MF_STRING, IDM_SHOW, L"Abrir a janela de captura");
-    AppendMenuW(m, MF_STRING, IDM_OPEN_EDITOR, L"Abrir o Editor");
-    AppendMenuW(m, MF_STRING, IDM_OPTIONS, L"Opções…");
+    AppendMenuW(m, MF_STRING, IDM_SHOW, Tr(L"Abrir a janela de captura"));
+    AppendMenuW(m, MF_STRING | (g.oneClick.enabled() ? MF_CHECKED : 0), IDM_ONECLICK, Tr(L"Mostrar o One Click"));
+    AppendMenuW(m, MF_STRING, IDM_OPEN_EDITOR, Tr(L"Abrir o Editor"));
+    AppendMenuW(m, MF_STRING, IDM_OPTIONS, Tr(L"Opções…"));
     AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(m, MF_STRING, IDM_EXIT, L"Sair");
+    AppendMenuW(m, MF_STRING, IDM_EXIT, Tr(L"Sair"));
     SetMenuDefaultItem(m, IDM_SHOW, FALSE);
     POINT p; GetCursorPos(&p);
     SetForegroundWindow(g.frame);
@@ -906,7 +983,125 @@ void TrayMenu() {
     DestroyMenu(m);
 }
 
-// linha da lista de presets: ícone do tipo, nome e atalho (como a lista de presets de referência)
+// menu suspenso de um controle "Rótulo  Valor ›" (abre embaixo dele, alinhado à direita ou à esquerda)
+int PopupBelow(HWND ctl, HMENU m, bool rightAlign = true) {
+    RECT r; GetWindowRect(ctl, &r);
+    TPMPARAMS tp{ sizeof tp, r };
+    return (int)TrackPopupMenuEx(m, TPM_RETURNCMD | (rightAlign ? TPM_RIGHTALIGN : TPM_LEFTALIGN) | TPM_TOPALIGN | TPM_VERTICAL,
+                                 rightAlign ? r.right : r.left, r.bottom, g.frame, &tp);
+}
+
+void DelayMenu() {
+    HMENU m = CreatePopupMenu();
+    int cur = Cur().delaySeconds;
+    for (int s : { 0, 1, 2, 3, 5, 10, 15, 30, 60 })
+        AppendMenuW(m, MF_STRING | (s == cur ? MF_CHECKED : 0), IDM_DELAY_BASE + s,
+                    s == 0 ? Tr(L"Desligado") : s == 1 ? Tr(L"1 segundo") : Format(Tr(L"%d segundos"), s).c_str());
+    int id = PopupBelow(C(IDC_DELAY), m);
+    DestroyMenu(m);
+    if (id < IDM_DELAY_BASE) return;
+    Cur().delaySeconds = id - IDM_DELAY_BASE;
+    g.store.Save();
+    LoadControls();
+}
+
+void EditChromaKey() {
+    auto& p = Cur();
+    std::vector<ui::Field> f = {
+        ui::Field::MakeCheck(Tr(L"Remover o fundo da webcam"), p.chromaKey),
+        ui::Field::MakeColor(Tr(L"Cor do fundo"), p.chromaColor),
+        ui::Field::MakeInt(Tr(L"Tolerância (0–100)"), p.chromaTolerance, 0, 100),
+        ui::Field::MakeLabel(Tr(L"Use um fundo liso e bem iluminado (tela verde é o ideal).")),
+        ui::Field::MakeLabel(Tr(L"Com o fundo removido, a webcam aparece sem moldura.")),
+    };
+    if (!ui::RunForm(g.frame, Tr(L"Remover o fundo (chroma key)"), f)) return;
+    p.chromaKey = f[0].value != 0;
+    p.chromaColor = f[1].color;
+    p.chromaTolerance = f[2].value;
+    if (p.chromaKey) p.webcam = true;
+    g.store.Save();
+    LoadControls();
+    Layout();
+}
+
+void WebcamMenu() {
+    HCURSOR old = SetCursor(LoadCursor(nullptr, IDC_WAIT));
+    g.cams = ListCameras();
+    SetCursor(old);
+    const Preset& p = Cur();
+    HMENU m = CreatePopupMenu();
+    AppendMenuW(m, MF_STRING | (!p.webcam ? MF_CHECKED : 0), IDM_WEBCAM_OFF, Tr(L"Desligada"));
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    if (g.cams.empty()) AppendMenuW(m, MF_STRING | MF_GRAYED, 0, Tr(L"Nenhuma webcam encontrada"));
+    for (size_t i = 0; i < g.cams.size(); i++) {
+        bool on = p.webcam && (p.webcamDevice == g.cams[i].link || (p.webcamDevice.empty() && i == 0));
+        AppendMenuW(m, MF_STRING | (on ? MF_CHECKED : 0), IDM_WEBCAM_BASE + i, g.cams[i].name.c_str());
+    }
+    // formato da webcam e remoção do fundo
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    HMENU shapes = CreatePopupMenu();
+    for (int s = 0; s < (int)CamShape::Count; s++)
+        AppendMenuW(shapes, MF_STRING | (s == p.webcamShape ? MF_CHECKED : 0) | (p.chromaKey ? MF_GRAYED : 0), IDM_WEBCAM_SHAPE + s,
+                    CamShapeName((CamShape)s));
+    AppendMenuW(m, MF_POPUP | (p.chromaKey ? MF_GRAYED : 0), (UINT_PTR)shapes, Tr(L"Formato"));
+    AppendMenuW(m, MF_STRING | (p.chromaKey ? MF_CHECKED : 0), IDM_WEBCAM_CHROMA, Tr(L"Remover o fundo (chroma key)…"));
+    int id = PopupBelow(C(IDC_WEBCAM), m, false);
+    DestroyMenu(m);
+    if (id >= IDM_WEBCAM_SHAPE && id < IDM_WEBCAM_SHAPE + (int)CamShape::Count) {
+        Cur().webcamShape = id - IDM_WEBCAM_SHAPE;
+        g.store.Save();
+        return;
+    }
+    if (id == IDM_WEBCAM_CHROMA) { EditChromaKey(); return; }
+    if (id == IDM_WEBCAM_OFF) Cur().webcam = false;
+    else if (id >= IDM_WEBCAM_BASE && id < IDM_WEBCAM_BASE + (int)g.cams.size()) {
+        auto& c = g.cams[id - IDM_WEBCAM_BASE];
+        Cur().webcam = true; Cur().webcamDevice = c.link; Cur().webcamName = c.name;
+    } else return;
+    g.store.Save();
+    LoadControls();
+    Layout();
+}
+
+void AddPresetMenu() {
+    HMENU m = CreatePopupMenu();
+    AppendMenuW(m, MF_STRING, IDM_PRESET_FROM_CURRENT, Tr(L"Novo preset com as configurações atuais"));
+    AppendMenuW(m, MF_STRING, IDM_PRESET_NEW, Tr(L"Novo preset…"));
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(m, MF_STRING, IDM_PRESET_HELP, Tr(L"Ajuda"));
+    RECT r; GetWindowRect(C(IDC_PRESET_ADD), &r);
+    TPMPARAMS tp{ sizeof tp, r };
+    TrackPopupMenuEx(m, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_VERTICAL, r.left, r.bottom, g.frame, &tp);
+    DestroyMenu(m);
+}
+
+void PresetRowMenu(int item, POINT pt) {
+    HMENU m = CreatePopupMenu();
+    AppendMenuW(m, MF_STRING, IDM_PRESET_RUN, Tr(L"Capturar com este preset"));
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(m, MF_STRING, IDM_PRESET_RENAME, Tr(L"Renomear…"));
+    AppendMenuW(m, MF_STRING, IDM_PRESET_HOTKEY, Tr(L"Atalho…"));
+    AppendMenuW(m, MF_STRING, IDM_PRESET_DUP, Tr(L"Duplicar"));
+    AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(m, MF_STRING, IDM_PRESET_DEL, Tr(L"Excluir"));
+    (void)item;
+    TrackPopupMenu(m, TPM_RIGHTALIGN | TPM_TOPALIGN, pt.x, pt.y, 0, g.frame, nullptr);
+    DestroyMenu(m);
+}
+
+// ---------------------------------------------------------------- lista de presets
+// linha: ícone do tipo, nome, "Adicionar atalho" (ou o atalho) e engrenagem — como a lista de presets de referência
+std::wstring HotkeyLabel(const Preset& p) { return p.hotkeyVk ? HotkeyToText(p.hotkeyMods, p.hotkeyVk) : Tr(L"Adicionar atalho"); }
+
+int PresetZoneAt(int item, int x) {
+    if (item < 0 || item >= (int)g.store.presets.size()) return 0;
+    RECT r; ListBox_GetItemRect(C(IDC_PRESETS), item, &r);
+    if (x >= r.right - S(40)) return 2;
+    int tw = TextW(HotkeyLabel(g.store.presets[item]));
+    if (x >= r.right - S(44) - tw - S(6)) return 1;
+    return 0;
+}
+
 void DrawPresetItem(DRAWITEMSTRUCT* di) {
     if ((int)di->itemID < 0 || di->itemID >= g.store.presets.size()) return;
     HDC dc = di->hDC;
@@ -914,42 +1109,95 @@ void DrawPresetItem(DRAWITEMSTRUCT* di) {
     FillRect(dc, &r, th.brSide);
     const Preset& p = g.store.presets[di->itemID];
     bool sel = (di->itemState & ODS_SELECTED) != 0;
-    if (sel) {
-        RECT f = r; InflateRect(&f, -S(2), -S(1));
-        Gdiplus::Graphics gr(dc);
-        gr.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-        COLORREF fill = Mix(th.bgSide, th.accent, 0.16);
-        Gdiplus::GraphicsPath path;
-        float rad = (float)S(4), d = rad * 2;
-        Gdiplus::RectF rf((float)f.left, (float)f.top, (float)(f.right - f.left), (float)(f.bottom - f.top));
-        path.AddArc(rf.X, rf.Y, d, d, 180, 90); path.AddArc(rf.GetRight() - d, rf.Y, d, d, 270, 90);
-        path.AddArc(rf.GetRight() - d, rf.GetBottom() - d, d, d, 0, 90); path.AddArc(rf.X, rf.GetBottom() - d, d, d, 90, 90);
-        path.CloseFigure();
+    bool hotRow = (int)di->itemID == g.presetHot;
+    Gdiplus::Graphics gr(dc);
+    gr.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+    if (sel || hotRow) {
+        COLORREF fill = Mix(th.bgSide, th.accent, sel ? 0.16 : 0.07);
         Gdiplus::SolidBrush b(Gdiplus::Color(255, GetRValue(fill), GetGValue(fill), GetBValue(fill)));
-        gr.FillPath(&b, &path);
-        COLORREF a = CaptureColor();
+        gr.FillRectangle(&b, (INT)r.left, (INT)r.top, (INT)(r.right - r.left), (INT)(r.bottom - r.top));
+    }
+    if (sel) {
+        COLORREF a = Luma(th.accent) > 0.55 ? th.accentDark : th.accent;
         Gdiplus::SolidBrush ab(Gdiplus::Color(255, GetRValue(a), GetGValue(a), GetBValue(a)));
-        float ih = (float)S(14);
-        gr.FillRectangle(&ab, rf.X + S(2), rf.Y + (rf.Height - ih) / 2, (float)S(3), ih);
+        float ih = (float)S(16);
+        gr.FillRectangle(&ab, (float)r.left, r.top + ((r.bottom - r.top) - ih) / 2, (float)S(3), ih);
     }
     int is = S(16), cy = (r.top + r.bottom) / 2;
-    RECT ir{ r.left + S(12), cy - is / 2, r.left + S(12) + is, cy - is / 2 + is };
-    icons::DrawOnDC(dc, p.kind == CaptureKind::Video ? icons::Video : icons::Camera, ir, sel ? th.accentText : RGB(80, 80, 86));
-    std::wstring hk = p.hotkeyVk ? HotkeyToText(p.hotkeyMods, p.hotkeyVk) : L"";
+    RECT ir{ r.left + S(16), cy - is / 2, r.left + S(16) + is, cy - is / 2 + is };
+    icons::DrawOnDC(dc, p.kind == CaptureKind::Video ? icons::VideoFill : icons::CameraFill, ir, sel ? th.accentText : RGB(84, 84, 92));
+    // engrenagem e atalho à direita
+    int zone = hotRow ? g.presetZone : 0;
+    RECT gearR{ r.right - S(40), r.top, r.right - S(10), r.bottom };
+    if (zone == 2) {
+        RECT hr = gearR; InflateRect(&hr, -S(2), -S(3));
+        ui::FillRoundRect(dc, hr, S(6), Mix(th.bgSide, th.accent, 0.20), Mix(th.bgSide, th.accent, 0.20));
+    }
+    RECT gi{ (gearR.left + gearR.right - is) / 2, cy - is / 2, (gearR.left + gearR.right - is) / 2 + is, cy - is / 2 + is };
+    icons::DrawOnDC(dc, icons::Gear, gi, zone == 2 ? th.accentText : RGB(96, 96, 104));
+    std::wstring hk = HotkeyLabel(p);
     HGDIOBJ of = SelectObject(dc, ui::UiFont(g.dpi));
     SetBkMode(dc, TRANSPARENT);
-    RECT hr{ r.left, r.top, r.right - S(10), r.bottom };
-    if (!hk.empty()) {
-        SetTextColor(dc, RGB(110, 110, 116));
-        DrawTextW(dc, hk.c_str(), -1, &hr, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX);
-        RECT m{}; DrawTextW(dc, hk.c_str(), -1, &m, DT_CALCRECT | DT_SINGLELINE | DT_NOPREFIX);
-        hr.right -= m.right + S(12);
-    }
-    RECT tr{ ir.right + S(10), r.top, hr.right, r.bottom };
+    RECT hr{ r.left, r.top, r.right - S(44), r.bottom };
+    SetTextColor(dc, zone == 1 ? th.accentText : p.hotkeyVk ? RGB(70, 70, 78) : RGB(128, 128, 136));
+    DrawTextW(dc, hk.c_str(), -1, &hr, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX);
+    hr.right -= TextW(hk) + S(14);
+    RECT tr{ ir.right + S(12), r.top, hr.right, r.bottom };
     SetTextColor(dc, RGB(28, 28, 32));
-    DrawTextW(dc, p.name.c_str(), -1, &tr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS);
+    DrawTextW(dc, Tr(p.name).c_str(), -1, &tr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS);
     SelectObject(dc, of);
     if ((di->itemState & ODS_FOCUS) && !(di->itemState & ODS_NOFOCUSRECT)) { RECT f = r; InflateRect(&f, -S(2), -S(1)); DrawFocusRect(dc, &f); }
+}
+
+LRESULT CALLBACK PresetListProc(HWND h, UINT m, WPARAM w, LPARAM l, UINT_PTR, DWORD_PTR) {
+    switch (m) {
+    case WM_MOUSEMOVE: {
+        DWORD r = (DWORD)SendMessageW(h, LB_ITEMFROMPOINT, 0, l);
+        int item = HIWORD(r) ? -1 : (int)LOWORD(r);
+        int zone = PresetZoneAt(item, GET_X_LPARAM(l));
+        if (item != g.presetHot || zone != g.presetZone) {
+            int old = g.presetHot;
+            g.presetHot = item; g.presetZone = zone;
+            RECT ir;
+            if (old >= 0 && ListBox_GetItemRect(h, old, &ir) != LB_ERR) InvalidateRect(h, &ir, FALSE);
+            if (item >= 0 && ListBox_GetItemRect(h, item, &ir) != LB_ERR) InvalidateRect(h, &ir, FALSE);
+        }
+        TRACKMOUSEEVENT t{ sizeof t, TME_LEAVE, h, 0 };
+        TrackMouseEvent(&t);
+        break;
+    }
+    case WM_MOUSELEAVE:
+        g.presetHot = -1; g.presetZone = 0;
+        InvalidateRect(h, nullptr, FALSE);
+        break;
+    case WM_SETCURSOR:
+        if (g.presetZone) { SetCursor(LoadCursor(nullptr, IDC_HAND)); return TRUE; }
+        break;
+    case WM_LBUTTONUP: {
+        LRESULT res = DefSubclassProc(h, m, w, l);
+        DWORD r = (DWORD)SendMessageW(h, LB_ITEMFROMPOINT, 0, l);
+        int item = HIWORD(r) ? -1 : (int)LOWORD(r);
+        int zone = PresetZoneAt(item, GET_X_LPARAM(l));
+        if (item >= 0 && zone) PostMessageW(g.frame, WM_PRESET_ZONE, item, zone);
+        return res;
+    }
+    case WM_LBUTTONDBLCLK: {
+        DWORD r = (DWORD)SendMessageW(h, LB_ITEMFROMPOINT, 0, l);
+        int item = HIWORD(r) ? -1 : (int)LOWORD(r);
+        if (PresetZoneAt(item, GET_X_LPARAM(l))) return 0;   // duplo clique no atalho/engrenagem não captura
+        break;
+    }
+    }
+    return DefSubclassProc(h, m, w, l);
+}
+
+void SelectPreset(int i) {
+    if (i < 0 || i >= (int)g.store.presets.size()) return;
+    g.store.selected = i;
+    g.store.Save();
+    ListBox_SetCurSel(C(IDC_PRESETS), i);
+    LoadControls();
+    bool l = g.loading; g.loading = true; Layout(); g.loading = l;
 }
 
 void DrawOwner(DRAWITEMSTRUCT* di) {
@@ -962,40 +1210,39 @@ void DrawOwner(DRAWITEMSTRUCT* di) {
         HBRUSH bg = CreateSolidBrush(active ? th.bgMain : th.bgSide);
         FillRect(dc, &r, bg); DeleteObject(bg);
         if (active) {   // indicador da aba ativa, como na navegação do Windows 11
-            int ih = S(20);
+            int ih = S(22);
             RECT ind{ r.left + S(3), (r.top + r.bottom - ih) / 2, r.left + S(6), (r.top + r.bottom + ih) / 2 };
             ui::FillRoundRect(dc, ind, S(3), th.accent, th.accent);
         }
-        COLORREF fg = active ? th.accentText : RGB(70, 70, 74);
+        COLORREF fg = active ? th.accentText : RGB(92, 92, 100);
         int is = S(22), cx = (r.left + r.right) / 2;
-        RECT ir{ cx - is / 2, r.top + S(9), cx + is / 2, r.top + S(9) + is };
-        icons::DrawOnDC(dc, di->CtlID == IDC_TAB_VIDEO ? icons::Video : icons::Image, ir, fg);
-        RECT tr{ r.left, ir.bottom + S(2), r.right, r.bottom - S(6) };
-        ui::DrawTextCentered(dc, di->CtlID == IDC_TAB_VIDEO ? L"Vídeo" : L"Imagem", tr, fg, ui::UiFont(g.dpi, 9, active));
+        RECT ir{ cx - is / 2, r.top + S(11), cx + is / 2, r.top + S(11) + is };
+        icons::DrawOnDC(dc, di->CtlID == IDC_TAB_VIDEO ? icons::VideoFill : icons::CameraFill, ir, fg);
+        RECT tr{ r.left, ir.bottom + S(3), r.right, r.bottom - S(6) };
+        ui::DrawTextCentered(dc, di->CtlID == IDC_TAB_VIDEO ? Tr(L"Vídeo") : Tr(L"Imagem"), tr, active ? th.accentText : RGB(70, 70, 78),
+                             ui::UiFont(g.dpi, 9, active));
         if (di->itemState & ODS_FOCUS) { RECT f = r; InflateRect(&f, -2, -2); DrawFocusRect(dc, &f); }
         return;
     }
     FillRect(dc, &r, th.brMain);
     if (di->CtlID == IDC_CAPTURE) {
-        int d = std::min(r.right - r.left, r.bottom - r.top - S(26));
-        RECT c{ r.left + (r.right - r.left - d) / 2, r.top, 0, 0 };
+        int d = lay.capD;
+        RECT c{ r.left + (r.right - r.left - d) / 2, r.top + (r.bottom - r.top - d) / 2, 0, 0 };
         c.right = c.left + d; c.bottom = c.top + d;
         bool pressed = (di->itemState & ODS_SELECTED) != 0;
-        COLORREF base = video ? RGB(226, 52, 52) : CaptureColor();
-        COLORREF col = base;
-        if (g.hoverCapture) col = Mix(base, RGB(255, 255, 255), 0.12);
-        if (pressed) col = video ? RGB(190, 40, 40) : Mix(base, 0, 0.2);
+        COLORREF col = kCaptureRed;
+        if (g.hoverCapture) col = Mix(col, RGB(255, 255, 255), 0.10);
+        if (pressed) col = Mix(kCaptureRed, 0, 0.16);
         Gdiplus::Graphics gr(dc);
         gr.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-        Gdiplus::SolidBrush sh(Gdiplus::Color(40, 0, 0, 0));
-        gr.FillEllipse(&sh, (INT)c.left + 2, (INT)c.top + 4, (INT)d, (INT)d);
+        gr.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+        for (int i = 3; i >= 1; i--) {                 // sombra suave
+            Gdiplus::SolidBrush sh(Gdiplus::Color((BYTE)(16 * (4 - i)), 0, 0, 0));
+            gr.FillEllipse(&sh, (float)c.left - i + 1, (float)c.top - i + 2.5f + i * 0.4f, (float)d + 2 * i - 2, (float)d + 2 * i - 2);
+        }
         Gdiplus::SolidBrush b(Gdiplus::Color(255, GetRValue(col), GetGValue(col), GetBValue(col)));
-        gr.FillEllipse(&b, (INT)c.left, (INT)c.top, (INT)d, (INT)d);
-        float in = d * 0.27f;
-        icons::Draw(gr, video ? icons::Video : icons::Capture,
-                    Gdiplus::RectF(c.left + in, c.top + in, d - 2 * in, d - 2 * in), Gdiplus::Color(255, 255, 255, 255));
-        RECT t{ r.left, c.bottom + S(4), r.right, r.bottom };
-        ui::DrawTextCentered(dc, video ? L"Gravar" : L"Capturar", t, RGB(40, 40, 40), ui::UiFont(g.dpi, 11, true));
+        gr.FillEllipse(&b, (float)c.left, (float)c.top, (float)d, (float)d);
+        ui::DrawTextCentered(dc, video ? Tr(L"Gravar") : Tr(L"Capturar"), c, RGB(255, 255, 255), ui::UiFont(g.dpi, 10, true));
         if (di->itemState & ODS_FOCUS) { RECT f = r; InflateRect(&f, -1, -1); DrawFocusRect(dc, &f); }
     }
 }
@@ -1006,38 +1253,36 @@ void OnCommand(int id, int code) {
     }
     switch (id) {
     case IDC_PRESETS:
-        if (code == LBN_SELCHANGE) {
-            int s = ListBox_GetCurSel(C(IDC_PRESETS));
-            if (s >= 0) { g.store.selected = s; g.store.Save(); LoadControls(); g.loading = true; Layout(); g.loading = false; }
-        } else if (code == LBN_DBLCLK) StartCapture(Cur());
+        if (code == LBN_SELCHANGE) SelectPreset(ListBox_GetCurSel(C(IDC_PRESETS)));
+        else if (code == LBN_DBLCLK) StartCapture(Cur());
         break;
-    case IDC_PRESET_NEW: {
-        Preset p; p.name = Format(L"Preset %zu", g.store.presets.size() + 1);
+    case IDC_PRESET_ADD: AddPresetMenu(); break;
+    case IDM_PRESET_FROM_CURRENT: { Preset p = Cur(); p.name = Cur().name + Tr(L" (cópia)"); AddPreset(p, Tr(L"Novo preset com as configurações atuais")); break; }
+    case IDM_PRESET_NEW: {
+        Preset p; p.name = Format(Tr(L"Preset %zu"), g.store.presets.size() + 1);
         p.kind = Cur().kind; if (p.kind == CaptureKind::Video) p.captureCursor = true;
-        g.store.presets.push_back(p);
-        g.store.selected = (int)g.store.presets.size() - 1;
-        g.store.Save(); FillPresetList(); LoadControls(); Layout();
-        if (!g.presetsOpen) TogglePresets();
-        RenamePreset();
+        AddPreset(p, Tr(L"Novo preset"));
         break;
     }
-    case IDC_PRESET_DUP: {
-        Preset p = Cur(); p.name += L" (cópia)"; p.hotkeyMods = p.hotkeyVk = 0;
+    case IDM_PRESET_HELP: PresetHelp(); break;
+    case IDM_PRESET_RUN: StartCapture(Cur()); break;
+    case IDM_PRESET_DUP: {
+        Preset p = Cur(); p.name += Tr(L" (cópia)"); p.hotkeyMods = p.hotkeyVk = 0; p.builtin.clear();
         g.store.presets.push_back(p);
         g.store.selected = (int)g.store.presets.size() - 1;
-        g.store.Save(); FillPresetList(); LoadControls();
+        g.store.Save(); FillPresetList(); LoadControls(); Layout(); ResizeToContent();
         break;
     }
-    case IDC_PRESET_DEL:
-        if (g.store.presets.size() <= 1) { MessageBoxW(g.frame, L"É preciso manter pelo menos um preset.", L"Snapnab", MB_ICONINFORMATION); break; }
-        if (MessageBoxW(g.frame, (L"Excluir o preset \"" + Cur().name + L"\"?").c_str(), L"Snapnab", MB_YESNO | MB_ICONQUESTION) != IDYES) break;
+    case IDM_PRESET_DEL:
+        if (g.store.presets.size() <= 1) { MessageBoxW(g.frame, Tr(L"É preciso manter pelo menos um preset."), L"Snapnab", MB_ICONINFORMATION); break; }
+        if (MessageBoxW(g.frame, Format(Tr(L"Excluir o preset \"%s\"?"), Tr(Cur().name).c_str()).c_str(), L"Snapnab", MB_YESNO | MB_ICONQUESTION) != IDYES) break;
         g.store.presets.erase(g.store.presets.begin() + g.store.selected);
         g.store.selected = std::max(0, g.store.selected - 1);
-        g.store.Save(); RegisterHotkeys(); FillPresetList(); LoadControls(); Layout();
+        g.store.Save(); RegisterHotkeys(); FillPresetList(); LoadControls(); Layout(); ResizeToContent();
         break;
-    case IDC_PRESETS_LABEL: TogglePresets(); break;
-    case IDC_PRESET_RENAME: RenamePreset(); break;
-    case IDC_PRESET_HOTKEY: EditPresetHotkey(); break;
+    case IDC_PRESETS_LABEL: case IDM_SHOW_PRESETS: ShowPresetList(!g.presetsOpen); break;
+    case IDM_PRESET_RENAME: RenamePreset(); break;
+    case IDM_PRESET_HOTKEY: EditPresetHotkey(); break;
     case IDC_TAB_IMAGE: case IDC_TAB_VIDEO: {
         CaptureKind k = id == IDC_TAB_VIDEO ? CaptureKind::Video : CaptureKind::Image;
         if (Cur().kind != k) {
@@ -1048,8 +1293,10 @@ void OnCommand(int id, int code) {
         }
         break;
     }
-    case IDC_SELECTION: if (code == CBN_SELCHANGE) SaveControls(); break;
-    case IDC_SEL_CFG: EditFixedSize(); break;
+    case IDC_SELECTION:
+        if (code == CBN_SELCHANGE) SaveControls();
+        else if (code == mui::MUI_GEARCLICK) RegionMenu();
+        break;
     case IDC_EFFECTS:
         if (code == CBN_DROPDOWN) FillEffectsList();
         else if (code == CBN_SELCHANGE) {
@@ -1057,37 +1304,51 @@ void OnCommand(int id, int code) {
             if (i >= 0) OnEffectPicked(ComboBox_GetItemData(C(IDC_EFFECTS), i));
         } else if (code == CBN_CLOSEUP) g.fxAddMode = false;
         break;
-    case IDC_SAVEFILE_CFG: EditFileOutput(); break;
-    case IDC_PREVIEW: case IDC_CLIPBOARD: case IDC_SAVEFILE: case IDC_CURSOR: case IDC_MIC: case IDC_SYS:
-    case IDC_DOWNSCALE: case IDC_HW:
+    case IDC_SHARE:
+        if (code == CBN_SELCHANGE) {
+            SetShare(Cur(), (Share)std::max(0, ComboBox_GetCurSel(C(IDC_SHARE))));
+            g.store.Save();
+            LoadControls();
+        } else if (code == mui::MUI_GEARCLICK) {
+            Share s = ShareOf(Cur());
+            if (s == ShareFile) EditFileOutput();
+            else if (s == ShareProgram) EditProgramOutput();
+        }
+        break;
+    case IDC_QUALITY:
+        if (code == CBN_SELCHANGE) SaveControls();
+        else if (code == mui::MUI_GEARCLICK) EditVideoOptions();
+        break;
+    case IDC_DELAY: DelayMenu(); break;
+    case IDC_WEBCAM: WebcamMenu(); break;
+    case IDC_PREVIEW: case IDC_CLIPBOARD: case IDC_CURSOR: case IDC_MIC: case IDC_SYS:
         if (code == BN_CLICKED) SaveControls();
         break;
-    case IDC_FPS: case IDC_QUALITY: if (code == CBN_SELCHANGE) SaveControls(); break;
-    case IDC_DELAY: if (code == CBN_SELCHANGE) SaveControls(); break;
     case IDC_CAPTURE: StartCapture(Cur()); break;
     case IDC_OPEN_EDITOR: case IDM_OPEN_EDITOR: OpenEditor(); break;
-    case IDC_OPTIONS: case IDM_OPTIONS: ShowOptions(); break;
+    case IDM_OPTIONS: ShowOptions(); break;
+    case IDM_ONECLICK: SetOneClick(!g.oneClick.enabled()); break;
     case IDM_CAPTURE_IMAGE: StartCapture(FirstOfKind(CaptureKind::Image)); break;
     case IDM_CAPTURE_VIDEO: StartCapture(FirstOfKind(CaptureKind::Video)); break;
     case IDM_REPEAT: if (g.haveLast) StartCapture(g.lastPreset); else StartCapture(Cur()); break;
     case IDM_CAPTURE_CLIPBOARD: { Preset p = FirstOfKind(CaptureKind::Image); p.selection = Selection::Clipboard; p.delaySeconds = 0; StartCapture(p); break; }
     case IDM_CAPTURE_FILE: { Preset p = FirstOfKind(CaptureKind::Image); p.selection = Selection::File; p.delaySeconds = 0; StartCapture(p); break; }
     case IDM_PRESET_IMPORT: {
-        std::wstring f = L"Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|";
+        std::wstring f = Tr(L"Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|");
         std::replace(f.begin(), f.end(), L'|', L'\0');
         std::wstring path;
         if (ui::OpenFileDialog(g.frame, f, path)) {
-            if (g.store.Import(path)) { FillPresetList(); TrayNotify(L"Snapnab", L"Presets importados."); }
-            else MessageBoxW(g.frame, L"Arquivo de presets inválido.", L"Snapnab", MB_ICONWARNING);
+            if (g.store.Import(path)) { FillPresetList(); Layout(); ResizeToContent(); TrayNotify(L"Snapnab", Tr(L"Presets importados.")); }
+            else MessageBoxW(g.frame, Tr(L"Arquivo de presets inválido."), L"Snapnab", MB_ICONWARNING);
         }
         break;
     }
     case IDM_PRESET_EXPORT: {
-        std::wstring f = L"Presets do Snapnab (*.snappresets)|*.snappresets|";
+        std::wstring f = Tr(L"Presets do Snapnab (*.snappresets)|*.snappresets|");
         std::replace(f.begin(), f.end(), L'|', L'\0');
         std::wstring path = L"Presets.snappresets"; int fi = 1;
         if (ui::SaveFileDialog(g.frame, f, path, fi, L"snappresets") && !g.store.Export(path))
-            MessageBoxW(g.frame, L"Não foi possível exportar.", L"Snapnab", MB_ICONWARNING);
+            MessageBoxW(g.frame, Tr(L"Não foi possível exportar."), L"Snapnab", MB_ICONWARNING);
         break;
     }
     case IDM_LIBRARY_FOLDER: ShellExecuteW(nullptr, L"open", LibraryDir().c_str(), nullptr, nullptr, SW_SHOWNORMAL); break;
@@ -1096,12 +1357,31 @@ void OnCommand(int id, int code) {
     case IDM_SHOW: ShowFrame(); break;
     case IDM_EXIT:
         if (g.engine.recorder.state() != Recorder::Idle) {
-            if (MessageBoxW(g.frame, L"Há uma gravação em andamento. Parar e sair?", L"Snapnab", MB_YESNO | MB_ICONQUESTION) != IDYES) break;
+            if (MessageBoxW(g.frame, Tr(L"Há uma gravação em andamento. Parar e sair?"), L"Snapnab", MB_YESNO | MB_ICONQUESTION) != IDYES) break;
             g.engine.VideoStop();
         }
         DestroyWindow(g.frame);
         break;
     }
+}
+
+void PaintBands(HDC dc) {
+    RECT cr; GetClientRect(g.frame, &cr);
+    int T = lay.capH;
+    g.caption.Paint(dc);
+    RECT main{ 0, T, cr.right, cr.bottom };
+    FillRect(dc, &main, th.brMain);
+    RECT tabs{ 0, T, lay.tabW, T + lay.contentH };
+    FillRect(dc, &tabs, th.brSide);
+    RECT bar{ 0, T + lay.contentH, cr.right, T + lay.contentH + lay.barH };
+    FillRect(dc, &bar, th.brBar);
+    RECT panel{ 0, T + lay.contentH + lay.barH, cr.right, cr.bottom };
+    if (g.presetsOpen) FillRect(dc, &panel, th.brSide);
+    HBRUSH ln = CreateSolidBrush(th.line);
+    RECT l1{ 0, T + lay.contentH, cr.right, T + lay.contentH + 1 };
+    FillRect(dc, &l1, ln);
+    if (g.presetsOpen) { RECT l2{ 0, panel.top, cr.right, panel.top + 1 }; FillRect(dc, &l2, ln); }
+    DeleteObject(ln);
 }
 
 LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
@@ -1111,8 +1391,16 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         g.frame = h;
         g.dpi = DpiForWindow(h);
         g.presetsOpen = RegGetDword(L"CapturePresetsOpen", 0) != 0;
+        g.caption.Init(h, { { Tr(kMenuNames[0]), i18n::AltKey(Tr(kMenuNames[0]), L'A'), GetSubMenu(g.menuBar, 0) },
+                            { Tr(kMenuNames[1]), i18n::AltKey(Tr(kMenuNames[1]), L'C'), GetSubMenu(g.menuBar, 1) },
+                            { Tr(kMenuNames[2]), i18n::AltKey(Tr(kMenuNames[2]), L'E'), GetSubMenu(g.menuBar, 2) },
+                            { Tr(kMenuNames[3]), i18n::AltKey(Tr(kMenuNames[3]), L'J'), GetSubMenu(g.menuBar, 3) } }, false, false);
+        g.caption.onInitMenu = [](HMENU mm, int) {
+            CheckMenuItem(mm, IDM_ONECLICK, g.oneClick.enabled() ? MF_CHECKED : MF_UNCHECKED);
+            CheckMenuItem(mm, IDM_SHOW_PRESETS, g.presetsOpen ? MF_CHECKED : MF_UNCHECKED);
+        };
         LoadTheme();
-        g.loading = true;          // UDM_SETBUDDY/SetWindowText disparam EN_CHANGE antes dos valores carregados
+        g.loading = true;
         CreateControls();
         FillPresetList();
         LoadControls();
@@ -1124,11 +1412,19 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         g.loading = false;
         return 0;
     }
-    case WM_SIZE: { bool l = g.loading; g.loading = true; Layout(); g.loading = l; InvalidateRect(h, nullptr, TRUE); return 0; }
+    case WM_NCCALCSIZE: { LRESULT r; if (g.caption.NcCalcSize(w, l, r)) return r; break; }   // a barra de título é nossa
+    case WM_NCACTIVATE: return DefWindowProcW(h, m, w, -1);
+    case WM_NCHITTEST: { LRESULT r; if (g.caption.NcHitTest(l, r)) return r; break; }
+    case WM_NCRBUTTONUP: if (g.caption.RButtonUp(w, l)) return 0; break;
+    case WM_MOUSEMOVE: g.caption.MouseMove({ GET_X_LPARAM(l), GET_Y_LPARAM(l) }); return 0;
+    case WM_MOUSELEAVE: g.caption.MouseLeave(); return 0;
+    case WM_LBUTTONDOWN: g.caption.LButtonDown({ GET_X_LPARAM(l), GET_Y_LPARAM(l) }); return 0;
+    case WM_LBUTTONUP: g.caption.LButtonUp({ GET_X_LPARAM(l), GET_Y_LPARAM(l) }); return 0;
+    case WM_SIZE: { bool l2 = g.loading; g.loading = true; Layout(); g.loading = l2; InvalidateRect(h, nullptr, TRUE); return 0; }
     case WM_DPICHANGED: {
         g.dpi = HIWORD(w);
         RECT* r = (RECT*)l;
-        for (auto& [id, hw] : g.ctl) SendMessageW(hw, WM_SETFONT, (WPARAM)ui::UiFont(g.dpi), TRUE);
+        SetFonts();
         SetWindowPos(h, nullptr, r->left, r->top, r->right - r->left, r->bottom - r->top, SWP_NOZORDER | SWP_NOACTIVATE);
         bool ld = g.loading; g.loading = true;
         ComputeMetrics();
@@ -1141,39 +1437,45 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         if (l && lstrcmpiW((const wchar_t*)l, L"ImmersiveColorSet") == 0) { LoadTheme(); ApplyFrameTheme(); }
         break;
     case WM_DWMCOLORIZATIONCOLORCHANGED: LoadTheme(); ApplyFrameTheme(); break;
-    case WM_ERASEBKGND: {
-        HDC dc = (HDC)w;
-        RECT cr; GetClientRect(h, &cr);
-        FillRect(dc, &cr, th.brMain);
-        RECT tabs{ 0, 0, lay.tabW, lay.contentH };
-        FillRect(dc, &tabs, th.brSide);
-        RECT bar{ 0, lay.contentH, cr.right, lay.contentH + lay.barH };
-        FillRect(dc, &bar, th.brBar);
-        RECT panel{ 0, lay.contentH + lay.barH, cr.right, cr.bottom };
-        if (g.presetsOpen) FillRect(dc, &panel, th.brSide);
-        HBRUSH ln = CreateSolidBrush(th.line);
-        RECT l1{ 0, lay.contentH, cr.right, lay.contentH + 1 };
-        FillRect(dc, &l1, ln);
-        if (g.presetsOpen) { RECT l2{ 0, panel.top, cr.right, panel.top + 1 }; FillRect(dc, &l2, ln); }
-        DeleteObject(ln);
-        return 1;
-    }
+    case WM_ERASEBKGND: PaintBands((HDC)w); return 1;
     case WM_CTLCOLORSTATIC: case WM_CTLCOLORBTN: {
         // fundo conforme a faixa da janela onde o controle está (conteúdo, barra inferior ou lista de presets)
         HWND c = (HWND)l;
         SetBkMode((HDC)w, TRANSPARENT);
         RECT rc; GetWindowRect(c, &rc);
         MapWindowPoints(nullptr, h, (POINT*)&rc, 2);
-        int id = GetDlgCtrlID(c);
-        bool dim = id == IDC_HINT || id == IDC_FILE_SUMMARY;
-        SetTextColor((HDC)w, dim ? RGB(100, 100, 106) : GetSysColor(COLOR_WINDOWTEXT));
-        if (rc.top >= lay.contentH + lay.barH) return (LRESULT)th.brSide;
-        if (rc.top >= lay.contentH) return (LRESULT)th.brBar;
+        SetTextColor((HDC)w, RGB(28, 28, 32));
+        int T = lay.capH;
+        if (rc.top >= T + lay.contentH + lay.barH) return (LRESULT)th.brSide;
+        if (rc.top >= T + lay.contentH) return (LRESULT)th.brBar;
         return (LRESULT)th.brMain;
     }
     case WM_DRAWITEM: DrawOwner((DRAWITEMSTRUCT*)l); return TRUE;
     case WM_MEASUREITEM: ((MEASUREITEMSTRUCT*)l)->itemHeight = S(30); return TRUE;
     case WM_CTLCOLORLISTBOX: return (LRESULT)th.brSide;
+    case WM_NOTIFY: {
+        auto* nm = (NMTTDISPINFOW*)l;
+        if (nm->hdr.hwndFrom == g.tip && nm->hdr.code == TTN_GETDISPINFOW) {
+            static std::wstring t;
+            bool video = Cur().kind == CaptureKind::Video;
+            t = (video ? Tr(L"Gravar vídeo  (") : Tr(L"Capturar imagem  (")) + HotkeyFor(video) + L")";
+            nm->lpszText = t.data();
+            return 0;
+        }
+        break;
+    }
+    case WM_PRESET_ZONE: {
+        int item = (int)w;
+        if (item != g.store.selected) SelectPreset(item);
+        if (l == 1) EditPresetHotkey();
+        else {
+            RECT r; ListBox_GetItemRect(C(IDC_PRESETS), item, &r);
+            POINT pt{ r.right - S(12), r.bottom };
+            ClientToScreen(C(IDC_PRESETS), &pt);
+            PresetRowMenu(item, pt);
+        }
+        return 0;
+    }
     case WM_FX_ADD:
         g.fxAddMode = true;
         SendMessageW(C(IDC_EFFECTS), CB_SHOWDROPDOWN, TRUE, 0);
@@ -1187,6 +1489,7 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         }
         break;
     case WM_TIMER:
+        if (w == kTrayClickTimer) { KillTimer(h, kTrayClickTimer); StartCapture(Cur()); return 0; }
         if (w == 7) {
             POINT p; GetCursorPos(&p);
             if (WindowFromPoint(p) != C(IDC_CAPTURE)) { g.hoverCapture = false; KillTimer(h, 7); InvalidateRect(C(IDC_CAPTURE), nullptr, FALSE); }
@@ -1205,10 +1508,20 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         return 0;
     }
     case WM_SNAP_TRAY:
+        // um clique captura, duplo clique abre a janela: o clique simples espera o tempo de duplo clique antes de
+        // capturar, e o segundo clique de um duplo clique é ignorado (antes os dois disparavam, alternando o resultado)
         switch (LOWORD(l)) {
-        case WM_LBUTTONUP: case NIN_SELECT: StartCapture(Cur()); break;     // "One Click"
-        case WM_LBUTTONDBLCLK: ShowFrame(); break;
-        case WM_RBUTTONUP: case WM_CONTEXTMENU: TrayMenu(); break;
+        case WM_LBUTTONUP:
+            if (g.trayIgnoreUp) { g.trayIgnoreUp = false; break; }
+            SetTimer(h, kTrayClickTimer, GetDoubleClickTime(), nullptr);
+            break;
+        case WM_LBUTTONDBLCLK:
+            KillTimer(h, kTrayClickTimer);
+            g.trayIgnoreUp = true;
+            ShowFrame();
+            break;
+        case NIN_KEYSELECT: StartCapture(Cur()); break;
+        case WM_RBUTTONUP: case WM_CONTEXTMENU: KillTimer(h, kTrayClickTimer); TrayMenu(); break;
         }
         return 0;
     case WM_SNAP_IPC: {
@@ -1236,6 +1549,7 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         RemoveClipboardFormatListener(h);
         Shell_NotifyIconW(NIM_DELETE, &g.nid);
         g.hk.Clear();
+        g.oneClick.Show(false);
         g.ipc.SendInt(ipc::kEditor, ipc::CloseEditorIfHidden, 0);
         PostQuitMessage(0);
         return 0;
@@ -1248,6 +1562,7 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
 int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int) {
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
     // instância única: mutex + janela "SnapnabUI"; a segunda instância repassa a linha de comando (WM_COPYDATA)
+    WaitForPreviousInstance(kCaptureWndClass);
     if (ForwardToExistingInstance(kCaptureMutex, kCaptureWndClass, &g.mutex)) return 0;
     CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
     INITCOMMONCONTROLSEX icc{ sizeof(icc), ICC_STANDARD_CLASSES | ICC_UPDOWN_CLASS | ICC_HOTKEY_CLASS | ICC_LISTVIEW_CLASSES };
@@ -1255,6 +1570,7 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int) {
     GdiplusSession gdip;
     mui::Register(hi);
     LogInit(L"Snapnab");
+    i18n::Init();
     g.hi = hi;
     g.store.Load();
 
@@ -1267,12 +1583,22 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int) {
     wc.lpszClassName = kCaptureWndClass;
     RegisterClassExW(&wc);
     g.taskbarCreated = RegisterWindowMessageW(L"TaskbarCreated");
-    // tamanho fixo, calculado pelo conteúdo em WM_CREATE (ResizeToContent)
-    HWND frame = CreateWindowExW(0, kCaptureWndClass, L"Snapnab — Captura",
-                                 WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPCHILDREN,
-                                 CW_USEDEFAULT, CW_USEDEFAULT, 800, 300, nullptr, BuildMenu(), hi, nullptr);
+    g.menuBar = BuildMenu();
+    // tamanho fixo, calculado pelo conteúdo em WM_CREATE (ResizeToContent); a barra de título é desenhada pela janela
+    HWND frame = CreateWindowExW(0, kCaptureWndClass, L"Snapnab",
+                                 WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPCHILDREN,
+                                 CW_USEDEFAULT, CW_USEDEFAULT, 700, 260, nullptr, nullptr, hi, nullptr);
     BOOL dark = FALSE;
     DwmSetWindowAttribute(frame, 20 /*DWMWA_USE_IMMERSIVE_DARK_MODE*/, &dark, sizeof dark);
+    DWORD corner = 2;   // DWMWCP_ROUND
+    DwmSetWindowAttribute(frame, 33 /*DWMWA_WINDOW_CORNER_PREFERENCE*/, &corner, sizeof corner);
+    // posição inicial: centro da tela principal (CW_USEDEFAULT não vale para WS_POPUP)
+    {
+        RECT wr; GetWindowRect(frame, &wr);
+        RECT wa = MonitorRectFromPoint({ 0, 0 }, true);
+        SetWindowPos(frame, nullptr, wa.left + (wa.right - wa.left - (wr.right - wr.left)) / 2,
+                     wa.top + (wa.bottom - wa.top - (wr.bottom - wr.top)) / 3, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+    }
     TrayAdd();
     g.hk.Init(frame);
     RegisterHotkeys();
@@ -1283,7 +1609,11 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int) {
     g.engine.notify = TrayNotify;
     g.engine.onBusyChanged = [](bool busy) {
         SetVideoHotkeys(busy && g.lastPreset.kind == CaptureKind::Video);
+        g.oneClick.SetBusy(busy);
     };
+    g.oneClick.onCapture = [] { StartCapture(Cur()); };
+    g.oneClick.onMenu = OneClickMenu;
+    if (RegGetDword(L"OneClickEnabled", 0)) g.oneClick.Show(true);
     // canal IPC: este processo é o canal 0
     g.ipc.Start(ipc::kCapture, [](const ipc::Message& m) {
         PostMessageW(g.frame, WM_SNAP_IPC, 0, (LPARAM)new ipc::Message(m));
@@ -1292,6 +1622,7 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int) {
 
     MSG msg;
     while (GetMessageW(&msg, nullptr, 0, 0)) {
+        if (g.caption.PreTranslate(msg)) continue;
         if (g.frame && IsDialogMessageW(g.frame, &msg)) continue;
         TranslateMessage(&msg);
         DispatchMessageW(&msg);

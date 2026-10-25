@@ -1,5 +1,6 @@
 #include "CaptureEngine.h"
 #include "Cv.h"
+#include "Ocr.h"
 #include "Ui.h"
 #include <dwmapi.h>
 
@@ -35,7 +36,7 @@ LRESULT CALLBACK DelayProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         RECT r; GetClientRect(h, &r);
         HBRUSH b = CreateSolidBrush(RGB(28, 28, 30)); FillRect(dc, &r, b); DeleteObject(b);
         int dpi = DpiForWindow(h);
-        ui::DrawTextCentered(dc, st ? Format(L"Captura em %d s…", st->left) : L"", r, RGB(255, 255, 255), ui::UiFont(dpi, 12, true));
+        ui::DrawTextCentered(dc, st ? Format(Tr(L"Captura em %d s…"), st->left) : L"", r, RGB(255, 255, 255), ui::UiFont(dpi, 12, true));
         EndPaint(h, &ps); return 0;
     }
     case WM_TIMER:
@@ -128,6 +129,21 @@ void CaptureEngine::BeginInput() {
     const bool video = preset_.kind == CaptureKind::Video;
     CaptureInfo info; info.mode = SelectionName(preset_.selection);
 
+    const bool fixedRegion = preset_.selection == Selection::FixedRegion || (preset_.selection == Selection::Region && preset_.regionFixed);
+    if (fixedRegion && preset_.regionUsePos) {
+        // região fixa com posição: a entrada fica pronta sem seletor (INPUT_REGION_FIXED, comp_1 §6)
+        RECT r{ preset_.regionX, preset_.regionY, preset_.regionX + preset_.fixedW, preset_.regionY + preset_.fixedH };
+        IntersectRect(&r, &r, &vs_);
+        if (IsRectEmpty(&r)) {
+            if (notify) notify(L"Snapnab", Tr(L"A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."));
+            InputCanceled(); return;
+        }
+        info.mode = Tr(L"Região fixa");
+        if (video) { StartVideoHud(r); return; }
+        SetState(Capturing);
+        InputCaptured(FreezeScreen(r, preset_.captureCursor), info);
+        return;
+    }
     switch (preset_.selection) {
     case Selection::FullScreen:
     case Selection::Monitor: {
@@ -142,18 +158,18 @@ void CaptureEngine::BeginInput() {
     case Selection::Clipboard: {
         Image img;
         if (!GetClipboardImage(img)) {
-            if (notify) notify(L"Snapnab", L"A área de transferência não contém imagem.");
+            if (notify) notify(L"Snapnab", Tr(L"A área de transferência não contém imagem."));
             InputCanceled(); return;
         }
-        info.application = L"Área de transferência";
+        info.application = Tr(L"Área de transferência");
         InputCaptured(std::move(img), info);
         return;
     }
     case Selection::File: {
         std::wstring path;
-        if (!ui::OpenFileDialog(nullptr, ImageOpenFilter(), path, L"Capturar de arquivo gráfico")) { InputCanceled(); return; }
+        if (!ui::OpenFileDialog(nullptr, ImageOpenFilter(), path, Tr(L"Capturar de arquivo gráfico"))) { InputCanceled(); return; }
         Image img;
-        if (!LoadImageFile(path, img)) { MessageBoxW(nullptr, L"Não foi possível abrir a imagem.", L"Snapnab", MB_ICONWARNING); InputCanceled(); return; }
+        if (!LoadImageFile(path, img)) { MessageBoxW(nullptr, Tr(L"Não foi possível abrir a imagem."), L"Snapnab", MB_ICONWARNING); InputCanceled(); return; }
         info.windowTitle = FileNameOf(path);
         InputCaptured(std::move(img), info);
         return;
@@ -162,7 +178,7 @@ void CaptureEngine::BeginInput() {
         SetState(Capturing);
         Image img;
         if (CaptureMenus(img)) { InputCaptured(std::move(img), info); return; }
-        if (notify) notify(L"Snapnab", L"Nenhum menu aberto encontrado; selecione a região.");
+        if (notify) notify(L"Snapnab", Tr(L"Nenhum menu aberto encontrado; selecione a região."));
         break;   // cai na seleção de região
     }
     default: break;
@@ -171,7 +187,7 @@ void CaptureEngine::BeginInput() {
     frozen_ = FreezeScreen(vs_, false);
     Image shown = preset_.captureCursor && !video ? FreezeScreen(vs_, true) : frozen_;
     if (preset_.captureCursor && !video) frozen_ = shown;
-    SelectMode mode = SelectMode::Region;
+    SelectMode mode = fixedRegion ? SelectMode::Fixed : SelectMode::Region;
     switch (preset_.selection) {
     case Selection::Window: mode = SelectMode::Window; break;
     case Selection::Object: mode = SelectMode::Object; break;
@@ -179,7 +195,7 @@ void CaptureEngine::BeginInput() {
     case Selection::Freehand: mode = SelectMode::Freehand; break;
     case Selection::MultiArea: mode = SelectMode::MultiArea; break;
     case Selection::Scrolling: case Selection::ExtendedWindow: mode = SelectMode::PickWindow; break;
-    default: break;
+    default: break;          // Panoramic: região comum; a rolagem começa depois da seleção
     }
     RunSelectOverlay(shown, vs_, mode, { preset_.fixedW, preset_.fixedH }, video,
                      [this](const SelectResult& r) { if (r.ok) OnInputSelected(r); else InputCanceled(); });
@@ -199,6 +215,15 @@ void CaptureEngine::OnInputSelected(const SelectResult& r) {
         return;
     }
     SetState(Capturing);
+    if (preset_.selection == Selection::Panoramic) {
+        // a tela congelada não serve: a região é copiada ao vivo enquanto o usuário rola
+        frozen_ = Image();
+        pano_.Start(r.rect, [this, info](Image img) {
+            if (img.empty()) InputCanceled();
+            else InputCaptured(std::move(img), info);
+        });
+        return;
+    }
     RECT local = r.rect;
     OffsetRect(&local, -vs_.left, -vs_.top);
     Image img;
@@ -247,16 +272,38 @@ void CaptureEngine::InputCaptured(Image img, const CaptureInfo& info) {
 }
 
 // ---------------------------------------------------------------- saída (COutputter)
+// Grab Text: reconhece o texto, copia para a área de transferência e mostra numa janela
+void CaptureEngine::GrabText(const Image& img) {
+    std::wstring text, err;
+    HCURSOR old = SetCursor(LoadCursor(nullptr, IDC_WAIT));
+    bool ok = RunOcr(img, text, err);
+    SetCursor(old);
+    if (!ok) { MessageBoxW(nullptr, (Tr(L"Não foi possível reconhecer o texto.\n\n") + err).c_str(), Tr(L"Snapnab — Capturar texto"), MB_ICONWARNING); return; }
+    if (Trim(text).empty()) { if (notify) notify(Tr(L"Snapnab — Capturar texto"), Tr(L"Nenhum texto encontrado na captura.")); return; }
+    if (OpenClipboard(frame_)) {
+        EmptyClipboard();
+        size_t cb = (text.size() + 1) * sizeof(wchar_t);
+        if (HGLOBAL hg = GlobalAlloc(GMEM_MOVEABLE, cb)) {
+            memcpy(GlobalLock(hg), text.c_str(), cb);
+            GlobalUnlock(hg);
+            if (!SetClipboardData(CF_UNICODETEXT, hg)) GlobalFree(hg);
+        }
+        CloseClipboard();
+    }
+    ui::ShowTextWindow(nullptr, Tr(L"Capturar texto — copiado para a área de transferência"), text);
+}
+
 void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
+    if (preset_.grabText) GrabText(img);
     std::wstring lib = AddImageToLibrary(img, info);
     std::vector<std::wstring> done;
-    if (preset_.copyToClipboard && CopyImageToClipboard(frame_, img)) done.push_back(L"copiada para a área de transferência");
+    if (preset_.copyToClipboard && CopyImageToClipboard(frame_, img)) done.push_back(Tr(L"copiada para a área de transferência"));
     std::wstring saved;
     if (preset_.saveToFile) {
         std::wstring folder = preset_.folder.empty() ? DefaultSaveDir() : preset_.folder;
         EnsureDir(folder);
         saved = NextAutoName(folder, preset_.filePrefix, FileFormatExt(preset_.fileFormat));
-        if (SaveImageFile(saved, img)) done.push_back(L"salva em " + saved);
+        if (SaveImageFile(saved, img)) done.push_back(Tr(L"salva em ") + saved);
         else { Log(L"Saída: falha ao salvar %s", saved.c_str()); saved.clear(); }
     }
     if (preset_.openInProgram && !preset_.programPath.empty()) {
@@ -270,8 +317,9 @@ void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
     }
     if (ipc_) ipc_->SendInt(ipc::kEditor, ipc::LibraryChanged, 0);
     if (preset_.previewInEditor && !lib.empty()) DeliverToEditor(lib);
+    else if (preset_.grabText) {}               // a janela de texto já é o retorno
     else if (notify) {
-        std::wstring t = L"Captura adicionada à biblioteca";
+        std::wstring t = Tr(L"Captura adicionada à biblioteca");
         for (auto& d : done) t += L"; " + d;
         notify(L"Snapnab", t + L".");
     }
@@ -396,11 +444,11 @@ Image CaptureEngine::ExtendedWindowCapture(HWND top) {
     RECT wr; GetWindowRect(top, &wr);
     int curW = wr.right - wr.left, curH = wr.bottom - wr.top;
     std::vector<ui::Field> f = {
-        ui::Field::MakeLabel(L"A janela será ampliada além da tela, capturada e restaurada."),
-        ui::Field::MakeInt(L"Nova largura (px)", curW, 100, 19500),
-        ui::Field::MakeInt(L"Nova altura (px)", std::min(19500, curH * 3), 100, 19500),
+        ui::Field::MakeLabel(Tr(L"A janela será ampliada além da tela, capturada e restaurada.")),
+        ui::Field::MakeInt(Tr(L"Nova largura (px)"), curW, 100, 19500),
+        ui::Field::MakeInt(Tr(L"Nova altura (px)"), std::min(19500, curH * 3), 100, 19500),
     };
-    if (!ui::RunForm(nullptr, L"Janela estendida", f)) return {};
+    if (!ui::RunForm(nullptr, Tr(L"Janela estendida"), f)) return {};
     int nw = f[1].value, nh = f[2].value;
 
     HMODULE dll = LoadLibraryW((ExeDir() + L"\\SnapEx64.dll").c_str());
@@ -472,13 +520,25 @@ void CaptureEngine::StartVideoHud(RECT area) {
     cb.onCancel = [this] { VideoCancel(); };
     cb.onSnapshot = [this] {
         Image snap = recorder.TakeSnapshot();
-        CaptureInfo info; info.mode = L"Imagem durante gravação";
+        CaptureInfo info; info.mode = Tr(L"Imagem durante gravação");
         AddImageToLibrary(snap, info);
         if (ipc_) ipc_->SendInt(ipc::kEditor, ipc::LibraryChanged, 0);
-        if (notify) notify(L"Snapnab", L"Imagem capturada sem parar a gravação.");
+        if (notify) notify(L"Snapnab", Tr(L"Imagem capturada sem parar a gravação."));
     };
+    cb.onWebcam = [this](bool on) { webcam_.SetVisible(on); };
+    hud_.camAvailable = hud_.camOn = false;
+    if (preset_.webcam) {
+        std::wstring err;
+        WebcamStyle st;
+        st.shape = (CamShape)std::clamp(preset_.webcamShape, 0, (int)CamShape::Count - 1);
+        st.chroma = preset_.chromaKey; st.key = preset_.chromaColor; st.tolerance = preset_.chromaTolerance;
+        if (webcam_.Start(preset_.webcamDevice, area, st, err)) hud_.camAvailable = hud_.camOn = true;
+        else if (notify) notify(Tr(L"Snapnab — webcam"), err);
+    }
     hud_.Show(area, &recorder, cb, preset_.microphone, preset_.systemAudio);
 }
+
+void CaptureEngine::StopWebcam() { webcam_.Stop(); }
 
 void CaptureEngine::StartRecording() {
     RecordSettings rs;
@@ -490,8 +550,9 @@ void CaptureEngine::StartRecording() {
     rs.downscale1080 = preset_.downscale1080; rs.hardware = preset_.hardwareEncode;
     rs.path = NewVideoPath();
     if (!recorder.Start(rs, frame_, WM_SNAP_DONE)) {
-        MessageBoxW(nullptr, (L"Não foi possível iniciar a gravação.\n\n" + recorder.lastError).c_str(), L"Snapnab", MB_ICONERROR);
+        MessageBoxW(nullptr, (Tr(L"Não foi possível iniciar a gravação.\n\n") + recorder.lastError).c_str(), L"Snapnab", MB_ICONERROR);
         hud_.Hide();
+        StopWebcam();
         SetState(Idle);
         return;
     }
@@ -500,6 +561,7 @@ void CaptureEngine::StartRecording() {
 }
 
 void CaptureEngine::VideoStartPauseResume() {
+    if (hud_.counting()) { hud_.SkipCountdown(); return; }       // atalho durante a contagem: começa já
     if (state_ == InputSelected && recorder.state() == Recorder::Idle) {
         hud_.Countdown(3, [this] { StartRecording(); });
         return;
@@ -519,19 +581,21 @@ void CaptureEngine::VideoStop() {
 void CaptureEngine::VideoCancel() {
     if (recorder.state() != Recorder::Idle) recorder.Cancel();
     hud_.Hide();
+    StopWebcam();
     SetState(Idle);
 }
 
 void CaptureEngine::FinishVideo(bool ok) {
     hud_.Hide();
+    StopWebcam();
     std::wstring path = recorder.path();
     if (ok && FileExists(path)) {
         if (!recorder.firstFrame.empty()) WriteThumbnail(path, recorder.firstFrame);
         if (ipc_) ipc_->SendInt(ipc::kEditor, ipc::LibraryChanged, 0);
         if (preset_.previewInEditor) DeliverToEditor(path);
-        else if (notify) notify(L"Snapnab", L"Vídeo salvo na biblioteca: " + FileNameOf(path));
+        else if (notify) notify(L"Snapnab", Tr(L"Vídeo salvo na biblioteca: ") + FileNameOf(path));
     } else {
-        MessageBoxW(nullptr, (L"A gravação falhou.\n\n" + recorder.lastError).c_str(), L"Snapnab", MB_ICONERROR);
+        MessageBoxW(nullptr, (Tr(L"A gravação falhou.\n\n") + recorder.lastError).c_str(), L"Snapnab", MB_ICONERROR);
     }
     SetState(Idle);
 }
@@ -539,10 +603,10 @@ void CaptureEngine::FinishVideo(bool ok) {
 void CaptureEngine::OnRecorderNote(WPARAM note) {
     switch (note) {
     case Recorder::NoteDiskLow:
-        if (notify) notify(L"Snapnab — pouco espaço em disco", L"Restam menos de 1 GB livres na unidade da biblioteca.");
+        if (notify) notify(Tr(L"Snapnab — pouco espaço em disco"), Tr(L"Restam menos de 1 GB livres na unidade da biblioteca."));
         break;
     case Recorder::NoteDiskFull:
-        if (notify) notify(L"Snapnab", L"Gravação interrompida: espaço em disco insuficiente.");
+        if (notify) notify(L"Snapnab", Tr(L"Gravação interrompida: espaço em disco insuficiente."));
         VideoStop();
         break;
     case Recorder::NoteError:

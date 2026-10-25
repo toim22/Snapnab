@@ -1,16 +1,17 @@
 // Grab Text (OCR) — o original usa ABBYY FineReader Engine (FREngine.dll, ds_arch §13); aqui o motor é o
-// OCR nativo do Windows (Windows.Media.Ocr), chamado numa thread MTA própria.
-#include "Document.h"
+// OCR nativo do Windows (Windows.Media.Ocr), chamado numa thread MTA própria. Usado pelo Editor e pelo
+// preset "Capturar texto" da janela de captura.
+#include "Ocr.h"
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Graphics.Imaging.h>
 #include <winrt/Windows.Media.Ocr.h>
 #include <winrt/Windows.Storage.Streams.h>
 
-namespace snap::ed {
+namespace snap {
 
 bool RunOcr(const Image& imgIn, std::wstring& text, std::wstring& err) {
-    if (imgIn.empty()) { err = L"Imagem vazia."; return false; }
+    if (imgIn.empty()) { err = Tr(L"Imagem vazia."); return false; }
     // fundo opaco e escala: texto pequeno é ampliado, imagens enormes são reduzidas
     Image img(imgIn.w, imgIn.h, 0xFFFFFFFF);
     img.Blit(imgIn, 0, 0, true);
@@ -32,7 +33,7 @@ bool RunOcr(const Image& imgIn, std::wstring& text, std::wstring& err) {
             buf.Length((uint32_t)work.px.size() * 4);
             sb.CopyFromBuffer(buf);
             OcrEngine engine = OcrEngine::TryCreateFromUserProfileLanguages();
-            if (!engine) { err = L"Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."; return; }
+            if (!engine) { err = Tr(L"Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."); return; }
             OcrResult res = engine.RecognizeAsync(sb).get();
             std::wstring out;
             for (auto const& line : res.Lines()) { out += line.Text().c_str(); out += L"\n"; }
@@ -40,7 +41,7 @@ bool RunOcr(const Image& imgIn, std::wstring& text, std::wstring& err) {
         } catch (winrt::hresult_error const& e) {
             err = e.message().c_str();
         } catch (...) {
-            err = L"Falha desconhecida no OCR.";
+            err = Tr(L"Falha desconhecida no OCR.");
         }
         winrt::uninit_apartment();
     });
@@ -48,4 +49,4 @@ bool RunOcr(const Image& imgIn, std::wstring& text, std::wstring& err) {
     return err.empty();
 }
 
-} // namespace snap::ed
+} // namespace snap

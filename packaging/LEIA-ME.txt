@@ -13,8 +13,9 @@ COMO USAR
   3. A captura abre no Snapnab Editor (SnapnabEditor.exe), onde dá para
      anotar, aplicar efeitos, cortar vídeos e salvar em PNG, JPG, GIF, PDF etc.
 
-  Os três arquivos (Snapnab.exe, SnapnabEditor.exe e SnapEx64.dll) precisam
-  ficar juntos na mesma pasta.
+  Os arquivos Snapnab.exe, SnapnabEditor.exe e SnapEx64.dll e a pasta lang
+  (traduções) precisam ficar juntos na mesma pasta. Para instalar com atalhos
+  no menu Iniciar, use Snapnab-<versão>-setup.exe.
 
 ONDE FICAM SEUS DADOS
   Capturas e vídeos:   %LOCALAPPDATA%\Snapnab\Library

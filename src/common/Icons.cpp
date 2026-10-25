@@ -103,22 +103,30 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         g.DrawPath(&p, &gp);
         break;
     }
-    case Step: {
-        g.FillEllipse(&b, 3.f, 3.f, 18.f, 18.f);
+    case Step: {              // passos: o "1" e o "2" atrás, o "3" na frente
         FontFamily ff(L"Segoe UI");
-        Font f(&ff, 12, FontStyleBold, UnitPixel);
-        SolidBrush w(Color(255, 255, 255, 255));
+        Font f(&ff, 8.5f, FontStyleBold, UnitPixel), f1(&ff, 7.0f, FontStyleBold, UnitPixel);
         StringFormat sf; sf.SetAlignment(StringAlignmentCenter); sf.SetLineAlignment(StringAlignmentCenter);
-        g.DrawString(L"1", 1, &f, RectF(3, 3.5f, 18, 18), &sf, &w);
+        SolidBrush white(Color(255, 255, 255, 255));
+        Gdiplus::Pen ring1(Color(150, c.GetR(), c.GetG(), c.GetB()), 1.0f);
+        g.FillEllipse(&white, 1.5f, 1.f, 9.f, 9.f);                    // 1: bolinha branca com o número na cor do 2
+        g.DrawEllipse(&ring1, 1.5f, 1.f, 9.f, 9.f);
+        g.DrawString(L"1", 1, &f1, RectF(1.5f, 1.4f, 9.f, 9.f), &sf, &b);
+        g.FillEllipse(&faint, 10.5f, 2.f, 11.5f, 11.5f);
+        g.DrawString(L"2", 1, &f, RectF(10.5f, 2.5f, 11.5f, 11.5f), &sf, &b);
+        g.FillEllipse(&white, 1.f, 8.5f, 14.f, 14.f);
+        g.FillEllipse(&b, 2.f, 9.5f, 12.f, 12.f);
+        g.DrawString(L"3", 1, &f, RectF(2.f, 10.f, 12.f, 12.f), &sf, &white);
         break;
     }
-    case Stamp: {
-        PointF s[10];
-        for (int i = 0; i < 10; i++) {
-            float a = -1.5708f + i * 3.14159f / 5, rr = i % 2 ? 4.2f : 9.5f;
-            s[i] = { 12 + rr * std::cos(a), 12.5f + rr * std::sin(a) };
-        }
-        g.DrawPolygon(&p, s, 10);
+    case Stamp: {             // carimbo de borracha: pegador, haste, corpo e base
+        g.FillEllipse(&b, 8.6f, 1.6f, 6.8f, 6.8f);
+        g.FillRectangle(&b, 10.6f, 7.f, 2.8f, 4.5f);
+        PointF body[] = { { 7.f, 11.f }, { 17.f, 11.f }, { 18.5f, 14.5f }, { 5.5f, 14.5f } };
+        g.FillPolygon(&b, body, 4);
+        g.FillRectangle(&b, 3.5f, 14.f, 17.f, 4.2f);
+        Gdiplus::Pen base(c, 1.6f);
+        g.DrawLine(&base, 4.f, 21.f, 20.f, 21.f);
         break;
     }
     case Blur:
@@ -144,10 +152,23 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
             g.DrawString(L"Aa", 2, &f, RectF(3, 3, 13, 13), &sf, &b);
         }
         break;
-    case Fill: {
-        PointF s[4] = { { 4, 11 }, { 11, 4 }, { 18, 11 }, { 11, 18 } };
-        g.DrawPolygon(&p, s, 4);
-        g.FillEllipse(&b, 17.f, 15.f, 4.f, 5.f);
+    case Fill: {              // balde inclinado com a boca para cima à esquerda, alça em pé e a gota de tinta caindo
+        Color light(150, c.GetR(), c.GetG(), c.GetB());
+        SolidBrush lb(light);
+        Gdiplus::Pen handle(light, 2.f);
+        handle.SetStartCap(LineCapRound); handle.SetEndCap(LineCapFlat);
+        g.DrawLine(&handle, 10.f, 1.2f, 10.f, 8.6f);
+        PointF bucket[] = { { 12.f, 5.f }, { 13.5f, 3.5f }, { 22.5f, 12.5f }, { 13.5f, 21.5f }, { 4.5f, 12.5f }, { 7.f, 10.f }, { 12.f, 10.f } };
+        Gdiplus::Pen edge(c, 1.4f);
+        edge.SetLineJoin(LineJoinRound);
+        g.FillPolygon(&b, bucket, 7);
+        g.DrawPolygon(&edge, bucket, 7);              // cantos arredondados
+        GraphicsPath drop;
+        drop.AddBezier(4.5f, 15.f, 5.5f, 16.7f, 7.f, 18.3f, 7.f, 20.4f);
+        drop.AddArc(2.f, 17.9f, 5.f, 5.f, 0.f, 180.f);
+        drop.AddBezier(2.f, 20.4f, 2.f, 18.3f, 3.5f, 16.7f, 4.5f, 15.f);
+        drop.CloseFigure();
+        g.FillPath(&lb, &drop);
         break;
     }
     case Eraser: {
@@ -172,10 +193,17 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
             float a = i * 1.5708f; g.DrawLine(&thin, 18 + 2 * std::cos(a), 6 + 2 * std::sin(a), 18 + 4.5f * std::cos(a), 6 + 4.5f * std::sin(a));
         }
         break;
-    case Cutout: {
-        Gdiplus::Pen d(c, 1.6f); d.SetDashStyle(DashStyleDash);
-        g.DrawLine(&d, 2.f, 10.f, 22.f, 10.f); g.DrawLine(&d, 2.f, 14.f, 22.f, 14.f);
-        g.DrawRectangle(&p, 4.f, 3.f, 16.f, 18.f);
+    case Cutout: {            // recortar faixa: imagem com um rasgo em zigue-zague
+        GraphicsPath gp;
+        float r = 2.5f, d = r * 2;
+        gp.AddArc(2.f, 4.f, d, d, 180, 90); gp.AddArc(22.f - d, 4.f, d, d, 270, 90);
+        gp.AddArc(22.f - d, 20.f - d, d, d, 0, 90); gp.AddArc(2.f, 20.f - d, d, d, 90, 90);
+        gp.CloseFigure();
+        g.FillPath(&b, &gp);
+        Gdiplus::Pen zig(Color(255, 255, 255, 255), 2.2f);
+        zig.SetLineJoin(LineJoinMiter);
+        PointF z[] = { { 1, 10.5f }, { 5, 7.5f }, { 8.5f, 11 }, { 12, 7.5f }, { 15.5f, 11 }, { 19, 7.5f }, { 23, 10.5f } };
+        g.DrawLines(&zig, z, 7);
         break;
     }
     case Eyedropper:
@@ -223,6 +251,169 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
     case Library:
         g.DrawRectangle(&p, 3.f, 4.f, 7.f, 7.f); g.DrawRectangle(&p, 14.f, 4.f, 7.f, 7.f);
         g.DrawRectangle(&p, 3.f, 14.f, 7.f, 7.f); g.DrawRectangle(&p, 14.f, 14.f, 7.f, 7.f);
+        break;
+    case CameraFill: {        // câmera preenchida (abas e listas da janela de captura, estilo material)
+        GraphicsPath gp(FillModeAlternate);
+        gp.AddLine(4.5f, 6.f, 8.f, 6.f); gp.AddLine(8.f, 6.f, 9.6f, 3.6f); gp.AddLine(9.6f, 3.6f, 14.4f, 3.6f);
+        gp.AddLine(14.4f, 3.6f, 16.f, 6.f); gp.AddLine(16.f, 6.f, 19.5f, 6.f);
+        gp.AddArc(17.f, 6.f, 5.f, 5.f, 270.f, 90.f); gp.AddArc(17.f, 15.f, 5.f, 5.f, 0.f, 90.f);
+        gp.AddArc(2.f, 15.f, 5.f, 5.f, 90.f, 90.f); gp.AddArc(2.f, 6.f, 5.f, 5.f, 180.f, 90.f);
+        gp.CloseFigure();
+        gp.AddEllipse(7.4f, 8.4f, 9.2f, 9.2f);
+        g.FillPath(&b, &gp);
+        g.FillEllipse(&b, 9.3f, 10.3f, 5.4f, 5.4f);
+        break;
+    }
+    case VideoFill: {
+        GraphicsPath gp;
+        gp.AddArc(2.f, 6.f, 5.f, 5.f, 180.f, 90.f); gp.AddArc(11.5f, 6.f, 5.f, 5.f, 270.f, 90.f);
+        gp.AddArc(11.5f, 13.f, 5.f, 5.f, 0.f, 90.f); gp.AddArc(2.f, 13.f, 5.f, 5.f, 90.f, 90.f);
+        gp.CloseFigure();
+        g.FillPath(&b, &gp);
+        PointF t[4] = { { 17.5f, 10.4f }, { 22.f, 7.4f }, { 22.f, 16.6f }, { 17.5f, 13.6f } };
+        g.FillPolygon(&b, t, 4);
+        break;
+    }
+    case Mail:
+        g.DrawRectangle(&p, 3.f, 6.f, 18.f, 13.f);
+        { PointF s[3] = { { 3.5f, 6.5f }, { 12, 13 }, { 20.5f, 6.5f } }; g.DrawLines(&p, s, 3); }
+        break;
+    case Print:
+        g.DrawRectangle(&p, 3.f, 9.f, 18.f, 8.f);
+        { PointF s[4] = { { 7, 9 }, { 7, 3.5f }, { 17, 3.5f }, { 17, 9 } }; g.DrawLines(&p, s, 4); }
+        g.DrawRectangle(&p, 7.f, 14.f, 10.f, 6.5f);
+        break;
+    case NewDoc: {
+        PointF s[6] = { { 5, 3 }, { 14, 3 }, { 19, 8 }, { 19, 21 }, { 5, 21 }, { 5, 3 } };
+        g.DrawLines(&p, s, 6);
+        { PointF f[3] = { { 14, 3 }, { 14, 8 }, { 19, 8 } }; g.DrawLines(&p, f, 3); }
+        g.DrawLine(&p, 12.f, 11.f, 12.f, 18.f); g.DrawLine(&p, 8.5f, 14.5f, 15.5f, 14.5f);
+        break;
+    }
+    case Trash:
+        g.DrawLine(&p, 4.f, 6.5f, 20.f, 6.5f);
+        { PointF s[4] = { { 9, 6 }, { 9.5f, 3.5f }, { 14.5f, 3.5f }, { 15, 6 } }; g.DrawLines(&p, s, 4); }
+        { PointF s[4] = { { 6, 7 }, { 7, 21 }, { 17, 21 }, { 18, 7 } }; g.DrawLines(&p, s, 4); }
+        g.DrawLine(&thin, 10.f, 10.f, 10.f, 18.f); g.DrawLine(&thin, 14.f, 10.f, 14.f, 18.f);
+        break;
+    case Layers: {
+        PointF top[4] = { { 12, 3 }, { 21, 8 }, { 12, 13 }, { 3, 8 } };
+        g.FillPolygon(&faint, top, 4); g.DrawPolygon(&p, top, 4);
+        { PointF s[3] = { { 3, 12 }, { 12, 17 }, { 21, 12 } }; g.DrawLines(&p, s, 3); }
+        { PointF s[3] = { { 3, 16 }, { 12, 21 }, { 21, 16 } }; g.DrawLines(&p, s, 3); }
+        break;
+    }
+    case Rotate:
+        g.DrawArc(&p, 4.f, 5.f, 15.f, 15.f, 200.f, 250.f);
+        arrowHead({ 19.f, 9.f }, 1.35f, 5.5f);
+        g.DrawRectangle(&thin, 9.f, 10.f, 6.f, 6.f);
+        break;
+    case Effects: {           // varinha com brilhos: efeitos de imagem
+        g.DrawLine(&p26, 4.f, 20.f, 14.f, 10.f);
+        auto spark = [&](float x, float y, float r) {
+            PointF s[8] = { { x, y - r }, { x + r * .28f, y - r * .28f }, { x + r, y }, { x + r * .28f, y + r * .28f },
+                            { x, y + r }, { x - r * .28f, y + r * .28f }, { x - r, y }, { x - r * .28f, y - r * .28f } };
+            g.FillPolygon(&b, s, 8);
+        };
+        spark(17.f, 7.f, 4.5f); spark(9.f, 5.f, 2.6f); spark(20.f, 15.f, 2.6f);
+        break;
+    }
+    case Star: {
+        PointF s[10];
+        for (int i = 0; i < 10; i++) {
+            float a = -1.5708f + i * 3.14159f / 5, rr = i % 2 ? 4.4f : 10.0f;
+            s[i] = { 12 + rr * std::cos(a), 12.8f + rr * std::sin(a) };
+        }
+        g.FillPolygon(&b, s, 10);
+        break;
+    }
+    case Clipboard:
+        g.DrawRectangle(&p, 5.f, 5.f, 14.f, 16.f);
+        g.FillRectangle(&b, 9.f, 3.f, 6.f, 4.f);
+        g.DrawLine(&thin, 8.f, 11.f, 16.f, 11.f); g.DrawLine(&thin, 8.f, 15.f, 14.f, 15.f);
+        break;
+    case Program:
+        g.DrawRectangle(&p, 3.f, 4.f, 18.f, 15.f);
+        g.FillRectangle(&b, 3.f, 4.f, 18.f, 4.f);
+        g.DrawLine(&thin, 7.f, 12.f, 17.f, 12.f); g.DrawLine(&thin, 7.f, 15.f, 13.f, 15.f);
+        break;
+    case Duplicate:
+        g.DrawRectangle(&p, 4.f, 4.f, 11.f, 11.f);
+        g.FillRectangle(&faint, 9.f, 9.f, 11.f, 11.f); g.DrawRectangle(&p, 9.f, 9.f, 11.f, 11.f);
+        break;
+    case SaveAs:
+        g.DrawRectangle(&p, 3.f, 3.f, 14.f, 14.f);
+        g.DrawRectangle(&p, 6.f, 3.f, 7.f, 4.f);
+        g.DrawLine(&p26, 13.f, 21.f, 21.f, 13.f);
+        break;
+    case NewClipboard:
+        g.DrawRectangle(&p, 4.f, 5.f, 12.f, 15.f);
+        g.FillRectangle(&b, 7.f, 3.f, 6.f, 4.f);
+        g.DrawLine(&p, 18.f, 14.f, 18.f, 22.f); g.DrawLine(&p, 14.f, 18.f, 22.f, 18.f);
+        break;
+    case AutoTrim: {
+        Gdiplus::Pen d(c, 1.4f); d.SetDashStyle(DashStyleDash);
+        g.DrawRectangle(&d, 3.f, 3.f, 18.f, 18.f);
+        g.FillRectangle(&b, 8.f, 8.f, 8.f, 8.f);
+        break;
+    }
+    case DeleteObject:
+        g.DrawEllipse(&p, 3.f, 6.f, 13.f, 12.f);
+        g.FillEllipse(&b, 13.f, 2.f, 9.f, 9.f);
+        { Gdiplus::Pen w(Color(255, 255, 255, 255), 1.4f); g.DrawLine(&w, 15.5f, 4.5f, 19.5f, 8.5f); g.DrawLine(&w, 19.5f, 4.5f, 15.5f, 8.5f); }
+        break;
+    case FxBorder: g.DrawRectangle(&p3, 4.5f, 4.5f, 15.f, 15.f); break;
+    case FxEdges: {
+        PointF s[] = { { 4, 4 }, { 20, 4 }, { 20, 16 }, { 17, 19 }, { 14, 16 }, { 11, 20 }, { 8, 17 }, { 4, 20 } };
+        g.FillPolygon(&b, s, 8);
+        break;
+    }
+    case FxCaption: g.DrawRectangle(&p, 3.f, 4.f, 18.f, 16.f); g.FillRectangle(&b, 3.f, 15.f, 18.f, 5.f); break;
+    case FxPerspective: { PointF s[] = { { 4, 6 }, { 20, 3 }, { 20, 21 }, { 4, 18 } }; g.FillPolygon(&b, s, 4); break; }
+    case FxPageCurl: {
+        PointF s[] = { { 4, 3 }, { 20, 3 }, { 20, 14 }, { 13, 21 }, { 4, 21 } };
+        g.FillPolygon(&b, s, 5);
+        PointF f[] = { { 20, 14 }, { 13, 14 }, { 13, 21 } };
+        SolidBrush w(Color(255, 255, 255, 255)); g.FillPolygon(&w, f, 3);
+        Gdiplus::Pen fp(c, 1.2f); g.DrawPolygon(&fp, f, 3);
+        break;
+    }
+    case FxShadow:
+        g.FillRectangle(&faint, 8.f, 8.f, 13.f, 13.f);
+        g.FillRectangle(&b, 4.f, 4.f, 13.f, 13.f);
+        break;
+    case FxFilters: {
+        SolidBrush a(Color(200, c.GetR(), c.GetG(), c.GetB()));
+        g.FillEllipse(&a, 3.f, 3.f, 11.f, 11.f); g.FillEllipse(&faint, 10.f, 3.f, 11.f, 11.f); g.FillEllipse(&faint, 6.5f, 10.f, 11.f, 11.f);
+        break;
+    }
+    case FxColorAdjust:
+        for (int i = 0; i < 4; i++) { SolidBrush cb(Color((BYTE)(70 + i * 60), c.GetR(), c.GetG(), c.GetB())); g.FillRectangle(&cb, 4.f, 4.f + i * 4.f, 16.f, 4.f); }
+        break;
+    case FxColorReplace:
+        g.DrawLine(&p24, 5.f, 19.f, 14.f, 10.f);
+        g.FillEllipse(&b, 13.f, 4.f, 7.f, 7.f);
+        g.DrawLine(&p, 11.f, 8.f, 16.f, 13.f);
+        g.FillEllipse(&faint, 3.f, 15.f, 6.f, 6.f);
+        break;
+    case FxSpotlight:
+        g.DrawEllipse(&p, 3.f, 3.f, 13.f, 13.f);
+        g.DrawLine(&p3, 14.5f, 14.5f, 20.5f, 20.5f);
+        g.FillEllipse(&faint, 6.f, 6.f, 7.f, 7.f);
+        break;
+    case FxWatermark: {
+        PointF m[] = { { 3, 19 }, { 9, 9 }, { 13, 15 }, { 16, 11 }, { 21, 19 } };
+        g.FillPolygon(&faint, m, 5);
+        g.DrawPolygon(&p, m, 5);
+        g.FillEllipse(&b, 15.f, 4.f, 4.f, 4.f);
+        break;
+    }
+    case Webcam: case WebcamOff:
+        g.DrawEllipse(&p, 5.5f, 3.f, 13.f, 13.f);
+        g.FillEllipse(&b, 9.6f, 7.1f, 4.8f, 4.8f);
+        g.DrawLine(&p, 12.f, 16.f, 12.f, 20.5f);
+        g.DrawLine(&p, 7.5f, 20.8f, 16.5f, 20.8f);
+        if (id == WebcamOff) g.DrawLine(&p, 3.5f, 3.5f, 20.5f, 20.5f);
         break;
     }
     g.Restore(st);

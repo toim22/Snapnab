@@ -87,6 +87,10 @@ bool SendCommandLine(HWND target, const std::wstring& cmdLine);
 bool ParseCopyData(const COPYDATASTRUCT* cds, std::wstring& outCmdLine);
 std::vector<std::wstring> SplitCommandLine(const std::wstring& cmdLine);
 bool IsProcessRunning(const wchar_t* mutexName);
+// "/restartwait <pid>" na linha de comando: espera o processo anterior terminar (e soltar o mutex de instância única)
+// antes de ocupar o lugar dela; sem o pid, espera a janela wndClass sumir
+void WaitForPreviousInstance(const wchar_t* wndClass);
+std::wstring RestartArgs();     // "/restartwait <pid deste processo>"
 bool LaunchSibling(const wchar_t* exeName, const std::wstring& args, bool lowPriority = false);
 
 // ---- Mensagens de janela privadas ----
@@ -116,3 +120,5 @@ bool PickColor(HWND owner, COLORREF& c);
 std::wstring HotkeyToText(UINT mods, UINT vk);
 
 } // namespace snap
+
+#include "I18n.h"

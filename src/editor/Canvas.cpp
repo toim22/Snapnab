@@ -10,25 +10,27 @@ using Gdiplus::RectF;
 
 const wchar_t* ToolName(Tool t) {
     switch (t) {
-    case Tool::Select: return L"Mover";
-    case Tool::Arrow: return L"Seta";
-    case Tool::Line: return L"Linha";
-    case Tool::Shape: return L"Forma";
-    case Tool::Pen: return L"Caneta";
-    case Tool::Highlighter: return L"Marcador";
-    case Tool::Text: return L"Texto";
-    case Tool::Callout: return L"Balão";
-    case Tool::Step: return L"Passo";
-    case Tool::Stamp: return L"Carimbo";
-    case Tool::Blur: return L"Ocultar";
-    case Tool::Spotlight: return L"Destaque";
-    case Tool::Magnify: return L"Lupa";
-    case Tool::Fill: return L"Preencher";
-    case Tool::Eraser: return L"Borracha";
-    case Tool::Crop: return L"Cortar";
-    case Tool::Selection: return L"Seleção";
-    case Tool::Cutout: return L"Recortar faixa";
-    case Tool::Eyedropper: return L"Conta-gotas";
+    case Tool::Select: return Tr(L"Mover");
+    case Tool::Arrow: return Tr(L"Seta");
+    case Tool::Line: return Tr(L"Linha");
+    case Tool::Shape: return Tr(L"Forma");
+    case Tool::Pen: return Tr(L"Caneta");
+    case Tool::Highlighter: return Tr(L"Marcador");
+    case Tool::Text: return Tr(L"Texto");
+    case Tool::Callout: return Tr(L"Balão");
+    case Tool::Step: return Tr(L"Passos");
+    case Tool::Stamp: return Tr(L"Carimbo");
+    case Tool::Blur: return Tr(L"Ocultar");
+    case Tool::Spotlight: return Tr(L"Destaque");
+    case Tool::Magnify: return Tr(L"Lupa");
+    case Tool::Fill: return Tr(L"Preencher");
+    case Tool::Eraser: return Tr(L"Borracha");
+    case Tool::Crop: return Tr(L"Cortar");
+    case Tool::Selection: return Tr(L"Seleção");
+    case Tool::Cutout: return Tr(L"Recortar faixa");
+    case Tool::Eyedropper: return Tr(L"Conta-gotas");
+    case Tool::Favorites: return Tr(L"Favoritos");
+    case Tool::MagicWand: return Tr(L"Varinha mágica");
     default: return L"";
     }
 }
@@ -45,23 +47,22 @@ void Canvas::Create(HWND parent) {
         wc.style = CS_DBLCLKS;
         RegisterClassW(&wc); reg = true;
     }
-    // estilos de fábrica por ferramenta (quick styles)
-    Style base;
-    styles[Tool::Arrow] = base; styles[Tool::Arrow].width = 6;
-    styles[Tool::Line] = base;
-    styles[Tool::Shape] = base;
-    styles[Tool::Pen] = base;
-    Style hl; hl.stroke = 0xFFFFE600; hl.width = 18; hl.shadow = false; styles[Tool::Highlighter] = hl;
-    Style tx; tx.textColor = 0xFFE5322D; tx.fontSize = 28; tx.width = 0; styles[Tool::Text] = tx;
-    Style co; co.fill = 0xFF1E78E6; co.stroke = 0xFF145AB4; co.width = 0; co.textColor = 0xFFFFFFFF; co.fontSize = 22; styles[Tool::Callout] = co;
-    Style st; st.fontSize = 26; st.textColor = 0xFFFFFFFF; styles[Tool::Step] = st;
-    styles[Tool::Stamp] = base;
-    Style bl; bl.amount = 10; bl.shadow = false; styles[Tool::Blur] = bl;
-    Style sp; sp.amount = 10; sp.shadow = false; styles[Tool::Spotlight] = sp;
-    Style mg; mg.amount = 10; mg.stroke = 0xFF404040; mg.width = 3; styles[Tool::Magnify] = mg;
-    styles[Tool::Fill] = base;
-    Style er; er.width = 24; styles[Tool::Eraser] = er;
-    styles[Tool::Select] = base; styles[Tool::Crop] = base; styles[Tool::Selection] = base; styles[Tool::Cutout] = base; styles[Tool::Eyedropper] = base;
+    // estilos de fábrica por ferramenta: o primeiro estilo rápido do tema Básico (QuickStyles troca depois)
+    const uint32_t red = 0xFFEF4136;
+    Style base; base.stroke = red;
+    for (int t = 0; t < (int)Tool::Count; t++) styles[(Tool)t] = base;
+    Style& ar = styles[Tool::Arrow]; ar.width = 8;
+    Style& ln = styles[Tool::Line]; ln.arrowEnd = CapFlat; ln.width = 4;
+    Style& sh = styles[Tool::Shape]; sh.width = 4; sh.shapeKind = ShapeRect;
+    Style& hl = styles[Tool::Highlighter]; hl.stroke = 0xFFFFEB3B; hl.opacity = 50; hl.shadow = false;
+    Style& tx = styles[Tool::Text]; tx.textColor = red; tx.stroke = 0xFFFFFFFF; tx.width = 4; tx.fontSize = 36;
+    Style& co = styles[Tool::Callout]; co.calloutShape = 4; co.fill = red; co.stroke = red; co.width = 0; co.textColor = 0xFFFFFFFF;
+    co.tailColor = red; co.tailWidth = 6; co.fontSize = 20; co.padding = 8;
+    Style& st = styles[Tool::Step]; st.fontSize = 26; st.textColor = 0xFFFFFFFF;
+    Style& mg = styles[Tool::Magnify]; mg.width = 4; mg.magnifyScale = 200;
+    styles[Tool::Blur].shadow = false; styles[Tool::Spotlight].shadow = false;
+    Style& er = styles[Tool::Eraser]; er.width = 16; er.shadow = false;
+    styles[Tool::Fill].shadow = false;
 
     hwnd = CreateWindowExW(0, L"SnapnabCanvas", nullptr, WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | WS_CLIPCHILDREN,
                            0, 0, 10, 10, parent, nullptr, GetModuleHandleW(nullptr), this);
@@ -73,6 +74,7 @@ void Canvas::SetDocument(Document* d) {
     CommitText();
     doc = d;
     selected = -1;
+    extra_.clear();
     hasSel_ = false; hasCrop_ = false;
     drag_ = Drag::None;
     preview_.reset();
@@ -84,12 +86,15 @@ void Canvas::SetDocument(Document* d) {
 
 void Canvas::SetTool(Tool t) {
     CommitText();
-    if (t != Tool::Selection) ClearRasterSelection();
+    if (t == Tool::MagicWand) { selMode = 3; t = Tool::Selection; }
+    if (t == Tool::Favorites) t = tool;
+    if (t != Tool::Selection && !(t == Tool::Select && smartMove)) ClearRasterSelection();
     if (t != Tool::Crop) hasCrop_ = false;
     tool = t;
     if (t != Tool::Select && selected >= 0 && doc) {
         // mantém a seleção só se o objeto é do tipo da ferramenta
         selected = -1;
+        extra_.clear();
         if (onSelectionChanged) onSelectionChanged();
     }
     InvalidateRect(hwnd, nullptr, FALSE);
@@ -98,6 +103,8 @@ void Canvas::SetTool(Tool t) {
 void Canvas::Refresh(bool docChanged) {
     if (docChanged) dirty_ = true;
     if (doc && selected >= (int)doc->st.objs.size()) selected = -1;
+    if (!doc || selected < 0) extra_.clear();
+    else extra_.erase(std::remove_if(extra_.begin(), extra_.end(), [&](int i) { return i < 0 || i >= (int)doc->st.objs.size() || i == selected; }), extra_.end());
     UpdateScrollBars();
     InvalidateRect(hwnd, nullptr, FALSE);
 }
@@ -184,19 +191,103 @@ void Canvas::FitToWindow() {
 // ---------------------------------------------------------------- alças
 std::vector<POINT> Canvas::HandlePoints(const DrawObj& o) const {
     std::vector<POINT> h;
-    if (o.IsLine()) { h.push_back(ToScreen(o.p1)); h.push_back(ToScreen(o.p2)); return h; }
+    if (o.IsLine()) {
+        h.push_back(ToScreen(o.p1)); h.push_back(ToScreen(o.p2));
+        if (o.style.bezier)        // alça da curva: o ponto do meio da curva
+            h.push_back(ToScreen(PointF(0.25f * o.p1.X + 0.5f * o.ctrl.X + 0.25f * o.p2.X, 0.25f * o.p1.Y + 0.5f * o.ctrl.Y + 0.25f * o.p2.Y)));
+        return h;
+    }
     if (o.type == ObjType::Step) return h;
     RectF r = o.IsPath() ? [&] { RectF b = o.Bounds(); float pad = o.style.width / 2 + (o.style.shadow ? 4 : 0); b.Inflate(-pad, -pad); return b; }() : o.Rect();
     RECT s = ToScreenRect(r);
     int mx = (s.left + s.right) / 2, my = (s.top + s.bottom) / 2;
     h = { { s.left, s.top }, { mx, s.top }, { s.right, s.top }, { s.right, my },
           { s.right, s.bottom }, { mx, s.bottom }, { s.left, s.bottom }, { s.left, my } };
-    if (o.type == ObjType::Callout) h.push_back(ToScreen(o.tail));
+    if ((o.type == ObjType::Callout && o.CalloutHasTail()) || (o.type == ObjType::Magnify && o.style.magnifyLink)) h.push_back(ToScreen(o.tail));
     return h;
 }
 
+std::vector<int> Canvas::SelectedList() const {
+    std::vector<int> v;
+    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size()) return v;
+    v.push_back(selected);
+    for (int i : extra_) if (i >= 0 && i < (int)doc->st.objs.size() && i != selected) v.push_back(i);
+    std::sort(v.begin(), v.end());
+    v.erase(std::unique(v.begin(), v.end()), v.end());
+    return v;
+}
+
+bool Canvas::IsSelected(int i) const {
+    auto v = SelectedList();
+    return std::find(v.begin(), v.end(), i) != v.end();
+}
+
+void Canvas::SelectObjects(const std::vector<int>& idx) {
+    extra_.clear();
+    selected = -1;
+    for (int i : idx) if (doc && i >= 0 && i < (int)doc->st.objs.size()) { if (selected >= 0) extra_.push_back(selected); selected = i; }
+    InvalidateRect(hwnd, nullptr, FALSE);
+    if (onSelectionChanged) onSelectionChanged();
+}
+
+void Canvas::SelectAllObjects() {
+    if (!doc) return;
+    std::vector<int> all;
+    for (int i = 0; i < (int)doc->st.objs.size(); i++) all.push_back(i);
+    if (tool != Tool::Select) SetTool(Tool::Select);
+    SelectObjects(all);
+}
+
+bool Canvas::CanUngroup() const {
+    for (int i : SelectedList()) if (doc->st.objs[i]->type == ObjType::Group) return true;
+    return false;
+}
+
+// Agrupar (CPaintOpGroup): os selecionados viram um objeto só, na posição do que estava mais à frente
+void Canvas::GroupSelected() {
+    auto v = SelectedList();
+    if (!doc || v.size() < 2) return;
+    CommitText();
+    doc->Checkpoint();
+    auto g = std::make_shared<DrawObj>();
+    g->type = ObjType::Group;
+    g->style.shadow = false;
+    for (int i : v) g->children.push_back(*doc->st.objs[i]);
+    g->UpdateGroupRect();
+    int at = v.back() - (int)(v.size() - 1);
+    for (auto it = v.rbegin(); it != v.rend(); ++it) doc->st.objs.erase(doc->st.objs.begin() + *it);
+    doc->st.objs.insert(doc->st.objs.begin() + at, g);
+    extra_.clear();
+    selected = at;
+    Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
+}
+
+// Desagrupar: cada grupo selecionado volta a ser os seus objetos, que ficam selecionados
+void Canvas::UngroupSelected() {
+    auto v = SelectedList();
+    if (!doc || !CanUngroup()) return;
+    CommitText();
+    doc->Checkpoint();
+    std::vector<ObjPtr> out;
+    std::vector<int> newSel;
+    for (int i = 0; i < (int)doc->st.objs.size(); i++) {
+        bool sel = std::find(v.begin(), v.end(), i) != v.end();
+        const DrawObj& o = *doc->st.objs[i];
+        if (sel && o.type == ObjType::Group) {
+            for (auto& c : o.children) { newSel.push_back((int)out.size()); out.push_back(std::make_shared<DrawObj>(c)); }
+        } else {
+            if (sel) newSel.push_back((int)out.size());
+            out.push_back(doc->st.objs[i]);
+        }
+    }
+    doc->st.objs = std::move(out);
+    dirty_ = true;
+    SelectObjects(newSel);
+    Refresh(); if (onDocChanged) onDocChanged();
+}
+
 int Canvas::HitHandle(POINT p) const {
-    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size()) return -1;
+    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size() || !extra_.empty()) return -1;
     auto hs = HandlePoints(*doc->st.objs[selected]);
     for (int i = (int)hs.size() - 1; i >= 0; i--)
         if (std::abs(p.x - hs[i].x) <= kHandle + 2 && std::abs(p.y - hs[i].y) <= kHandle + 2) return i;
@@ -231,8 +322,32 @@ void Canvas::Paint(HDC hdc) {
     FillRect(mem, &cr, bgb); DeleteObject(bgb);
     int dpi = DpiForWindow(hwnd);
     if (!doc || doc->isVideo) {
-        ui::DrawTextCentered(mem, doc ? L"" : L"Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O).",
+        ui::DrawTextCentered(mem, doc ? L"" : Tr(L"Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."),
                              cr, RGB(90, 90, 90), ui::UiFont(dpi, 11));
+    } else if (fxPreview_ && !fxPreview_->empty()) {
+        // prévia do efeito: a imagem resultante, centrada, no zoom atual (reduzida se não couber); sem alças
+        const Image& f = *fxPreview_;
+        double z = std::min({ zoom, (double)(cr.right - 2 * kMargin) / f.w, (double)(cr.bottom - 2 * kMargin) / f.h });
+        z = std::max(z, 0.02);
+        int iw = std::max(1, (int)std::lround(f.w * z)), ih = std::max(1, (int)std::lround(f.h * z));
+        RECT ir{ (cr.right - iw) / 2, (cr.bottom - ih) / 2, 0, 0 };
+        ir.right = ir.left + iw; ir.bottom = ir.top + ih;
+        if (f.HasTransparency()) {
+            Image disp(f.w, f.h);
+            for (size_t i = 0; i < f.px.size(); i++) {
+                int x = (int)(i % f.w), y = (int)(i / f.w);
+                uint32_t bg = (((int)(x * z) / 8 + (int)(y * z) / 8) % 2) ? 0xFFFFFFFF : 0xFFDADADA;
+                disp.px[i] = BlendOver(bg, f.px[i]);
+            }
+            disp.DrawTo(mem, ir.left, ir.top, iw, ih, z < 1.0);
+        } else {
+            RECT sh = ir; OffsetRect(&sh, 3, 3);
+            HBRUSH shb = CreateSolidBrush(RGB(180, 182, 186)); FillRect(mem, &sh, shb); DeleteObject(shb);
+            f.DrawTo(mem, ir.left, ir.top, iw, ih, z < 1.0);
+        }
+        RECT tag{ cr.right / 2 - ui::Scale(130, dpi), ui::Scale(10, dpi), cr.right / 2 + ui::Scale(130, dpi), ui::Scale(36, dpi) };
+        ui::FillRoundRect(mem, tag, ui::Scale(13, dpi), RGB(32, 32, 36), RGB(32, 32, 36));
+        ui::DrawTextCentered(mem, Tr(L"Prévia — Aplicar ou Cancelar no painel"), tag, RGB(255, 255, 255), ui::UiFont(dpi, 9));
     } else {
         Recompose();
         // quadro exibido = composição (+ objeto em criação)
@@ -280,6 +395,38 @@ void Canvas::Paint(HDC hdc) {
             g.DrawRectangle(&p1, GR(sr));
             g.DrawRectangle(&p2, GR(sr));
         }
+        // caixa de texto: tracejada enquanto é arrastada e enquanto o texto é digitado
+        if ((preview_ && preview_->type == ObjType::Text && drag_ == Drag::Create) ||
+            (edit_ && editIdx_ >= 0 && editIdx_ < (int)doc->st.objs.size() && doc->st.objs[editIdx_]->type == ObjType::Text)) {
+            const DrawObj& tb = preview_ && drag_ == Drag::Create ? *preview_ : *doc->st.objs[editIdx_];
+            RECT s = ToScreenRect(tb.Rect());
+            Gdiplus::Pen w1(Gdiplus::Color(255, 255, 255, 255), 1.0f), p(Gdiplus::Color(255, 30, 120, 230), 1.0f);
+            p.SetDashStyle(Gdiplus::DashStyleDash);
+            g.DrawRectangle(&w1, GR(s));
+            g.DrawRectangle(&p, GR(s));
+        }
+        // retângulo de seleção de objetos
+        if (drag_ == Drag::Marquee) {
+            RECT s = ToScreenRect(selRect_);
+            Gdiplus::SolidBrush fillB(Gdiplus::Color(40, 30, 120, 230));
+            g.FillRectangle(&fillB, GR(s));
+            Gdiplus::Pen p(Gdiplus::Color(255, 30, 120, 230), 1.2f); p.SetDashStyle(Gdiplus::DashStyleDash);
+            g.DrawRectangle(&p, GR(s));
+        }
+        // vários objetos selecionados: contorno de cada um e da área do conjunto
+        if (!edit_ && SelectionCount() > 1) {
+            Gdiplus::Pen p(Gdiplus::Color(220, 30, 120, 230), 1.4f); p.SetDashStyle(Gdiplus::DashStyleDot);
+            RectF u;
+            bool first = true;
+            for (int i : SelectedList()) {
+                RectF b = doc->st.objs[i]->Bounds();
+                g.DrawRectangle(&p, GR(ToScreenRect(b)));
+                if (first) { u = b; first = false; } else RectF::Union(u, u, b);
+            }
+            Gdiplus::Pen up(Gdiplus::Color(255, 30, 120, 230), 1.0f); up.SetDashStyle(Gdiplus::DashStyleDash);
+            RECT ur = ToScreenRect(u); InflateRect(&ur, 3, 3);
+            g.DrawRectangle(&up, GR(ur));
+        }
         // seleção em andamento (retângulo/elipse/laço)
         if (drag_ == Drag::Select || drag_ == Drag::Lasso) {
             Gdiplus::Pen p(Gdiplus::Color(255, 30, 120, 230), 1.5f); p.SetDashStyle(Gdiplus::DashStyleDash);
@@ -302,7 +449,7 @@ void Canvas::Paint(HDC hdc) {
             g.FillRegion(&dim, &rg);
             Gdiplus::Pen p(Gdiplus::Color(255, 255, 255, 255), 2);
             g.DrawRectangle(&p, GR(c));
-            std::wstring t = Format(L"%d × %d  — Enter aplica, Esc cancela", (int)crop_.Width, (int)crop_.Height);
+            std::wstring t = Format(Tr(L"%d × %d  — Enter aplica, Esc cancela"), (int)crop_.Width, (int)crop_.Height);
             RECT tr{ c.left, c.top - ui::Scale(26, dpi), c.left + ui::Scale(300, dpi), c.top - ui::Scale(4, dpi) };
             if (tr.top < 0) OffsetRect(&tr, 0, ui::Scale(32, dpi));
             ui::FillRoundRect(mem, tr, 8, RGB(30, 30, 30), RGB(30, 30, 30));
@@ -316,7 +463,7 @@ void Canvas::Paint(HDC hdc) {
             else g.FillRectangle(&b, s.left, ir.top, s.right - s.left, ih);
         }
         // alças do objeto selecionado
-        if (selected >= 0 && selected < (int)doc->st.objs.size() && !edit_) {
+        if (selected >= 0 && selected < (int)doc->st.objs.size() && !edit_ && SelectionCount() == 1) {
             const DrawObj& obj = *doc->st.objs[selected];
             RECT b = ToScreenRect(obj.IsLine() ? RectF() : obj.Bounds());
             if (!obj.IsLine()) {
@@ -327,7 +474,7 @@ void Canvas::Paint(HDC hdc) {
             Gdiplus::Pen bp(Gdiplus::Color(255, 30, 120, 230), 1.5f);
             auto hs = HandlePoints(obj);
             for (size_t i = 0; i < hs.size(); i++) {
-                bool tail = obj.type == ObjType::Callout && i == 8;
+                bool tail = (i == 8 && !obj.IsLine()) || (obj.IsLine() && i == 2);
                 Gdiplus::SolidBrush yb(Gdiplus::Color(255, 255, 200, 0));
                 g.FillEllipse(tail ? &yb : &wb, hs[i].x - kHandle, hs[i].y - kHandle, kHandle * 2, kHandle * 2);
                 g.DrawEllipse(&bp, hs[i].x - kHandle, hs[i].y - kHandle, kHandle * 2, kHandle * 2);
@@ -390,8 +537,10 @@ Image Canvas::SelectionImage() const {
                 if (!selMask_[(size_t)(selBounds_.top + y) * doc->w() + selBounds_.left + x]) out.at(x, y) = 0;
         return out;
     }
-    if (selected >= 0 && selected < (int)doc->st.objs.size()) {
-        RectF b = doc->st.objs[selected]->Bounds();
+    auto v = SelectedList();
+    if (!v.empty()) {
+        RectF b = doc->st.objs[v[0]]->Bounds();
+        for (int i : v) RectF::Union(b, b, doc->st.objs[i]->Bounds());
         return comp.Crop({ (LONG)b.X, (LONG)b.Y, (LONG)std::ceil(b.GetRight()), (LONG)std::ceil(b.GetBottom()) });
     }
     return comp;
@@ -414,10 +563,12 @@ void Canvas::DeleteSelected() {
         Refresh(); if (onDocChanged) onDocChanged();
         return;
     }
-    if (selected >= 0 && selected < (int)doc->st.objs.size()) {
+    auto v = SelectedList();
+    if (!v.empty()) {
         doc->Checkpoint();
-        doc->st.objs.erase(doc->st.objs.begin() + selected);
+        for (auto it = v.rbegin(); it != v.rend(); ++it) doc->st.objs.erase(doc->st.objs.begin() + *it);
         selected = -1;
+        extra_.clear();
         Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
     }
 }
@@ -452,30 +603,141 @@ void Canvas::PasteImage(const Image& img) {
     float x = std::max(0.0f, (doc->w() - img.w) / 2.0f), y = std::max(0.0f, (doc->h() - img.h) / 2.0f);
     o->p1 = PointF(x, y); o->p2 = PointF(x + img.w, y + img.h);
     doc->st.objs.push_back(o);
-    selected = (int)doc->st.objs.size() - 1;
+    selected = (int)doc->st.objs.size() - 1; extra_.clear();
     SetTool(Tool::Select);
-    selected = (int)doc->st.objs.size() - 1;
+    selected = (int)doc->st.objs.size() - 1; extra_.clear();
     Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
 }
 
+// ordem: os selecionados andam juntos, mantendo a ordem entre eles
+static void Reorder(Document* doc, const std::vector<int>& v, int mode, int& selected, std::vector<int>& extra) {
+    auto& objs = doc->st.objs;
+    ObjPtr primary = selected >= 0 ? objs[selected] : nullptr;
+    std::vector<char> sel(objs.size(), 0);
+    for (int i : v) sel[i] = true;
+    if (mode == 0 || mode == 3) {              // 0 primeiro plano, 3 plano de fundo
+        std::vector<ObjPtr> a, b;
+        for (size_t i = 0; i < objs.size(); i++) (sel[i] ? a : b).push_back(objs[i]);
+        objs = mode == 0 ? b : a;
+        objs.insert(objs.end(), (mode == 0 ? a : b).begin(), (mode == 0 ? a : b).end());
+    } else if (mode == 1) {                    // um passo à frente
+        for (int i = (int)objs.size() - 2; i >= 0; i--)
+            if (sel[i] && !sel[i + 1]) { std::swap(objs[i], objs[i + 1]); std::swap(sel[i], sel[i + 1]); }
+    } else {                                   // um passo para trás
+        for (int i = 1; i < (int)objs.size(); i++)
+            if (sel[i] && !sel[i - 1]) { std::swap(objs[i], objs[i - 1]); std::swap(sel[i], sel[i - 1]); }
+    }
+    extra.clear();
+    selected = -1;
+    for (size_t i = 0; i < objs.size(); i++) {         // seleção refeita nas novas posições
+        if (!sel[i]) continue;
+        if (objs[i] == primary) selected = (int)i; else extra.push_back((int)i);
+    }
+    if (selected < 0 && !extra.empty()) { selected = extra.back(); extra.pop_back(); }
+}
+
 void Canvas::BringToFront() {
-    if (!doc || selected < 0) return;
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
     doc->Checkpoint();
-    auto o = doc->st.objs[selected];
-    doc->st.objs.erase(doc->st.objs.begin() + selected);
-    doc->st.objs.push_back(o);
-    selected = (int)doc->st.objs.size() - 1;
+    Reorder(doc, v, 0, selected, extra_);
     Refresh(); if (onDocChanged) onDocChanged();
 }
 
 void Canvas::SendToBack() {
-    if (!doc || selected < 0) return;
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
     doc->Checkpoint();
-    auto o = doc->st.objs[selected];
-    doc->st.objs.erase(doc->st.objs.begin() + selected);
-    doc->st.objs.insert(doc->st.objs.begin(), o);
-    selected = 0;
+    Reorder(doc, v, 3, selected, extra_);
     Refresh(); if (onDocChanged) onDocChanged();
+}
+
+void Canvas::BringForward() {
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
+    doc->Checkpoint();
+    Reorder(doc, v, 1, selected, extra_);
+    Refresh(); if (onDocChanged) onDocChanged();
+}
+
+void Canvas::SendBackward() {
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
+    doc->Checkpoint();
+    Reorder(doc, v, 2, selected, extra_);
+    Refresh(); if (onDocChanged) onDocChanged();
+}
+
+static RectF ObjExtent(const DrawObj& o) { return o.IsLine() || o.IsPath() || o.type == ObjType::Group ? o.Bounds() : o.Rect(); }
+
+// alinhar: um objeto, em relação à imagem; vários, entre si (pela área que ocupam juntos)
+void Canvas::AlignSelected(int mode) {
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
+    RectF ref(0, 0, (float)doc->w(), (float)doc->h());
+    if (v.size() > 1) { ref = ObjExtent(*doc->st.objs[v[0]]); for (int i : v) RectF::Union(ref, ref, ObjExtent(*doc->st.objs[i])); }
+    bool any = false;
+    std::vector<std::pair<int, PointF>> moves;
+    for (int i : v) {
+        RectF r = ObjExtent(*doc->st.objs[i]);
+        float dx = 0, dy = 0;
+        switch (mode) {
+        case 0: dx = ref.X - r.X; break;
+        case 1: dx = ref.X + (ref.Width - r.Width) / 2 - r.X; break;
+        case 2: dx = ref.GetRight() - r.GetRight(); break;
+        case 3: dy = ref.Y - r.Y; break;
+        case 4: dy = ref.Y + (ref.Height - r.Height) / 2 - r.Y; break;
+        case 5: dy = ref.GetBottom() - r.GetBottom(); break;
+        }
+        if (std::fabs(dx) > 0.01f || std::fabs(dy) > 0.01f) { any = true; moves.push_back({ i, PointF(dx, dy) }); }
+    }
+    if (!any) return;
+    doc->Checkpoint();
+    for (auto& [i, d] : moves) doc->Mutable(i)->Move(d.X, d.Y);
+    Refresh(); if (onDocChanged) onDocChanged();
+}
+
+bool Canvas::FlipSelected(bool horizontal) {
+    auto v = SelectedList();
+    if (!doc || v.empty()) return false;
+    RectF u = ObjExtent(*doc->st.objs[v[0]]);
+    for (int i : v) RectF::Union(u, u, ObjExtent(*doc->st.objs[i]));
+    float cx = u.X + u.Width / 2, cy = u.Y + u.Height / 2;
+    doc->Checkpoint();
+    for (int i : v) {
+        DrawObj* o = doc->Mutable(i);
+        std::function<void(DrawObj&)> flipObj = [&](DrawObj& ob) {
+            ob.MapPoints([&](PointF p) { return horizontal ? PointF(2 * cx - p.X, p.Y) : PointF(p.X, 2 * cy - p.Y); });
+            if (ob.picture) ob.picture = std::make_shared<Image>(horizontal ? fx::FlipH(*ob.picture) : fx::FlipV(*ob.picture));
+            for (auto& c : ob.children) if (c.picture) c.picture = std::make_shared<Image>(horizontal ? fx::FlipH(*c.picture) : fx::FlipV(*c.picture));
+        };
+        flipObj(*o);
+        o->UpdateGroupRect();
+    }
+    Refresh(); if (onDocChanged) onDocChanged();
+    return true;
+}
+
+void Canvas::FlattenSelected() {
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
+    CommitText();
+    doc->Checkpoint();
+    Image base = *doc->st.base;
+    {
+        auto bmp = base.WrapGdip();
+        Gdiplus::Graphics g(bmp.get());
+        g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+        g.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+        g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+        for (int i : v) RenderObject(g, base, *doc->st.objs[i]);
+        g.Flush(Gdiplus::FlushIntentionSync);
+    }
+    doc->SetBase(std::move(base));
+    for (auto it = v.rbegin(); it != v.rend(); ++it) doc->st.objs.erase(doc->st.objs.begin() + *it);
+    selected = -1;
+    extra_.clear();
+    Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
 }
 
 void Canvas::FlattenAll() {
@@ -488,39 +750,51 @@ void Canvas::FlattenAll() {
     Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
 }
 
-void Canvas::ApplyStyleToSelected(const Style& s) {
+static int Family(const DrawObj& o) {
+    if (o.IsShape()) return (int)ObjType::Shape;
+    if (o.type == ObjType::Pixelate) return (int)ObjType::Blur;
+    return (int)o.type;
+}
+
+void Canvas::ApplyStyleToSelected(const Style& s, bool newStep) {
     if (!doc || selected < 0 || selected >= (int)doc->st.objs.size()) return;
-    doc->Checkpoint();
+    if (newStep) doc->Checkpoint();
+    int fam = Family(*doc->st.objs[selected]);
+    for (int i : SelectedList()) {                // vários selecionados: o estilo vale para os do mesmo tipo do principal
+        if (i == selected || Family(*doc->st.objs[i]) != fam || doc->st.objs[i]->type == ObjType::Group) continue;
+        DrawObj* x = doc->Mutable(i);
+        x->style = s;
+        if (x->IsShape()) x->type = ObjType::Shape;
+        if (x->type == ObjType::Blur || x->type == ObjType::Pixelate) x->type = s.hideKind == 1 ? ObjType::Pixelate : ObjType::Blur;
+    }
+    if (doc->st.objs[selected]->type == ObjType::Group) { Refresh(); if (onDocChanged) onDocChanged(); return; }
     DrawObj* o = doc->Mutable(selected);
     o->style = s;
+    if (o->IsShape()) o->type = ObjType::Shape;                  // formas antigas viram Shape com o tipo do estilo
+    if (o->type == ObjType::Blur || o->type == ObjType::Pixelate) o->type = s.hideKind == 1 ? ObjType::Pixelate : ObjType::Blur;
+    if (o->type == ObjType::Magnify && s.magnifyLink && o->tail.X == 0 && o->tail.Y == 0) {
+        RectF r = o->Rect(); o->tail = PointF(r.X - r.Width * 0.4f, r.GetBottom() + r.Height * 0.3f);
+    }
+    if (o->type == ObjType::Callout && o->CalloutHasTail() && o->Rect().Contains(o->tail)) {
+        RectF r = o->Rect(); o->tail = PointF(r.X + r.Width * 0.25f, r.GetBottom() + std::max(20.0f, r.Height * 0.45f));
+    }
     Refresh(); if (onDocChanged) onDocChanged();
 }
 
-void Canvas::ChangeSelectedKind() {
-    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size()) return;
-    const DrawObj& cur = *doc->st.objs[selected];
-    ObjType nt = cur.type;
-    if (cur.type == ObjType::Rect || cur.type == ObjType::Ellipse || cur.type == ObjType::RoundRect)
-        nt = shapeKind == 1 ? ObjType::Ellipse : shapeKind == 2 ? ObjType::RoundRect : ObjType::Rect;
-    else if (cur.type == ObjType::Blur || cur.type == ObjType::Pixelate)
-        nt = hideKind == 1 ? ObjType::Pixelate : ObjType::Blur;
-    else if (cur.type == ObjType::Stamp) {
-        auto g = StampGlyphs();
-        if (stampIndex >= 0 && stampIndex < (int)g.size() && g[stampIndex] != cur.text) {
-            doc->Checkpoint(); doc->Mutable(selected)->text = g[stampIndex]; Refresh(); if (onDocChanged) onDocChanged();
-        }
-        return;
-    }
-    if (nt == cur.type) return;
+void Canvas::SetSelectedStamp(const std::wstring& id) {
+    stampId = id;
+    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size() || doc->st.objs[selected]->type != ObjType::Stamp) return;
+    if (doc->st.objs[selected]->text == id) return;
     doc->Checkpoint();
-    doc->Mutable(selected)->type = nt;
+    doc->Mutable(selected)->text = id;
     Refresh(); if (onDocChanged) onDocChanged();
 }
 
 void Canvas::Nudge(int dx, int dy) {
-    if (!doc || selected < 0 || selected >= (int)doc->st.objs.size()) return;
+    auto v = SelectedList();
+    if (!doc || v.empty()) return;
     doc->Checkpoint();
-    doc->Mutable(selected)->Move((float)dx, (float)dy);
+    for (int i : v) doc->Mutable(i)->Move((float)dx, (float)dy);
     Refresh(); if (onDocChanged) onDocChanged();
 }
 
@@ -532,21 +806,21 @@ void Canvas::BeginTextEdit(int idx, bool isNew) {
     if (!o.HasText()) return;
     if (!isNew) doc->Checkpoint();
     editIdx_ = idx; editNew_ = isNew;
-    RECT r = ToScreenRect(o.Rect());
-    if (o.type == ObjType::Callout) {
-        int in = (int)((std::min(r.right - r.left, r.bottom - r.top)) * (o.style.calloutShape >= 2 ? 0.18 : 0.08)) + 4;
-        InflateRect(&r, -in, -in);
-    }
+    RectF tr = o.Rect();
+    if (o.type == ObjType::Callout) tr = CalloutTextRect(o);
+    else tr.Inflate(-o.style.padding, -o.style.padding);
+    RECT r = ToScreenRect(tr);
     if (r.right - r.left < 60) r.right = r.left + 60;
     if (r.bottom - r.top < 30) r.bottom = r.top + 30;
     LOGFONTW lf{};
     lf.lfHeight = -std::max(8, (int)std::lround(o.style.fontSize * zoom));
     lf.lfWeight = o.style.bold ? FW_BOLD : FW_NORMAL;
+    lf.lfItalic = o.style.italic; lf.lfUnderline = o.style.underline;
     lf.lfQuality = CLEARTYPE_QUALITY;
     wcsncpy_s(lf.lfFaceName, o.style.font.c_str(), _TRUNCATE);
     if (editFont_) DeleteObject(editFont_);
     editFont_ = CreateFontIndirectW(&lf);
-    DWORD align = o.type == ObjType::Callout ? ES_CENTER : ES_LEFT;
+    DWORD align = o.style.alignH == 1 ? ES_CENTER : o.style.alignH == 2 ? ES_RIGHT : ES_LEFT;
     edit_ = CreateWindowExW(0, L"EDIT", nullptr, WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | align,
                             r.left, r.top, r.right - r.left, r.bottom - r.top, hwnd, (HMENU)77, GetModuleHandleW(nullptr), nullptr);
     SendMessageW(edit_, WM_SETFONT, (WPARAM)editFont_, TRUE);
@@ -556,6 +830,53 @@ void Canvas::BeginTextEdit(int idx, bool isNew) {
     SendMessageW(edit_, EM_SETSEL, 0, -1);
     SetFocus(edit_);
     dirty_ = true;
+    LayoutTextEdit();
+    InvalidateRect(hwnd, nullptr, FALSE);
+}
+
+// A largura é a da caixa (arrastada ou a padrão); a altura acompanha o texto digitado — a caixa de texto cresce para
+// baixo quando o texto passa dela. A caixa de edição fica na altura do texto, no alinhamento vertical escolhido,
+// para o que se vê ao digitar ser o mesmo que fica na imagem.
+void Canvas::LayoutTextEdit() {
+    if (!edit_ || !doc || editIdx_ < 0 || editIdx_ >= (int)doc->st.objs.size()) return;
+    ObjType type = doc->st.objs[editIdx_]->type;
+    int alignV = doc->st.objs[editIdx_]->style.alignV;
+    float pad = doc->st.objs[editIdx_]->style.padding;
+    auto area = [&] {
+        const DrawObj& o = *doc->st.objs[editIdx_];
+        RectF a = o.Rect();
+        if (type == ObjType::Callout) a = CalloutTextRect(o); else a.Inflate(-pad, -pad);
+        RECT r = ToScreenRect(a);
+        if (r.right - r.left < 60) r.right = r.left + 60;
+        return r;
+    };
+    RECT r = area();
+    int n = GetWindowTextLengthW(edit_);
+    std::wstring t(n + 1, L'\0');
+    GetWindowTextW(edit_, t.data(), n + 1);
+    t.resize(n);
+    if (t.empty() || t.back() == L'\n') t += L"Ag";        // a linha nova ainda vazia também ocupa altura
+    HDC dc = GetDC(edit_);
+    HGDIOBJ of = SelectObject(dc, editFont_);
+    DWORD mg = (DWORD)SendMessageW(edit_, EM_GETMARGINS, 0, 0);
+    RECT m{ 0, 0, std::max(10, (int)(r.right - r.left) - (int)LOWORD(mg) - (int)HIWORD(mg) - 2), 0 };
+    DrawTextW(dc, t.c_str(), -1, &m, DT_CALCRECT | DT_WORDBREAK | DT_EDITCONTROL | DT_NOPREFIX);
+    SelectObject(dc, of);
+    ReleaseDC(edit_, dc);
+    int textH = m.bottom + 4, areaH = r.bottom - r.top;
+    if (type == ObjType::Text && textH > areaH) {          // cresce para baixo
+        float grow = (textH - areaH) / (float)zoom;
+        DrawObj* w = doc->Mutable(editIdx_);
+        if (w->p2.Y >= w->p1.Y) w->p2.Y += grow; else w->p1.Y += grow;
+        dirty_ = true;
+        r = area();
+        areaH = r.bottom - r.top;
+    }
+    int h = std::min(textH, areaH);
+    int top = r.top;
+    if (h < areaH) top = alignV == 1 ? r.top + (areaH - h) / 2 : alignV == 2 ? r.bottom - h : r.top;
+    MoveWindow(edit_, r.left, top, r.right - r.left, std::max(h, 8), TRUE);
+    if (textH <= areaH) SendMessageW(edit_, EM_LINESCROLL, 0, -1000);   // tudo cabe: sem rolagem interna
     InvalidateRect(hwnd, nullptr, FALSE);
 }
 
@@ -576,7 +897,13 @@ void Canvas::CommitText() {
             selected = -1;
             if (onSelectionChanged) onSelectionChanged();
         } else if (doc->st.objs[editIdx_]->text != clean) {
-            doc->Mutable(editIdx_)->text = clean;
+            DrawObj* w = doc->Mutable(editIdx_);
+            w->text = clean;
+            if (w->type == ObjType::Text) {                     // garante a altura para o texto inteiro (sem cortar linhas)
+                RectF r = w->Rect();
+                float need = TextBlockHeight(*w, r.Width - 2 * w->style.padding) + 2 * w->style.padding;
+                if (r.Height < need) { if (w->p2.Y >= w->p1.Y) w->p2.Y = w->p1.Y + need; else w->p1.Y = w->p2.Y + need; }
+            }
         } else if (!editNew_) doc->DiscardCheckpoint();
     }
     editIdx_ = -1;
@@ -587,6 +914,15 @@ void Canvas::CommitText() {
 }
 
 // ---------------------------------------------------------------- mouse
+void Canvas::BeginMove() {
+    doc->Checkpoint();
+    dragMulti_.clear();
+    for (int i : SelectedList()) dragMulti_.push_back({ i, *doc->st.objs[i] });
+    if (selected >= 0) dragOrig_ = *doc->st.objs[selected];
+    drag_ = Drag::Move;
+    InvalidateRect(hwnd, nullptr, FALSE);
+}
+
 void Canvas::StartSmartMove(PointF p) {
     // levanta os pixels da seleção como objeto e preenche o buraco (Smart Move, TSCV.Inpainting)
     doc->Checkpoint();
@@ -604,30 +940,50 @@ void Canvas::StartSmartMove(PointF p) {
     o->p2 = PointF((float)selBounds_.right, (float)selBounds_.bottom);
     doc->st.objs.push_back(o);
     ClearRasterSelection();
-    selected = (int)doc->st.objs.size() - 1;
+    selected = (int)doc->st.objs.size() - 1; extra_.clear();
+    extra_.clear();
     dragOrig_ = *o;
+    dragMulti_ = { { selected, *o } };
     drag_ = Drag::Move;
     changed_ = true;
     dirty_ = true;
     if (onSelectionChanged) onSelectionChanged();
 }
 
+// borracha: tira alfa da imagem na opacidade escolhida; com suavização a borda do pincel é gradual
 void Canvas::EraseAt(PointF p) {
     Image& base = const_cast<Image&>(*doc->st.base);
-    float r = std::max(2.0f, CurrentStyle().width / 2);
-    for (int y = (int)(p.Y - r); y <= (int)(p.Y + r); y++)
-        for (int x = (int)(p.X - r); x <= (int)(p.X + r); x++) {
+    const Style& s = CurrentStyle();
+    float r = std::max(1.0f, s.width / 2);
+    int op = std::clamp(s.opacity, 1, 100);
+    for (int y = (int)(p.Y - r - 1); y <= (int)(p.Y + r + 1); y++)
+        for (int x = (int)(p.X - r - 1); x <= (int)(p.X + r + 1); x++) {
             if (x < 0 || y < 0 || x >= base.w || y >= base.h) continue;
-            float dx = x + 0.5f - p.X, dy = y + 0.5f - p.Y;
-            if (dx * dx + dy * dy <= r * r) base.at(x, y) = 0;
+            float dx = x + 0.5f - p.X, dy = y + 0.5f - p.Y, d = std::sqrt(dx * dx + dy * dy);
+            float cover = s.antialias ? std::clamp(r + 0.5f - d, 0.0f, 1.0f) : (d <= r ? 1.0f : 0.0f);
+            if (cover <= 0) continue;
+            int keep = 255 - (int)(255 * cover * op / 100);
+            uint32_t& px = base.at(x, y);
+            int na = std::min(CA(px), CA(px) * keep / 255);
+            px = na ? (px & 0x00FFFFFF) | ((uint32_t)na << 24) : 0;
         }
 }
 
 void Canvas::OnDown(POINT p, bool dbl) {
-    if (!doc || doc->isVideo) return;
+    if (!doc || doc->isVideo || fxPreview_) return;         // durante a prévia de um efeito a imagem não é editável
     if (edit_) { CommitText(); return; }      // clicar fora só confirma o texto (não cria outro objeto)
     SetFocus(hwnd);
     PointF d = ToDoc(p);
+    if (pickColorOnce) {                      // conta-gotas do painel do Preencher
+        pickColorOnce = false;
+        Recompose();
+        int x = (int)d.X, y = (int)d.Y;
+        if (x >= 0 && y >= 0 && x < composed_.w && y < composed_.h) {
+            styles[tool].stroke = composed_.at(x, y) | 0xFF000000;
+            if (onSelectionChanged) onSelectionChanged();
+        }
+        return;
+    }
     downScreen_ = p; downDoc_ = d; changed_ = false;
     SetCapture(hwnd);
 
@@ -645,23 +1001,48 @@ void Canvas::OnDown(POINT p, bool dbl) {
         int hit = HitObject(d);
         // com ferramenta de desenho, clicar num objeto existente o seleciona/move (como no original)
         if (hit >= 0 && (tool == Tool::Select || hit == selected || !dbl)) {
-            if (tool == Tool::Select || hit == selected || (GetKeyState(VK_CONTROL) >= 0 && tool != Tool::Step && tool != Tool::Stamp)) {
-                if (dbl && doc->st.objs[hit]->HasText()) { selected = hit; BeginTextEdit(hit, false); ReleaseCapture(); return; }
-                if (hit != selected) { selected = hit; if (onSelectionChanged) onSelectionChanged(); }
-                doc->Checkpoint();
-                dragOrig_ = *doc->st.objs[hit];
-                drag_ = Drag::Move;
-                InvalidateRect(hwnd, nullptr, FALSE);
+            // ferramenta de desenho só pega objetos do próprio tipo (seta pega seta); sobre os outros ela desenha —
+            // assim dá para marcar ou apontar um texto. Ctrl força desenhar também sobre o mesmo tipo.
+            ObjType ht = doc->st.objs[hit]->type;
+            bool sameKind = (tool == Tool::Arrow && ht == ObjType::Arrow) || (tool == Tool::Line && ht == ObjType::Line) ||
+                            (tool == Tool::Shape && doc->st.objs[hit]->IsShape()) || (tool == Tool::Pen && ht == ObjType::Pen) ||
+                            (tool == Tool::Highlighter && ht == ObjType::Highlighter) || (tool == Tool::Text && ht == ObjType::Text) ||
+                            (tool == Tool::Callout && ht == ObjType::Callout) || (tool == Tool::Magnify && ht == ObjType::Magnify) ||
+                            (tool == Tool::Blur && (ht == ObjType::Blur || ht == ObjType::Pixelate)) || (tool == Tool::Spotlight && ht == ObjType::Spotlight);
+            if (tool == Tool::Select || hit == selected || (GetKeyState(VK_CONTROL) >= 0 && sameKind)) {
+                if (dbl && doc->st.objs[hit]->HasText()) { selected = hit; extra_.clear(); BeginTextEdit(hit, false); ReleaseCapture(); return; }
+                bool toggle = tool == Tool::Select && (GetKeyState(VK_CONTROL) < 0 || GetKeyState(VK_SHIFT) < 0);
+                if (toggle && IsSelected(hit)) {         // Ctrl/Shift+clique num selecionado: tira da seleção
+                    auto v = SelectedList();
+                    v.erase(std::remove(v.begin(), v.end(), hit), v.end());
+                    SelectObjects(v);
+                    ReleaseCapture();
+                    return;
+                }
+                if (toggle) { if (selected >= 0) extra_.push_back(selected); selected = hit; }
+                else if (!IsSelected(hit)) { selected = hit; extra_.clear(); }
+                else if (hit != selected) { extra_.push_back(selected); selected = hit; }     // continua com todos, este é o principal
+                if (onSelectionChanged) onSelectionChanged();
+                BeginMove();
                 return;
             }
         }
         if (tool == Tool::Select) {
-            if (selected != -1) { selected = -1; if (onSelectionChanged) onSelectionChanged(); InvalidateRect(hwnd, nullptr, FALSE); }
-            drag_ = Drag::Pan; panStart_ = { scroll_.x, scroll_.y };
+            bool keep = GetKeyState(VK_CONTROL) < 0 || GetKeyState(VK_SHIFT) < 0;
+            if (selected != -1 && !keep) { selected = -1; extra_.clear(); if (onSelectionChanged) onSelectionChanged(); InvalidateRect(hwnd, nullptr, FALSE); }
+            if (smartMove) {               // Smart Move: arrastar dentro da área levanta os pixels; fora, marca outra área
+                int x = (int)d.X, y = (int)d.Y;
+                bool inside = hasSel_ && x >= 0 && y >= 0 && x < doc->w() && y < doc->h() && selMask_[(size_t)y * doc->w() + x];
+                if (inside) { StartSmartMove(d); return; }
+                ClearRasterSelection();
+                drag_ = Drag::Select; selRect_ = RectF(d.X, d.Y, 0, 0);
+                return;
+            }
+            drag_ = Drag::Marquee; selRect_ = RectF(d.X, d.Y, 0, 0);    // retângulo de seleção de objetos
             return;
         }
     }
-    if (selected != -1 && drawTool) { selected = -1; if (onSelectionChanged) onSelectionChanged(); }
+    if (selected != -1 && drawTool) { selected = -1; extra_.clear(); if (onSelectionChanged) onSelectionChanged(); }
 
     Style s = CurrentStyle();
     switch (tool) {
@@ -671,7 +1052,7 @@ void Canvas::OnDown(POINT p, bool dbl) {
         o->type = ObjType::Step; o->style = s; o->p1 = o->p2 = d;
         o->stepValue = doc->st.nextStep++;
         doc->st.objs.push_back(o);
-        selected = (int)doc->st.objs.size() - 1;
+        selected = (int)doc->st.objs.size() - 1; extra_.clear();
         Refresh(); if (onDocChanged) onDocChanged(); if (onSelectionChanged) onSelectionChanged();
         ReleaseCapture();
         return;
@@ -731,16 +1112,19 @@ void Canvas::OnDown(POINT p, bool dbl) {
     DrawObj& o = *preview_;
     o.style = s;
     o.p1 = o.p2 = d;
+    o.ctrl = d;
     switch (tool) {
     case Tool::Arrow: o.type = ObjType::Arrow; break;
-    case Tool::Line: o.type = ObjType::Line; o.style.arrowEnd = 0; break;
-    case Tool::Shape: o.type = shapeKind == 1 ? ObjType::Ellipse : shapeKind == 2 ? ObjType::RoundRect : ObjType::Rect; break;
+    case Tool::Line: o.type = ObjType::Line; break;
+    case Tool::Shape: o.type = ObjType::Shape; break;
     case Tool::Pen: o.type = ObjType::Pen; o.pts = { d }; break;
-    case Tool::Highlighter: o.type = ObjType::Highlighter; o.pts = { d }; break;
+    // marcador (CPaintOpHighlight, objeto <Highlight>, comp_5 §3.2): sempre um retângulo arrastado, na cor e na
+    // opacidade escolhidas
+    case Tool::Highlighter: o.type = ObjType::Highlighter; break;
     case Tool::Text: o.type = ObjType::Text; break;
     case Tool::Callout: o.type = ObjType::Callout; break;
-    case Tool::Stamp: { o.type = ObjType::Stamp; auto g = StampGlyphs(); o.text = g[std::clamp(stampIndex, 0, (int)g.size() - 1)]; break; }
-    case Tool::Blur: o.type = hideKind == 1 ? ObjType::Pixelate : ObjType::Blur; break;
+    case Tool::Stamp: o.type = ObjType::Stamp; o.text = stampId; break;
+    case Tool::Blur: o.type = s.hideKind == 1 ? ObjType::Pixelate : ObjType::Blur; break;
     case Tool::Spotlight: o.type = ObjType::Spotlight; break;
     case Tool::Magnify: o.type = ObjType::Magnify; break;
     default: break;
@@ -763,7 +1147,7 @@ void Canvas::OnMove(POINT p, WPARAM keys) {
     }
     case Drag::Create: {
         DrawObj& o = *preview_;
-        if (o.IsPath()) {
+        if (o.IsPath() && !o.pts.empty()) {
             PointF last = o.pts.back();
             if (std::hypot(d.X - last.X, d.Y - last.Y) * zoom > 1.5) o.pts.push_back(d);
         } else {
@@ -779,19 +1163,44 @@ void Canvas::OnMove(POINT p, WPARAM keys) {
                 }
             }
             o.p2 = e;
+            o.ctrl = PointF((o.p1.X + o.p2.X) / 2, (o.p1.Y + o.p2.Y) / 2);
+            RectF r = o.Rect();
             if (o.type == ObjType::Callout) {
-                RectF r = o.Rect();
-                o.tail = PointF(r.X + r.Width * 0.25f, r.GetBottom() + std::max(20.0f, r.Height * 0.45f));
+                int sh = o.style.calloutShape;
+                if (sh >= 5 && sh <= 11) o.tail = PointF(r.GetRight() + 30, r.Y + r.Height / 2);           // setas: aponta para a direita
+                else if (sh == 4 || sh == 15) o.tail = PointF(r.GetRight() + std::max(40.0f, r.Width * 0.5f), r.GetBottom() + std::max(30.0f, r.Height * 0.6f));
+                else o.tail = PointF(r.X + r.Width * 0.25f, r.GetBottom() + std::max(20.0f, r.Height * 0.45f));
             }
+            if (o.type == ObjType::Magnify) o.tail = PointF(r.X - r.Width * 0.4f, r.GetBottom() + r.Height * 0.3f);
         }
         break;
     }
     case Drag::Move: {
         if (std::abs(p.x - downScreen_.x) + std::abs(p.y - downScreen_.y) < 2 && !changed_) return;
         changed_ = true;
-        DrawObj* o = doc->Mutable(selected);
-        *o = dragOrig_;
-        o->Move(dx, dy);
+        if (dragMulti_.empty()) dragMulti_ = { { selected, dragOrig_ } };
+        if (snapping && !(keys & MK_ALT)) {      // encaixe: bordas e centro do conjunto nas bordas e no centro da imagem
+            RectF r = ObjExtent(dragMulti_[0].second);
+            for (auto& m : dragMulti_) RectF::Union(r, r, ObjExtent(m.second));
+            float tol = (float)(8 / zoom), W = (float)doc->w(), H = (float)doc->h();
+            auto snap = [&](float a0, float len, float total, float d) {
+                float best = d, bestDist = tol;
+                for (float edge : { 0.0f, total / 2, total })
+                    for (float off : { 0.0f, len / 2, len }) {
+                        float cand = edge - off - a0, dist = std::fabs(cand - d);
+                        if (dist < bestDist) { bestDist = dist; best = cand; }
+                    }
+                return best;
+            };
+            dx = snap(r.X, r.Width, W, dx);
+            dy = snap(r.Y, r.Height, H, dy);
+        }
+        for (auto& m : dragMulti_) {
+            if (m.first < 0 || m.first >= (int)doc->st.objs.size()) continue;
+            DrawObj* o = doc->Mutable(m.first);
+            *o = m.second;
+            o->Move(dx, dy);
+        }
         dirty_ = true;
         break;
     }
@@ -799,8 +1208,13 @@ void Canvas::OnMove(POINT p, WPARAM keys) {
         changed_ = true;
         DrawObj* o = doc->Mutable(selected);
         *o = dragOrig_;
-        if (o->IsLine()) { if (handle_ == 0) o->p1 = d; else o->p2 = d; }
-        else if (o->type == ObjType::Callout && handle_ == 8) o->tail = d;
+        if (o->IsLine()) {
+            if (handle_ == 0) o->p1 = d;
+            else if (handle_ == 1) o->p2 = d;
+            else o->ctrl = PointF(2 * d.X - 0.5f * (o->p1.X + o->p2.X), 2 * d.Y - 0.5f * (o->p1.Y + o->p2.Y));   // a curva passa pelo ponto
+            if (handle_ != 2 && !o->style.bezier) o->ctrl = PointF((o->p1.X + o->p2.X) / 2, (o->p1.Y + o->p2.Y) / 2);
+        }
+        else if ((o->type == ObjType::Callout || o->type == ObjType::Magnify) && handle_ == 8) o->tail = d;
         else {
             RectF r0 = o->IsPath() ? [&] { RectF b = dragOrig_.Bounds(); float pad = dragOrig_.style.width / 2 + (dragOrig_.style.shadow ? 4 : 0); b.Inflate(-pad, -pad); return b; }() : dragOrig_.Rect();
             float l = r0.X, t = r0.Y, r = r0.GetRight(), b = r0.GetBottom();
@@ -815,10 +1229,10 @@ void Canvas::OnMove(POINT p, WPARAM keys) {
                 else if (handle_ == 4) { r = l + nw; b = t + nh; } else { l = r - nw; b = t + nh; }
             }
             RectF to(std::min(l, r), std::min(t, b), std::fabs(r - l), std::fabs(b - t));
-            if (o->type == ObjType::Callout) {
+            if (o->type == ObjType::Callout || o->type == ObjType::Magnify) {
                 PointF tail = dragOrig_.tail;
                 o->p1 = PointF(to.X, to.Y); o->p2 = PointF(to.GetRight(), to.GetBottom()); o->tail = tail;
-            } else o->Scale(r0, to);
+            } else { o->Scale(r0, to); o->UpdateGroupRect(); }
         }
         dirty_ = true;
         break;
@@ -833,6 +1247,9 @@ void Canvas::OnMove(POINT p, WPARAM keys) {
     case Drag::Lasso:
         if (std::hypot(d.X - lasso_.back().X, d.Y - lasso_.back().Y) * zoom > 2) lasso_.push_back(d);
         break;
+    case Drag::Marquee:
+        selRect_ = RectF(std::min(downDoc_.X, d.X), std::min(downDoc_.Y, d.Y), std::fabs(d.X - downDoc_.X), std::fabs(d.Y - downDoc_.Y));
+        break;
     case Drag::Erase: EraseAt(d); dirty_ = true; break;
     }
     InvalidateRect(hwnd, nullptr, FALSE);
@@ -843,19 +1260,24 @@ void Canvas::FinishCreate() {
     preview_.reset();
     RectF r = o.Rect();
     float minSz = (float)(6 / zoom);
-    bool tiny = o.IsPath() ? o.pts.size() < 2 && o.type == ObjType::Pen && false : (o.IsLine() ? std::hypot(o.p2.X - o.p1.X, o.p2.Y - o.p1.Y) < minSz
-                                                                                              : (r.Width < minSz || r.Height < minSz));
+    bool tiny = o.IsPath() && !o.pts.empty() ? false : (o.IsLine() ? std::hypot(o.p2.X - o.p1.X, o.p2.Y - o.p1.Y) < minSz
+                                                                                   : (r.Width < minSz || r.Height < minSz));
+    if (o.type == ObjType::Text && r.Width >= minSz * 3) {   // caixa arrastada: largura dela, altura mínima de uma linha
+        tiny = false;
+        float minH = o.style.fontSize * 1.4f + 2 * o.style.padding;
+        if (r.Height < minH) { o.p1 = PointF(r.X, r.Y); o.p2 = PointF(r.GetRight(), r.Y + minH); }
+    }
     if (tiny) {
         if (o.type == ObjType::Text) { o.p2 = PointF(o.p1.X + 260, o.p1.Y + o.style.fontSize * 1.6f); }
         else if (o.type == ObjType::Callout) {
             o.p2 = PointF(o.p1.X + 220, o.p1.Y + 90);
             o.tail = PointF(o.p1.X + 50, o.p1.Y + 150);
-        } else if (o.type == ObjType::Stamp) { o.p1 = PointF(o.p1.X - 36, o.p1.Y - 36); o.p2 = PointF(o.p1.X + 72, o.p1.Y + 72); }
+        } else if (o.type == ObjType::Stamp) { o.p1 = PointF(o.p1.X - 48, o.p1.Y - 48); o.p2 = PointF(o.p1.X + 96, o.p1.Y + 96); }
         else return;
     }
     doc->Checkpoint();
     doc->st.objs.push_back(std::make_shared<DrawObj>(o));
-    selected = (int)doc->st.objs.size() - 1;
+    selected = (int)doc->st.objs.size() - 1; extra_.clear();
     dirty_ = true;
     if (onSelectionChanged) onSelectionChanged();
     if (o.HasText()) BeginTextEdit(selected, true);
@@ -919,6 +1341,17 @@ void Canvas::OnUp(POINT p) {
         break;
     }
     case Drag::Erase: dirty_ = true; break;
+    case Drag::Marquee: {                       // seleciona os objetos que o retângulo toca (somando aos de antes com Ctrl/Shift)
+        std::vector<int> v;
+        if (GetKeyState(VK_CONTROL) < 0 || GetKeyState(VK_SHIFT) < 0) v = SelectedList();
+        if (selRect_.Width * zoom >= 3 || selRect_.Height * zoom >= 3)
+            for (int i = 0; i < (int)doc->st.objs.size(); i++) {
+                RectF b = doc->st.objs[i]->Bounds();
+                if (b.IntersectsWith(selRect_) && std::find(v.begin(), v.end(), i) == v.end()) v.push_back(i);
+            }
+        SelectObjects(v);
+        break;
+    }
     default: break;
     }
     Refresh();
@@ -940,8 +1373,7 @@ void Canvas::SetCursorForPoint(POINT p) {
         PointF d = ToDoc(p); int x = (int)d.X, y = (int)d.Y;
         bool inside = hasSel_ && x >= 0 && y >= 0 && x < doc->w() && y < doc->h() && selMask_[(size_t)y * doc->w() + x];
         c = inside ? IDC_SIZEALL : IDC_CROSS;
-    } else if (tool == Tool::Text) c = IDC_IBEAM;
-    else if (tool == Tool::Fill || tool == Tool::Eyedropper) c = IDC_HAND;
+    } else if (tool == Tool::Fill || tool == Tool::Eyedropper) c = IDC_HAND;
     else {
         int hit = HitObject(ToDoc(p));
         c = (hit >= 0 && hit == selected) ? IDC_SIZEALL : IDC_CROSS;
@@ -972,7 +1404,7 @@ LRESULT Canvas::Handle(UINT m, WPARAM w, LPARAM l) {
         if (tool == Tool::Crop && hasCrop_) { ApplyCrop(); return 0; }
         if (doc) {
             int hit = HitObject(ToDoc(p));
-            if (hit >= 0 && doc->st.objs[hit]->HasText()) { selected = hit; BeginTextEdit(hit, false); return 0; }
+            if (hit >= 0 && doc->st.objs[hit]->HasText()) { selected = hit; extra_.clear(); BeginTextEdit(hit, false); return 0; }
         }
         OnDown(p, true);
         return 0;
@@ -1018,7 +1450,7 @@ LRESULT Canvas::Handle(UINT m, WPARAM w, LPARAM l) {
         case VK_ESCAPE:
             if (drag_ != Drag::None) { if ((drag_ == Drag::Move || drag_ == Drag::Resize) && changed_) { doc->Undo(); dirty_ = true; } else if (drag_ == Drag::Move || drag_ == Drag::Resize) doc->DiscardCheckpoint(); ReleaseCapture(); drag_ = Drag::None; preview_.reset(); }
             hasCrop_ = false; ClearRasterSelection();
-            if (selected >= 0) { selected = -1; if (onSelectionChanged) onSelectionChanged(); }
+            if (selected >= 0) { selected = -1; extra_.clear(); if (onSelectionChanged) onSelectionChanged(); }
             InvalidateRect(hwnd, nullptr, FALSE);
             return 0;
         case VK_RETURN: if (hasCrop_) ApplyCrop(); return 0;
@@ -1031,6 +1463,7 @@ LRESULT Canvas::Handle(UINT m, WPARAM w, LPARAM l) {
     case WM_GETDLGCODE: return DLGC_WANTARROWS | DLGC_WANTCHARS;
     case WM_COMMAND:
         if (LOWORD(w) == 77 && HIWORD(w) == EN_KILLFOCUS) { CommitText(); return 0; }
+        if (LOWORD(w) == 77 && HIWORD(w) == EN_CHANGE) { LayoutTextEdit(); return 0; }
         break;
     case WM_CTLCOLOREDIT: {
         HDC dc = (HDC)w;

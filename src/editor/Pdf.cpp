@@ -6,9 +6,9 @@
 namespace snap::ed {
 
 bool SavePdf(const std::wstring& path, const Image& imgIn, std::wstring& err) {
-    if (imgIn.empty()) { err = L"Imagem vazia."; return false; }
+    if (imgIn.empty()) { err = Tr(L"Imagem vazia."); return false; }
     std::vector<BYTE> jpg;
-    if (!EncodeToMemory(imgIn, ImageFormat::JPEG, jpg, 92)) { err = L"Falha ao codificar a imagem."; return false; }
+    if (!EncodeToMemory(imgIn, ImageFormat::JPEG, jpg, 92)) { err = Tr(L"Falha ao codificar a imagem."); return false; }
 
     DWORD measure = 0;
     GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT, LOCALE_IMEASURE | LOCALE_RETURN_NUMBER, (LPWSTR)&measure, sizeof(measure) / 2);
@@ -41,11 +41,11 @@ bool SavePdf(const std::wstring& path, const Image& imgIn, std::wstring& err) {
     out += FormatA("trailer\n<< /Size %zu /Root 1 0 R /Info %zu 0 R >>\nstartxref\n%zu\n%%%%EOF\n", offs.size() + 1, offs.size(), xref);
 
     HANDLE h = CreateFileW(path.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-    if (h == INVALID_HANDLE_VALUE) { err = L"Não foi possível criar o arquivo."; return false; }
+    if (h == INVALID_HANDLE_VALUE) { err = Tr(L"Não foi possível criar o arquivo."); return false; }
     DWORD wr = 0;
     BOOL ok = WriteFile(h, out.data(), (DWORD)out.size(), &wr, nullptr);
     CloseHandle(h);
-    if (!ok || wr != out.size()) { err = L"Falha ao gravar o arquivo."; return false; }
+    if (!ok || wr != out.size()) { err = Tr(L"Falha ao gravar o arquivo."); return false; }
     return true;
 }
 

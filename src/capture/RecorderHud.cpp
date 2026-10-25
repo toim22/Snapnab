@@ -8,7 +8,7 @@
 
 namespace snap {
 
-enum { BtnRecord = 1, BtnStop, BtnRestart, BtnCancel, BtnMic, BtnSys, BtnSnap };
+enum { BtnRecord = 1, BtnStop, BtnRestart, BtnCancel, BtnMic, BtnSys, BtnCam, BtnSnap };
 
 static RecorderHud* g_hud = nullptr;
 
@@ -20,6 +20,7 @@ void RecorderHud::Layout() {
     auto add = [&](int id) { buttons_.push_back({ id, { x, y, x + b, y + b } }); x += b + gap; };
     add(BtnRecord); add(BtnStop); add(BtnRestart); add(BtnCancel);
     x += sep; add(BtnMic); add(BtnSys);
+    if (camAvailable) add(BtnCam);
     x += sep; add(BtnSnap);
 }
 
@@ -56,7 +57,7 @@ void RecorderHud::Show(RECT area, Recorder* rec, HudCallbacks cb, bool micOpt, b
     ShowWindow(border_, SW_SHOWNOACTIVATE);
 
     // HUD abaixo da área; se não couber, acima; senão dentro, no canto inferior
-    hwnd_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, L"SnapnabRecorderHud", L"Snapnab — gravação",
+    hwnd_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, L"SnapnabRecorderHud", Tr(L"Snapnab — gravação"),
                             WS_POPUP, 0, 0, 10, 10, nullptr, nullptr, hi, nullptr);
     Layout();
     int dpi = DpiForWindow(hwnd_);
@@ -120,6 +121,7 @@ void RecorderHud::Paint(HDC hdc) {
                 id = (rec_ && rec_->sysMuted()) || !sysOn ? icons::SpeakerOff : icons::Speaker;
                 enabled = st == Recorder::Idle ? true : rec_->hasSys();
                 break;
+            case BtnCam: id = camOn ? icons::Webcam : icons::WebcamOff; break;
             case BtnSnap: id = icons::Camera; enabled = st != Recorder::Idle; break;
             }
             if (hover_ == b.id && enabled) {
@@ -148,7 +150,7 @@ void RecorderHud::Paint(HDC hdc) {
     int s = (int)e;
     std::wstring t = Format(L"%02d:%02d:%02d", s / 3600, (s / 60) % 60, s % 60);
     if (st == Recorder::Paused) t += L"  ❚❚";
-    else if (st == Recorder::Idle) t = L"Pronto";
+    else if (st == Recorder::Idle) t = Tr(L"Pronto");
     RECT tr{ buttons_.back().r.right + ui::Scale(84, dpi), 0, cr.right - ui::Scale(8, dpi), cr.bottom };
     if (st == Recorder::Recording && ((GetTickCount64() / 500) % 2)) {
         RECT dot{ tr.left - ui::Scale(4, dpi), cr.bottom / 2 - ui::Scale(4, dpi), tr.left + ui::Scale(4, dpi), cr.bottom / 2 + ui::Scale(4, dpi) };
@@ -186,7 +188,10 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         Recorder::State st = self->rec_ ? self->rec_->state() : Recorder::Idle;
         switch (self->HitButton(p)) {
-        case BtnRecord: if (self->cb_.onRecord) self->cb_.onRecord(); break;
+        case BtnRecord:
+            if (self->count_) self->SkipCountdown();          // durante a contagem, gravar = começar já
+            else if (self->cb_.onRecord) self->cb_.onRecord();
+            break;
         case BtnStop: if (st != Recorder::Idle && self->cb_.onStop) self->cb_.onStop(); break;
         case BtnRestart: if (st != Recorder::Idle && self->cb_.onRestart) self->cb_.onRestart(); break;
         case BtnCancel: if (self->cb_.onCancel) self->cb_.onCancel(); break;
@@ -198,6 +203,10 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
             if (st == Recorder::Idle) self->sysOn = !self->sysOn;
             else if (self->rec_->hasSys()) { self->rec_->SetSysMuted(!self->rec_->sysMuted()); if (self->cb_.onSysMute) self->cb_.onSysMute(self->rec_->sysMuted()); }
             break;
+        case BtnCam:
+            self->camOn = !self->camOn;
+            if (self->cb_.onWebcam) self->cb_.onWebcam(self->camOn);
+            break;
         case BtnSnap: if (st != Recorder::Idle && self->cb_.onSnapshot) self->cb_.onSnapshot(); break;
         }
         InvalidateRect(h, nullptr, FALSE);
@@ -208,31 +217,116 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     return DefWindowProcW(h, m, w, l);
 }
 
+// contagem regressiva: círculo escuro translúcido com o número e, embaixo, a pílula "Pular" (janela em camadas,
+// bordas suavizadas). Só a pílula recebe clique; o resto da janela tem alfa e não atrapalha.
+static int CountSize(int dpi) { return ui::Scale(150, dpi); }
+
+RECT RecorderHud::SkipRect() const {
+    int dpi = DpiForWindow(count_);
+    int s = CountSize(dpi), w = ui::Scale(104, dpi), h = ui::Scale(32, dpi);
+    return { (s - w) / 2, s + ui::Scale(14, dpi), (s + w) / 2, s + ui::Scale(14, dpi) + h };
+}
+
+void RecorderHud::RenderCount() {
+    if (!count_) return;
+    RECT wr; GetWindowRect(count_, &wr);
+    int W = wr.right - wr.left, H = wr.bottom - wr.top;
+    int dpi = DpiForWindow(count_);
+    int s = CountSize(dpi);
+    BITMAPINFO bi{};
+    bi.bmiHeader = { sizeof(BITMAPINFOHEADER), W, -H, 1, 32, BI_RGB };
+    void* bits = nullptr;
+    HDC screen = GetDC(nullptr);
+    HDC mem = CreateCompatibleDC(screen);
+    HBITMAP bmp = CreateDIBSection(screen, &bi, DIB_RGB_COLORS, &bits, nullptr, 0);
+    HGDIOBJ ob = SelectObject(mem, bmp);
+    {
+        Gdiplus::Bitmap canvas(W, H, W * 4, PixelFormat32bppPARGB, (BYTE*)bits);
+        Gdiplus::Graphics g(&canvas);
+        g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+        g.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+        g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+        g.Clear(Gdiplus::Color(0, 0, 0, 0));
+        Gdiplus::SolidBrush disc(Gdiplus::Color(200, 24, 24, 26));
+        g.FillEllipse(&disc, 0.5f, 0.5f, (float)s - 1, (float)s - 1);
+        Gdiplus::Pen ring(Gdiplus::Color(90, 255, 255, 255), (float)ui::Scale(2, dpi));
+        g.DrawEllipse(&ring, (float)ui::Scale(2, dpi), (float)ui::Scale(2, dpi), (float)s - ui::Scale(4, dpi), (float)s - ui::Scale(4, dpi));
+        Gdiplus::FontFamily ff(L"Segoe UI");
+        Gdiplus::Font big(&ff, (float)ui::Scale(68, dpi), Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
+        Gdiplus::StringFormat sf; sf.SetAlignment(Gdiplus::StringAlignmentCenter); sf.SetLineAlignment(Gdiplus::StringAlignmentCenter);
+        Gdiplus::SolidBrush white(Gdiplus::Color(255, 255, 255, 255));
+        std::wstring n = std::to_wstring(countLeft_);
+        g.DrawString(n.c_str(), -1, &big, Gdiplus::RectF(0, 0, (float)s, (float)s + ui::Scale(4, dpi)), &sf, &white);
+        // pílula "Pular"
+        RECT k = SkipRect();
+        Gdiplus::RectF kr((float)k.left, (float)k.top, (float)(k.right - k.left), (float)(k.bottom - k.top));
+        Gdiplus::GraphicsPath pill;
+        float d = kr.Height;
+        pill.AddArc(kr.X, kr.Y, d, d, 90, 180); pill.AddArc(kr.GetRight() - d, kr.Y, d, d, 270, 180); pill.CloseFigure();
+        Gdiplus::SolidBrush pb(skipHot_ ? Gdiplus::Color(235, 60, 60, 66) : Gdiplus::Color(215, 24, 24, 26));
+        g.FillPath(&pb, &pill);
+        Gdiplus::Pen pr(Gdiplus::Color(skipHot_ ? 150 : 90, 255, 255, 255), 1.0f);
+        g.DrawPath(&pr, &pill);
+        Gdiplus::Font label(&ff, (float)ui::Scale(13, dpi), Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
+        // texto + ícone de avançar (»)
+        Gdiplus::RectF tr = kr; tr.Width -= ui::Scale(14, dpi);
+        g.DrawString(Tr(L"Pular"), -1, &label, tr, &sf, &white);
+        Gdiplus::Pen chev(Gdiplus::Color(255, 255, 255, 255), std::max(1.6f, dpi / 55.0f));
+        chev.SetStartCap(Gdiplus::LineCapRound); chev.SetEndCap(Gdiplus::LineCapRound); chev.SetLineJoin(Gdiplus::LineJoinRound);
+        float cx = kr.GetRight() - ui::Scale(26, dpi), cy = kr.Y + kr.Height / 2, a = (float)ui::Scale(4, dpi);
+        for (int i = 0; i < 2; i++) {
+            float x = cx + i * ui::Scale(5, dpi);
+            Gdiplus::PointF p[3] = { { x - a / 2, cy - a }, { x + a / 2, cy }, { x - a / 2, cy + a } };
+            g.DrawLines(&chev, p, 3);
+        }
+    }
+    POINT src{ 0, 0 }, dst{ wr.left, wr.top };
+    SIZE sz{ W, H };
+    BLENDFUNCTION bf{ AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+    UpdateLayeredWindow(count_, screen, &dst, &sz, mem, &src, 0, &bf, ULW_ALPHA);
+    SelectObject(mem, ob); DeleteObject(bmp); DeleteDC(mem);
+    ReleaseDC(nullptr, screen);
+}
+
+void RecorderHud::SkipCountdown() {
+    if (!count_) return;
+    KillTimer(count_, 1);
+    DestroyWindow(count_);
+    count_ = nullptr;
+    auto then = std::move(countThen_);
+    if (then) then();
+}
+
 LRESULT CALLBACK RecorderHud::CountProc(HWND h, UINT m, WPARAM w, LPARAM l) {
     RecorderHud* self = g_hud;
+    if (!self || self->count_ != h) return DefWindowProcW(h, m, w, l);
     switch (m) {
-    case WM_PAINT: {
-        PAINTSTRUCT ps; HDC dc = BeginPaint(h, &ps);
-        RECT r; GetClientRect(h, &r);
-        HBRUSH b = CreateSolidBrush(RGB(20, 20, 20)); FillRect(dc, &r, b); DeleteObject(b);
-        int dpi = DpiForWindow(h);
-        LOGFONTW lf{}; lf.lfHeight = -ui::Scale(72, dpi); lf.lfWeight = FW_BOLD; wcscpy_s(lf.lfFaceName, L"Segoe UI");
-        HFONT f = CreateFontIndirectW(&lf);
-        ui::DrawTextCentered(dc, self ? std::to_wstring(self->countLeft_) : L"", r, RGB(255, 255, 255), f);
-        DeleteObject(f);
-        EndPaint(h, &ps);
+    case WM_TIMER:
+        if (--self->countLeft_ <= 0) self->SkipCountdown();
+        else self->RenderCount();
+        return 0;
+    case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
+    case WM_SETCURSOR: {
+        POINT p; GetCursorPos(&p); ScreenToClient(h, &p);
+        RECT k = self->SkipRect();
+        SetCursor(LoadCursor(nullptr, PtInRect(&k, p) ? IDC_HAND : IDC_ARROW));
+        return TRUE;
+    }
+    case WM_MOUSEMOVE: {
+        POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
+        RECT k = self->SkipRect();
+        bool hot = PtInRect(&k, p) != FALSE;
+        if (hot != self->skipHot_) { self->skipHot_ = hot; self->RenderCount(); }
+        TRACKMOUSEEVENT t{ sizeof t, TME_LEAVE, h, 0 }; TrackMouseEvent(&t);
         return 0;
     }
-    case WM_TIMER:
-        if (!self) return 0;
-        if (--self->countLeft_ <= 0) {
-            KillTimer(h, 1);
-            DestroyWindow(h);
-            self->count_ = nullptr;
-            auto then = std::move(self->countThen_);
-            if (then) then();
-        } else InvalidateRect(h, nullptr, FALSE);
+    case WM_MOUSELEAVE: if (self->skipHot_) { self->skipHot_ = false; self->RenderCount(); } return 0;
+    case WM_LBUTTONUP: {
+        POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
+        RECT k = self->SkipRect();
+        if (PtInRect(&k, p)) self->SkipCountdown();
         return 0;
+    }
     }
     return DefWindowProcW(h, m, w, l);
 }
@@ -241,15 +335,16 @@ void RecorderHud::Countdown(int seconds, std::function<void()> then) {
     if (seconds <= 0) { if (then) then(); return; }
     countLeft_ = seconds;
     countThen_ = std::move(then);
+    skipHot_ = false;
     int dpi = DpiForWindow(hwnd_);
-    int s = ui::Scale(150, dpi);
+    int s = CountSize(dpi);
+    int W = s, H = s + ui::Scale(14 + 32 + 2, dpi);
     int cx = (area_.left + area_.right) / 2, cy = (area_.top + area_.bottom) / 2;
-    count_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_NOACTIVATE | WS_EX_TRANSPARENT,
-                             L"SnapnabCountdown", L"", WS_POPUP, cx - s / 2, cy - s / 2, s, s, nullptr, nullptr,
+    count_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_NOACTIVATE,
+                             L"SnapnabCountdown", L"", WS_POPUP, cx - W / 2, cy - s / 2, W, H, nullptr, nullptr,
                              GetModuleHandleW(nullptr), nullptr);
-    SetLayeredWindowAttributes(count_, 0, 200, LWA_ALPHA);
-    SetWindowRgn(count_, CreateEllipticRgn(0, 0, s, s), FALSE);
     SetWindowDisplayAffinity(count_, WDA_EXCLUDEFROMCAPTURE);
+    RenderCount();
     ShowWindow(count_, SW_SHOWNOACTIVATE);
     SetTimer(count_, 1, 1000, nullptr);
 }

@@ -1,0 +1,4803 @@
+# Snapnab — traduções da interface.
+# Copyright © 2026 Antonio Rezende. GPL-3.0.
+# Idioma: العربية.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Snapnab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: العربية\n"
+
+#: src/capture/CaptureEngine.cpp:39
+#, c-format
+msgid "Captura em %d s…"
+msgstr "الالتقاط خلال %d ث…"
+
+#: src/capture/CaptureEngine.cpp:138
+msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
+msgstr "المنطقة الثابتة خارج الشاشة. اضبط موضعها من قائمة الترس في التحديد."
+
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+msgid "Região fixa"
+msgstr "منطقة ثابتة"
+
+#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+msgid "A área de transferência não contém imagem."
+msgstr "لا تحتوي الحافظة على صورة."
+
+#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669
+msgid "Área de transferência"
+msgstr "الحافظة"
+
+#: src/capture/CaptureEngine.cpp:170
+msgid "Capturar de arquivo gráfico"
+msgstr "الالتقاط من ملف رسومي"
+
+#: src/capture/CaptureEngine.cpp:172
+msgid "Não foi possível abrir a imagem."
+msgstr "تعذّر فتح الصورة."
+
+#: src/capture/CaptureEngine.cpp:181
+msgid "Nenhum menu aberto encontrado; selecione a região."
+msgstr "لم يتم العثور على قائمة مفتوحة؛ حدّد المنطقة."
+
+#: src/capture/CaptureEngine.cpp:281
+msgid ""
+"Não foi possível reconhecer o texto.\n"
+"\n"
+msgstr ""
+"تعذّر التعرّف على النص.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+msgid "Snapnab — Capturar texto"
+msgstr "Snapnab — استخراج النص"
+
+#: src/capture/CaptureEngine.cpp:282
+msgid "Nenhum texto encontrado na captura."
+msgstr "لم يتم العثور على نص في اللقطة."
+
+#: src/capture/CaptureEngine.cpp:293
+msgid "Capturar texto — copiado para a área de transferência"
+msgstr "استخراج النص — تم النسخ إلى الحافظة"
+
+#: src/capture/CaptureEngine.cpp:300
+msgid "copiada para a área de transferência"
+msgstr "تم نسخها إلى الحافظة"
+
+#: src/capture/CaptureEngine.cpp:306
+msgid "salva em "
+msgstr "تم حفظها في "
+
+#: src/capture/CaptureEngine.cpp:322
+msgid "Captura adicionada à biblioteca"
+msgstr "تمت إضافة اللقطة إلى المكتبة"
+
+#: src/capture/CaptureEngine.cpp:447
+msgid "A janela será ampliada além da tela, capturada e restaurada."
+msgstr "سيتم تكبير النافذة إلى ما بعد الشاشة والتقاطها ثم استعادتها."
+
+#: src/capture/CaptureEngine.cpp:448
+msgid "Nova largura (px)"
+msgstr "العرض الجديد (بكسل)"
+
+#: src/capture/CaptureEngine.cpp:449
+msgid "Nova altura (px)"
+msgstr "الارتفاع الجديد (بكسل)"
+
+#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+msgid "Janela estendida"
+msgstr "نافذة ممتدة"
+
+#: src/capture/CaptureEngine.cpp:523
+msgid "Imagem durante gravação"
+msgstr "صورة أثناء التسجيل"
+
+#: src/capture/CaptureEngine.cpp:526
+msgid "Imagem capturada sem parar a gravação."
+msgstr "تم التقاط الصورة دون إيقاف التسجيل."
+
+#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+msgid "Snapnab — webcam"
+msgstr "Snapnab — كاميرا الويب"
+
+#: src/capture/CaptureEngine.cpp:553
+msgid ""
+"Não foi possível iniciar a gravação.\n"
+"\n"
+msgstr ""
+"تعذّر بدء التسجيل.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:596
+msgid "Vídeo salvo na biblioteca: "
+msgstr "تم حفظ الفيديو في المكتبة: "
+
+#: src/capture/CaptureEngine.cpp:598
+msgid ""
+"A gravação falhou.\n"
+"\n"
+msgstr ""
+"فشل التسجيل.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Snapnab — pouco espaço em disco"
+msgstr "Snapnab — مساحة القرص منخفضة"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Restam menos de 1 GB livres na unidade da biblioteca."
+msgstr "تبقّى أقل من 1 غيغابايت حرّة على محرك المكتبة."
+
+#: src/capture/CaptureEngine.cpp:609
+msgid "Gravação interrompida: espaço em disco insuficiente."
+msgstr "توقف التسجيل: مساحة القرص غير كافية."
+
+#: src/capture/OneClick.h:39
+msgid "Iniciar uma captura"
+msgstr "بدء لقطة"
+
+#: src/capture/Panoramic.cpp:132
+msgid "Snapnab — rolagem panorâmica"
+msgstr "Snapnab — تمرير بانورامي"
+
+#: src/capture/Panoramic.cpp:192
+msgid "Role o conteúdo dentro da moldura…"
+msgstr "مرّر المحتوى داخل الإطار…"
+
+#: src/capture/Panoramic.cpp:193
+#, c-format
+msgid "Capturando: %d × %d px"
+msgstr "جارٍ الالتقاط: %d × %d بكسل"
+
+#: src/capture/Panoramic.cpp:204
+msgid "Concluir"
+msgstr "إنهاء"
+
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
+msgid "Cancelar"
+msgstr "إلغاء"
+
+#: src/capture/Presets.cpp:7
+msgid "Região"
+msgstr "منطقة"
+
+#: src/capture/Presets.cpp:8
+msgid "Janela"
+msgstr "نافذة"
+
+#: src/capture/Presets.cpp:9
+msgid "Tela inteira (todos os monitores)"
+msgstr "ملء الشاشة (كل الشاشات)"
+
+#: src/capture/Presets.cpp:10
+msgid "Monitor atual"
+msgstr "الشاشة الحالية"
+
+#: src/capture/Presets.cpp:11
+msgid "Região com tamanho fixo"
+msgstr "منطقة بحجم ثابت"
+
+#: src/capture/Presets.cpp:12
+msgid "Mão livre"
+msgstr "رسم حر"
+
+#: src/capture/Presets.cpp:13
+msgid "Várias áreas"
+msgstr "عدة مناطق"
+
+#: src/capture/Presets.cpp:14
+msgid "Objeto (controle sob o cursor)"
+msgstr "عنصر (عنصر التحكم تحت المؤشر)"
+
+#: src/capture/Presets.cpp:15
+msgid "Rolagem automática (janela)"
+msgstr "تمرير تلقائي (نافذة)"
+
+#: src/capture/Presets.cpp:16
+msgid "Rolagem panorâmica"
+msgstr "تمرير بانورامي"
+
+#: src/capture/Presets.cpp:18
+msgid "Menu"
+msgstr "قائمة"
+
+#: src/capture/Presets.cpp:20
+msgid "Arquivo gráfico"
+msgstr "ملف رسومي"
+
+#: src/capture/Presets.cpp:150
+msgid "Imagem — Região"
+msgstr "صورة — منطقة"
+
+#: src/capture/Presets.cpp:151
+msgid "Imagem — Janela"
+msgstr "صورة — نافذة"
+
+#: src/capture/Presets.cpp:152
+msgid "Tela inteira → Área de transferência"
+msgstr "ملء الشاشة ← الحافظة"
+
+#: src/capture/Presets.cpp:154
+msgid "Rolagem (página inteira)"
+msgstr "تمرير (صفحة كاملة)"
+
+#: src/capture/Presets.cpp:155
+msgid "Vídeo — Região"
+msgstr "فيديو — منطقة"
+
+#: src/capture/Presets.cpp:156
+msgid "Vídeo — Tela inteira"
+msgstr "فيديو — ملء الشاشة"
+
+#: src/capture/Presets.cpp:164
+msgid "Captura com rolagem panorâmica"
+msgstr "التقاط بالتمرير البانورامي"
+
+#: src/capture/Presets.cpp:166
+msgid "Capturar texto"
+msgstr "استخراج النص"
+
+#: src/capture/Recorder.cpp:252
+msgid "Área de gravação muito pequena."
+msgstr "منطقة التسجيل صغيرة جدًا."
+
+#: src/capture/Recorder.cpp:259
+msgid "Media Foundation indisponível."
+msgstr "Media Foundation غير متاح."
+
+#: src/capture/Recorder.cpp:274
+#, c-format
+msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
+msgstr "تعذّر بدء مرمّز MP4 (0x%08X)."
+
+#: src/capture/Recorder.cpp:386
+msgid "Falha ao gravar quadro de vídeo."
+msgstr "فشل تسجيل إطار فيديو."
+
+#: src/capture/Recorder.cpp:478
+#, c-format
+msgid "Falha ao finalizar o MP4 (0x%08X)."
+msgstr "فشل إنهاء ملف MP4 (0x%08X)."
+
+#: src/capture/RecorderHud.cpp:60
+msgid "Snapnab — gravação"
+msgstr "Snapnab — تسجيل"
+
+#: src/capture/RecorderHud.cpp:153
+msgid "Pronto"
+msgstr "جاهز"
+
+#: src/capture/RecorderHud.cpp:273
+msgid "Pular"
+msgstr "تخطٍّ"
+
+#: src/capture/SelectOverlay.cpp:244
+msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
+msgstr "اسحب لتحديد منطقة • انقر لالتقاط النافذة/المنطقة المميّزة • Enter = الشاشة • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:245
+msgid "Clique na janela a capturar • Esc = cancelar"
+msgstr "انقر النافذة المراد التقاطها • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:246
+msgid "Clique no controle/objeto a capturar • Esc = cancelar"
+msgstr "انقر عنصر التحكم/العنصر المراد التقاطه • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:247
+#, c-format
+msgid "Região fixa %d × %d — clique para capturar • Esc = cancelar"
+msgstr "منطقة ثابتة %d × %d — انقر للالتقاط • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:248
+msgid "Desenhe o contorno com o botão pressionado • Esc = cancelar"
+msgstr "ارسم المحيط مع الضغط على الزر • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:249
+msgid "Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"
+msgstr "اسحب عدة مناطق • Backspace للتراجع • Enter أو النقر بزر الماوس الأيمن للإنهاء • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:250
+msgid "Clique na janela/área rolável • Esc = cancelar"
+msgstr "انقر النافذة/المنطقة القابلة للتمرير • Esc = إلغاء"
+
+#: src/capture/SelectOverlay.cpp:252
+msgid "Gravação: "
+msgstr "التسجيل: "
+
+#: src/capture/SelectOverlay.cpp:380
+msgid "Snapnab — seleção"
+msgstr "Snapnab — تحديد"
+
+#: src/capture/Webcam.cpp:50
+msgid "Círculo"
+msgstr "دائرة"
+
+#: src/capture/Webcam.cpp:51
+msgid "Quadrado arredondado"
+msgstr "مربع بزوايا مستديرة"
+
+#: src/capture/Webcam.cpp:52
+msgid "Quadrado"
+msgstr "مربع"
+
+#: src/capture/Webcam.cpp:53
+msgid "Retângulo 16:9"
+msgstr "مستطيل 16:9"
+
+#: src/capture/Webcam.cpp:54
+msgid "Retângulo 4:3"
+msgstr "مستطيل 4:3"
+
+#: src/capture/Webcam.cpp:80
+msgid "Nenhuma webcam encontrada."
+msgstr "لم يتم العثور على كاميرا ويب."
+
+#: src/capture/Webcam.cpp:109
+msgid "O Windows bloqueou o acesso à câmera. Libere em Configurações › Privacidade e segurança › Câmera."
+msgstr "منع Windows الوصول إلى الكاميرا. اسمح به من الإعدادات › الخصوصية والأمان › الكاميرا."
+
+#: src/capture/Webcam.cpp:110
+#, c-format
+msgid "Não foi possível abrir a webcam (0x%08X)."
+msgstr "تعذّر فتح كاميرا الويب (0x%08X)."
+
+#: src/capture/Webcam.cpp:136
+#, c-format
+msgid "A webcam não oferece um formato compatível (0x%08X)."
+msgstr "لا توفّر كاميرا الويب تنسيقًا متوافقًا (0x%08X)."
+
+#: src/capture/main.cpp:120
+msgid "Snapnab — clique para capturar"
+msgstr "Snapnab — انقر للالتقاط"
+
+#: src/capture/main.cpp:147 src/capture/main.cpp:511
+msgid "Conflito de atalho"
+msgstr "تعارض في الاختصار"
+
+#: src/capture/main.cpp:147
+#, c-format
+msgid "O atalho do preset \"%s\" já está em uso por outra ação."
+msgstr "اختصار الإعداد المسبق \"%s\" مستخدم بالفعل لإجراء آخر."
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+msgid "Borda"
+msgstr "إطار"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+msgid "Filtros"
+msgstr "مرشّحات"
+
+#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498
+msgid "Sombra"
+msgstr "ظل"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+msgid "Informações da captura"
+msgstr "معلومات اللقطة"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+msgid "Substituição de cor"
+msgstr "استبدال اللون"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:362
+msgid "Redimensionar imagem"
+msgstr "تغيير حجم الصورة"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+msgid "Bordas especiais"
+msgstr "حواف خاصة"
+
+#: src/capture/main.cpp:189
+msgid "Cortar bordas"
+msgstr "قصّ الحواف"
+
+#: src/capture/main.cpp:189
+msgid "Ajuste de cor"
+msgstr "ضبط الألوان"
+
+#: src/capture/main.cpp:189
+msgid "Girar imagem"
+msgstr "تدوير الصورة"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+msgid "Marca d'água"
+msgstr "علامة مائية"
+
+#: src/capture/main.cpp:189
+msgid "Resolução da imagem"
+msgstr "دقة الصورة"
+
+#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360
+msgid "Largura (px)"
+msgstr "العرض (بكسل)"
+
+#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494
+msgid "Cor"
+msgstr "اللون"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Filtro"
+msgstr "المرشّح"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Tons de cinza"
+msgstr "تدرّج رمادي"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Sépia"
+msgstr "بني داكن"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Inverter cores"
+msgstr "عكس الألوان"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Preto e branco"
+msgstr "أبيض وأسود"
+
+#: src/capture/main.cpp:211
+msgid "Deslocamento (px)"
+msgstr "الإزاحة (بكسل)"
+
+#: src/capture/main.cpp:211
+msgid "Desfoque (px)"
+msgstr "التمويه (بكسل)"
+
+#: src/capture/main.cpp:212 src/capture/main.cpp:241
+msgid "Opacidade (%)"
+msgstr "العتامة (%)"
+
+#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477
+msgid "Texto"
+msgstr "النص"
+
+#: src/capture/main.cpp:215
+msgid "Campos: {date} {time} {computer} {user}"
+msgstr "الحقول: {date} {time} {computer} {user}"
+
+#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+msgid "Posição"
+msgstr "الموضع"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Embaixo"
+msgstr "أسفل"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Em cima"
+msgstr "أعلى"
+
+#: src/capture/main.cpp:219
+msgid "Cor a substituir"
+msgstr "اللون المراد استبداله"
+
+#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+msgid "Nova cor"
+msgstr "لون جديد"
+
+#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576
+msgid "Tolerância"
+msgstr "التفاوت"
+
+#: src/capture/main.cpp:222
+msgid "Escala (%)"
+msgstr "المقياس (%)"
+
+#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+msgid "Estilo"
+msgstr "النمط"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Rasgada"
+msgstr "ممزّق"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+msgid "Onda"
+msgstr "موجة"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de serra"
+msgstr "أسنان المنشار"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de tubarão"
+msgstr "أسنان القرش"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+msgid "Esmaecer"
+msgstr "تلاشٍ"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Chanfrada"
+msgstr "مشطوف"
+
+#: src/capture/main.cpp:225
+msgid "Tamanho (px)"
+msgstr "الحجم (بكسل)"
+
+#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+msgid "Direita"
+msgstr "يمين"
+
+#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+msgid "Esquerda"
+msgstr "يسار"
+
+#: src/capture/main.cpp:230
+msgid "Remove as faixas de cor uniforme em volta da captura."
+msgstr "يزيل الأشرطة ذات اللون الموحّد حول اللقطة."
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+msgid "Brilho"
+msgstr "السطوع"
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+msgid "Contraste"
+msgstr "التباين"
+
+#: src/capture/main.cpp:234
+msgid "Matiz (graus)"
+msgstr "تدرّج اللون (درجات)"
+
+#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+msgid "Saturação"
+msgstr "التشبّع"
+
+#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+msgid "Girar"
+msgstr "تدوير"
+
+#: src/capture/main.cpp:237
+msgid "90° à direita"
+msgstr "90° لليمين"
+
+#: src/capture/main.cpp:237
+msgid "90° à esquerda"
+msgstr "90° لليسار"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na horizontal"
+msgstr "انعكاس أفقي"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na vertical"
+msgstr "انعكاس عمودي"
+
+#: src/capture/main.cpp:242
+msgid "Repetir por toda a imagem"
+msgstr "التكرار على الصورة كلها"
+
+#: src/capture/main.cpp:245
+msgid "Resolução (DPI)"
+msgstr "الدقة (DPI)"
+
+#: src/capture/main.cpp:245
+msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
+msgstr "تُكتب في الملفات المحفوظة (PNG وJPEG وTIFF وBMP)."
+
+#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+msgid "Nenhum"
+msgstr "لا شيء"
+
+#: src/capture/main.cpp:303
+msgid "Adicionar outro efeito"
+msgstr "إضافة تأثير آخر"
+
+#: src/capture/main.cpp:304
+msgid "Remover este efeito"
+msgstr "إزالة هذا التأثير"
+
+#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+msgid "Desligado"
+msgstr "إيقاف"
+
+#: src/capture/main.cpp:339
+#, c-format
+msgid "%d s"
+msgstr "%d ث"
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890
+msgid "Ligada"
+msgstr "تشغيل"
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+msgid "Desligada"
+msgstr "إيقاف"
+
+#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+msgid "Formato"
+msgstr "التنسيق"
+
+#: src/capture/main.cpp:421
+msgid "Prefixo do nome"
+msgstr "بادئة الاسم"
+
+#: src/capture/main.cpp:422
+msgid "Pasta"
+msgstr "المجلد"
+
+#: src/capture/main.cpp:423
+msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
+msgstr "اسم تلقائي: <البادئة><الرقم>، مثل: Capture001.png"
+
+#: src/capture/main.cpp:427
+msgid "O prefixo contém caracteres inválidos."
+msgstr "تحتوي البادئة على أحرف غير صالحة."
+
+#: src/capture/main.cpp:430
+msgid "Salvar em arquivo"
+msgstr "حفظ في ملف"
+
+#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+msgid "Programa"
+msgstr "البرنامج"
+
+#: src/capture/main.cpp:438
+msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
+msgstr "تُفتح اللقطة في هذا البرنامج (مثل: mspaint.exe)."
+
+#: src/capture/main.cpp:439 src/editor/main.cpp:813
+msgid "Abrir em um programa externo"
+msgstr "فتح في برنامج خارجي"
+
+#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+msgid "Altura (px)"
+msgstr "الارتفاع (بكسل)"
+
+#: src/capture/main.cpp:451
+msgid "Capturar sempre na mesma posição"
+msgstr "الالتقاط دائمًا في الموضع نفسه"
+
+#: src/capture/main.cpp:452
+msgid "Esquerda (X)"
+msgstr "يسار (X)"
+
+#: src/capture/main.cpp:453
+msgid "Topo (Y)"
+msgstr "أعلى (Y)"
+
+#: src/capture/main.cpp:454
+msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
+msgstr "بدون موضع ثابت، تسحب المستطيل إلى مكانه وقت الالتقاط."
+
+#: src/capture/main.cpp:468
+msgid "Selecionar a região na captura"
+msgstr "تحديد المنطقة وقت الالتقاط"
+
+#: src/capture/main.cpp:469
+msgid "Região fixa…"
+msgstr "منطقة ثابتة…"
+
+#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+msgid "Quadros por segundo"
+msgstr "إطار في الثانية"
+
+#: src/capture/main.cpp:491
+msgid "Reduzir para 1080p"
+msgstr "تصغير إلى 1080p"
+
+#: src/capture/main.cpp:492
+msgid "Codificação por hardware"
+msgstr "الترميز بالأجهزة"
+
+#: src/capture/main.cpp:494
+msgid "Opções de vídeo"
+msgstr "خيارات الفيديو"
+
+#: src/capture/main.cpp:503
+msgid "Atalho do preset"
+msgstr "اختصار الإعداد المسبق"
+
+#: src/capture/main.cpp:504
+msgid "Deixe vazio (Backspace) para remover."
+msgstr "اتركه فارغًا (Backspace) للإزالة."
+
+#: src/capture/main.cpp:505
+msgid "Atalho — "
+msgstr "الاختصار — "
+
+#: src/capture/main.cpp:511
+msgid "Esse atalho já está em uso por outra ação do Snapnab."
+msgstr "هذا الاختصار مستخدم بالفعل لإجراء آخر في Snapnab."
+
+#: src/capture/main.cpp:516
+msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
+msgstr "يستخدم برنامج آخر هذا الاختصار بالفعل. سيعترضه Snapnab عبر خطاف لوحة المفاتيح."
+
+#: src/capture/main.cpp:517
+msgid "Atalho"
+msgstr "الاختصار"
+
+#: src/capture/main.cpp:523
+msgid "Nome do preset"
+msgstr "اسم الإعداد المسبق"
+
+#: src/capture/main.cpp:531
+msgid "Renomear preset"
+msgstr "إعادة تسمية الإعداد المسبق"
+
+#: src/capture/main.cpp:551
+msgid ""
+"Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
+"\n"
+"•  Clique em um preset para carregá-lo na janela; clique duas vezes para capturar com ele.\n"
+"•  \"Adicionar atalho\" dá a ele uma tecla de atalho global.\n"
+"•  A engrenagem da linha renomeia, duplica ou exclui o preset.\n"
+"•  \"Novo preset com as configurações atuais\" salva o que está na janela agora."
+msgstr ""
+"يحفظ الإعداد المسبق كل ما تعرضه نافذة الالتقاط: النوع (صورة أو فيديو) والتحديد والتأثيرات والوجهة وخيارات التسجيل.\n"
+"\n"
+"•  انقر إعدادًا مسبقًا لتحميله في النافذة؛ وانقر نقرًا مزدوجًا للالتقاط به.\n"
+"•  \"إضافة اختصار\" يمنحه مفتاح اختصار عامًا.\n"
+"•  ترس الصف يعيد تسمية الإعداد المسبق أو يكرّره أو يحذفه.\n"
+"•  \"إعداد مسبق جديد من الإعدادات الحالية\" يحفظ ما في النافذة الآن."
+
+#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+msgid "Presets"
+msgstr "إعدادات مسبقة"
+
+#: src/capture/main.cpp:588
+msgid "Automático (idioma do Windows)"
+msgstr "تلقائي (لغة Windows)"
+
+#: src/capture/main.cpp:593
+msgid "Atalhos globais"
+msgstr "اختصارات عامة"
+
+#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+msgid "Capturar imagem"
+msgstr "التقاط صورة"
+
+#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+msgid "Gravar vídeo"
+msgstr "تسجيل فيديو"
+
+#: src/capture/main.cpp:596
+msgid "Pausar/retomar vídeo"
+msgstr "إيقاف/استئناف الفيديو مؤقتًا"
+
+#: src/capture/main.cpp:597
+msgid "Parar vídeo"
+msgstr "إيقاف الفيديو"
+
+#: src/capture/main.cpp:598
+msgid "Geral"
+msgstr "عام"
+
+#: src/capture/main.cpp:599
+msgid "Pasta de saída"
+msgstr "مجلد الإخراج"
+
+#: src/capture/main.cpp:600
+msgid "Monitorar área de transferência"
+msgstr "مراقبة الحافظة"
+
+#: src/capture/main.cpp:600
+msgid "Só a Ferramenta de Captura do Windows"
+msgstr "أداة القص في Windows فقط"
+
+#: src/capture/main.cpp:600
+msgid "Qualquer aplicativo"
+msgstr "أي تطبيق"
+
+#: src/capture/main.cpp:602
+msgid "Iniciar com o Windows"
+msgstr "البدء مع Windows"
+
+#: src/capture/main.cpp:603
+msgid "Mostrar a janela de captura ao iniciar"
+msgstr "إظهار نافذة الالتقاط عند البدء"
+
+#: src/capture/main.cpp:604
+msgid "Idioma"
+msgstr "اللغة"
+
+#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+msgid "Biblioteca: "
+msgstr "المكتبة: "
+
+#: src/capture/main.cpp:611
+msgid "Dois atalhos iguais: "
+msgstr "اختصاران متطابقان: "
+
+#: src/capture/main.cpp:616
+msgid "Opções do Snapnab"
+msgstr "خيارات Snapnab"
+
+#: src/capture/main.cpp:632
+msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
+msgstr "ستُطبَّق اللغة الجديدة بعد إعادة تشغيل Snapnab والمحرّر. هل تريد إعادة التشغيل الآن؟"
+
+#: src/capture/main.cpp:655
+msgid " — captura de tela e gravação de vídeo"
+msgstr " — التقاط الشاشة وتسجيل الفيديو"
+
+#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+msgid "Software livre sob a GNU General Public License versão 3."
+msgstr "برنامج حر بموجب رخصة جنو العمومية العامة، الإصدار 3."
+
+#: src/capture/main.cpp:657
+msgid ""
+"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
+"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
+msgstr ""
+"عملية الالتقاط (Snapnab.exe) + المحرّر (SnapnabEditor.exe)، يتواصلان عبر ذاكرة\n"
+"مشتركة (قناة IPC) وWM_COPYDATA. تُحفظ اللقطات في المكتبة:\n"
+
+#: src/capture/main.cpp:659
+msgid "Sobre o Snapnab"
+msgstr "حول Snapnab"
+
+#: src/capture/main.cpp:681 src/capture/main.cpp:972
+msgid "Abrir a janela de captura"
+msgstr "فتح نافذة الالتقاط"
+
+#: src/capture/main.cpp:682
+msgid "Ocultar o One Click"
+msgstr "إخفاء One Click"
+
+#: src/capture/main.cpp:735
+msgid ""
+"Snapnab.exe [opções]\n"
+"\n"
+"/hide            inicia só na bandeja\n"
+"/capture         captura imagem com o preset de imagem atual\n"
+"/video           grava vídeo com o preset de vídeo atual\n"
+"/preset \"nome\"   executa um preset pelo nome\n"
+"/clipboard       captura a imagem da área de transferência\n"
+"/exit            encerra o Snapnab em execução"
+msgstr ""
+"Snapnab.exe [خيارات]\n"
+"\n"
+"/hide            البدء في منطقة الإعلامات فقط\n"
+"/capture         التقاط صورة بالإعداد المسبق الحالي للصور\n"
+"/video           تسجيل فيديو بالإعداد المسبق الحالي للفيديو\n"
+"/preset \"الاسم\"  تشغيل إعداد مسبق بالاسم\n"
+"/clipboard       التقاط الصورة من الحافظة\n"
+"/exit            إغلاق Snapnab قيد التشغيل"
+
+#: src/capture/main.cpp:741
+msgid "Snapnab — linha de comando"
+msgstr "Snapnab — سطر الأوامر"
+
+#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+msgid "Imagem"
+msgstr "صورة"
+
+#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+msgid "Vídeo"
+msgstr "فيديو"
+
+#: src/capture/main.cpp:772
+msgid "Seleção:"
+msgstr "التحديد:"
+
+#: src/capture/main.cpp:775
+msgid "Efeitos:"
+msgstr "التأثيرات:"
+
+#: src/capture/main.cpp:778
+msgid "Compartilhar:"
+msgstr "المشاركة:"
+
+#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839
+msgid "Arquivo"
+msgstr "ملف"
+
+#: src/capture/main.cpp:781
+msgid "Programa externo"
+msgstr "برنامج خارجي"
+
+#: src/capture/main.cpp:781
+msgid "Texto (OCR)"
+msgstr "نص (OCR)"
+
+#: src/capture/main.cpp:782
+msgid "Qualidade:"
+msgstr "الجودة:"
+
+#: src/capture/main.cpp:785
+msgid "Muito baixa"
+msgstr "منخفضة جدًا"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Baixa"
+msgstr "منخفضة"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+msgid "Média"
+msgstr "متوسطة"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Alta"
+msgstr "عالية"
+
+#: src/capture/main.cpp:786
+msgid "Webcam:"
+msgstr "كاميرا الويب:"
+
+#: src/capture/main.cpp:789
+msgid "Visualizar no Editor"
+msgstr "المعاينة في المحرّر"
+
+#: src/capture/main.cpp:790
+msgid "Copiar para a área de transferência"
+msgstr "نسخ إلى الحافظة"
+
+#: src/capture/main.cpp:791
+msgid "Capturar o cursor"
+msgstr "التقاط المؤشر"
+
+#: src/capture/main.cpp:792 src/capture/main.cpp:846
+msgid "Atraso"
+msgstr "تأخير"
+
+#: src/capture/main.cpp:794
+msgid "Gravar microfone"
+msgstr "تسجيل الميكروفون"
+
+#: src/capture/main.cpp:795
+msgid "Gravar áudio do sistema"
+msgstr "تسجيل صوت النظام"
+
+#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+msgid "Capturar"
+msgstr "التقاط"
+
+#: src/capture/main.cpp:802
+msgid "Abrir Editor"
+msgstr "فتح المحرّر"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:436
+msgid "Captura"
+msgstr "التقاط"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+msgid "Exibir"
+msgstr "عرض"
+
+#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+msgid "Ajuda"
+msgstr "تعليمات"
+
+#: src/capture/main.cpp:933
+msgid "Abrir o &Editor"
+msgstr "فتح المحرّر(&E)"
+
+#: src/capture/main.cpp:934 src/editor/main.cpp:710
+msgid "Abrir a pasta da &biblioteca"
+msgstr "فتح مجلد المكتبة(&L)"
+
+#: src/capture/main.cpp:935
+msgid "Abrir a pasta de &logs"
+msgstr "فتح مجلد السجلات(&G)"
+
+#: src/capture/main.cpp:937
+msgid "&Importar presets…"
+msgstr "استيراد إعدادات مسبقة(&I)…"
+
+#: src/capture/main.cpp:938
+msgid "E&xportar presets…"
+msgstr "تصدير إعدادات مسبقة(&X)…"
+
+#: src/capture/main.cpp:940
+msgid "&Opções…"
+msgstr "خيارات(&O)…"
+
+#: src/capture/main.cpp:942
+msgid "&Sair do Snapnab"
+msgstr "إنهاء Snapnab(&Q)"
+
+#: src/capture/main.cpp:944
+msgid "Capturar &imagem"
+msgstr "التقاط صورة(&I)"
+
+#: src/capture/main.cpp:945
+msgid "Gravar &vídeo"
+msgstr "تسجيل فيديو(&V)"
+
+#: src/capture/main.cpp:946
+msgid "&Repetir a última captura"
+msgstr "تكرار آخر لقطة(&R)"
+
+#: src/capture/main.cpp:948
+msgid "Da área de &transferência"
+msgstr "من الحافظة(&C)"
+
+#: src/capture/main.cpp:949
+msgid "De um &arquivo gráfico…"
+msgstr "من ملف رسومي(&F)…"
+
+#: src/capture/main.cpp:951
+msgid "Mostrar o &One Click"
+msgstr "إظهار One Click(&O)"
+
+#: src/capture/main.cpp:952
+msgid "Lista de &presets"
+msgstr "قائمة الإعدادات المسبقة(&P)"
+
+#: src/capture/main.cpp:954
+msgid "Como usar os &presets"
+msgstr "كيفية استخدام الإعدادات المسبقة(&H)"
+
+#: src/capture/main.cpp:956
+msgid "&Sobre o Snapnab"
+msgstr "حول Snapnab(&A)"
+
+#: src/capture/main.cpp:973
+msgid "Mostrar o One Click"
+msgstr "إظهار One Click"
+
+#: src/capture/main.cpp:974
+msgid "Abrir o Editor"
+msgstr "فتح المحرّر"
+
+#: src/capture/main.cpp:975
+msgid "Opções…"
+msgstr "خيارات…"
+
+#: src/capture/main.cpp:977
+msgid "Sair"
+msgstr "إنهاء"
+
+#: src/capture/main.cpp:999
+msgid "1 segundo"
+msgstr "ثانية واحدة"
+
+#: src/capture/main.cpp:999
+#, c-format
+msgid "%d segundos"
+msgstr "%d ثوانٍ"
+
+#: src/capture/main.cpp:1011
+msgid "Remover o fundo da webcam"
+msgstr "إزالة خلفية كاميرا الويب"
+
+#: src/capture/main.cpp:1012
+msgid "Cor do fundo"
+msgstr "لون الخلفية"
+
+#: src/capture/main.cpp:1013
+msgid "Tolerância (0–100)"
+msgstr "التفاوت (0–100)"
+
+#: src/capture/main.cpp:1014
+msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
+msgstr "استخدم خلفية سادة وجيدة الإضاءة (الشاشة الخضراء هي الأمثل)."
+
+#: src/capture/main.cpp:1015
+msgid "Com o fundo removido, a webcam aparece sem moldura."
+msgstr "بعد إزالة الخلفية تظهر كاميرا الويب بلا إطار."
+
+#: src/capture/main.cpp:1017
+msgid "Remover o fundo (chroma key)"
+msgstr "إزالة الخلفية (مفتاح الكروما)"
+
+#: src/capture/main.cpp:1035
+msgid "Nenhuma webcam encontrada"
+msgstr "لم يتم العثور على كاميرا ويب"
+
+#: src/capture/main.cpp:1047
+msgid "Remover o fundo (chroma key)…"
+msgstr "إزالة الخلفية (مفتاح الكروما)…"
+
+#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+msgid "Novo preset com as configurações atuais"
+msgstr "إعداد مسبق جديد من الإعدادات الحالية"
+
+#: src/capture/main.cpp:1069
+msgid "Novo preset…"
+msgstr "إعداد مسبق جديد…"
+
+#: src/capture/main.cpp:1080
+msgid "Capturar com este preset"
+msgstr "الالتقاط بهذا الإعداد المسبق"
+
+#: src/capture/main.cpp:1082
+msgid "Renomear…"
+msgstr "إعادة تسمية…"
+
+#: src/capture/main.cpp:1083
+msgid "Atalho…"
+msgstr "اختصار…"
+
+#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+msgid "Duplicar"
+msgstr "تكرار"
+
+#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+msgid "Excluir"
+msgstr "حذف"
+
+#: src/capture/main.cpp:1094
+msgid "Adicionar atalho"
+msgstr "إضافة اختصار"
+
+#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+msgid "Gravar"
+msgstr "تسجيل"
+
+#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047
+msgid " (cópia)"
+msgstr " (نسخة)"
+
+#: src/capture/main.cpp:1262
+#, c-format
+msgid "Preset %zu"
+msgstr "إعداد مسبق %zu"
+
+#: src/capture/main.cpp:1264
+msgid "Novo preset"
+msgstr "إعداد مسبق جديد"
+
+#: src/capture/main.cpp:1277
+msgid "É preciso manter pelo menos um preset."
+msgstr "يجب الإبقاء على إعداد مسبق واحد على الأقل."
+
+#: src/capture/main.cpp:1278
+#, c-format
+msgid "Excluir o preset \"%s\"?"
+msgstr "هل تريد حذف الإعداد المسبق \"%s\"؟"
+
+#: src/capture/main.cpp:1337
+msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
+msgstr "إعدادات Snapnab المسبقة (*.snappresets;*.xml)|*.snappresets;*.xml|"
+
+#: src/capture/main.cpp:1341
+msgid "Presets importados."
+msgstr "تم استيراد الإعدادات المسبقة."
+
+#: src/capture/main.cpp:1342
+msgid "Arquivo de presets inválido."
+msgstr "ملف إعدادات مسبقة غير صالح."
+
+#: src/capture/main.cpp:1347
+msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
+msgstr "إعدادات Snapnab المسبقة (*.snappresets)|*.snappresets|"
+
+#: src/capture/main.cpp:1351
+msgid "Não foi possível exportar."
+msgstr "تعذّر التصدير."
+
+#: src/capture/main.cpp:1360
+msgid "Há uma gravação em andamento. Parar e sair?"
+msgstr "يوجد تسجيل قيد التقدم. هل تريد الإيقاف والإنهاء؟"
+
+#: src/capture/main.cpp:1461
+msgid "Gravar vídeo  ("
+msgstr "تسجيل فيديو  ("
+
+#: src/capture/main.cpp:1461
+msgid "Capturar imagem  ("
+msgstr "التقاط صورة  ("
+
+#: src/common/Image.cpp:285
+msgid "Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|"
+msgstr "الصور والمستندات (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|مستند Snapnab (*.snap)|*.snap|فيديو MP4 (*.mp4)|*.mp4|كل الملفات (*.*)|*.*|"
+
+#: src/common/Image.cpp:292
+msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
+msgstr "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|مستند Snapnab (*.snap)|*.snap|"
+
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+msgid "Imagem vazia."
+msgstr "صورة فارغة."
+
+#: src/common/Ocr.cpp:36
+msgid "Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."
+msgstr "لا توجد لغة OCR مثبّتة في Windows (الإعدادات › الوقت واللغة › اللغة)."
+
+#: src/common/Ocr.cpp:44
+msgid "Falha desconhecida no OCR."
+msgstr "خطأ OCR غير معروف."
+
+#: src/common/Ui.cpp:247
+msgid "OK"
+msgstr "موافق"
+
+#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+msgid "Copiar tudo"
+msgstr "نسخ الكل"
+
+#: src/common/Util.cpp:340
+msgid "(nenhum)"
+msgstr "(لا شيء)"
+
+#: src/common/Util.cpp:349
+msgid "Print Screen"
+msgstr "Print Screen"
+
+#: src/editor/Canvas.cpp:13
+msgid "Mover"
+msgstr "تحريك"
+
+#: src/editor/Canvas.cpp:14
+msgid "Seta"
+msgstr "سهم"
+
+#: src/editor/Canvas.cpp:15
+msgid "Linha"
+msgstr "خط"
+
+#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540
+msgid "Forma"
+msgstr "شكل"
+
+#: src/editor/Canvas.cpp:17
+msgid "Caneta"
+msgstr "قلم"
+
+#: src/editor/Canvas.cpp:18
+msgid "Marcador"
+msgstr "قلم تمييز"
+
+#: src/editor/Canvas.cpp:20
+msgid "Balão"
+msgstr "وسيلة شرح"
+
+#: src/editor/Canvas.cpp:21
+msgid "Passos"
+msgstr "خطوات"
+
+#: src/editor/Canvas.cpp:22
+msgid "Carimbo"
+msgstr "ختم"
+
+#: src/editor/Canvas.cpp:23
+msgid "Ocultar"
+msgstr "إخفاء"
+
+#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+msgid "Destaque"
+msgstr "بقعة ضوء"
+
+#: src/editor/Canvas.cpp:25
+msgid "Lupa"
+msgstr "مكبّر"
+
+#: src/editor/Canvas.cpp:26
+msgid "Preencher"
+msgstr "تعبئة"
+
+#: src/editor/Canvas.cpp:27
+msgid "Borracha"
+msgstr "ممحاة"
+
+#: src/editor/Canvas.cpp:28
+msgid "Cortar"
+msgstr "اقتصاص"
+
+#: src/editor/Canvas.cpp:29
+msgid "Seleção"
+msgstr "تحديد"
+
+#: src/editor/Canvas.cpp:30
+msgid "Recortar faixa"
+msgstr "قصّ شريط"
+
+#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+msgid "Conta-gotas"
+msgstr "قطّارة"
+
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+msgid "Favoritos"
+msgstr "المفضّلة"
+
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+msgid "Varinha mágica"
+msgstr "العصا السحرية"
+
+#: src/editor/Canvas.cpp:325
+msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
+msgstr "لا توجد لقطة مفتوحة — استخدم “التقاط” أو افتح ملفًا (Ctrl+O)."
+
+#: src/editor/Canvas.cpp:350
+msgid "Prévia — Aplicar ou Cancelar no painel"
+msgstr "معاينة — تطبيق أو إلغاء في اللوحة"
+
+#: src/editor/Canvas.cpp:452
+#, c-format
+msgid "%d × %d  — Enter aplica, Esc cancela"
+msgstr "%d × %d  — Enter للتطبيق، Esc للإلغاء"
+
+#: src/editor/Panels.cpp:251
+msgid "Mais"
+msgstr "المزيد"
+
+#: src/editor/Panels.cpp:295
+msgid "  •  arraste para mudar de lugar"
+msgstr "  •  اسحب لتغيير المكان"
+
+#: src/editor/Panels.cpp:296
+msgid "Mais ferramentas e personalização da barra"
+msgstr "مزيد من الأدوات وتخصيص الشريط"
+
+#: src/editor/Panels.cpp:471
+msgid "Arraste suas ferramentas, efeitos e comandos favoritos para a barra…"
+msgstr "اسحب أدواتك وتأثيراتك وأوامرك المفضّلة إلى الشريط…"
+
+#: src/editor/Panels.cpp:493 src/editor/Panels.cpp:550
+msgid "Espaçador"
+msgstr "فاصل"
+
+#: src/editor/Panels.cpp:517
+msgid "Número de ferramentas na barra automática:"
+msgstr "عدد الأدوات في الشريط التلقائي:"
+
+#: src/editor/Panels.cpp:525
+msgid "Restaurar padrões"
+msgstr "استعادة الافتراضي"
+
+#: src/editor/Panels.cpp:526
+msgid "Concluído"
+msgstr "تم"
+
+#: src/editor/Panels.cpp:596
+msgid ""
+"Arraste um item desta janela para a barra de ferramentas para acrescentá-lo; a barra mostra onde ele vai entrar.\n"
+"\n"
+"Na barra, arraste um item para mudar de lugar, ou para fora da barra para removê-lo.\n"
+"“Restaurar padrões” volta à barra automática: Mover, Seleção, Texto, Marcador, Forma, as usadas por último e Lupa. O número de ferramentas dela é escolhido embaixo (de 6 a 16)."
+msgstr ""
+"اسحب عنصرًا من هذه النافذة إلى شريط الأدوات لإضافته؛ يُظهر الشريط مكان إدراجه.\n"
+"\n"
+"في الشريط، اسحب عنصرًا لتغيير مكانه، أو إلى خارج الشريط لإزالته.\n"
+"“استعادة الافتراضي” يعيد الشريط التلقائي: تحريك وتحديد ونص وقلم تمييز وشكل والأدوات المستخدمة مؤخرًا والمكبّر. يُختار عدد أدواته في الأسفل (من 6 إلى 16)."
+
+#: src/editor/Panels.cpp:600 src/editor/Panels.cpp:645
+msgid "Personalizar a barra de ferramentas"
+msgstr "تخصيص شريط الأدوات"
+
+#: src/editor/Panels.cpp:816 src/editor/Panels.cpp:1058
+msgid "Aplicar"
+msgstr "تطبيق"
+
+#: src/editor/Panels.cpp:916
+msgid "Efeitos rápidos"
+msgstr "تأثيرات سريعة"
+
+#: src/editor/Panels.cpp:972
+msgid "Adicionar"
+msgstr "إضافة"
+
+#: src/editor/Panels.cpp:1060
+msgid "Excluir este efeito rápido"
+msgstr "حذف هذا التأثير السريع"
+
+#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+msgid "Capturas recentes"
+msgstr "اللقطات الأخيرة"
+
+#: src/editor/Panels.cpp:1650
+#, c-format
+msgid "Biblioteca  •  %zu capturas"
+msgstr "المكتبة  •  %zu لقطة"
+
+#: src/editor/Panels.cpp:1651
+#, c-format
+msgid "  •  %d selecionadas"
+msgstr "  •  %d محددة"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Exportar (%d)…"
+msgstr "تصدير (%d)…"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Excluir (%d)"
+msgstr "حذف (%d)"
+
+#: src/editor/Panels.cpp:1660
+msgid "Limpar seleção"
+msgstr "مسح التحديد"
+
+#: src/editor/Panels.cpp:1661
+msgid "Biblioteca"
+msgstr "المكتبة"
+
+#: src/editor/Panels.cpp:1661
+msgid "Voltar ao editor"
+msgstr "العودة إلى المحرّر"
+
+#: src/editor/Panels.cpp:1666
+msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
+msgstr "لا توجد لقطات حديثة. التقط باستخدام Snapnab (Print Screen) أو أفلت الملفات هنا."
+
+#: src/editor/Panels.cpp:1667
+msgid "A biblioteca está vazia."
+msgstr "المكتبة فارغة."
+
+#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+msgid "Abrir"
+msgstr "فتح"
+
+#: src/editor/Panels.cpp:1822
+msgid "Mostrar na pasta"
+msgstr "إظهار في المجلد"
+
+#: src/editor/Panels.cpp:1825
+#, c-format
+msgid "Exportar %zu itens…"
+msgstr "تصدير %zu عنصر…"
+
+#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+msgid "Exportar…"
+msgstr "تصدير…"
+
+#: src/editor/Panels.cpp:1826
+msgid "Selecionar tudo\tCtrl+A"
+msgstr "تحديد الكل\tCtrl+A"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja"
+msgstr "إزالة من الشريط"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja (continua na biblioteca)"
+msgstr "إزالة من الشريط (تبقى في المكتبة)"
+
+#: src/editor/Panels.cpp:1829
+#, c-format
+msgid "Excluir %zu itens (Lixeira)\tDel"
+msgstr "حذف %zu عنصر (سلة المحذوفات)\tDel"
+
+#: src/editor/Panels.cpp:1829
+msgid "Excluir (Lixeira)\tDel"
+msgstr "حذف (سلة المحذوفات)\tDel"
+
+#: src/editor/Pdf.cpp:11
+msgid "Falha ao codificar a imagem."
+msgstr "فشل ترميز الصورة."
+
+#: src/editor/Pdf.cpp:44
+msgid "Não foi possível criar o arquivo."
+msgstr "تعذّر إنشاء الملف."
+
+#: src/editor/Pdf.cpp:48
+msgid "Falha ao gravar o arquivo."
+msgstr "فشل كتابة الملف."
+
+#: src/editor/Popups.cpp:253
+msgid "Cores do tema"
+msgstr "ألوان النسق"
+
+#: src/editor/Popups.cpp:255
+msgid "Cores padrão"
+msgstr "الألوان القياسية"
+
+#: src/editor/Popups.cpp:256
+msgid "Recentes"
+msgstr "الأخيرة"
+
+#: src/editor/Popups.cpp:265
+msgid "Sem cor"
+msgstr "بلا لون"
+
+#: src/editor/Popups.cpp:265
+msgid "Mais cores…"
+msgstr "مزيد من الألوان…"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Retângulo"
+msgstr "مستطيل"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Retângulo arredondado"
+msgstr "مستطيل بزوايا مستديرة"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Elipse"
+msgstr "قطع ناقص"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Triângulo"
+msgstr "مثلث"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Losango"
+msgstr "معيّن"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Paralelogramo"
+msgstr "متوازي أضلاع"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Hexágono"
+msgstr "سداسي"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Estrela"
+msgstr "نجمة"
+
+#: src/editor/PropsPanel.cpp:97
+msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
+msgstr "اسحب لرسم سهم. Shift يثبّت على 45°. مع “منحنى بيزييه”، اسحب المقبض الأوسط لتقويسه."
+
+#: src/editor/PropsPanel.cpp:98
+msgid "Arraste para desenhar uma linha. Shift trava em 45°."
+msgstr "اسحب لرسم خط. Shift يثبّت على 45°."
+
+#: src/editor/PropsPanel.cpp:99
+msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
+msgstr "اسحب لرسم الشكل. Shift يحافظ على التناسب (مربع، دائرة)."
+
+#: src/editor/PropsPanel.cpp:100
+msgid "Arraste para desenhar à mão livre."
+msgstr "اسحب للرسم الحر."
+
+#: src/editor/PropsPanel.cpp:101
+msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
+msgstr "اسحب مستطيلًا فوق ما تريد تمييزه. اللون والعتامة يأتيان من الخصائص."
+
+#: src/editor/PropsPanel.cpp:102
+msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
+msgstr "انقر أو اسحب لإنشاء مربع نص. النقر المزدوج يحرّر النص."
+
+#: src/editor/PropsPanel.cpp:103
+msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
+msgstr "اسحب لإنشاء وسيلة الشرح ثم اكتب. المقبض الأصفر يحرّك الذيل (أو اتجاه الأسهم)."
+
+#: src/editor/PropsPanel.cpp:104
+msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
+msgstr "انقر لترقيم الخطوات بالتسلسل. «النوع» يختار أرقامًا أو أحرفًا أو أرقامًا رومانية."
+
+#: src/editor/PropsPanel.cpp:105
+msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
+msgstr "اختر ختمًا من المعرض ثم انقر أو اسحب على الصورة. “استيراد…” يضيف صورك الخاصة."
+
+#: src/editor/PropsPanel.cpp:106
+msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
+msgstr "انقر لتعبئة المنطقة ذات اللون المتشابه. تأخذ القطّارة لون التعبئة من الصورة."
+
+#: src/editor/PropsPanel.cpp:107
+msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
+msgstr "اسحب لمسح بكسلات الصورة (تصبح شفافة)."
+
+#: src/editor/PropsPanel.cpp:108
+msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "اسحب لإنشاء المكبّر. مع العدسة المنفصلة، يختار المقبض الأصفر المنطقة المكبّرة."
+
+#: src/editor/PropsPanel.cpp:109
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
+msgstr "اسحب فوق المنطقة المراد إخفاؤها (تمويه أو تقطيع بكسلي)."
+
+#: src/editor/PropsPanel.cpp:110
+msgid "Arraste a área em destaque; o resto da imagem escurece."
+msgstr "اسحب المنطقة المراد إبرازها؛ يصبح باقي الصورة داكنًا."
+
+#: src/editor/PropsPanel.cpp:111
+msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
+msgstr "انقر عنصرًا لتحديده وسحبه. مع Smart Move، اسحب منطقة من الصورة لنقلها؛ تُملأ الخلفية."
+
+#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+msgid "Arraste a área a manter; Enter ou duplo clique aplica."
+msgstr "اسحب المنطقة المراد الاحتفاظ بها؛ Enter أو النقر المزدوج للتطبيق."
+
+#: src/editor/PropsPanel.cpp:113
+msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
+msgstr "حدّد واسحب للنقل (Smart Move)؛ Del يمسح؛ Ctrl+C ينسخ."
+
+#: src/editor/PropsPanel.cpp:114
+msgid "Arraste sobre a faixa a remover; as partes são unidas."
+msgstr "اسحب فوق الشريط المراد إزالته؛ تُضمّ الأجزاء معًا."
+
+#: src/editor/PropsPanel.cpp:115
+msgid "Clique na imagem para pegar a cor."
+msgstr "انقر الصورة لأخذ اللون."
+
+#: src/editor/PropsPanel.cpp:250
+msgid "Pesquisar carimbos"
+msgstr "البحث في الأختام"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "I, II, III…"
+msgstr "I, II, III…"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "i, ii, iii…"
+msgstr "i, ii, iii…"
+
+#: src/editor/PropsPanel.cpp:257
+msgid "Laço (mão livre)"
+msgstr "لاسو (رسم حر)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Transparência"
+msgstr "الشفافية"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Cor do canvas (branco)"
+msgstr "لون اللوحة (أبيض)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Preenchimento inteligente"
+msgstr "تعبئة ذكية"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Horizontal (remove linhas)"
+msgstr "أفقي (يزيل صفوفًا)"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Vertical (remove colunas)"
+msgstr "عمودي (يزيل أعمدة)"
+
+#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460
+msgid "Desfoque"
+msgstr "تمويه"
+
+#: src/editor/PropsPanel.cpp:263
+msgid "Pixelado"
+msgstr "تقطيع بكسلي"
+
+#: src/editor/PropsPanel.cpp:264
+msgid "Organizar carimbos…"
+msgstr "تنظيم الأختام…"
+
+#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+msgid "Importar…"
+msgstr "استيراد…"
+
+#: src/editor/PropsPanel.cpp:269
+msgid "Trazer para a frente"
+msgstr "إحضار للأمام"
+
+#: src/editor/PropsPanel.cpp:270
+msgid "Enviar para trás"
+msgstr "إرسال للخلف"
+
+#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+msgid "Excluir objeto"
+msgstr "حذف العنصر"
+
+#: src/editor/PropsPanel.cpp:272
+msgid "Agrupar"
+msgstr "تجميع"
+
+#: src/editor/PropsPanel.cpp:273
+msgid "Desagrupar"
+msgstr "فك التجميع"
+
+#: src/editor/PropsPanel.cpp:294
+msgid "Novo tema…"
+msgstr "نسق جديد…"
+
+#: src/editor/PropsPanel.cpp:351
+msgid "Aplicar recorte"
+msgstr "تطبيق القص"
+
+#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+msgid "Corte automático"
+msgstr "اقتصاص تلقائي"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Cortar para a seleção"
+msgstr "اقتصاص إلى التحديد"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Copiar seleção"
+msgstr "نسخ التحديد"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Excluir seleção"
+msgstr "حذف التحديد"
+
+#: src/editor/PropsPanel.cpp:378
+msgid "Tema:"
+msgstr "النسق:"
+
+#: src/editor/PropsPanel.cpp:446
+msgid "Ponta inicial"
+msgstr "طرف البداية"
+
+#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+msgid "Tracejado"
+msgstr "متقطّع"
+
+#: src/editor/PropsPanel.cpp:448
+msgid "Ponta final"
+msgstr "طرف النهاية"
+
+#: src/editor/PropsPanel.cpp:456
+msgid "Avançado"
+msgstr "متقدّم"
+
+#: src/editor/PropsPanel.cpp:462
+msgid "Alinhamento"
+msgstr "المحاذاة"
+
+#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495
+msgid "Opacidade"
+msgstr "العتامة"
+
+#: src/editor/PropsPanel.cpp:467
+msgid "Margem interna"
+msgstr "الهامش الداخلي"
+
+#: src/editor/PropsPanel.cpp:468
+msgid "Sombreado (degradê)"
+msgstr "مظلّل (تدرّج)"
+
+#: src/editor/PropsPanel.cpp:474
+#, c-format
+msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
+msgstr "تم تحديد %d عناصر. تُطبَّق تغييرات النمط على العناصر من نوع آخر عنصر تم النقر عليه."
+
+#: src/editor/PropsPanel.cpp:475
+#, c-format
+msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
+msgstr "مجموعة من %zu عناصر: اسحب للنقل، واستخدم المقابض لتغيير الحجم."
+
+#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+msgid "Largura"
+msgstr "العرض"
+
+#: src/editor/PropsPanel.cpp:483
+msgid "Tamanho inicial"
+msgstr "حجم البداية"
+
+#: src/editor/PropsPanel.cpp:484
+msgid "Tamanho final"
+msgstr "حجم النهاية"
+
+#: src/editor/PropsPanel.cpp:485
+msgid "Curva de Bézier"
+msgstr "منحنى بيزييه"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534
+msgid "Preenchimento"
+msgstr "التعبئة"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+msgid "Contorno"
+msgstr "المحيط"
+
+#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+msgid "Fonte"
+msgstr "الخط"
+
+#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+msgid "Tamanho da fonte"
+msgstr "حجم الخط"
+
+#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+msgid "Espessura"
+msgstr "السُّمك"
+
+#: src/editor/PropsPanel.cpp:513
+msgid "Estilo da seta"
+msgstr "نمط السهم"
+
+#: src/editor/PropsPanel.cpp:515
+msgid "Ponta"
+msgstr "الطرف"
+
+#: src/editor/PropsPanel.cpp:517
+msgid "Cor da seta"
+msgstr "لون السهم"
+
+#: src/editor/PropsPanel.cpp:520
+msgid "Tamanho da seta"
+msgstr "حجم السهم"
+
+#: src/editor/PropsPanel.cpp:537
+msgid "Mesma cor em toda a imagem"
+msgstr "اللون نفسه في الصورة كلها"
+
+#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+msgid "Cor do texto"
+msgstr "لون النص"
+
+#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
+msgid "Tipo"
+msgstr "النوع"
+
+#: src/editor/PropsPanel.cpp:543
+msgid "Reiniciar a sequência"
+msgstr "إعادة بدء التسلسل"
+
+#: src/editor/PropsPanel.cpp:548
+msgid "Suavizar as bordas"
+msgstr "تنعيم الحواف"
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Ampliação (%)"
+msgstr "التكبير (%)"
+
+#: src/editor/PropsPanel.cpp:554
+msgid "Lente separada da área ampliada"
+msgstr "عدسة منفصلة عن المنطقة المكبّرة"
+
+#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+msgid "Intensidade"
+msgstr "الشدة"
+
+#: src/editor/PropsPanel.cpp:565
+msgid "Smart Move"
+msgstr "Smart Move"
+
+#: src/editor/PropsPanel.cpp:567
+msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
+msgstr "اسحب منطقة من الصورة ثم انقلها إلى مكان آخر؛ تُملأ الخلفية."
+
+#: src/editor/PropsPanel.cpp:568
+msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
+msgstr "انقر عنصرًا لتحديده. Ctrl+نقر أو اسحب مستطيلًا لتحديد عدة عناصر."
+
+#: src/editor/PropsPanel.cpp:575
+msgid "Modo"
+msgstr "الوضع"
+
+#: src/editor/PropsPanel.cpp:577
+msgid "Seleção global (mesma cor)"
+msgstr "تحديد شامل (اللون نفسه)"
+
+#: src/editor/PropsPanel.cpp:578
+msgid "Ao mover, preencher"
+msgstr "التعبئة عند النقل"
+
+#: src/editor/PropsPanel.cpp:582
+msgid "Direção"
+msgstr "الاتجاه"
+
+#: src/editor/PropsPanel.cpp:583
+msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
+msgstr "اسحب فوق الشريط المراد إزالته؛ تُضمّ أجزاء الصورة معًا."
+
+#: src/editor/PropsPanel.cpp:587
+msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
+msgstr "انقر الصورة لأخذ اللون؛ ينتقل إلى أدوات الرسم."
+
+#: src/editor/PropsPanel.cpp:681
+msgid "Sombra ▾"
+msgstr "ظل ▾"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Carimbos"
+msgstr "الأختام"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Estilos rápidos"
+msgstr "أنماط سريعة"
+
+#: src/editor/PropsPanel.cpp:884
+msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
+msgstr "انقر النجمة على نمط سريع لإضافته إلى المفضّلة."
+
+#: src/editor/PropsPanel.cpp:885
+msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
+msgstr "لا توجد أختام في هذه الفئة. استخدم “استيراد…” لإضافة صور."
+
+#: src/editor/PropsPanel.cpp:886
+msgid "Nenhum carimbo encontrado."
+msgstr "لم يتم العثور على أختام."
+
+#: src/editor/PropsPanel.cpp:952
+msgid "Propriedades da ferramenta"
+msgstr "خصائص الأداة"
+
+#: src/editor/PropsPanel.cpp:1012
+msgid "Aplicar este estilo"
+msgstr "تطبيق هذا النمط"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Remover dos favoritos"
+msgstr "إزالة من المفضّلة"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Adicionar aos favoritos"
+msgstr "إضافة إلى المفضّلة"
+
+#: src/editor/PropsPanel.cpp:1014
+msgid "Excluir este estilo rápido"
+msgstr "حذف هذا النمط السريع"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar uma cópia do tema…"
+msgstr "تحرير نسخة من النسق…"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar o tema…"
+msgstr "تحرير النسق…"
+
+#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
+msgid "Nome"
+msgstr "الاسم"
+
+#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#, c-format
+msgid "Cor %d"
+msgstr "اللون %d"
+
+#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
+msgstr "تُنشأ الأنماط السريعة لكل الأدوات من هذه الألوان."
+
+#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+msgid "Novo tema"
+msgstr "نسق جديد"
+
+#: src/editor/PropsPanel.cpp:1039
+msgid "Editar tema"
+msgstr "تحرير النسق"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
+msgstr "نسق Snapnab (*.snaptheme)|*.snaptheme|"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Exportar tema"
+msgstr "تصدير النسق"
+
+#: src/editor/PropsPanel.cpp:1052
+msgid "Não foi possível exportar o tema."
+msgstr "تعذّر تصدير النسق."
+
+#: src/editor/PropsPanel.cpp:1056
+#, c-format
+msgid "Excluir o tema \"%s\"?"
+msgstr "هل تريد حذف النسق \"%s\"؟"
+
+#: src/editor/PropsPanel.cpp:1079
+msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
+msgstr "القطّارة: انقر الصورة لأخذ لون التعبئة."
+
+#: src/editor/PropsPanel.cpp:1099
+msgid "Mostrar sombra"
+msgstr "إظهار الظل"
+
+#: src/editor/PropsPanel.cpp:1100
+msgid "Cor da sombra…"
+msgstr "لون الظل…"
+
+#: src/editor/PropsPanel.cpp:1103
+msgid "Distância"
+msgstr "المسافة"
+
+#: src/editor/PropsPanel.cpp:1201
+msgid "A sequência de passos recomeça em 1."
+msgstr "يبدأ تسلسل الخطوات من 1 مجددًا."
+
+#: src/editor/PropsPanel.cpp:1363
+msgid "Meu tema"
+msgstr "نسقي"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
+msgstr "نسق Snapnab (*.snaptheme)|*.snaptheme|كل الملفات|*.*|"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Importar tema"
+msgstr "استيراد نسق"
+
+#: src/editor/PropsPanel.cpp:1408
+#, c-format
+msgid "%d carimbo(s) importado(s) para Meus carimbos."
+msgstr "تم استيراد %d ختم إلى «أختامي»."
+
+#: src/editor/QuickStyles.cpp:200
+msgid "Básico"
+msgstr "أساسي"
+
+#: src/editor/QuickStyles.cpp:201
+msgid "Industrial"
+msgstr "صناعي"
+
+#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+msgid "Tema"
+msgstr "نسق"
+
+#: src/editor/QuickStyles.cpp:323
+msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
+msgstr "الملف ليس نسق Snapnab (.snaptheme)."
+
+#: src/editor/Stamps.cpp:16
+msgid "Negócios"
+msgstr "أعمال"
+
+#: src/editor/Stamps.cpp:23
+msgid "Interface"
+msgstr "الواجهة"
+
+#: src/editor/Stamps.cpp:29
+msgid "Atividades"
+msgstr "أنشطة"
+
+#: src/editor/Stamps.cpp:33
+msgid "Comida e bebida"
+msgstr "طعام وشراب"
+
+#: src/editor/Stamps.cpp:37
+msgid "Feriados"
+msgstr "أعياد"
+
+#: src/editor/Stamps.cpp:40
+msgid "Smileys e pessoas"
+msgstr "وجوه وأشخاص"
+
+#: src/editor/Stamps.cpp:46
+msgid "Adesivos"
+msgstr "ملصقات"
+
+#: src/editor/Stamps.cpp:49
+msgid "Símbolos"
+msgstr "رموز"
+
+#: src/editor/Stamps.cpp:54
+msgid "Viagem e lugares"
+msgstr "سفر وأماكن"
+
+#: src/editor/Stamps.cpp:92
+msgid "Meus carimbos"
+msgstr "أختامي"
+
+#: src/editor/Stamps.cpp:100
+msgid "Meus carimbos › "
+msgstr "أختامي › "
+
+#: src/editor/Stamps.cpp:125
+msgid "Importar carimbos"
+msgstr "استيراد أختام"
+
+#: src/editor/Stamps.cpp:126
+msgid "Imagens"
+msgstr "الصور"
+
+#: src/editor/Stamps.cpp:16
+msgid "clipe anexo"
+msgstr "مشبك مرفق"
+
+#: src/editor/Stamps.cpp:16
+msgid "lupa pesquisar"
+msgstr "مكبّر بحث"
+
+#: src/editor/Stamps.cpp:16
+msgid "engrenagem configurações"
+msgstr "ترس إعدادات"
+
+#: src/editor/Stamps.cpp:16
+msgid "relógio hora"
+msgstr "ساعة وقت"
+
+#: src/editor/Stamps.cpp:16
+msgid "usuário pessoa"
+msgstr "مستخدم شخص"
+
+#: src/editor/Stamps.cpp:16
+msgid "equipe pessoas"
+msgstr "فريق أشخاص"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado fechado segurança"
+msgstr "قفل مغلق أمان"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado aberto"
+msgstr "قفل مفتوح"
+
+#: src/editor/Stamps.cpp:16
+msgid "marcador"
+msgstr "إشارة مرجعية"
+
+#: src/editor/Stamps.cpp:16
+msgid "sinal wi-fi"
+msgstr "إشارة واي فاي"
+
+#: src/editor/Stamps.cpp:16
+msgid "notebook código"
+msgstr "حاسوب محمول برمجة"
+
+#: src/editor/Stamps.cpp:16
+msgid "baixar download"
+msgstr "تنزيل"
+
+#: src/editor/Stamps.cpp:16
+msgid "enviar upload"
+msgstr "رفع"
+
+#: src/editor/Stamps.cpp:16
+msgid "mesclar"
+msgstr "دمج"
+
+#: src/editor/Stamps.cpp:16
+msgid "repetir"
+msgstr "تكرار"
+
+#: src/editor/Stamps.cpp:16
+msgid "gráfico barras"
+msgstr "مخطط أعمدة"
+
+#: src/editor/Stamps.cpp:16
+msgid "crescimento"
+msgstr "نمو"
+
+#: src/editor/Stamps.cpp:16
+msgid "queda"
+msgstr "انخفاض"
+
+#: src/editor/Stamps.cpp:16
+msgid "lista concluído"
+msgstr "قائمة مكتملة"
+
+#: src/editor/Stamps.cpp:16
+msgid "link compartilhar"
+msgstr "رابط مشاركة"
+
+#: src/editor/Stamps.cpp:16
+msgid "reproduzir play"
+msgstr "تشغيل"
+
+#: src/editor/Stamps.cpp:16
+msgid "parar"
+msgstr "إيقاف"
+
+#: src/editor/Stamps.cpp:16
+msgid "pausar"
+msgstr "إيقاف مؤقت"
+
+#: src/editor/Stamps.cpp:16
+msgid "avançar"
+msgstr "تقديم"
+
+#: src/editor/Stamps.cpp:16
+msgid "voltar"
+msgstr "ترجيع"
+
+#: src/editor/Stamps.cpp:16
+msgid "dinheiro moedas"
+msgstr "مال عملات"
+
+#: src/editor/Stamps.cpp:16
+msgid "cartão pagamento"
+msgstr "بطاقة دفع"
+
+#: src/editor/Stamps.cpp:16
+msgid "globo internet"
+msgstr "كرة أرضية إنترنت"
+
+#: src/editor/Stamps.cpp:16
+msgid "prêmio medalha"
+msgstr "جائزة ميدالية"
+
+#: src/editor/Stamps.cpp:16
+msgid "caneta"
+msgstr "قلم"
+
+#: src/editor/Stamps.cpp:16
+msgid "lápis"
+msgstr "قلم رصاص"
+
+#: src/editor/Stamps.cpp:16
+msgid "documento"
+msgstr "مستند"
+
+#: src/editor/Stamps.cpp:16
+msgid "nota"
+msgstr "ملاحظة"
+
+#: src/editor/Stamps.cpp:16
+msgid "telefone"
+msgstr "هاتف"
+
+#: src/editor/Stamps.cpp:16
+msgid "e-mail carta"
+msgstr "بريد رسالة"
+
+#: src/editor/Stamps.cpp:16
+msgid "conversa comentário"
+msgstr "محادثة تعليق"
+
+#: src/editor/Stamps.cpp:16
+msgid "monitor computador"
+msgstr "شاشة حاسوب"
+
+#: src/editor/Stamps.cpp:16
+msgid "celular"
+msgstr "هاتف محمول"
+
+#: src/editor/Stamps.cpp:16
+msgid "mouse"
+msgstr "فأرة"
+
+#: src/editor/Stamps.cpp:16
+msgid "nuvem"
+msgstr "سحابة"
+
+#: src/editor/Stamps.cpp:16
+msgid "pasta"
+msgstr "مجلد"
+
+#: src/editor/Stamps.cpp:16
+msgid "calendário"
+msgstr "تقويم"
+
+#: src/editor/Stamps.cpp:16
+msgid "maleta trabalho"
+msgstr "حقيبة عمل"
+
+#: src/editor/Stamps.cpp:16
+msgid "alfinete"
+msgstr "دبوس"
+
+#: src/editor/Stamps.cpp:16
+msgid "lixeira"
+msgstr "سلة مهملات"
+
+#: src/editor/Stamps.cpp:16
+msgid "sino notificação"
+msgstr "جرس إشعار"
+
+#: src/editor/Stamps.cpp:16
+msgid "ideia lâmpada"
+msgstr "فكرة مصباح"
+
+#: src/editor/Stamps.cpp:16
+msgid "alvo meta"
+msgstr "هدف"
+
+#: src/editor/Stamps.cpp:16
+msgid "foguete lançamento"
+msgstr "صاروخ إطلاق"
+
+#: src/editor/Stamps.cpp:16
+msgid "troféu"
+msgstr "كأس"
+
+#: src/editor/Stamps.cpp:23
+msgid "concluído certo"
+msgstr "مكتمل صحيح"
+
+#: src/editor/Stamps.cpp:23
+msgid "errado fechar"
+msgstr "خطأ إغلاق"
+
+#: src/editor/Stamps.cpp:23
+msgid "atenção aviso"
+msgstr "انتباه تحذير"
+
+#: src/editor/Stamps.cpp:23
+msgid "informação"
+msgstr "معلومات"
+
+#: src/editor/Stamps.cpp:23
+msgid "pergunta dúvida"
+msgstr "سؤال شك"
+
+#: src/editor/Stamps.cpp:23
+msgid "exclamação importante"
+msgstr "تعجب مهم"
+
+#: src/editor/Stamps.cpp:23
+msgid "estrela favorito"
+msgstr "نجمة مفضّلة"
+
+#: src/editor/Stamps.cpp:23
+msgid "coração"
+msgstr "قلب"
+
+#: src/editor/Stamps.cpp:23
+msgid "positivo curtir"
+msgstr "إعجاب"
+
+#: src/editor/Stamps.cpp:23
+msgid "negativo"
+msgstr "عدم إعجاب"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta direita"
+msgstr "سهم يمين"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta esquerda"
+msgstr "سهم يسار"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta cima"
+msgstr "سهم أعلى"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta baixo"
+msgstr "سهم أسفل"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta diagonal"
+msgstr "سهم قطري"
+
+#: src/editor/Stamps.cpp:23
+msgid "atualizar"
+msgstr "تحديث"
+
+#: src/editor/Stamps.cpp:23
+msgid "adicionar mais"
+msgstr "إضافة زائد"
+
+#: src/editor/Stamps.cpp:23
+msgid "remover menos"
+msgstr "إزالة ناقص"
+
+#: src/editor/Stamps.cpp:23
+msgid "marca certo"
+msgstr "علامة صح"
+
+#: src/editor/Stamps.cpp:23
+msgid "multiplicar fechar"
+msgstr "ضرب إغلاق"
+
+#: src/editor/Stamps.cpp:23
+msgid "vermelho"
+msgstr "أحمر"
+
+#: src/editor/Stamps.cpp:23
+msgid "laranja"
+msgstr "برتقالي"
+
+#: src/editor/Stamps.cpp:23
+msgid "amarelo"
+msgstr "أصفر"
+
+#: src/editor/Stamps.cpp:23
+msgid "verde"
+msgstr "أخضر"
+
+#: src/editor/Stamps.cpp:23
+msgid "azul"
+msgstr "أزرق"
+
+#: src/editor/Stamps.cpp:23
+msgid "roxo"
+msgstr "بنفسجي"
+
+#: src/editor/Stamps.cpp:23
+msgid "preto"
+msgstr "أسود"
+
+#: src/editor/Stamps.cpp:23
+msgid "branco"
+msgstr "أبيض"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado vermelho"
+msgstr "مربع أحمر"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado verde"
+msgstr "مربع أخضر"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado azul"
+msgstr "مربع أزرق"
+
+#: src/editor/Stamps.cpp:23
+msgid "botão rádio"
+msgstr "زر اختيار"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa"
+msgstr "مربع"
+
+#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+msgid "caixa marcada"
+msgstr "مربع محدد"
+
+#: src/editor/Stamps.cpp:23
+msgid "som alto"
+msgstr "صوت عالٍ"
+
+#: src/editor/Stamps.cpp:23
+msgid "sem som mudo"
+msgstr "كتم الصوت"
+
+#: src/editor/Stamps.cpp:23
+msgid "início casa"
+msgstr "الرئيسية منزل"
+
+#: src/editor/Stamps.cpp:23
+msgid "chave senha"
+msgstr "مفتاح كلمة مرور"
+
+#: src/editor/Stamps.cpp:23
+msgid "carrinho compras"
+msgstr "عربة تسوق"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de entrada"
+msgstr "البريد الوارد"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de saída"
+msgstr "البريد الصادر"
+
+#: src/editor/Stamps.cpp:23
+msgid "zoom pesquisa"
+msgstr "تكبير بحث"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol"
+msgstr "كرة القدم"
+
+#: src/editor/Stamps.cpp:29
+msgid "basquete"
+msgstr "كرة السلة"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol americano"
+msgstr "كرة القدم الأمريكية"
+
+#: src/editor/Stamps.cpp:29
+msgid "beisebol"
+msgstr "البيسبول"
+
+#: src/editor/Stamps.cpp:29
+msgid "tênis"
+msgstr "التنس"
+
+#: src/editor/Stamps.cpp:29
+msgid "vôlei"
+msgstr "الكرة الطائرة"
+
+#: src/editor/Stamps.cpp:29
+msgid "pingue-pongue"
+msgstr "تنس الطاولة"
+
+#: src/editor/Stamps.cpp:29
+msgid "badminton"
+msgstr "الريشة الطائرة"
+
+#: src/editor/Stamps.cpp:29
+msgid "boxe"
+msgstr "الملاكمة"
+
+#: src/editor/Stamps.cpp:29
+msgid "boliche"
+msgstr "البولينغ"
+
+#: src/editor/Stamps.cpp:29
+msgid "golfe"
+msgstr "الغولف"
+
+#: src/editor/Stamps.cpp:29
+msgid "pesca"
+msgstr "صيد السمك"
+
+#: src/editor/Stamps.cpp:29
+msgid "esqui"
+msgstr "التزلج"
+
+#: src/editor/Stamps.cpp:29
+msgid "snowboard"
+msgstr "التزلج على الجليد بلوح"
+
+#: src/editor/Stamps.cpp:29
+msgid "surfe"
+msgstr "ركوب الأمواج"
+
+#: src/editor/Stamps.cpp:29
+msgid "ciclismo bicicleta"
+msgstr "ركوب الدراجات دراجة"
+
+#: src/editor/Stamps.cpp:29
+msgid "natação"
+msgstr "السباحة"
+
+#: src/editor/Stamps.cpp:29
+msgid "musculação"
+msgstr "رفع الأثقال"
+
+#: src/editor/Stamps.cpp:29
+msgid "videogame jogo"
+msgstr "لعبة فيديو"
+
+#: src/editor/Stamps.cpp:29
+msgid "dado"
+msgstr "نرد"
+
+#: src/editor/Stamps.cpp:29
+msgid "quebra-cabeça"
+msgstr "أحجية"
+
+#: src/editor/Stamps.cpp:29
+msgid "pintura arte"
+msgstr "رسم فن"
+
+#: src/editor/Stamps.cpp:29
+msgid "teatro"
+msgstr "مسرح"
+
+#: src/editor/Stamps.cpp:29
+msgid "microfone"
+msgstr "ميكروفون"
+
+#: src/editor/Stamps.cpp:29
+msgid "fone"
+msgstr "سماعات"
+
+#: src/editor/Stamps.cpp:29
+msgid "guitarra"
+msgstr "غيتار"
+
+#: src/editor/Stamps.cpp:29
+msgid "piano"
+msgstr "بيانو"
+
+#: src/editor/Stamps.cpp:29
+msgid "bateria"
+msgstr "طبول"
+
+#: src/editor/Stamps.cpp:29
+msgid "cinema filme"
+msgstr "سينما فيلم"
+
+#: src/editor/Stamps.cpp:29
+msgid "primeiro lugar"
+msgstr "المركز الأول"
+
+#: src/editor/Stamps.cpp:29
+msgid "ingresso"
+msgstr "تذكرة"
+
+#: src/editor/Stamps.cpp:29
+msgid "foto câmera"
+msgstr "صورة كاميرا"
+
+#: src/editor/Stamps.cpp:33
+msgid "maçã"
+msgstr "تفاحة"
+
+#: src/editor/Stamps.cpp:33
+msgid "banana"
+msgstr "موزة"
+
+#: src/editor/Stamps.cpp:33
+msgid "uva"
+msgstr "عنب"
+
+#: src/editor/Stamps.cpp:33
+msgid "morango"
+msgstr "فراولة"
+
+#: src/editor/Stamps.cpp:33
+msgid "melancia"
+msgstr "بطيخ"
+
+#: src/editor/Stamps.cpp:33
+msgid "cereja"
+msgstr "كرز"
+
+#: src/editor/Stamps.cpp:33
+msgid "pêssego"
+msgstr "خوخ"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacaxi"
+msgstr "أناناس"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacate"
+msgstr "أفوكادو"
+
+#: src/editor/Stamps.cpp:33
+msgid "cenoura"
+msgstr "جزر"
+
+#: src/editor/Stamps.cpp:33
+msgid "milho"
+msgstr "ذرة"
+
+#: src/editor/Stamps.cpp:33
+msgid "pão"
+msgstr "خبز"
+
+#: src/editor/Stamps.cpp:33
+msgid "queijo"
+msgstr "جبن"
+
+#: src/editor/Stamps.cpp:33
+msgid "hambúrguer"
+msgstr "همبرغر"
+
+#: src/editor/Stamps.cpp:33
+msgid "batata frita"
+msgstr "بطاطس مقلية"
+
+#: src/editor/Stamps.cpp:33
+msgid "pizza"
+msgstr "بيتزا"
+
+#: src/editor/Stamps.cpp:33
+msgid "cachorro-quente"
+msgstr "نقانق"
+
+#: src/editor/Stamps.cpp:33
+msgid "taco"
+msgstr "تاكو"
+
+#: src/editor/Stamps.cpp:33
+msgid "sushi"
+msgstr "سوشي"
+
+#: src/editor/Stamps.cpp:33
+msgid "lámen sopa"
+msgstr "رامن حساء"
+
+#: src/editor/Stamps.cpp:33
+msgid "rosquinha"
+msgstr "دونات"
+
+#: src/editor/Stamps.cpp:33
+msgid "biscoito"
+msgstr "بسكويت"
+
+#: src/editor/Stamps.cpp:33
+msgid "bolo aniversário"
+msgstr "كعكة عيد ميلاد"
+
+#: src/editor/Stamps.cpp:33
+msgid "torta"
+msgstr "فطيرة"
+
+#: src/editor/Stamps.cpp:33
+msgid "chocolate"
+msgstr "شوكولاتة"
+
+#: src/editor/Stamps.cpp:33
+msgid "pipoca"
+msgstr "فشار"
+
+#: src/editor/Stamps.cpp:33
+msgid "café"
+msgstr "قهوة"
+
+#: src/editor/Stamps.cpp:33
+msgid "chá"
+msgstr "شاي"
+
+#: src/editor/Stamps.cpp:33
+msgid "refrigerante"
+msgstr "مشروب غازي"
+
+#: src/editor/Stamps.cpp:33
+msgid "cerveja"
+msgstr "بيرة"
+
+#: src/editor/Stamps.cpp:33
+msgid "vinho"
+msgstr "نبيذ"
+
+#: src/editor/Stamps.cpp:33
+msgid "brinde"
+msgstr "نخب"
+
+#: src/editor/Stamps.cpp:37
+msgid "natal árvore"
+msgstr "شجرة عيد الميلاد"
+
+#: src/editor/Stamps.cpp:37
+msgid "papai noel"
+msgstr "بابا نويل"
+
+#: src/editor/Stamps.cpp:37
+msgid "presente"
+msgstr "هدية"
+
+#: src/editor/Stamps.cpp:37
+msgid "abóbora halloween"
+msgstr "يقطين هالوين"
+
+#: src/editor/Stamps.cpp:37
+msgid "fantasma"
+msgstr "شبح"
+
+#: src/editor/Stamps.cpp:37
+msgid "peru"
+msgstr "ديك رومي"
+
+#: src/editor/Stamps.cpp:37
+msgid "coelho páscoa"
+msgstr "أرنب الفصح"
+
+#: src/editor/Stamps.cpp:37
+msgid "ovo"
+msgstr "بيضة"
+
+#: src/editor/Stamps.cpp:37
+msgid "coração presente"
+msgstr "قلب هدية"
+
+#: src/editor/Stamps.cpp:37
+msgid "flores"
+msgstr "زهور"
+
+#: src/editor/Stamps.cpp:37
+msgid "fogos"
+msgstr "ألعاب نارية"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrelinha"
+msgstr "شرارة"
+
+#: src/editor/Stamps.cpp:37
+msgid "festa"
+msgstr "حفلة"
+
+#: src/editor/Stamps.cpp:37
+msgid "confete"
+msgstr "قصاصات ورق ملونة"
+
+#: src/editor/Stamps.cpp:37
+msgid "balão"
+msgstr "بالون"
+
+#: src/editor/Stamps.cpp:37
+msgid "vela"
+msgstr "شمعة"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrela brilhante"
+msgstr "نجمة لامعة"
+
+#: src/editor/Stamps.cpp:37
+msgid "neve floco"
+msgstr "ندفة ثلج"
+
+#: src/editor/Stamps.cpp:37
+msgid "boneco de neve"
+msgstr "رجل ثلج"
+
+#: src/editor/Stamps.cpp:37
+msgid "laço"
+msgstr "شريطة"
+
+#: src/editor/Stamps.cpp:37
+msgid "envelope"
+msgstr "مغلف"
+
+#: src/editor/Stamps.cpp:37
+msgid "trevo sorte"
+msgstr "برسيم حظ"
+
+#: src/editor/Stamps.cpp:37
+msgid "piñata"
+msgstr "بينياتا"
+
+#: src/editor/Stamps.cpp:37
+msgid "menorá"
+msgstr "شمعدان"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso feliz"
+msgstr "ابتسامة سعيد"
+
+#: src/editor/Stamps.cpp:40
+msgid "alegre"
+msgstr "مبتهج"
+
+#: src/editor/Stamps.cpp:40
+msgid "rindo"
+msgstr "يضحك"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorrisão"
+msgstr "ابتسامة عريضة"
+
+#: src/editor/Stamps.cpp:40
+msgid "gargalhada"
+msgstr "قهقهة"
+
+#: src/editor/Stamps.cpp:40
+msgid "aliviado"
+msgstr "مرتاح"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando de rir"
+msgstr "دموع الضحك"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso leve"
+msgstr "ابتسامة خفيفة"
+
+#: src/editor/Stamps.cpp:40
+msgid "piscada"
+msgstr "غمزة"
+
+#: src/editor/Stamps.cpp:40
+msgid "contente"
+msgstr "راضٍ"
+
+#: src/editor/Stamps.cpp:40
+msgid "apaixonado"
+msgstr "واقع في الحب"
+
+#: src/editor/Stamps.cpp:40
+msgid "beijo"
+msgstr "قبلة"
+
+#: src/editor/Stamps.cpp:40
+msgid "legal óculos"
+msgstr "رائع نظارة شمسية"
+
+#: src/editor/Stamps.cpp:40
+msgid "pensando"
+msgstr "يفكّر"
+
+#: src/editor/Stamps.cpp:40
+msgid "neutro"
+msgstr "محايد"
+
+#: src/editor/Stamps.cpp:40
+msgid "dormindo"
+msgstr "نائم"
+
+#: src/editor/Stamps.cpp:40
+msgid "surpreso"
+msgstr "متفاجئ"
+
+#: src/editor/Stamps.cpp:40
+msgid "espantado"
+msgstr "مذهول"
+
+#: src/editor/Stamps.cpp:40
+msgid "triste"
+msgstr "حزين"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando"
+msgstr "يبكي"
+
+#: src/editor/Stamps.cpp:40
+msgid "bravo"
+msgstr "غاضب"
+
+#: src/editor/Stamps.cpp:40
+msgid "cabeça explodindo"
+msgstr "انفجار العقل"
+
+#: src/editor/Stamps.cpp:40
+msgid "comemorando"
+msgstr "يحتفل"
+
+#: src/editor/Stamps.cpp:40
+msgid "encantado"
+msgstr "مسرور"
+
+#: src/editor/Stamps.cpp:40
+msgid "anjo"
+msgstr "ملاك"
+
+#: src/editor/Stamps.cpp:40
+msgid "de cabeça para baixo"
+msgstr "مقلوب"
+
+#: src/editor/Stamps.cpp:40
+msgid "abraço"
+msgstr "عناق"
+
+#: src/editor/Stamps.cpp:40
+msgid "revirando olhos"
+msgstr "تدوير العينين"
+
+#: src/editor/Stamps.cpp:40
+msgid "careta"
+msgstr "تكشيرة"
+
+#: src/editor/Stamps.cpp:40
+msgid "olá tchau"
+msgstr "مرحبًا وداعًا"
+
+#: src/editor/Stamps.cpp:40
+msgid "palmas"
+msgstr "تصفيق"
+
+#: src/editor/Stamps.cpp:40
+msgid "viva"
+msgstr "هيا"
+
+#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+msgid "ok"
+msgstr "حسنًا"
+
+#: src/editor/Stamps.cpp:40
+msgid "paz"
+msgstr "سلام"
+
+#: src/editor/Stamps.cpp:40
+msgid "dedos cruzados"
+msgstr "أصابع متقاطعة"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando direita"
+msgstr "يشير لليمين"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando esquerda"
+msgstr "يشير لليسار"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando cima"
+msgstr "يشير للأعلى"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando baixo"
+msgstr "يشير للأسفل"
+
+#: src/editor/Stamps.cpp:40
+msgid "força"
+msgstr "قوة"
+
+#: src/editor/Stamps.cpp:40
+msgid "por favor obrigado"
+msgstr "من فضلك شكرًا"
+
+#: src/editor/Stamps.cpp:40
+msgid "acordo aperto de mão"
+msgstr "اتفاق مصافحة"
+
+#: src/editor/Stamps.cpp:46
+msgid "cem pontos"
+msgstr "مئة نقطة"
+
+#: src/editor/Stamps.cpp:46
+msgid "fogo"
+msgstr "نار"
+
+#: src/editor/Stamps.cpp:46
+msgid "brilho"
+msgstr "بريق"
+
+#: src/editor/Stamps.cpp:46
+msgid "explosão"
+msgstr "انفجار"
+
+#: src/editor/Stamps.cpp:46
+msgid "tontura"
+msgstr "دوار"
+
+#: src/editor/Stamps.cpp:46
+msgid "raiva"
+msgstr "غضب"
+
+#: src/editor/Stamps.cpp:46
+msgid "sono"
+msgstr "نوم"
+
+#: src/editor/Stamps.cpp:46
+msgid "gotas"
+msgstr "قطرات"
+
+#: src/editor/Stamps.cpp:46
+msgid "novo"
+msgstr "جديد"
+
+#: src/editor/Stamps.cpp:46
+msgid "legal"
+msgstr "رائع"
+
+#: src/editor/Stamps.cpp:46
+msgid "grátis"
+msgstr "مجاني"
+
+#: src/editor/Stamps.cpp:46
+msgid "up"
+msgstr "up"
+
+#: src/editor/Stamps.cpp:46
+msgid "topo"
+msgstr "الأعلى"
+
+#: src/editor/Stamps.cpp:46
+msgid "em breve"
+msgstr "قريبًا"
+
+#: src/editor/Stamps.cpp:46
+msgid "arco-íris"
+msgstr "قوس قزح"
+
+#: src/editor/Stamps.cpp:46
+msgid "coroa"
+msgstr "تاج"
+
+#: src/editor/Stamps.cpp:46
+msgid "diamante"
+msgstr "ألماسة"
+
+#: src/editor/Stamps.cpp:46
+msgid "bandeira"
+msgstr "علم"
+
+#: src/editor/Stamps.cpp:46
+msgid "chegada"
+msgstr "خط النهاية"
+
+#: src/editor/Stamps.cpp:46
+msgid "megafone"
+msgstr "مكبّر صوت"
+
+#: src/editor/Stamps.cpp:46
+msgid "anúncio"
+msgstr "إعلان"
+
+#: src/editor/Stamps.cpp:46
+msgid "etiqueta"
+msgstr "ملصق"
+
+#: src/editor/Stamps.cpp:46
+msgid "medalha"
+msgstr "ميدالية"
+
+#: src/editor/Stamps.cpp:46
+msgid "ímã"
+msgstr "مغناطيس"
+
+#: src/editor/Stamps.cpp:46
+msgid "bola de cristal"
+msgstr "كرة بلورية"
+
+#: src/editor/Stamps.cpp:46
+msgid "varinha mágica"
+msgstr "عصا سحرية"
+
+#: src/editor/Stamps.cpp:46
+msgid "bomba"
+msgstr "قنبلة"
+
+#: src/editor/Stamps.cpp:46
+msgid "trevo"
+msgstr "برسيم"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla horizontal"
+msgstr "سهم مزدوج أفقي"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla vertical"
+msgstr "سهم مزدوج عمودي"
+
+#: src/editor/Stamps.cpp:49
+msgid "girar"
+msgstr "تدوير"
+
+#: src/editor/Stamps.cpp:49
+msgid "dividir"
+msgstr "قسمة"
+
+#: src/editor/Stamps.cpp:49
+msgid "infinito"
+msgstr "ما لا نهاية"
+
+#: src/editor/Stamps.cpp:49
+msgid "dupla exclamação"
+msgstr "علامة تعجب مزدوجة"
+
+#: src/editor/Stamps.cpp:49
+msgid "exclamação pergunta"
+msgstr "تعجب استفهام"
+
+#: src/editor/Stamps.cpp:49
+msgid "proibido"
+msgstr "ممنوع"
+
+#: src/editor/Stamps.cpp:49
+msgid "entrada proibida"
+msgstr "ممنوع الدخول"
+
+#: src/editor/Stamps.cpp:49
+msgid "círculo"
+msgstr "دائرة"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango laranja"
+msgstr "معيّن برتقالي"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango azul"
+msgstr "معيّن أزرق"
+
+#: src/editor/Stamps.cpp:49
+msgid "reciclar"
+msgstr "إعادة تدوير"
+
+#: src/editor/Stamps.cpp:49
+msgid "raio energia"
+msgstr "برق طاقة"
+
+#: src/editor/Stamps.cpp:49
+msgid "radioativo"
+msgstr "مشع"
+
+#: src/editor/Stamps.cpp:49
+msgid "risco biológico"
+msgstr "خطر بيولوجي"
+
+#: src/editor/Stamps.cpp:49
+msgid "copyright"
+msgstr "حقوق النشر"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca registrada"
+msgstr "علامة تجارية مسجّلة"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca"
+msgstr "علامة تجارية"
+
+#: src/editor/Stamps.cpp:49
+msgid "hashtag"
+msgstr "وسم"
+
+#: src/editor/Stamps.cpp:49
+msgid "um"
+msgstr "واحد"
+
+#: src/editor/Stamps.cpp:49
+msgid "dois"
+msgstr "اثنان"
+
+#: src/editor/Stamps.cpp:49
+msgid "três"
+msgstr "ثلاثة"
+
+#: src/editor/Stamps.cpp:49
+msgid "quatro"
+msgstr "أربعة"
+
+#: src/editor/Stamps.cpp:49
+msgid "cinco"
+msgstr "خمسة"
+
+#: src/editor/Stamps.cpp:49
+msgid "seis"
+msgstr "ستة"
+
+#: src/editor/Stamps.cpp:49
+msgid "sete"
+msgstr "سبعة"
+
+#: src/editor/Stamps.cpp:49
+msgid "oito"
+msgstr "ثمانية"
+
+#: src/editor/Stamps.cpp:49
+msgid "nove"
+msgstr "تسعة"
+
+#: src/editor/Stamps.cpp:49
+msgid "dez"
+msgstr "عشرة"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra a"
+msgstr "الحرف a"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra b"
+msgstr "الحرف b"
+
+#: src/editor/Stamps.cpp:49
+msgid "ab"
+msgstr "ab"
+
+#: src/editor/Stamps.cpp:49
+msgid "abc"
+msgstr "abc"
+
+#: src/editor/Stamps.cpp:49
+msgid "cifrão"
+msgstr "علامة الدولار"
+
+#: src/editor/Stamps.cpp:49
+msgid "câmbio"
+msgstr "صرف العملات"
+
+#: src/editor/Stamps.cpp:54
+msgid "carro"
+msgstr "سيارة"
+
+#: src/editor/Stamps.cpp:54
+msgid "táxi"
+msgstr "سيارة أجرة"
+
+#: src/editor/Stamps.cpp:54
+msgid "ônibus"
+msgstr "حافلة"
+
+#: src/editor/Stamps.cpp:54
+msgid "ambulância"
+msgstr "إسعاف"
+
+#: src/editor/Stamps.cpp:54
+msgid "bombeiros"
+msgstr "إطفاء"
+
+#: src/editor/Stamps.cpp:54
+msgid "polícia"
+msgstr "شرطة"
+
+#: src/editor/Stamps.cpp:54
+msgid "bicicleta"
+msgstr "دراجة"
+
+#: src/editor/Stamps.cpp:54
+msgid "moto"
+msgstr "دراجة نارية"
+
+#: src/editor/Stamps.cpp:54
+msgid "trem"
+msgstr "قطار"
+
+#: src/editor/Stamps.cpp:54
+msgid "avião"
+msgstr "طائرة"
+
+#: src/editor/Stamps.cpp:54
+msgid "navio"
+msgstr "سفينة"
+
+#: src/editor/Stamps.cpp:54
+msgid "veleiro"
+msgstr "قارب شراعي"
+
+#: src/editor/Stamps.cpp:54
+msgid "helicóptero"
+msgstr "مروحية"
+
+#: src/editor/Stamps.cpp:54
+msgid "mapa"
+msgstr "خريطة"
+
+#: src/editor/Stamps.cpp:54
+msgid "bússola"
+msgstr "بوصلة"
+
+#: src/editor/Stamps.cpp:54
+msgid "montanha"
+msgstr "جبل"
+
+#: src/editor/Stamps.cpp:54
+msgid "praia"
+msgstr "شاطئ"
+
+#: src/editor/Stamps.cpp:54
+msgid "ilha"
+msgstr "جزيرة"
+
+#: src/editor/Stamps.cpp:54
+msgid "acampamento"
+msgstr "تخييم"
+
+#: src/editor/Stamps.cpp:54
+msgid "cidade"
+msgstr "مدينة"
+
+#: src/editor/Stamps.cpp:54
+msgid "prédio escritório"
+msgstr "مبنى مكاتب"
+
+#: src/editor/Stamps.cpp:54
+msgid "hospital"
+msgstr "مستشفى"
+
+#: src/editor/Stamps.cpp:54
+msgid "banco"
+msgstr "بنك"
+
+#: src/editor/Stamps.cpp:54
+msgid "hotel"
+msgstr "فندق"
+
+#: src/editor/Stamps.cpp:54
+msgid "escola"
+msgstr "مدرسة"
+
+#: src/editor/Stamps.cpp:54
+msgid "igreja"
+msgstr "كنيسة"
+
+#: src/editor/Stamps.cpp:54
+msgid "estátua"
+msgstr "تمثال"
+
+#: src/editor/Stamps.cpp:54
+msgid "torre"
+msgstr "برج"
+
+#: src/editor/Stamps.cpp:54
+msgid "terra mundo"
+msgstr "الأرض العالم"
+
+#: src/editor/Stamps.cpp:54
+msgid "posto combustível"
+msgstr "محطة وقود"
+
+#: src/editor/Stamps.cpp:54
+msgid "semáforo"
+msgstr "إشارة مرور"
+
+#: src/editor/Stamps.cpp:54
+msgid "estacionamento"
+msgstr "موقف سيارات"
+
+#: src/editor/Stamps.cpp:54
+msgid "mala"
+msgstr "حقيبة سفر"
+
+#: src/editor/Stamps.cpp:54
+msgid "local pino"
+msgstr "دبوس موقع"
+
+#: src/editor/Video.cpp:153 src/editor/Video.cpp:288
+msgid "Não foi possível abrir o vídeo."
+msgstr "تعذّر فتح الفيديو."
+
+#: src/editor/Video.cpp:159
+msgid "Formato de vídeo não suportado."
+msgstr "تنسيق فيديو غير مدعوم."
+
+#: src/editor/Video.cpp:188
+msgid "Não foi possível criar o arquivo de saída."
+msgstr "تعذّر إنشاء ملف الإخراج."
+
+#: src/editor/Video.cpp:198
+msgid "Codificador H.264 indisponível."
+msgstr "مرمّز H.264 غير متاح."
+
+#: src/editor/Video.cpp:205
+msgid "Entrada de vídeo recusada."
+msgstr "تم رفض إدخال الفيديو."
+
+#: src/editor/Video.cpp:216
+msgid "Codificador AAC indisponível."
+msgstr "مرمّز AAC غير متاح."
+
+#: src/editor/Video.cpp:218
+msgid "Falha ao iniciar a gravação."
+msgstr "فشل بدء الكتابة."
+
+#: src/editor/Video.cpp:230
+#, c-format
+msgid "Falha ao ler o vídeo (0x%08X)."
+msgstr "فشل قراءة الفيديو (0x%08X)."
+
+#: src/editor/Video.cpp:263
+msgid "Falha ao codificar quadro."
+msgstr "فشل ترميز إطار."
+
+#: src/editor/Video.cpp:270
+msgid "Falha ao codificar áudio."
+msgstr "فشل ترميز الصوت."
+
+#: src/editor/Video.cpp:273 src/editor/Video.cpp:313
+msgid "Cancelado."
+msgstr "تم الإلغاء."
+
+#: src/editor/Video.cpp:274
+msgid "Falha ao finalizar o MP4."
+msgstr "فشل إنهاء ملف MP4."
+
+#: src/editor/Video.cpp:294
+msgid "Não foi possível criar o GIF."
+msgstr "تعذّر إنشاء GIF."
+
+#: src/editor/Video.cpp:314
+msgid "Nenhum quadro no intervalo."
+msgstr "لا توجد إطارات في النطاق."
+
+#: src/editor/Video.cpp:464 src/editor/Video.cpp:559
+msgid "▶ Reproduzir"
+msgstr "▶ تشغيل"
+
+#: src/editor/Video.cpp:464
+msgid "◀ Quadro"
+msgstr "◀ إطار"
+
+#: src/editor/Video.cpp:464
+msgid "Quadro ▶"
+msgstr "إطار ▶"
+
+#: src/editor/Video.cpp:464
+msgid "[ Início"
+msgstr "[ البداية"
+
+#: src/editor/Video.cpp:464
+msgid "Fim ]"
+msgstr "النهاية ]"
+
+#: src/editor/Video.cpp:465
+msgid "✂ Cortar seleção"
+msgstr "✂ قصّ التحديد"
+
+#: src/editor/Video.cpp:465
+msgid "Desfazer corte"
+msgstr "التراجع عن القص"
+
+#: src/editor/Video.cpp:465
+msgid "Salvar quadro"
+msgstr "حفظ الإطار"
+
+#: src/editor/Video.cpp:465
+msgid "Criar GIF…"
+msgstr "إنشاء GIF…"
+
+#: src/editor/Video.cpp:466
+msgid "Salvar MP4…"
+msgstr "حفظ MP4…"
+
+#: src/editor/Video.cpp:466
+msgid "Abrir no player"
+msgstr "فتح في المشغّل"
+
+#: src/editor/Video.cpp:549
+msgid "❚❚ Pausar"
+msgstr "❚❚ إيقاف مؤقت"
+
+#: src/editor/Video.cpp:580
+msgid "Não foi possível abrir o vídeo (somente MP4)."
+msgstr "تعذّر فتح الفيديو (MP4 فقط)."
+
+#: src/editor/Video.cpp:589
+msgid "trecho cortado"
+msgstr "مقطع مقصوص"
+
+#: src/editor/Video.cpp:613
+#, c-format
+msgid "   •   %d×%d @ %.0f qps"
+msgstr "   •   %d×%d @ %.0f إطار/ث"
+
+#: src/editor/Video.cpp:614
+msgid "   •   duração após cortes: "
+msgstr "   •   المدة بعد القص: "
+
+#: src/editor/Video.cpp:615
+msgid "   •   seleção: "
+msgstr "   •   التحديد: "
+
+#: src/editor/Video.cpp:627
+msgid "Vídeo MP4 (*.mp4)|*.mp4|"
+msgstr "فيديو MP4 (*.mp4)|*.mp4|"
+
+#: src/editor/Video.cpp:629
+msgid "Salvar vídeo"
+msgstr "حفظ الفيديو"
+
+#: src/editor/Video.cpp:630
+msgid "Escolha um arquivo diferente do original."
+msgstr "اختر ملفًا مختلفًا عن الأصل."
+
+#: src/editor/Video.cpp:633
+msgid "Salvando vídeo…"
+msgstr "جارٍ حفظ الفيديو…"
+
+#: src/editor/Video.cpp:634
+msgid "Não foi possível salvar o vídeo.\n"
+msgstr "تعذّر حفظ الفيديو.\n"
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: a seleção marcada."
+msgstr "النطاق: التحديد المعلَّم."
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
+msgstr "النطاق: الفيديو كله (علّم البداية/النهاية للتقييد)."
+
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+msgid "Cores"
+msgstr "الألوان"
+
+#: src/editor/Video.cpp:644
+msgid "256 cores"
+msgstr "256 لونًا"
+
+#: src/editor/Video.cpp:644
+msgid "16 cores (arquivo menor)"
+msgstr "16 لونًا (ملف أصغر)"
+
+#: src/editor/Video.cpp:645
+msgid "Pontilhado (dithering)"
+msgstr "تنقيط (dithering)"
+
+#: src/editor/Video.cpp:646
+msgid "Quadros delta (só o que mudou)"
+msgstr "إطارات فرقية (التغييرات فقط)"
+
+#: src/editor/Video.cpp:648
+msgid "Criar GIF animado"
+msgstr "إنشاء GIF متحرك"
+
+#: src/editor/Video.cpp:649
+msgid "GIF animado (*.gif)|*.gif|"
+msgstr "GIF متحرك (*.gif)|*.gif|"
+
+#: src/editor/Video.cpp:651
+msgid "Salvar GIF"
+msgstr "حفظ GIF"
+
+#: src/editor/Video.cpp:657
+msgid "Criando GIF…"
+msgstr "جارٍ إنشاء GIF…"
+
+#: src/editor/Video.cpp:660
+msgid "Não foi possível criar o GIF.\n"
+msgstr "تعذّر إنشاء GIF.\n"
+
+#: src/editor/Video.cpp:733
+msgid "Marque o início e o fim do trecho a remover."
+msgstr "علّم بداية ونهاية المقطع المراد إزالته."
+
+#: src/editor/main.cpp:96
+msgid " — Snapnab Editor"
+msgstr " — Snapnab Editor"
+
+#: src/editor/main.cpp:112
+msgid "Vídeo: "
+msgstr "الفيديو: "
+
+#: src/editor/main.cpp:113
+#, c-format
+msgid "%d × %d px"
+msgstr "%d × %d بكسل"
+
+#: src/editor/main.cpp:114
+msgid ""
+"\n"
+"Captura: "
+msgstr ""
+"\n"
+"اللقطة: "
+
+#: src/editor/main.cpp:115
+msgid ""
+"\n"
+"Aplicativo: "
+msgstr ""
+"\n"
+"التطبيق: "
+
+#: src/editor/main.cpp:116
+msgid ""
+"\n"
+"Janela: "
+msgstr ""
+"\n"
+"النافذة: "
+
+#: src/editor/main.cpp:117
+#, c-format
+msgid ""
+"\n"
+"Objetos: %zu"
+msgstr ""
+"\n"
+"العناصر: %zu"
+
+#: src/editor/main.cpp:118
+msgid ""
+"\n"
+"Etiquetas: "
+msgstr ""
+"\n"
+"الوسوم: "
+
+#: src/editor/main.cpp:255
+msgid "Arquivo não encontrado:\n"
+msgstr "الملف غير موجود:\n"
+
+#: src/editor/main.cpp:258
+msgid "Não foi possível abrir:\n"
+msgstr "تعذّر الفتح:\n"
+
+#: src/editor/main.cpp:262
+msgid "Arquivo importado"
+msgstr "ملف مستورد"
+
+#: src/editor/main.cpp:283
+#, c-format
+msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
+msgstr "%d × %d بكسل  •  %zu عنصر  •  %zu خطوة للتراجع"
+
+#: src/editor/main.cpp:348
+msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
+msgstr "أنشئ تحديدًا (أداة التحديد) أو قصًّا أولًا."
+
+#: src/editor/main.cpp:351
+msgid "Ângulo (graus, horário)"
+msgstr "الزاوية (درجات، باتجاه عقارب الساعة)"
+
+#: src/editor/main.cpp:351 src/editor/main.cpp:483
+msgid "Cor de fundo"
+msgstr "لون الخلفية"
+
+#: src/editor/main.cpp:352
+msgid "Fundo transparente"
+msgstr "خلفية شفافة"
+
+#: src/editor/main.cpp:353
+msgid "Os objetos serão mesclados à imagem."
+msgstr "سيتم دمج العناصر في الصورة."
+
+#: src/editor/main.cpp:361
+msgid "ou escala (%)"
+msgstr "أو المقياس (%)"
+
+#: src/editor/main.cpp:361
+msgid "Manter proporção"
+msgstr "الحفاظ على التناسب"
+
+#: src/editor/main.cpp:379
+msgid "Âncora"
+msgstr "نقطة الارتكاز"
+
+#: src/editor/main.cpp:379
+msgid "Superior esquerda"
+msgstr "أعلى اليسار"
+
+#: src/editor/main.cpp:379
+msgid "Superior"
+msgstr "أعلى"
+
+#: src/editor/main.cpp:379
+msgid "Superior direita"
+msgstr "أعلى اليمين"
+
+#: src/editor/main.cpp:379
+msgid "Centro"
+msgstr "الوسط"
+
+#: src/editor/main.cpp:380
+msgid "Inferior esquerda"
+msgstr "أسفل اليسار"
+
+#: src/editor/main.cpp:380
+msgid "Inferior"
+msgstr "أسفل"
+
+#: src/editor/main.cpp:380
+msgid "Inferior direita"
+msgstr "أسفل اليمين"
+
+#: src/editor/main.cpp:381
+msgid "Cor do canvas"
+msgstr "لون اللوحة"
+
+#: src/editor/main.cpp:381 src/editor/main.cpp:483
+msgid "Transparente"
+msgstr "شفاف"
+
+#: src/editor/main.cpp:382
+msgid "Tamanho do canvas"
+msgstr "حجم اللوحة"
+
+#: src/editor/main.cpp:402
+msgid "Nada a cortar: as bordas não são uniformes."
+msgstr "لا شيء لاقتصاصه: الحواف غير موحّدة."
+
+#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como"
+msgstr "حفظ باسم"
+
+#: src/editor/main.cpp:446
+msgid "Qualidade JPEG (1–100)"
+msgstr "جودة JPEG (1–100)"
+
+#: src/editor/main.cpp:457
+msgid "Não foi possível salvar:\n"
+msgstr "تعذّر الحفظ:\n"
+
+#: src/editor/main.cpp:458
+msgid "Salvo em "
+msgstr "تم الحفظ في "
+
+#: src/editor/main.cpp:469
+msgid "Salvo na biblioteca: "
+msgstr "تم الحفظ في المكتبة: "
+
+#: src/editor/main.cpp:477
+msgid "Da área de transferência"
+msgstr "من الحافظة"
+
+#: src/editor/main.cpp:478
+msgid "Imagem nova criada a partir da área de transferência."
+msgstr "تم إنشاء صورة جديدة من الحافظة."
+
+#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+msgid "Nova imagem"
+msgstr "صورة جديدة"
+
+#: src/editor/main.cpp:485
+msgid "Imagem nova"
+msgstr "صورة جديدة"
+
+#: src/editor/main.cpp:510
+msgid "Enviar para a Lixeira?\n"
+msgstr "هل تريد النقل إلى سلة المحذوفات؟\n"
+
+#: src/editor/main.cpp:511
+#, c-format
+msgid "Enviar %zu itens da biblioteca para a Lixeira?"
+msgstr "هل تريد نقل %zu عنصر من المكتبة إلى سلة المحذوفات؟"
+
+#: src/editor/main.cpp:524
+msgid "Item enviado para a Lixeira."
+msgstr "تم نقل العنصر إلى سلة المحذوفات."
+
+#: src/editor/main.cpp:524
+#, c-format
+msgid "%zu itens enviados para a Lixeira."
+msgstr "تم نقل %zu عنصر إلى سلة المحذوفات."
+
+#: src/editor/main.cpp:534
+msgid "Exportar para a pasta"
+msgstr "التصدير إلى مجلد"
+
+#: src/editor/main.cpp:552
+msgid "Formato das imagens"
+msgstr "تنسيق الصور"
+
+#: src/editor/main.cpp:553
+msgid "Vídeos são copiados em MP4."
+msgstr "تُنسخ مقاطع الفيديو بتنسيق MP4."
+
+#: src/editor/main.cpp:554
+#, c-format
+msgid "Exportar %zu item(ns)"
+msgstr "تصدير %zu عنصر"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid "%d item(ns) exportado(s) para %s"
+msgstr "تم تصدير %d عنصر إلى %s"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid " — %d falha(s)"
+msgstr " — %d فشل"
+
+#: src/editor/main.cpp:621
+msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
+msgstr "لم يتم إعداد عميل بريد MAPI. تم حفظ الصورة في:\n"
+
+#: src/editor/main.cpp:627
+msgid "Captura: "
+msgstr "اللقطة: "
+
+#: src/editor/main.cpp:631
+#, c-format
+msgid "Falha ao enviar e-mail (MAPI %u)."
+msgstr "فشل إرسال البريد (MAPI %u)."
+
+#: src/editor/main.cpp:638
+msgid "Abrir em programa externo"
+msgstr "فتح في برنامج خارجي"
+
+#: src/editor/main.cpp:651
+msgid "OCR indisponível: "
+msgstr "OCR غير متاح: "
+
+#: src/editor/main.cpp:651 src/editor/main.cpp:820
+msgid "Grab Text"
+msgstr "استخراج النص"
+
+#: src/editor/main.cpp:652
+msgid "(nenhum texto reconhecido)"
+msgstr "(لم يتم التعرّف على نص)"
+
+#: src/editor/main.cpp:653
+msgid "Grab Text — texto reconhecido"
+msgstr "استخراج النص — النص المتعرَّف عليه"
+
+#: src/editor/main.cpp:668
+msgid "Nada para colar."
+msgstr "لا يوجد ما يُلصق."
+
+#: src/editor/main.cpp:669
+msgid "Colado"
+msgstr "تم اللصق"
+
+#: src/editor/main.cpp:705
+msgid "Nova &captura\tCtrl+Shift+N"
+msgstr "لقطة جديدة(&C)\tCtrl+Shift+N"
+
+#: src/editor/main.cpp:705
+msgid "Nova &gravação de vídeo"
+msgstr "تسجيل فيديو جديد(&R)"
+
+#: src/editor/main.cpp:706
+msgid "Novo da área de &transferência"
+msgstr "جديد من الحافظة(&B)"
+
+#: src/editor/main.cpp:706
+msgid "Nova &imagem…"
+msgstr "صورة جديدة(&I)…"
+
+#: src/editor/main.cpp:707
+msgid "&Abrir…\tCtrl+O"
+msgstr "فتح(&O)…\tCtrl+O"
+
+#: src/editor/main.cpp:707
+msgid "&Salvar\tCtrl+S"
+msgstr "حفظ(&S)\tCtrl+S"
+
+#: src/editor/main.cpp:707
+msgid "Salvar &como…\tCtrl+Shift+S"
+msgstr "حفظ باسم(&A)…\tCtrl+Shift+S"
+
+#: src/editor/main.cpp:708
+msgid "&Duplicar"
+msgstr "تكرار(&D)"
+
+#: src/editor/main.cpp:708
+msgid "&Excluir (Lixeira)"
+msgstr "حذف (سلة المحذوفات)(&L)"
+
+#: src/editor/main.cpp:709
+msgid "&Imprimir…\tCtrl+P"
+msgstr "طباعة(&P)…\tCtrl+P"
+
+#: src/editor/main.cpp:709
+msgid "Enviar por &e-mail…"
+msgstr "إرسال بالبريد(&E)…"
+
+#: src/editor/main.cpp:709
+msgid "Abrir em &programa externo…"
+msgstr "فتح في برنامج خارجي(&G)…"
+
+#: src/editor/main.cpp:710
+msgid "&Fechar documento\tCtrl+W"
+msgstr "إغلاق المستند(&W)\tCtrl+W"
+
+#: src/editor/main.cpp:710
+msgid "Sai&r"
+msgstr "إنهاء(&X)"
+
+#: src/editor/main.cpp:711
+msgid "&Desfazer\tCtrl+Z"
+msgstr "تراجع(&U)\tCtrl+Z"
+
+#: src/editor/main.cpp:711
+msgid "&Refazer\tCtrl+Y"
+msgstr "إعادة(&R)\tCtrl+Y"
+
+#: src/editor/main.cpp:711
+msgid "Desfazer &tudo"
+msgstr "تراجع عن الكل(&L)"
+
+#: src/editor/main.cpp:712
+msgid "Recor&tar\tCtrl+X"
+msgstr "قص(&T)\tCtrl+X"
+
+#: src/editor/main.cpp:712
+msgid "&Copiar\tCtrl+C"
+msgstr "نسخ(&C)\tCtrl+C"
+
+#: src/editor/main.cpp:712
+msgid "Copiar t&udo\tCtrl+Shift+C"
+msgstr "نسخ الكل(&O)\tCtrl+Shift+C"
+
+#: src/editor/main.cpp:713
+msgid "C&olar\tCtrl+V"
+msgstr "لصق(&P)\tCtrl+V"
+
+#: src/editor/main.cpp:713
+msgid "E&xcluir\tDel"
+msgstr "حذف(&D)\tDel"
+
+#: src/editor/main.cpp:713
+msgid "Selecionar tu&do\tCtrl+A"
+msgstr "تحديد الكل(&A)\tCtrl+A"
+
+#: src/editor/main.cpp:714
+msgid "Cortar para a &seleção"
+msgstr "اقتصاص إلى التحديد(&S)"
+
+#: src/editor/main.cpp:715
+msgid "&Grab Text (OCR)\tCtrl+Shift+O"
+msgstr "استخراج النص (OCR)(&G)\tCtrl+Shift+O"
+
+#: src/editor/main.cpp:717
+msgid "&Borda"
+msgstr "إطار(&B)"
+
+#: src/editor/main.cpp:717
+msgid "Bor&das"
+msgstr "حواف(&E)"
+
+#: src/editor/main.cpp:717
+msgid "&Informações da captura"
+msgstr "معلومات اللقطة(&I)"
+
+#: src/editor/main.cpp:718
+msgid "&Perspectiva"
+msgstr "منظور(&P)"
+
+#: src/editor/main.cpp:718
+msgid "D&obra de página"
+msgstr "طي الصفحة(&U)"
+
+#: src/editor/main.cpp:718
+msgid "&Sombra"
+msgstr "ظل(&S)"
+
+#: src/editor/main.cpp:719
+msgid "&Filtros"
+msgstr "مرشّحات(&F)"
+
+#: src/editor/main.cpp:719
+msgid "&Ajuste de cores"
+msgstr "ضبط الألوان(&A)"
+
+#: src/editor/main.cpp:719
+msgid "Substituição de co&r"
+msgstr "استبدال اللون(&R)"
+
+#: src/editor/main.cpp:720
+msgid "Spotlight e &lupa"
+msgstr "بقعة ضوء ومكبّر(&M)"
+
+#: src/editor/main.cpp:720
+msgid "&Marca d'água"
+msgstr "علامة مائية(&W)"
+
+#: src/editor/main.cpp:726
+msgid "À &esquerda"
+msgstr "يسار(&L)"
+
+#: src/editor/main.cpp:726
+msgid "Ao &centro"
+msgstr "وسط(&C)"
+
+#: src/editor/main.cpp:726
+msgid "À &direita"
+msgstr "يمين(&R)"
+
+#: src/editor/main.cpp:727
+msgid "Em &cima"
+msgstr "أعلى(&T)"
+
+#: src/editor/main.cpp:727
+msgid "No &meio"
+msgstr "منتصف(&M)"
+
+#: src/editor/main.cpp:727
+msgid "Em&baixo"
+msgstr "أسفل(&B)"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para a &frente\tCtrl+Shift+F"
+msgstr "إحضار للأمام(&F)\tCtrl+Shift+F"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para o &primeiro plano"
+msgstr "إحضار إلى المقدمة(&O)"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para &trás\tCtrl+Shift+B"
+msgstr "إرسال للخلف(&B)\tCtrl+Shift+B"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para o plano de &fundo"
+msgstr "إرسال إلى الخلفية(&K)"
+
+#: src/editor/main.cpp:731
+msgid "&Alinhar"
+msgstr "محاذاة(&A)"
+
+#: src/editor/main.cpp:733
+msgid "Espelhar na &vertical"
+msgstr "انعكاس عمودي(&V)"
+
+#: src/editor/main.cpp:734
+msgid "Espelhar na &horizontal"
+msgstr "انعكاس أفقي(&H)"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &horário\tCtrl+R"
+msgstr "باتجاه عقارب الساعة(&C)\tCtrl+R"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &anti-horário"
+msgstr "عكس اتجاه عقارب الساعة(&W)"
+
+#: src/editor/main.cpp:735
+msgid "&180 graus"
+msgstr "180 درجة(&1)"
+
+#: src/editor/main.cpp:736
+msgid "Ângulo &personalizado…"
+msgstr "زاوية مخصصة(&A)…"
+
+#: src/editor/main.cpp:738
+msgid "Ferramen&tas"
+msgstr "الأدوات(&T)"
+
+#: src/editor/main.cpp:739
+msgid "&Efeitos"
+msgstr "التأثيرات(&E)"
+
+#: src/editor/main.cpp:741
+msgid "&Organizar"
+msgstr "ترتيب(&R)"
+
+#: src/editor/main.cpp:742
+msgid "A&grupar\tCtrl+Shift+G"
+msgstr "تجميع(&G)\tCtrl+Shift+G"
+
+#: src/editor/main.cpp:743
+msgid "Desagr&upar\tCtrl+Shift+U"
+msgstr "فك التجميع(&U)\tCtrl+Shift+U"
+
+#: src/editor/main.cpp:745
+msgid "&Mesclar\tCtrl+T"
+msgstr "دمج(&M)\tCtrl+T"
+
+#: src/editor/main.cpp:746
+msgid "Mesclar t&udo\tCtrl+Shift+T"
+msgstr "دمج الكل(&L)\tCtrl+Shift+T"
+
+#: src/editor/main.cpp:748
+msgid "A&parar"
+msgstr "تشذيب(&P)"
+
+#: src/editor/main.cpp:749
+msgid "&Redimensionar imagem…"
+msgstr "تغيير حجم الصورة(&R)…"
+
+#: src/editor/main.cpp:750
+msgid "Redimensionar &canvas…"
+msgstr "تغيير حجم اللوحة(&C)…"
+
+#: src/editor/main.cpp:751
+msgid "Aplicar mode&lo…\tCtrl+Alt+C"
+msgstr "تطبيق قالب(&L)…\tCtrl+Alt+C"
+
+#: src/editor/main.cpp:753
+msgid "&Girar"
+msgstr "تدوير(&O)"
+
+#: src/editor/main.cpp:754
+msgid "Encai&xe no canvas\tCtrl+;"
+msgstr "المحاذاة إلى اللوحة(&X)\tCtrl+;"
+
+#: src/editor/main.cpp:755
+msgid "Cor do canva&s…"
+msgstr "لون اللوحة(&S)…"
+
+#: src/editor/main.cpp:757
+msgid "Etiquetar &imagem…"
+msgstr "وسم الصورة(&I)…"
+
+#: src/editor/main.cpp:758
+msgid "&Ampliar\tCtrl++"
+msgstr "تكبير(&I)\tCtrl++"
+
+#: src/editor/main.cpp:758
+msgid "&Reduzir\tCtrl+-"
+msgstr "تصغير(&O)\tCtrl+-"
+
+#: src/editor/main.cpp:758
+msgid "&Tamanho real\tCtrl+1"
+msgstr "الحجم الفعلي(&A)\tCtrl+1"
+
+#: src/editor/main.cpp:759
+msgid "A&justar à janela\tCtrl+0"
+msgstr "ملاءمة النافذة(&F)\tCtrl+0"
+
+#: src/editor/main.cpp:759
+msgid "&Cor de fundo da área…"
+msgstr "لون خلفية المنطقة(&B)…"
+
+#: src/editor/main.cpp:760
+msgid "Painel de &efeitos"
+msgstr "لوحة التأثيرات(&E)"
+
+#: src/editor/main.cpp:760
+msgid "&Biblioteca"
+msgstr "المكتبة(&L)"
+
+#: src/editor/main.cpp:761
+msgid "Capturas &recentes (bandeja)"
+msgstr "اللقطات الأخيرة (الشريط)(&R)"
+
+#: src/editor/main.cpp:762
+msgid "&Personalizar a barra de ferramentas…"
+msgstr "تخصيص شريط الأدوات(&C)…"
+
+#: src/editor/main.cpp:763
+msgid "&Atalhos de teclado"
+msgstr "اختصارات لوحة المفاتيح(&K)"
+
+#: src/editor/main.cpp:763
+msgid "&Sobre o Snapnab Editor"
+msgstr "حول Snapnab Editor(&A)"
+
+#: src/editor/main.cpp:764
+msgid "&Arquivo"
+msgstr "ملف(&F)"
+
+#: src/editor/main.cpp:765
+msgid "&Editar"
+msgstr "تحرير(&E)"
+
+#: src/editor/main.cpp:766
+msgid "&Imagem"
+msgstr "صورة(&I)"
+
+#: src/editor/main.cpp:767
+msgid "E&xibir"
+msgstr "عرض(&V)"
+
+#: src/editor/main.cpp:768
+msgid "A&juda"
+msgstr "تعليمات(&H)"
+
+#: src/editor/main.cpp:796
+msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
+msgstr "المفضّلة: أنماطك المفضّلة من كل الأدوات"
+
+#: src/editor/main.cpp:797
+msgid "Seta (A)"
+msgstr "سهم (A)"
+
+#: src/editor/main.cpp:797
+msgid "Texto (T)"
+msgstr "نص (T)"
+
+#: src/editor/main.cpp:797
+msgid "Balão (C)"
+msgstr "وسيلة شرح (C)"
+
+#: src/editor/main.cpp:798
+msgid "Forma: retângulo, elipse… (R)"
+msgstr "شكل: مستطيل، قطع ناقص… (R)"
+
+#: src/editor/main.cpp:798
+msgid "Carimbo (K)"
+msgstr "ختم (K)"
+
+#: src/editor/main.cpp:799
+msgid "Preencher (F)"
+msgstr "تعبئة (F)"
+
+#: src/editor/main.cpp:799
+msgid "Seleção e Smart Move (S)"
+msgstr "تحديد وSmart Move (S)"
+
+#: src/editor/main.cpp:800
+msgid "Varinha mágica: seleciona pela cor"
+msgstr "العصا السحرية: تحدّد حسب اللون"
+
+#: src/editor/main.cpp:800
+msgid "Cortar (X)"
+msgstr "اقتصاص (X)"
+
+#: src/editor/main.cpp:801
+msgid "Recortar faixa (U)"
+msgstr "قصّ شريط (U)"
+
+#: src/editor/main.cpp:801
+msgid "Caneta (P)"
+msgstr "قلم (P)"
+
+#: src/editor/main.cpp:801
+msgid "Linha (L)"
+msgstr "خط (L)"
+
+#: src/editor/main.cpp:802
+msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
+msgstr "قلم التمييز: اسحب مستطيلًا باللون والعتامة المختارين (H)"
+
+#: src/editor/main.cpp:803
+msgid "Passos numerados (N)"
+msgstr "خطوات مرقّمة (N)"
+
+#: src/editor/main.cpp:803
+msgid "Borracha (E)"
+msgstr "ممحاة (E)"
+
+#: src/editor/main.cpp:804
+msgid "Ocultar: desfoque/pixelado (B)"
+msgstr "إخفاء: تمويه/تقطيع بكسلي (B)"
+
+#: src/editor/main.cpp:804
+msgid "Mover e Smart Move (V)"
+msgstr "تحريك وSmart Move (V)"
+
+#: src/editor/main.cpp:805
+msgid "Lupa (Z)"
+msgstr "مكبّر (Z)"
+
+#: src/editor/main.cpp:805
+msgid "Destaque/spotlight (G)"
+msgstr "بقعة ضوء (G)"
+
+#: src/editor/main.cpp:806
+msgid "Conta-gotas (I)"
+msgstr "قطّارة (I)"
+
+#: src/editor/main.cpp:812
+msgid "Salvar como arquivo (PNG, JPG, PDF…)"
+msgstr "حفظ كملف (PNG، JPG، PDF…)"
+
+#: src/editor/main.cpp:812
+msgid "E-mail"
+msgstr "البريد"
+
+#: src/editor/main.cpp:812
+msgid "Enviar por e-mail"
+msgstr "إرسال بالبريد"
+
+#: src/editor/main.cpp:814
+msgid "Copiar a imagem inteira"
+msgstr "نسخ الصورة كاملة"
+
+#: src/editor/main.cpp:814
+msgid "Impressora"
+msgstr "الطابعة"
+
+#: src/editor/main.cpp:814
+msgid "Imprimir a imagem"
+msgstr "طباعة الصورة"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer"
+msgstr "تراجع"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer (Ctrl+Z)"
+msgstr "تراجع (Ctrl+Z)"
+
+#: src/editor/main.cpp:816
+msgid "Refazer"
+msgstr "إعادة"
+
+#: src/editor/main.cpp:816
+msgid "Refazer (Ctrl+Y)"
+msgstr "إعادة (Ctrl+Y)"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem em branco"
+msgstr "صورة فارغة جديدة"
+
+#: src/editor/main.cpp:817
+msgid "Da área de transf."
+msgstr "من الحافظة"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem da área de transferência"
+msgstr "صورة جديدة من الحافظة"
+
+#: src/editor/main.cpp:818
+msgid "Abrir arquivo (Ctrl+O)"
+msgstr "فتح ملف (Ctrl+O)"
+
+#: src/editor/main.cpp:818
+msgid "Salvar"
+msgstr "حفظ"
+
+#: src/editor/main.cpp:818
+msgid "Salvar na biblioteca (Ctrl+S)"
+msgstr "حفظ في المكتبة (Ctrl+S)"
+
+#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como arquivo (Ctrl+Shift+S)"
+msgstr "حفظ كملف (Ctrl+Shift+S)"
+
+#: src/editor/main.cpp:819
+msgid "Duplicar a imagem"
+msgstr "تكرار الصورة"
+
+#: src/editor/main.cpp:820
+msgid "Excluir o objeto selecionado (Del)"
+msgstr "حذف العنصر المحدد (Del)"
+
+#: src/editor/main.cpp:820
+msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
+msgstr "التعرّف على نص الصورة (Ctrl+Shift+T)"
+
+#: src/editor/main.cpp:821
+msgid "Excluir imagem"
+msgstr "حذف الصورة"
+
+#: src/editor/main.cpp:821
+msgid "Enviar a imagem para a Lixeira"
+msgstr "نقل الصورة إلى سلة المحذوفات"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar tudo"
+msgstr "دمج الكل"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar todos os objetos na imagem"
+msgstr "دمج كل العناصر في الصورة"
+
+#: src/editor/main.cpp:822
+msgid "Girar 90° no sentido horário (Ctrl+R)"
+msgstr "تدوير 90° باتجاه عقارب الساعة (Ctrl+R)"
+
+#: src/editor/main.cpp:823
+msgid "Cortar as bordas de cor uniforme"
+msgstr "قص الحواف ذات اللون الموحّد"
+
+#: src/editor/main.cpp:854
+msgid "Efeito: "
+msgstr "التأثير: "
+
+#: src/editor/main.cpp:854
+msgid " — abre os ajustes no painel de efeitos"
+msgstr " — يفتح الإعدادات في لوحة التأثيرات"
+
+#: src/editor/main.cpp:957
+msgid "Ferramenta: "
+msgstr "الأداة: "
+
+#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+msgid "Ampliar parte da imagem"
+msgstr "تكبير جزء من الصورة"
+
+#: src/editor/main.cpp:1021
+msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "كبّر أجزاء من الصورة لإبراز التفاصيل المهمة. اسحب لإنشاء المكبّر؛ مع العدسة المنفصلة، يختار المقبض الأصفر المنطقة المكبّرة."
+
+#: src/editor/main.cpp:1036
+msgid "Entendi!"
+msgstr "فهمت!"
+
+#: src/editor/main.cpp:1083
+msgid "Ferramentas de desenho"
+msgstr "أدوات الرسم"
+
+#: src/editor/main.cpp:1084
+msgid "Itens de menu"
+msgstr "عناصر القائمة"
+
+#: src/editor/main.cpp:1085
+msgid "Destinos de compartilhamento"
+msgstr "وجهات المشاركة"
+
+#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+msgid "Efeitos"
+msgstr "التأثيرات"
+
+#: src/editor/main.cpp:1090
+msgid "Diversos"
+msgstr "متنوّعة"
+
+#: src/editor/main.cpp:1106
+msgid "Personalização cancelada."
+msgstr "تم إلغاء التخصيص."
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas personalizada."
+msgstr "شريط أدوات مخصّص."
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas automática."
+msgstr "شريط أدوات تلقائي."
+
+#: src/editor/main.cpp:1134
+msgid "Personalizar a barra…"
+msgstr "تخصيص الشريط…"
+
+#: src/editor/main.cpp:1136
+msgid "Voltar ao padrão (automática)"
+msgstr "العودة إلى الافتراضي (تلقائي)"
+
+#: src/editor/main.cpp:1143
+msgid "Atalhos do Snapnab Editor"
+msgstr "اختصارات Snapnab Editor"
+
+#: src/editor/main.cpp:1144
+msgid ""
+"Ferramentas (com a área de pintura em foco):\n"
+"  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
+"  T Texto   C Balão   N Passo   K Carimbo   B Ocultar   G Destaque   Z Lupa\n"
+"  F Preencher   E Borracha   X Cortar   S Seleção   U Recortar faixa   I Conta-gotas\n"
+"\n"
+"Edição:  Ctrl+Z/Ctrl+Y desfazer/refazer • Ctrl+C/X/V • Ctrl+Shift+C copiar tudo • Del excluir\n"
+"         Setas movem o objeto (Shift = 10 px) • Shift restringe proporção/ângulo\n"
+"         Duplo clique edita texto • Esc cancela • Enter aplica o recorte\n"
+"Exibir:  Ctrl+roda = zoom • Ctrl+0 ajustar • Ctrl+1 tamanho real • botão do meio arrasta\n"
+"Arquivo: Ctrl+S salvar na biblioteca • Ctrl+Shift+S salvar como (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"Texto:   Ctrl+Shift+O Grab Text (OCR)\n"
+"Imagem:  Ctrl+Shift+F/B um passo à frente/atrás • Ctrl+T mesclar o objeto • Ctrl+Shift+T mesclar tudo • Ctrl+; encaixe\n"
+"Vídeo:   Espaço reproduz/pausa • ←/→ quadro • I/O marcam início/fim\n"
+msgstr ""
+"الأدوات (عند التركيز على اللوحة):\n"
+"  V تحريك   A سهم   L خط   R شكل   P قلم   H قلم تمييز\n"
+"  T نص   C وسيلة شرح   N خطوة   K ختم   B إخفاء   G بقعة ضوء   Z مكبّر\n"
+"  F تعبئة   E ممحاة   X اقتصاص   S تحديد   U قصّ شريط   I قطّارة\n"
+"\n"
+"التحرير: Ctrl+Z/Ctrl+Y تراجع/إعادة • Ctrl+C/X/V • Ctrl+Shift+C نسخ الكل • Del حذف\n"
+"         الأسهم تحرّك العنصر (Shift = 10 بكسل) • Shift يقيّد التناسب/الزاوية\n"
+"         النقر المزدوج يحرّر النص • Esc إلغاء • Enter يطبّق الاقتصاص\n"
+"العرض:   Ctrl+العجلة = تكبير • Ctrl+0 ملاءمة • Ctrl+1 الحجم الفعلي • الزر الأوسط يسحب\n"
+"الملف:   Ctrl+S حفظ في المكتبة • Ctrl+Shift+S حفظ باسم (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"النص:    Ctrl+Shift+O استخراج النص (OCR)\n"
+"الصورة:  Ctrl+Shift+F/B مستوى للأمام/للخلف • Ctrl+T دمج العنصر • Ctrl+Shift+T دمج الكل • Ctrl+; محاذاة\n"
+"الفيديو: مسافة تشغيل/إيقاف مؤقت • ←/→ إطار • I/O تعليم البداية/النهاية\n"
+
+#: src/editor/main.cpp:1169
+msgid "Imagem inteira copiada para a área de transferência."
+msgstr "تم نسخ الصورة كاملة إلى الحافظة."
+
+#: src/editor/main.cpp:1174
+msgid "Arquivo…"
+msgstr "ملف…"
+
+#: src/editor/main.cpp:1176
+msgid "E-mail…"
+msgstr "البريد…"
+
+#: src/editor/main.cpp:1177
+msgid "Impressora…"
+msgstr "الطابعة…"
+
+#: src/editor/main.cpp:1178
+msgid "Programa externo…"
+msgstr "برنامج خارجي…"
+
+#: src/editor/main.cpp:1201
+msgid "Copiado."
+msgstr "تم النسخ."
+
+#: src/editor/main.cpp:1226
+msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
+msgstr "حدّد عنصرين أو أكثر (Ctrl+نقر أو اسحب مستطيلًا بأداة التحريك) لتجميعها."
+
+#: src/editor/main.cpp:1228
+msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
+msgstr "تم تجميع العناصر. صورة › فك التجميع (Ctrl+Shift+U) يفصلها."
+
+#: src/editor/main.cpp:1233
+msgid "Grupo desfeito."
+msgstr "تم فك التجميع."
+
+#: src/editor/main.cpp:1236
+msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
+msgstr "القوالب (دمج الصور) غير متاحة بعد في Snapnab."
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
+msgstr "المحاذاة إلى اللوحة مفعّلة (Alt أثناء السحب يعطّلها مؤقتًا)."
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas desligado."
+msgstr "المحاذاة إلى اللوحة معطّلة."
+
+#: src/editor/main.cpp:1245
+msgid "Etiquetas"
+msgstr "الوسوم"
+
+#: src/editor/main.cpp:1246
+msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
+msgstr "افصل الوسوم بفواصل. تُحفظ في اللقطة."
+
+#: src/editor/main.cpp:1247
+msgid "Etiquetar imagem"
+msgstr "وسم الصورة"
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas removidas."
+msgstr "تمت إزالة الوسوم."
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas: "
+msgstr "الوسوم: "
+
+#: src/editor/main.cpp:1267
+msgid ""
+"Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
+"OCR, exportação PDF e edição de vídeo (cortes e GIF)."
+msgstr ""
+"تحرير اللقطات بعناصر متجهة وتأثيرات وSmart Move\n"
+"وOCR وتصدير PDF وتحرير الفيديو (القص وGIF)."
+
+#: src/editor/main.cpp:1270
+msgid "Sobre"
+msgstr "حول"
+
+#: src/editor/main.cpp:1311
+msgid ""
+"SnapnabEditor.exe [opções] [arquivo…]\n"
+"\n"
+"/Open \"arquivo\"     abre um arquivo (.snap, imagem, .mp4)\n"
+"/NewFromClipboard   cria imagem a partir da área de transferência\n"
+"/restartwait        espera a instância anterior fechar"
+msgstr ""
+"SnapnabEditor.exe [خيارات] [ملف…]\n"
+"\n"
+"/Open \"ملف\"        يفتح ملفًا (.snap، صورة، .mp4)\n"
+"/NewFromClipboard   ينشئ صورة من الحافظة\n"
+"/restartwait        ينتظر إغلاق النسخة السابقة"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "Zoom %d%%  ▾"
+msgstr "تكبير %d%%  ▾"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "%d × %d px  ▾"
+msgstr "%d × %d بكسل  ▾"
+
+#: src/editor/main.cpp:1409
+msgid "Propriedades"
+msgstr "الخصائص"
+
+#: src/editor/main.cpp:1440
+msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
+msgstr "محيط مصمت حول الصورة بالعرض واللون اللذين تختارهما."
+
+#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451
+msgid "Bordas e sombras"
+msgstr "الإطارات والظلال"
+
+#: src/editor/main.cpp:1443
+msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
+msgstr "ظل ناعم خلف الصورة يميّز اللقطة عن الخلفية."
+
+#: src/editor/main.cpp:1444
+msgid "Deslocamento"
+msgstr "الإزاحة"
+
+#: src/editor/main.cpp:1447
+msgid "Perspectiva"
+msgstr "منظور"
+
+#: src/editor/main.cpp:1447
+msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
+msgstr "يميل الصورة كأنها على جانبها أو واقفة أو مستلقية."
+
+#: src/editor/main.cpp:1448
+msgid "Horizontal"
+msgstr "أفقي"
+
+#: src/editor/main.cpp:1449
+msgid "Vertical"
+msgstr "عمودي"
+
+#: src/editor/main.cpp:1450
+msgid "Inclinação"
+msgstr "الميل"
+
+#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+msgid "Dobra de página"
+msgstr "طي الصفحة"
+
+#: src/editor/main.cpp:1451
+msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
+msgstr "يطوي زاوية من الصورة مثل طرف ورقة."
+
+#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+msgid "Tamanho"
+msgstr "الحجم"
+
+#: src/editor/main.cpp:1452
+msgid "Pequena"
+msgstr "صغير"
+
+#: src/editor/main.cpp:1452
+msgid "Grande"
+msgstr "كبير"
+
+#: src/editor/main.cpp:1453
+msgid "Canto"
+msgstr "الزاوية"
+
+#: src/editor/main.cpp:1453
+msgid "Superior esquerdo"
+msgstr "أعلى اليسار"
+
+#: src/editor/main.cpp:1453
+msgid "Superior direito"
+msgstr "أعلى اليمين"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior direito"
+msgstr "أسفل اليمين"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior esquerdo"
+msgstr "أسفل اليسار"
+
+#: src/editor/main.cpp:1454
+msgid "Bordas"
+msgstr "الحواف"
+
+#: src/editor/main.cpp:1454
+msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
+msgstr "ممزّق أو موجة أو منشار أو قرش أو متلاشٍ أو مشطوف."
+
+#: src/editor/main.cpp:1459
+msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
+msgstr "رمادي، بني داكن، عكس، أبيض وأسود، نقش بارز، فسيفساء، حدّة، تمويه."
+
+#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+msgid "Relevo"
+msgstr "نقش بارز"
+
+#: src/editor/main.cpp:1460
+msgid "Mosaico"
+msgstr "فسيفساء"
+
+#: src/editor/main.cpp:1460
+msgid "Nitidez"
+msgstr "حدّة"
+
+#: src/editor/main.cpp:1463
+msgid "Ajuste de cores"
+msgstr "ضبط الألوان"
+
+#: src/editor/main.cpp:1463
+msgid "Brilho, contraste, gama, matiz e saturação."
+msgstr "السطوع والتباين وغاما وتدرّج اللون والتشبّع."
+
+#: src/editor/main.cpp:1466
+msgid "Gama"
+msgstr "غاما"
+
+#: src/editor/main.cpp:1467
+msgid "Matiz"
+msgstr "تدرّج اللون"
+
+#: src/editor/main.cpp:1469
+msgid "Troca uma cor por outra (ou por transparente)."
+msgstr "يستبدل لونًا بآخر (أو بالشفافية)."
+
+#: src/editor/main.cpp:1470
+msgid "Cor atual"
+msgstr "اللون الحالي"
+
+#: src/editor/main.cpp:1470
+msgid "Tornar transparente"
+msgstr "جعله شفافًا"
+
+#: src/editor/main.cpp:1472
+msgid "Spotlight e lupa"
+msgstr "بقعة ضوء ومكبّر"
+
+#: src/editor/main.cpp:1472
+msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
+msgstr "يبرز التحديد (أو وسط الصورة) ويعتّم الباقي."
+
+#: src/editor/main.cpp:1473
+msgid "Escurecer"
+msgstr "تعتيم"
+
+#: src/editor/main.cpp:1475
+msgid "Ampliar"
+msgstr "تكبير"
+
+#: src/editor/main.cpp:1476
+msgid "Sombra na área em foco"
+msgstr "ظل في منطقة التركيز"
+
+#: src/editor/main.cpp:1477
+msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
+msgstr "نص شفاف فوق الصورة، مرة واحدة أو متكرر."
+
+#: src/editor/main.cpp:1478
+msgid "Confidencial"
+msgstr "سري"
+
+#: src/editor/main.cpp:1479
+msgid "Repetir em mosaico"
+msgstr "تكرار متجانب"
+
+#: src/editor/main.cpp:1480
+msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
+msgstr "شريط نص في الأعلى أو الأسفل؛ يقبل {date} و{time}."
+
+#: src/editor/main.cpp:1483
+msgid "Cor da faixa"
+msgstr "لون الشريط"
+
+#: src/editor/main.cpp:1572
+msgid "Borda e sombra"
+msgstr "إطار وظل"
+
+#: src/editor/main.cpp:1573
+msgid "Papel rasgado"
+msgstr "ورق ممزّق"
+
+#: src/editor/main.cpp:1576
+msgid "Serrilhado"
+msgstr "مسنّن"
+
+#: src/editor/main.cpp:1578
+msgid "Chanfrado"
+msgstr "مشطوف"
+
+#: src/editor/main.cpp:1589
+msgid "Efeito"
+msgstr "تأثير"
+
+#: src/editor/main.cpp:1636
+msgid "Efeito aplicado: "
+msgstr "تم تطبيق التأثير: "
+
+#: src/editor/main.cpp:1636
+msgid " (Ctrl+Z desfaz)"
+msgstr " (Ctrl+Z للتراجع)"
+
+#: src/editor/main.cpp:1644
+msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
+msgstr "بقعة الضوء: بدون تحديد، يكون التركيز على وسط الصورة. استخدم أداة التحديد لاختيار المنطقة."
+
+#: src/editor/main.cpp:1665
+#, c-format
+msgid "Meu efeito %zu"
+msgstr "تأثيري %zu"
+
+#: src/editor/main.cpp:1666
+msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
+msgstr "تأتي الإعدادات من التأثيرات في اللوحة (افتح كل تأثير لتغييره):"
+
+#: src/editor/main.cpp:1670
+msgid "Adicionar aos efeitos rápidos"
+msgstr "إضافة إلى التأثيرات السريعة"
+
+#: src/editor/main.cpp:1682
+msgid "Efeito rápido adicionado: "
+msgstr "تمت إضافة تأثير سريع: "
+
+#: src/editor/main.cpp:1712
+msgid "Nova captura de imagem (pede ao Snapnab)"
+msgstr "لقطة صورة جديدة (تطلبها من Snapnab)"
+
+#: src/editor/main.cpp:1713
+msgid "Nova gravação de vídeo"
+msgstr "تسجيل فيديو جديد"
+
+#: src/editor/main.cpp:1714
+msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
+msgstr "نسخ الصورة كاملة (Ctrl+Shift+C)"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar"
+msgstr "مشاركة"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
+msgstr "مشاركة: ملف، حافظة، بريد، طابعة، برنامج"
+
+#: src/editor/main.cpp:1734
+#, c-format
+msgid "Excluir o efeito rápido \"%s\"?"
+msgstr "هل تريد حذف التأثير السريع \"%s\"؟"
+
+#: src/editor/main.cpp:1758
+msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
+msgstr "شريط أدوات مخصّص. المزيد › العودة إلى الافتراضي يلغيه."
+
+#: src/editor/main.cpp:1776
+#, c-format
+msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
+msgstr "تم تحديد %d عناصر  •  Ctrl+Shift+G للتجميع  •  ترتيب › محاذاة لمحاذاتها معًا"
+
+#: src/editor/main.cpp:1783
+msgid "Cor capturada: "
+msgstr "اللون المأخوذ: "
+
+#: src/editor/main.cpp:1783
+msgid " (aplicada às ferramentas de desenho)"
+msgstr " (مطبّق على أدوات الرسم)"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro do vídeo"
+msgstr "إطار الفيديو"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro de vídeo"
+msgstr "إطار فيديو"
+
+#: src/editor/main.cpp:1804
+msgid "Vídeo salvo: "
+msgstr "تم حفظ الفيديو: "
+
+#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+msgid "Editar"
+msgstr "تحرير"
+
+#: src/editor/main.cpp:1865
+msgid "Ajustar à janela\tCtrl+0"
+msgstr "ملاءمة النافذة\tCtrl+0"

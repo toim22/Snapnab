@@ -60,8 +60,14 @@ private:
     void SaveGif();
     RECT TimelineRect() const;
     LONGLONG TimeFromX(int x) const;
+    LONGLONG PlayClock() const;                    // posição no vídeo-fonte que a reprodução deveria mostrar agora
     VideoReader reader_;
-    Image frame_;
+    Image frame_, pending_;                        // pending_: quadro já lido, adiantado em relação ao relógio
+    LONGLONG pendingTs_ = -1;
+    struct AudioPlayer;
+    std::unique_ptr<AudioPlayer, void (*)(AudioPlayer*)> audio_{ nullptr, nullptr };
+    ULONGLONG playTick_ = 0;                       // início da reprodução (relógio de parede)
+    LONGLONG playFrom_ = 0;
     LONGLONG pos_ = 0, selA_ = -1, selB_ = -1;
     std::vector<Interval> cuts_;
     std::vector<std::vector<Interval>> cutUndo_;

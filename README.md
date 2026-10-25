@@ -11,14 +11,17 @@ O Snapnab fica na área de notificação: aperte **Print Screen**, escolha o que
 
 **Captura**
 - Região, janela, tela inteira, monitor, região de tamanho fixo, mão livre, várias áreas, objeto sob o cursor,
-  rolagem (página inteira), janela estendida, menus, área de transferência e arquivo
+  rolagem panorâmica (você rola, ele junta), rolagem automática de janela, janela estendida, menus, área de transferência e arquivo
+- **Capturar texto**: reconhece o texto da região (OCR) e copia para a área de transferência
 - Lupa e coordenadas na mira, atraso com contagem regressiva, captura do cursor
-- Presets com atalhos globais e destinos: Editor, área de transferência, arquivo com nome automático, programa externo
+- Presets com atalhos globais e destinos: Editor, área de transferência, arquivo com nome automático, programa externo, texto
+- **One Click**: painel discreto preso à borda da tela, que abre com o mouse em cima (*Exibir › Mostrar o One Click*)
 - 12 efeitos aplicados na hora: borda, filtros, sombra, informações da captura, substituição de cor, redimensionar,
   bordas especiais, cortar bordas, ajuste de cor, girar, marca d'água e resolução
 
 **Gravação de vídeo**
 - MP4 (H.264 + AAC), microfone e áudio do sistema com mudo separado, pausa sem buraco no vídeo
+- Webcam em bolha redonda dentro do vídeo, que pode ser arrastada durante a gravação
 - Painel de controle e moldura que não aparecem na gravação, redução para 1080p, codificação por hardware
 
 **Editor**
@@ -29,6 +32,10 @@ O Snapnab fica na área de notificação: aperte **Print Screen**, escolha o que
 - Vídeo: cortar trechos, salvar quadro, criar GIF animado e exportar MP4
 - Biblioteca com todas as capturas
 
+**Idiomas**
+- Português, inglês, chinês (simplificado), hindi, espanhol, árabe, francês, bengali, russo, indonésio, urdu e alemão;
+  segue o idioma do Windows (inglês se não houver tradução) e muda em *Arquivo › Opções… › Idioma*
+
 A janela de captura acompanha a cor de destaque escolhida em *Configurações > Personalização > Cores*.
 
 ## Instalação
@@ -36,7 +43,9 @@ A janela de captura acompanha a cor de destaque escolhida em *Configurações > 
 Requer **Windows 10 versão 2004 ou mais novo, ou Windows 11 (64 bits)**. Não precisa de nenhum runtime extra.
 
 - **Portátil:** baixe `Snapnab-<versão>-win-x64.zip` na página de *Releases*, extraia em qualquer pasta e abra `Snapnab.exe`.
-- **Instalador:** `Snapnab-<versão>-setup.exe` instala, cria atalhos no menu Iniciar e desinstala pelo Windows.
+- **Instalador:** abra `Snapnab-<versão>-setup.exe` e siga o assistente. Ele instala só para você (sem pedir
+  administrador) ou para todos os usuários, cria os atalhos no menu Iniciar, pode iniciar o Snapnab com o Windows e
+  desinstala por *Configurações › Aplicativos*. Suas capturas e configurações são mantidas ao desinstalar.
 
 ## Uso
 
@@ -87,8 +96,9 @@ src/                    código-fonte (C++20, Win32)
   snapex/               SnapEx64.dll — captura de janela estendida
   resources/            ícones e manifesto
 tests/                  testes de integração
+lang/                   traduções da interface (gettext: <idioma>.po e o modelo snapnab.pot)
 packaging/              arquivos do pacote e script do instalador
-scripts/                utilitários de desenvolvimento
+scripts/                utilitários de desenvolvimento (i18n.py extrai e confere as traduções)
 docs/                   arquitetura, build e imagens
 ```
 

@@ -31,9 +31,17 @@ void Pixelate(Image& img, RECT r, int block);
 // borda e acabamento
 Image Border(const Image& s, int width, uint32_t color);
 Image Shadow(const Image& s, int offset, int blur, int opacityPercent);
-enum class Edge { Torn = 0, Wave, Sawtooth, SharkTooth, Fade };
+enum class Edge { Torn = 0, Wave, Sawtooth, SharkTooth, Fade, Beveled };    // presets EdgeEffectPreset* (comp_4 §6)
 enum Sides { Top = 1, Right = 2, Bottom = 4, Left = 8, All = 15 };
 Image EdgeEffect(const Image& s, Edge style, int size, int sides, bool shadow);
+
+// efeitos que só o Editor tem (CEffectSettingsPerspectiveShear / PageCurl / SpotlightMagnify, ed_comp_5 §4.3)
+Image Perspective(const Image& s, int horizontal /*-100..100*/, int vertical /*-100..100*/, int shear /*-100..100*/);
+Image PageCurl(const Image& s, int size, int corner /*0 sup. esq., 1 sup. dir., 2 inf. dir., 3 inf. esq.*/);
+Image Spotlight(const Image& s, RECT focus, int dimPercent, int blur, int zoomPercent, bool shadow);
+// filtros (CEffectSettingsFilter: Emboss, Mosaic, Sharpen, AverageFilter…)
+void Emboss(Image& img, int depth /*1..10*/);
+void Sharpen(Image& img, int amount /*0..100*/);
 
 // texto
 void Watermark(Image& img, const std::wstring& text, int opacityPercent, bool tiled, bool emboss);

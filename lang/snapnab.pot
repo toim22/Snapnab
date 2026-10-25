@@ -1,0 +1,4745 @@
+# Snapnab — traduções da interface.
+# Copyright © 2026 Antonio Rezende. GPL-3.0.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Snapnab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/capture/CaptureEngine.cpp:39
+#, c-format
+msgid "Captura em %d s…"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:138
+msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+msgid "Região fixa"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+msgid "A área de transferência não contém imagem."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669 …
+msgid "Área de transferência"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:170
+msgid "Capturar de arquivo gráfico"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:172
+msgid "Não foi possível abrir a imagem."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:181
+msgid "Nenhum menu aberto encontrado; selecione a região."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:281
+msgid ""
+"Não foi possível reconhecer o texto.\n"
+"\n"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+msgid "Snapnab — Capturar texto"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:282
+msgid "Nenhum texto encontrado na captura."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:293
+msgid "Capturar texto — copiado para a área de transferência"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:300
+msgid "copiada para a área de transferência"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:306
+msgid "salva em "
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:322
+msgid "Captura adicionada à biblioteca"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:447
+msgid "A janela será ampliada além da tela, capturada e restaurada."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:448
+msgid "Nova largura (px)"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:449
+msgid "Nova altura (px)"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+msgid "Janela estendida"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:523
+msgid "Imagem durante gravação"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:526
+msgid "Imagem capturada sem parar a gravação."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+msgid "Snapnab — webcam"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:553
+msgid ""
+"Não foi possível iniciar a gravação.\n"
+"\n"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:596
+msgid "Vídeo salvo na biblioteca: "
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:598
+msgid ""
+"A gravação falhou.\n"
+"\n"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Snapnab — pouco espaço em disco"
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Restam menos de 1 GB livres na unidade da biblioteca."
+msgstr ""
+
+#: src/capture/CaptureEngine.cpp:609
+msgid "Gravação interrompida: espaço em disco insuficiente."
+msgstr ""
+
+#: src/capture/OneClick.h:39
+msgid "Iniciar uma captura"
+msgstr ""
+
+#: src/capture/Panoramic.cpp:132
+msgid "Snapnab — rolagem panorâmica"
+msgstr ""
+
+#: src/capture/Panoramic.cpp:192
+msgid "Role o conteúdo dentro da moldura…"
+msgstr ""
+
+#: src/capture/Panoramic.cpp:193
+#, c-format
+msgid "Capturando: %d × %d px"
+msgstr ""
+
+#: src/capture/Panoramic.cpp:204
+msgid "Concluir"
+msgstr ""
+
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818 …
+msgid "Cancelar"
+msgstr ""
+
+#: src/capture/Presets.cpp:7
+msgid "Região"
+msgstr ""
+
+#: src/capture/Presets.cpp:8
+msgid "Janela"
+msgstr ""
+
+#: src/capture/Presets.cpp:9
+msgid "Tela inteira (todos os monitores)"
+msgstr ""
+
+#: src/capture/Presets.cpp:10
+msgid "Monitor atual"
+msgstr ""
+
+#: src/capture/Presets.cpp:11
+msgid "Região com tamanho fixo"
+msgstr ""
+
+#: src/capture/Presets.cpp:12
+msgid "Mão livre"
+msgstr ""
+
+#: src/capture/Presets.cpp:13
+msgid "Várias áreas"
+msgstr ""
+
+#: src/capture/Presets.cpp:14
+msgid "Objeto (controle sob o cursor)"
+msgstr ""
+
+#: src/capture/Presets.cpp:15
+msgid "Rolagem automática (janela)"
+msgstr ""
+
+#: src/capture/Presets.cpp:16
+msgid "Rolagem panorâmica"
+msgstr ""
+
+#: src/capture/Presets.cpp:18
+msgid "Menu"
+msgstr ""
+
+#: src/capture/Presets.cpp:20
+msgid "Arquivo gráfico"
+msgstr ""
+
+#: src/capture/Presets.cpp:150
+msgid "Imagem — Região"
+msgstr ""
+
+#: src/capture/Presets.cpp:151
+msgid "Imagem — Janela"
+msgstr ""
+
+#: src/capture/Presets.cpp:152
+msgid "Tela inteira → Área de transferência"
+msgstr ""
+
+#: src/capture/Presets.cpp:154
+msgid "Rolagem (página inteira)"
+msgstr ""
+
+#: src/capture/Presets.cpp:155
+msgid "Vídeo — Região"
+msgstr ""
+
+#: src/capture/Presets.cpp:156
+msgid "Vídeo — Tela inteira"
+msgstr ""
+
+#: src/capture/Presets.cpp:164
+msgid "Captura com rolagem panorâmica"
+msgstr ""
+
+#: src/capture/Presets.cpp:166
+msgid "Capturar texto"
+msgstr ""
+
+#: src/capture/Recorder.cpp:252
+msgid "Área de gravação muito pequena."
+msgstr ""
+
+#: src/capture/Recorder.cpp:259
+msgid "Media Foundation indisponível."
+msgstr ""
+
+#: src/capture/Recorder.cpp:274
+#, c-format
+msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
+msgstr ""
+
+#: src/capture/Recorder.cpp:386
+msgid "Falha ao gravar quadro de vídeo."
+msgstr ""
+
+#: src/capture/Recorder.cpp:478
+#, c-format
+msgid "Falha ao finalizar o MP4 (0x%08X)."
+msgstr ""
+
+#: src/capture/RecorderHud.cpp:60
+msgid "Snapnab — gravação"
+msgstr ""
+
+#: src/capture/RecorderHud.cpp:153
+msgid "Pronto"
+msgstr ""
+
+#: src/capture/RecorderHud.cpp:273
+msgid "Pular"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:244
+msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:245
+msgid "Clique na janela a capturar • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:246
+msgid "Clique no controle/objeto a capturar • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:247
+#, c-format
+msgid "Região fixa %d × %d — clique para capturar • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:248
+msgid "Desenhe o contorno com o botão pressionado • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:249
+msgid "Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:250
+msgid "Clique na janela/área rolável • Esc = cancelar"
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:252
+msgid "Gravação: "
+msgstr ""
+
+#: src/capture/SelectOverlay.cpp:380
+msgid "Snapnab — seleção"
+msgstr ""
+
+#: src/capture/Webcam.cpp:50
+msgid "Círculo"
+msgstr ""
+
+#: src/capture/Webcam.cpp:51
+msgid "Quadrado arredondado"
+msgstr ""
+
+#: src/capture/Webcam.cpp:52
+msgid "Quadrado"
+msgstr ""
+
+#: src/capture/Webcam.cpp:53
+msgid "Retângulo 16:9"
+msgstr ""
+
+#: src/capture/Webcam.cpp:54
+msgid "Retângulo 4:3"
+msgstr ""
+
+#: src/capture/Webcam.cpp:80
+msgid "Nenhuma webcam encontrada."
+msgstr ""
+
+#: src/capture/Webcam.cpp:109
+msgid "O Windows bloqueou o acesso à câmera. Libere em Configurações › Privacidade e segurança › Câmera."
+msgstr ""
+
+#: src/capture/Webcam.cpp:110
+#, c-format
+msgid "Não foi possível abrir a webcam (0x%08X)."
+msgstr ""
+
+#: src/capture/Webcam.cpp:136
+#, c-format
+msgid "A webcam não oferece um formato compatível (0x%08X)."
+msgstr ""
+
+#: src/capture/main.cpp:120
+msgid "Snapnab — clique para capturar"
+msgstr ""
+
+#: src/capture/main.cpp:147 src/capture/main.cpp:511
+msgid "Conflito de atalho"
+msgstr ""
+
+#: src/capture/main.cpp:147
+#, c-format
+msgid "O atalho do preset \"%s\" já está em uso por outra ação."
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+msgid "Borda"
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+msgid "Filtros"
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498 …
+msgid "Sombra"
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+msgid "Informações da captura"
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+msgid "Substituição de cor"
+msgstr ""
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:362
+msgid "Redimensionar imagem"
+msgstr ""
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+msgid "Bordas especiais"
+msgstr ""
+
+#: src/capture/main.cpp:189
+msgid "Cortar bordas"
+msgstr ""
+
+#: src/capture/main.cpp:189
+msgid "Ajuste de cor"
+msgstr ""
+
+#: src/capture/main.cpp:189
+msgid "Girar imagem"
+msgstr ""
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+msgid "Marca d'água"
+msgstr ""
+
+#: src/capture/main.cpp:189
+msgid "Resolução da imagem"
+msgstr ""
+
+#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360 …
+msgid "Largura (px)"
+msgstr ""
+
+#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494 …
+msgid "Cor"
+msgstr ""
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Filtro"
+msgstr ""
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Tons de cinza"
+msgstr ""
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Sépia"
+msgstr ""
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Inverter cores"
+msgstr ""
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Preto e branco"
+msgstr ""
+
+#: src/capture/main.cpp:211
+msgid "Deslocamento (px)"
+msgstr ""
+
+#: src/capture/main.cpp:211
+msgid "Desfoque (px)"
+msgstr ""
+
+#: src/capture/main.cpp:212 src/capture/main.cpp:241
+msgid "Opacidade (%)"
+msgstr ""
+
+#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477 …
+msgid "Texto"
+msgstr ""
+
+#: src/capture/main.cpp:215
+msgid "Campos: {date} {time} {computer} {user}"
+msgstr ""
+
+#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+msgid "Posição"
+msgstr ""
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Embaixo"
+msgstr ""
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Em cima"
+msgstr ""
+
+#: src/capture/main.cpp:219
+msgid "Cor a substituir"
+msgstr ""
+
+#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+msgid "Nova cor"
+msgstr ""
+
+#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576 …
+msgid "Tolerância"
+msgstr ""
+
+#: src/capture/main.cpp:222
+msgid "Escala (%)"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+msgid "Estilo"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Rasgada"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+msgid "Onda"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de serra"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de tubarão"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+msgid "Esmaecer"
+msgstr ""
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Chanfrada"
+msgstr ""
+
+#: src/capture/main.cpp:225
+msgid "Tamanho (px)"
+msgstr ""
+
+#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+msgid "Direita"
+msgstr ""
+
+#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+msgid "Esquerda"
+msgstr ""
+
+#: src/capture/main.cpp:230
+msgid "Remove as faixas de cor uniforme em volta da captura."
+msgstr ""
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+msgid "Brilho"
+msgstr ""
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+msgid "Contraste"
+msgstr ""
+
+#: src/capture/main.cpp:234
+msgid "Matiz (graus)"
+msgstr ""
+
+#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+msgid "Saturação"
+msgstr ""
+
+#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+msgid "Girar"
+msgstr ""
+
+#: src/capture/main.cpp:237
+msgid "90° à direita"
+msgstr ""
+
+#: src/capture/main.cpp:237
+msgid "90° à esquerda"
+msgstr ""
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na horizontal"
+msgstr ""
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na vertical"
+msgstr ""
+
+#: src/capture/main.cpp:242
+msgid "Repetir por toda a imagem"
+msgstr ""
+
+#: src/capture/main.cpp:245
+msgid "Resolução (DPI)"
+msgstr ""
+
+#: src/capture/main.cpp:245
+msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
+msgstr ""
+
+#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+msgid "Nenhum"
+msgstr ""
+
+#: src/capture/main.cpp:303
+msgid "Adicionar outro efeito"
+msgstr ""
+
+#: src/capture/main.cpp:304
+msgid "Remover este efeito"
+msgstr ""
+
+#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+msgid "Desligado"
+msgstr ""
+
+#: src/capture/main.cpp:339
+#, c-format
+msgid "%d s"
+msgstr ""
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890
+msgid "Ligada"
+msgstr ""
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+msgid "Desligada"
+msgstr ""
+
+#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+msgid "Formato"
+msgstr ""
+
+#: src/capture/main.cpp:421
+msgid "Prefixo do nome"
+msgstr ""
+
+#: src/capture/main.cpp:422
+msgid "Pasta"
+msgstr ""
+
+#: src/capture/main.cpp:423
+msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
+msgstr ""
+
+#: src/capture/main.cpp:427
+msgid "O prefixo contém caracteres inválidos."
+msgstr ""
+
+#: src/capture/main.cpp:430
+msgid "Salvar em arquivo"
+msgstr ""
+
+#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+msgid "Programa"
+msgstr ""
+
+#: src/capture/main.cpp:438
+msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
+msgstr ""
+
+#: src/capture/main.cpp:439 src/editor/main.cpp:813
+msgid "Abrir em um programa externo"
+msgstr ""
+
+#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+msgid "Altura (px)"
+msgstr ""
+
+#: src/capture/main.cpp:451
+msgid "Capturar sempre na mesma posição"
+msgstr ""
+
+#: src/capture/main.cpp:452
+msgid "Esquerda (X)"
+msgstr ""
+
+#: src/capture/main.cpp:453
+msgid "Topo (Y)"
+msgstr ""
+
+#: src/capture/main.cpp:454
+msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
+msgstr ""
+
+#: src/capture/main.cpp:468
+msgid "Selecionar a região na captura"
+msgstr ""
+
+#: src/capture/main.cpp:469
+msgid "Região fixa…"
+msgstr ""
+
+#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+msgid "Quadros por segundo"
+msgstr ""
+
+#: src/capture/main.cpp:491
+msgid "Reduzir para 1080p"
+msgstr ""
+
+#: src/capture/main.cpp:492
+msgid "Codificação por hardware"
+msgstr ""
+
+#: src/capture/main.cpp:494
+msgid "Opções de vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:503
+msgid "Atalho do preset"
+msgstr ""
+
+#: src/capture/main.cpp:504
+msgid "Deixe vazio (Backspace) para remover."
+msgstr ""
+
+#: src/capture/main.cpp:505
+msgid "Atalho — "
+msgstr ""
+
+#: src/capture/main.cpp:511
+msgid "Esse atalho já está em uso por outra ação do Snapnab."
+msgstr ""
+
+#: src/capture/main.cpp:516
+msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
+msgstr ""
+
+#: src/capture/main.cpp:517
+msgid "Atalho"
+msgstr ""
+
+#: src/capture/main.cpp:523
+msgid "Nome do preset"
+msgstr ""
+
+#: src/capture/main.cpp:531
+msgid "Renomear preset"
+msgstr ""
+
+#: src/capture/main.cpp:551
+msgid ""
+"Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
+"\n"
+"•  Clique em um preset para carregá-lo na janela; clique duas vezes para capturar com ele.\n"
+"•  \"Adicionar atalho\" dá a ele uma tecla de atalho global.\n"
+"•  A engrenagem da linha renomeia, duplica ou exclui o preset.\n"
+"•  \"Novo preset com as configurações atuais\" salva o que está na janela agora."
+msgstr ""
+
+#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+msgid "Presets"
+msgstr ""
+
+#: src/capture/main.cpp:588
+msgid "Automático (idioma do Windows)"
+msgstr ""
+
+#: src/capture/main.cpp:593
+msgid "Atalhos globais"
+msgstr ""
+
+#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+msgid "Capturar imagem"
+msgstr ""
+
+#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+msgid "Gravar vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:596
+msgid "Pausar/retomar vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:597
+msgid "Parar vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:598
+msgid "Geral"
+msgstr ""
+
+#: src/capture/main.cpp:599
+msgid "Pasta de saída"
+msgstr ""
+
+#: src/capture/main.cpp:600
+msgid "Monitorar área de transferência"
+msgstr ""
+
+#: src/capture/main.cpp:600
+msgid "Só a Ferramenta de Captura do Windows"
+msgstr ""
+
+#: src/capture/main.cpp:600
+msgid "Qualquer aplicativo"
+msgstr ""
+
+#: src/capture/main.cpp:602
+msgid "Iniciar com o Windows"
+msgstr ""
+
+#: src/capture/main.cpp:603
+msgid "Mostrar a janela de captura ao iniciar"
+msgstr ""
+
+#: src/capture/main.cpp:604
+msgid "Idioma"
+msgstr ""
+
+#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+msgid "Biblioteca: "
+msgstr ""
+
+#: src/capture/main.cpp:611
+msgid "Dois atalhos iguais: "
+msgstr ""
+
+#: src/capture/main.cpp:616
+msgid "Opções do Snapnab"
+msgstr ""
+
+#: src/capture/main.cpp:632
+msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
+msgstr ""
+
+#: src/capture/main.cpp:655
+msgid " — captura de tela e gravação de vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+msgid "Software livre sob a GNU General Public License versão 3."
+msgstr ""
+
+#: src/capture/main.cpp:657
+msgid ""
+"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
+"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
+msgstr ""
+
+#: src/capture/main.cpp:659
+msgid "Sobre o Snapnab"
+msgstr ""
+
+#: src/capture/main.cpp:681 src/capture/main.cpp:972
+msgid "Abrir a janela de captura"
+msgstr ""
+
+#: src/capture/main.cpp:682
+msgid "Ocultar o One Click"
+msgstr ""
+
+#: src/capture/main.cpp:735
+msgid ""
+"Snapnab.exe [opções]\n"
+"\n"
+"/hide            inicia só na bandeja\n"
+"/capture         captura imagem com o preset de imagem atual\n"
+"/video           grava vídeo com o preset de vídeo atual\n"
+"/preset \"nome\"   executa um preset pelo nome\n"
+"/clipboard       captura a imagem da área de transferência\n"
+"/exit            encerra o Snapnab em execução"
+msgstr ""
+
+#: src/capture/main.cpp:741
+msgid "Snapnab — linha de comando"
+msgstr ""
+
+#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+msgid "Imagem"
+msgstr ""
+
+#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+msgid "Vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:772
+msgid "Seleção:"
+msgstr ""
+
+#: src/capture/main.cpp:775
+msgid "Efeitos:"
+msgstr ""
+
+#: src/capture/main.cpp:778
+msgid "Compartilhar:"
+msgstr ""
+
+#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839 …
+msgid "Arquivo"
+msgstr ""
+
+#: src/capture/main.cpp:781
+msgid "Programa externo"
+msgstr ""
+
+#: src/capture/main.cpp:781
+msgid "Texto (OCR)"
+msgstr ""
+
+#: src/capture/main.cpp:782
+msgid "Qualidade:"
+msgstr ""
+
+#: src/capture/main.cpp:785
+msgid "Muito baixa"
+msgstr ""
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Baixa"
+msgstr ""
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+msgid "Média"
+msgstr ""
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Alta"
+msgstr ""
+
+#: src/capture/main.cpp:786
+msgid "Webcam:"
+msgstr ""
+
+#: src/capture/main.cpp:789
+msgid "Visualizar no Editor"
+msgstr ""
+
+#: src/capture/main.cpp:790
+msgid "Copiar para a área de transferência"
+msgstr ""
+
+#: src/capture/main.cpp:791
+msgid "Capturar o cursor"
+msgstr ""
+
+#: src/capture/main.cpp:792 src/capture/main.cpp:846
+msgid "Atraso"
+msgstr ""
+
+#: src/capture/main.cpp:794
+msgid "Gravar microfone"
+msgstr ""
+
+#: src/capture/main.cpp:795
+msgid "Gravar áudio do sistema"
+msgstr ""
+
+#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+msgid "Capturar"
+msgstr ""
+
+#: src/capture/main.cpp:802
+msgid "Abrir Editor"
+msgstr ""
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:436
+msgid "Captura"
+msgstr ""
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+msgid "Exibir"
+msgstr ""
+
+#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+msgid "Ajuda"
+msgstr ""
+
+#: src/capture/main.cpp:933
+msgid "Abrir o &Editor"
+msgstr ""
+
+#: src/capture/main.cpp:934 src/editor/main.cpp:710
+msgid "Abrir a pasta da &biblioteca"
+msgstr ""
+
+#: src/capture/main.cpp:935
+msgid "Abrir a pasta de &logs"
+msgstr ""
+
+#: src/capture/main.cpp:937
+msgid "&Importar presets…"
+msgstr ""
+
+#: src/capture/main.cpp:938
+msgid "E&xportar presets…"
+msgstr ""
+
+#: src/capture/main.cpp:940
+msgid "&Opções…"
+msgstr ""
+
+#: src/capture/main.cpp:942
+msgid "&Sair do Snapnab"
+msgstr ""
+
+#: src/capture/main.cpp:944
+msgid "Capturar &imagem"
+msgstr ""
+
+#: src/capture/main.cpp:945
+msgid "Gravar &vídeo"
+msgstr ""
+
+#: src/capture/main.cpp:946
+msgid "&Repetir a última captura"
+msgstr ""
+
+#: src/capture/main.cpp:948
+msgid "Da área de &transferência"
+msgstr ""
+
+#: src/capture/main.cpp:949
+msgid "De um &arquivo gráfico…"
+msgstr ""
+
+#: src/capture/main.cpp:951
+msgid "Mostrar o &One Click"
+msgstr ""
+
+#: src/capture/main.cpp:952
+msgid "Lista de &presets"
+msgstr ""
+
+#: src/capture/main.cpp:954
+msgid "Como usar os &presets"
+msgstr ""
+
+#: src/capture/main.cpp:956
+msgid "&Sobre o Snapnab"
+msgstr ""
+
+#: src/capture/main.cpp:973
+msgid "Mostrar o One Click"
+msgstr ""
+
+#: src/capture/main.cpp:974
+msgid "Abrir o Editor"
+msgstr ""
+
+#: src/capture/main.cpp:975
+msgid "Opções…"
+msgstr ""
+
+#: src/capture/main.cpp:977
+msgid "Sair"
+msgstr ""
+
+#: src/capture/main.cpp:999
+msgid "1 segundo"
+msgstr ""
+
+#: src/capture/main.cpp:999
+#, c-format
+msgid "%d segundos"
+msgstr ""
+
+#: src/capture/main.cpp:1011
+msgid "Remover o fundo da webcam"
+msgstr ""
+
+#: src/capture/main.cpp:1012
+msgid "Cor do fundo"
+msgstr ""
+
+#: src/capture/main.cpp:1013
+msgid "Tolerância (0–100)"
+msgstr ""
+
+#: src/capture/main.cpp:1014
+msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
+msgstr ""
+
+#: src/capture/main.cpp:1015
+msgid "Com o fundo removido, a webcam aparece sem moldura."
+msgstr ""
+
+#: src/capture/main.cpp:1017
+msgid "Remover o fundo (chroma key)"
+msgstr ""
+
+#: src/capture/main.cpp:1035
+msgid "Nenhuma webcam encontrada"
+msgstr ""
+
+#: src/capture/main.cpp:1047
+msgid "Remover o fundo (chroma key)…"
+msgstr ""
+
+#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+msgid "Novo preset com as configurações atuais"
+msgstr ""
+
+#: src/capture/main.cpp:1069
+msgid "Novo preset…"
+msgstr ""
+
+#: src/capture/main.cpp:1080
+msgid "Capturar com este preset"
+msgstr ""
+
+#: src/capture/main.cpp:1082
+msgid "Renomear…"
+msgstr ""
+
+#: src/capture/main.cpp:1083
+msgid "Atalho…"
+msgstr ""
+
+#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+msgid "Duplicar"
+msgstr ""
+
+#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+msgid "Excluir"
+msgstr ""
+
+#: src/capture/main.cpp:1094
+msgid "Adicionar atalho"
+msgstr ""
+
+#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+msgid "Gravar"
+msgstr ""
+
+#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047 …
+msgid " (cópia)"
+msgstr ""
+
+#: src/capture/main.cpp:1262
+#, c-format
+msgid "Preset %zu"
+msgstr ""
+
+#: src/capture/main.cpp:1264
+msgid "Novo preset"
+msgstr ""
+
+#: src/capture/main.cpp:1277
+msgid "É preciso manter pelo menos um preset."
+msgstr ""
+
+#: src/capture/main.cpp:1278
+#, c-format
+msgid "Excluir o preset \"%s\"?"
+msgstr ""
+
+#: src/capture/main.cpp:1337
+msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
+msgstr ""
+
+#: src/capture/main.cpp:1341
+msgid "Presets importados."
+msgstr ""
+
+#: src/capture/main.cpp:1342
+msgid "Arquivo de presets inválido."
+msgstr ""
+
+#: src/capture/main.cpp:1347
+msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
+msgstr ""
+
+#: src/capture/main.cpp:1351
+msgid "Não foi possível exportar."
+msgstr ""
+
+#: src/capture/main.cpp:1360
+msgid "Há uma gravação em andamento. Parar e sair?"
+msgstr ""
+
+#: src/capture/main.cpp:1461
+msgid "Gravar vídeo  ("
+msgstr ""
+
+#: src/capture/main.cpp:1461
+msgid "Capturar imagem  ("
+msgstr ""
+
+#: src/common/Image.cpp:285
+msgid "Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|"
+msgstr ""
+
+#: src/common/Image.cpp:292
+msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
+msgstr ""
+
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+msgid "Imagem vazia."
+msgstr ""
+
+#: src/common/Ocr.cpp:36
+msgid "Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."
+msgstr ""
+
+#: src/common/Ocr.cpp:44
+msgid "Falha desconhecida no OCR."
+msgstr ""
+
+#: src/common/Ui.cpp:247
+msgid "OK"
+msgstr ""
+
+#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+msgid "Copiar tudo"
+msgstr ""
+
+#: src/common/Util.cpp:340
+msgid "(nenhum)"
+msgstr ""
+
+#: src/common/Util.cpp:349
+msgid "Print Screen"
+msgstr ""
+
+#: src/editor/Canvas.cpp:13
+msgid "Mover"
+msgstr ""
+
+#: src/editor/Canvas.cpp:14
+msgid "Seta"
+msgstr ""
+
+#: src/editor/Canvas.cpp:15
+msgid "Linha"
+msgstr ""
+
+#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540 …
+msgid "Forma"
+msgstr ""
+
+#: src/editor/Canvas.cpp:17
+msgid "Caneta"
+msgstr ""
+
+#: src/editor/Canvas.cpp:18
+msgid "Marcador"
+msgstr ""
+
+#: src/editor/Canvas.cpp:20
+msgid "Balão"
+msgstr ""
+
+#: src/editor/Canvas.cpp:21
+msgid "Passos"
+msgstr ""
+
+#: src/editor/Canvas.cpp:22
+msgid "Carimbo"
+msgstr ""
+
+#: src/editor/Canvas.cpp:23
+msgid "Ocultar"
+msgstr ""
+
+#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+msgid "Destaque"
+msgstr ""
+
+#: src/editor/Canvas.cpp:25
+msgid "Lupa"
+msgstr ""
+
+#: src/editor/Canvas.cpp:26
+msgid "Preencher"
+msgstr ""
+
+#: src/editor/Canvas.cpp:27
+msgid "Borracha"
+msgstr ""
+
+#: src/editor/Canvas.cpp:28
+msgid "Cortar"
+msgstr ""
+
+#: src/editor/Canvas.cpp:29
+msgid "Seleção"
+msgstr ""
+
+#: src/editor/Canvas.cpp:30
+msgid "Recortar faixa"
+msgstr ""
+
+#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+msgid "Conta-gotas"
+msgstr ""
+
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+msgid "Favoritos"
+msgstr ""
+
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+msgid "Varinha mágica"
+msgstr ""
+
+#: src/editor/Canvas.cpp:325
+msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
+msgstr ""
+
+#: src/editor/Canvas.cpp:350
+msgid "Prévia — Aplicar ou Cancelar no painel"
+msgstr ""
+
+#: src/editor/Canvas.cpp:452
+#, c-format
+msgid "%d × %d  — Enter aplica, Esc cancela"
+msgstr ""
+
+#: src/editor/Panels.cpp:251
+msgid "Mais"
+msgstr ""
+
+#: src/editor/Panels.cpp:295
+msgid "  •  arraste para mudar de lugar"
+msgstr ""
+
+#: src/editor/Panels.cpp:296
+msgid "Mais ferramentas e personalização da barra"
+msgstr ""
+
+#: src/editor/Panels.cpp:471
+msgid "Arraste suas ferramentas, efeitos e comandos favoritos para a barra…"
+msgstr ""
+
+#: src/editor/Panels.cpp:493 src/editor/Panels.cpp:550
+msgid "Espaçador"
+msgstr ""
+
+#: src/editor/Panels.cpp:517
+msgid "Número de ferramentas na barra automática:"
+msgstr ""
+
+#: src/editor/Panels.cpp:525
+msgid "Restaurar padrões"
+msgstr ""
+
+#: src/editor/Panels.cpp:526
+msgid "Concluído"
+msgstr ""
+
+#: src/editor/Panels.cpp:596
+msgid ""
+"Arraste um item desta janela para a barra de ferramentas para acrescentá-lo; a barra mostra onde ele vai entrar.\n"
+"\n"
+"Na barra, arraste um item para mudar de lugar, ou para fora da barra para removê-lo.\n"
+"“Restaurar padrões” volta à barra automática: Mover, Seleção, Texto, Marcador, Forma, as usadas por último e Lupa. O número de ferramentas dela é escolhido embaixo (de 6 a 16)."
+msgstr ""
+
+#: src/editor/Panels.cpp:600 src/editor/Panels.cpp:645
+msgid "Personalizar a barra de ferramentas"
+msgstr ""
+
+#: src/editor/Panels.cpp:816 src/editor/Panels.cpp:1058
+msgid "Aplicar"
+msgstr ""
+
+#: src/editor/Panels.cpp:916
+msgid "Efeitos rápidos"
+msgstr ""
+
+#: src/editor/Panels.cpp:972
+msgid "Adicionar"
+msgstr ""
+
+#: src/editor/Panels.cpp:1060
+msgid "Excluir este efeito rápido"
+msgstr ""
+
+#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+msgid "Capturas recentes"
+msgstr ""
+
+#: src/editor/Panels.cpp:1650
+#, c-format
+msgid "Biblioteca  •  %zu capturas"
+msgstr ""
+
+#: src/editor/Panels.cpp:1651
+#, c-format
+msgid "  •  %d selecionadas"
+msgstr ""
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Exportar (%d)…"
+msgstr ""
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Excluir (%d)"
+msgstr ""
+
+#: src/editor/Panels.cpp:1660
+msgid "Limpar seleção"
+msgstr ""
+
+#: src/editor/Panels.cpp:1661
+msgid "Biblioteca"
+msgstr ""
+
+#: src/editor/Panels.cpp:1661
+msgid "Voltar ao editor"
+msgstr ""
+
+#: src/editor/Panels.cpp:1666
+msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
+msgstr ""
+
+#: src/editor/Panels.cpp:1667
+msgid "A biblioteca está vazia."
+msgstr ""
+
+#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+msgid "Abrir"
+msgstr ""
+
+#: src/editor/Panels.cpp:1822
+msgid "Mostrar na pasta"
+msgstr ""
+
+#: src/editor/Panels.cpp:1825
+#, c-format
+msgid "Exportar %zu itens…"
+msgstr ""
+
+#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+msgid "Exportar…"
+msgstr ""
+
+#: src/editor/Panels.cpp:1826
+msgid "Selecionar tudo\tCtrl+A"
+msgstr ""
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja"
+msgstr ""
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja (continua na biblioteca)"
+msgstr ""
+
+#: src/editor/Panels.cpp:1829
+#, c-format
+msgid "Excluir %zu itens (Lixeira)\tDel"
+msgstr ""
+
+#: src/editor/Panels.cpp:1829
+msgid "Excluir (Lixeira)\tDel"
+msgstr ""
+
+#: src/editor/Pdf.cpp:11
+msgid "Falha ao codificar a imagem."
+msgstr ""
+
+#: src/editor/Pdf.cpp:44
+msgid "Não foi possível criar o arquivo."
+msgstr ""
+
+#: src/editor/Pdf.cpp:48
+msgid "Falha ao gravar o arquivo."
+msgstr ""
+
+#: src/editor/Popups.cpp:253
+msgid "Cores do tema"
+msgstr ""
+
+#: src/editor/Popups.cpp:255
+msgid "Cores padrão"
+msgstr ""
+
+#: src/editor/Popups.cpp:256
+msgid "Recentes"
+msgstr ""
+
+#: src/editor/Popups.cpp:265
+msgid "Sem cor"
+msgstr ""
+
+#: src/editor/Popups.cpp:265
+msgid "Mais cores…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Retângulo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Retângulo arredondado"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Elipse"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Triângulo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Losango"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Paralelogramo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Hexágono"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Estrela"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:97
+msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:98
+msgid "Arraste para desenhar uma linha. Shift trava em 45°."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:99
+msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:100
+msgid "Arraste para desenhar à mão livre."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:101
+msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:102
+msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:103
+msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:104
+msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:105
+msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:106
+msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:107
+msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:108
+msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:109
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:110
+msgid "Arraste a área em destaque; o resto da imagem escurece."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:111
+msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+msgid "Arraste a área a manter; Enter ou duplo clique aplica."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:113
+msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:114
+msgid "Arraste sobre a faixa a remover; as partes são unidas."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:115
+msgid "Clique na imagem para pegar a cor."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:250
+msgid "Pesquisar carimbos"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:255
+msgid "I, II, III…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:255
+msgid "i, ii, iii…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:257
+msgid "Laço (mão livre)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Transparência"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Cor do canvas (branco)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Preenchimento inteligente"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Horizontal (remove linhas)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Vertical (remove colunas)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460 …
+msgid "Desfoque"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:263
+msgid "Pixelado"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:264
+msgid "Organizar carimbos…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+msgid "Importar…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:269
+msgid "Trazer para a frente"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:270
+msgid "Enviar para trás"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+msgid "Excluir objeto"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:272
+msgid "Agrupar"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:273
+msgid "Desagrupar"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:294
+msgid "Novo tema…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:351
+msgid "Aplicar recorte"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+msgid "Corte automático"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Cortar para a seleção"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Copiar seleção"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Excluir seleção"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:378
+msgid "Tema:"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:446
+msgid "Ponta inicial"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+msgid "Tracejado"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:448
+msgid "Ponta final"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:456
+msgid "Avançado"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:462
+msgid "Alinhamento"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495 …
+msgid "Opacidade"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:467
+msgid "Margem interna"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:468
+msgid "Sombreado (degradê)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:474
+#, c-format
+msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:475
+#, c-format
+msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+msgid "Largura"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:483
+msgid "Tamanho inicial"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:484
+msgid "Tamanho final"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:485
+msgid "Curva de Bézier"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534 …
+msgid "Preenchimento"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+msgid "Contorno"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+msgid "Fonte"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+msgid "Tamanho da fonte"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+msgid "Espessura"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:513
+msgid "Estilo da seta"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:515
+msgid "Ponta"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:517
+msgid "Cor da seta"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:520
+msgid "Tamanho da seta"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:537
+msgid "Mesma cor em toda a imagem"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+msgid "Cor do texto"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
+msgid "Tipo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:543
+msgid "Reiniciar a sequência"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:548
+msgid "Suavizar as bordas"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Ampliação (%)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:554
+msgid "Lente separada da área ampliada"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+msgid "Intensidade"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:565
+msgid "Smart Move"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:567
+msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:568
+msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:575
+msgid "Modo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:577
+msgid "Seleção global (mesma cor)"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:578
+msgid "Ao mover, preencher"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:582
+msgid "Direção"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:583
+msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:587
+msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:681
+msgid "Sombra ▾"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Carimbos"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Estilos rápidos"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:884
+msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:885
+msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:886
+msgid "Nenhum carimbo encontrado."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:952
+msgid "Propriedades da ferramenta"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1012
+msgid "Aplicar este estilo"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Remover dos favoritos"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Adicionar aos favoritos"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1014
+msgid "Excluir este estilo rápido"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar uma cópia do tema…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar o tema…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
+msgid "Nome"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#, c-format
+msgid "Cor %d"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+msgid "Novo tema"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1039
+msgid "Editar tema"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Exportar tema"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1052
+msgid "Não foi possível exportar o tema."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1056
+#, c-format
+msgid "Excluir o tema \"%s\"?"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1079
+msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1099
+msgid "Mostrar sombra"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1100
+msgid "Cor da sombra…"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1103
+msgid "Distância"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1201
+msgid "A sequência de passos recomeça em 1."
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1363
+msgid "Meu tema"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Importar tema"
+msgstr ""
+
+#: src/editor/PropsPanel.cpp:1408
+#, c-format
+msgid "%d carimbo(s) importado(s) para Meus carimbos."
+msgstr ""
+
+#: src/editor/QuickStyles.cpp:200
+msgid "Básico"
+msgstr ""
+
+#: src/editor/QuickStyles.cpp:201
+msgid "Industrial"
+msgstr ""
+
+#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+msgid "Tema"
+msgstr ""
+
+#: src/editor/QuickStyles.cpp:323
+msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "Negócios"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "Interface"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "Atividades"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "Comida e bebida"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "Feriados"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "Smileys e pessoas"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "Adesivos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "Símbolos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "Viagem e lugares"
+msgstr ""
+
+#: src/editor/Stamps.cpp:92
+msgid "Meus carimbos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:100
+msgid "Meus carimbos › "
+msgstr ""
+
+#: src/editor/Stamps.cpp:125
+msgid "Importar carimbos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:126
+msgid "Imagens"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "clipe anexo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "lupa pesquisar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "engrenagem configurações"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "relógio hora"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "usuário pessoa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "equipe pessoas"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado fechado segurança"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado aberto"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "marcador"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "sinal wi-fi"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "notebook código"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "baixar download"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "enviar upload"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "mesclar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "repetir"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "gráfico barras"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "crescimento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "queda"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "lista concluído"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "link compartilhar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "reproduzir play"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "parar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "pausar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "avançar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "voltar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "dinheiro moedas"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "cartão pagamento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "globo internet"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "prêmio medalha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "caneta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "lápis"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "documento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "nota"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "telefone"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "e-mail carta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "conversa comentário"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "monitor computador"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "celular"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "mouse"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "nuvem"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "pasta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "calendário"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "maleta trabalho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "alfinete"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "lixeira"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "sino notificação"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "ideia lâmpada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "alvo meta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "foguete lançamento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:16
+msgid "troféu"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "concluído certo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "errado fechar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "atenção aviso"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "informação"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "pergunta dúvida"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "exclamação importante"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "estrela favorito"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "coração"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "positivo curtir"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "negativo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "seta direita"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "seta esquerda"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "seta cima"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "seta baixo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "seta diagonal"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "atualizar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "adicionar mais"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "remover menos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "marca certo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "multiplicar fechar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "vermelho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "laranja"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "amarelo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "verde"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "azul"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "roxo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "preto"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "branco"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado vermelho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado verde"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado azul"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "botão rádio"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+msgid "caixa marcada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "som alto"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "sem som mudo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "início casa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "chave senha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "carrinho compras"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de entrada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de saída"
+msgstr ""
+
+#: src/editor/Stamps.cpp:23
+msgid "zoom pesquisa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "basquete"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol americano"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "beisebol"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "tênis"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "vôlei"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "pingue-pongue"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "badminton"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "boxe"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "boliche"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "golfe"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "pesca"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "esqui"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "snowboard"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "surfe"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "ciclismo bicicleta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "natação"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "musculação"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "videogame jogo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "dado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "quebra-cabeça"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "pintura arte"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "teatro"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "microfone"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "fone"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "guitarra"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "piano"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "bateria"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "cinema filme"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "primeiro lugar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "ingresso"
+msgstr ""
+
+#: src/editor/Stamps.cpp:29
+msgid "foto câmera"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "maçã"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "banana"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "uva"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "morango"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "melancia"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "cereja"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "pêssego"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "abacaxi"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "abacate"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "cenoura"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "milho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "pão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "queijo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "hambúrguer"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "batata frita"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "pizza"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "cachorro-quente"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "taco"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "sushi"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "lámen sopa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "rosquinha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "biscoito"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "bolo aniversário"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "torta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "chocolate"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "pipoca"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "café"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "chá"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "refrigerante"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "cerveja"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "vinho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:33
+msgid "brinde"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "natal árvore"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "papai noel"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "presente"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "abóbora halloween"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "fantasma"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "peru"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "coelho páscoa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "ovo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "coração presente"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "flores"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "fogos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "estrelinha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "festa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "confete"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "balão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "vela"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "estrela brilhante"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "neve floco"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "boneco de neve"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "laço"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "envelope"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "trevo sorte"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "piñata"
+msgstr ""
+
+#: src/editor/Stamps.cpp:37
+msgid "menorá"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso feliz"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "alegre"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "rindo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "sorrisão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "gargalhada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "aliviado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando de rir"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso leve"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "piscada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "contente"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "apaixonado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "beijo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "legal óculos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "pensando"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "neutro"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "dormindo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "surpreso"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "espantado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "triste"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "bravo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "cabeça explodindo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "comemorando"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "encantado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "anjo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "de cabeça para baixo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "abraço"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "revirando olhos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "careta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "olá tchau"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "palmas"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "viva"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+msgid "ok"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "paz"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "dedos cruzados"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando direita"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando esquerda"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando cima"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando baixo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "força"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "por favor obrigado"
+msgstr ""
+
+#: src/editor/Stamps.cpp:40
+msgid "acordo aperto de mão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "cem pontos"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "fogo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "brilho"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "explosão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "tontura"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "raiva"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "sono"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "gotas"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "novo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "legal"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "grátis"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "up"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "topo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "em breve"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "arco-íris"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "coroa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "diamante"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "bandeira"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "chegada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "megafone"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "anúncio"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "etiqueta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "medalha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "ímã"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "bola de cristal"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "varinha mágica"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "bomba"
+msgstr ""
+
+#: src/editor/Stamps.cpp:46
+msgid "trevo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla horizontal"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla vertical"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "girar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "dividir"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "infinito"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "dupla exclamação"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "exclamação pergunta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "proibido"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "entrada proibida"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "círculo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "losango laranja"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "losango azul"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "reciclar"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "raio energia"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "radioativo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "risco biológico"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "copyright"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "marca registrada"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "marca"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "hashtag"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "um"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "dois"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "três"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "quatro"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "cinco"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "seis"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "sete"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "oito"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "nove"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "dez"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "letra a"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "letra b"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "ab"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "abc"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "cifrão"
+msgstr ""
+
+#: src/editor/Stamps.cpp:49
+msgid "câmbio"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "carro"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "táxi"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "ônibus"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "ambulância"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "bombeiros"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "polícia"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "bicicleta"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "moto"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "trem"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "avião"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "navio"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "veleiro"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "helicóptero"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "mapa"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "bússola"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "montanha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "praia"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "ilha"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "acampamento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "cidade"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "prédio escritório"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "hospital"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "banco"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "hotel"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "escola"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "igreja"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "estátua"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "torre"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "terra mundo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "posto combustível"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "semáforo"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "estacionamento"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "mala"
+msgstr ""
+
+#: src/editor/Stamps.cpp:54
+msgid "local pino"
+msgstr ""
+
+#: src/editor/Video.cpp:153 src/editor/Video.cpp:288
+msgid "Não foi possível abrir o vídeo."
+msgstr ""
+
+#: src/editor/Video.cpp:159
+msgid "Formato de vídeo não suportado."
+msgstr ""
+
+#: src/editor/Video.cpp:188
+msgid "Não foi possível criar o arquivo de saída."
+msgstr ""
+
+#: src/editor/Video.cpp:198
+msgid "Codificador H.264 indisponível."
+msgstr ""
+
+#: src/editor/Video.cpp:205
+msgid "Entrada de vídeo recusada."
+msgstr ""
+
+#: src/editor/Video.cpp:216
+msgid "Codificador AAC indisponível."
+msgstr ""
+
+#: src/editor/Video.cpp:218
+msgid "Falha ao iniciar a gravação."
+msgstr ""
+
+#: src/editor/Video.cpp:230
+#, c-format
+msgid "Falha ao ler o vídeo (0x%08X)."
+msgstr ""
+
+#: src/editor/Video.cpp:263
+msgid "Falha ao codificar quadro."
+msgstr ""
+
+#: src/editor/Video.cpp:270
+msgid "Falha ao codificar áudio."
+msgstr ""
+
+#: src/editor/Video.cpp:273 src/editor/Video.cpp:313
+msgid "Cancelado."
+msgstr ""
+
+#: src/editor/Video.cpp:274
+msgid "Falha ao finalizar o MP4."
+msgstr ""
+
+#: src/editor/Video.cpp:294
+msgid "Não foi possível criar o GIF."
+msgstr ""
+
+#: src/editor/Video.cpp:314
+msgid "Nenhum quadro no intervalo."
+msgstr ""
+
+#: src/editor/Video.cpp:464 src/editor/Video.cpp:559
+msgid "▶ Reproduzir"
+msgstr ""
+
+#: src/editor/Video.cpp:464
+msgid "◀ Quadro"
+msgstr ""
+
+#: src/editor/Video.cpp:464
+msgid "Quadro ▶"
+msgstr ""
+
+#: src/editor/Video.cpp:464
+msgid "[ Início"
+msgstr ""
+
+#: src/editor/Video.cpp:464
+msgid "Fim ]"
+msgstr ""
+
+#: src/editor/Video.cpp:465
+msgid "✂ Cortar seleção"
+msgstr ""
+
+#: src/editor/Video.cpp:465
+msgid "Desfazer corte"
+msgstr ""
+
+#: src/editor/Video.cpp:465
+msgid "Salvar quadro"
+msgstr ""
+
+#: src/editor/Video.cpp:465
+msgid "Criar GIF…"
+msgstr ""
+
+#: src/editor/Video.cpp:466
+msgid "Salvar MP4…"
+msgstr ""
+
+#: src/editor/Video.cpp:466
+msgid "Abrir no player"
+msgstr ""
+
+#: src/editor/Video.cpp:549
+msgid "❚❚ Pausar"
+msgstr ""
+
+#: src/editor/Video.cpp:580
+msgid "Não foi possível abrir o vídeo (somente MP4)."
+msgstr ""
+
+#: src/editor/Video.cpp:589
+msgid "trecho cortado"
+msgstr ""
+
+#: src/editor/Video.cpp:613
+#, c-format
+msgid "   •   %d×%d @ %.0f qps"
+msgstr ""
+
+#: src/editor/Video.cpp:614
+msgid "   •   duração após cortes: "
+msgstr ""
+
+#: src/editor/Video.cpp:615
+msgid "   •   seleção: "
+msgstr ""
+
+#: src/editor/Video.cpp:627
+msgid "Vídeo MP4 (*.mp4)|*.mp4|"
+msgstr ""
+
+#: src/editor/Video.cpp:629
+msgid "Salvar vídeo"
+msgstr ""
+
+#: src/editor/Video.cpp:630
+msgid "Escolha um arquivo diferente do original."
+msgstr ""
+
+#: src/editor/Video.cpp:633
+msgid "Salvando vídeo…"
+msgstr ""
+
+#: src/editor/Video.cpp:634
+msgid "Não foi possível salvar o vídeo.\n"
+msgstr ""
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: a seleção marcada."
+msgstr ""
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
+msgstr ""
+
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+msgid "Cores"
+msgstr ""
+
+#: src/editor/Video.cpp:644
+msgid "256 cores"
+msgstr ""
+
+#: src/editor/Video.cpp:644
+msgid "16 cores (arquivo menor)"
+msgstr ""
+
+#: src/editor/Video.cpp:645
+msgid "Pontilhado (dithering)"
+msgstr ""
+
+#: src/editor/Video.cpp:646
+msgid "Quadros delta (só o que mudou)"
+msgstr ""
+
+#: src/editor/Video.cpp:648
+msgid "Criar GIF animado"
+msgstr ""
+
+#: src/editor/Video.cpp:649
+msgid "GIF animado (*.gif)|*.gif|"
+msgstr ""
+
+#: src/editor/Video.cpp:651
+msgid "Salvar GIF"
+msgstr ""
+
+#: src/editor/Video.cpp:657
+msgid "Criando GIF…"
+msgstr ""
+
+#: src/editor/Video.cpp:660
+msgid "Não foi possível criar o GIF.\n"
+msgstr ""
+
+#: src/editor/Video.cpp:733
+msgid "Marque o início e o fim do trecho a remover."
+msgstr ""
+
+#: src/editor/main.cpp:96
+msgid " — Snapnab Editor"
+msgstr ""
+
+#: src/editor/main.cpp:112
+msgid "Vídeo: "
+msgstr ""
+
+#: src/editor/main.cpp:113
+#, c-format
+msgid "%d × %d px"
+msgstr ""
+
+#: src/editor/main.cpp:114
+msgid ""
+"\n"
+"Captura: "
+msgstr ""
+
+#: src/editor/main.cpp:115
+msgid ""
+"\n"
+"Aplicativo: "
+msgstr ""
+
+#: src/editor/main.cpp:116
+msgid ""
+"\n"
+"Janela: "
+msgstr ""
+
+#: src/editor/main.cpp:117
+#, c-format
+msgid ""
+"\n"
+"Objetos: %zu"
+msgstr ""
+
+#: src/editor/main.cpp:118
+msgid ""
+"\n"
+"Etiquetas: "
+msgstr ""
+
+#: src/editor/main.cpp:255
+msgid "Arquivo não encontrado:\n"
+msgstr ""
+
+#: src/editor/main.cpp:258
+msgid "Não foi possível abrir:\n"
+msgstr ""
+
+#: src/editor/main.cpp:262
+msgid "Arquivo importado"
+msgstr ""
+
+#: src/editor/main.cpp:283
+#, c-format
+msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
+msgstr ""
+
+#: src/editor/main.cpp:348
+msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
+msgstr ""
+
+#: src/editor/main.cpp:351
+msgid "Ângulo (graus, horário)"
+msgstr ""
+
+#: src/editor/main.cpp:351 src/editor/main.cpp:483
+msgid "Cor de fundo"
+msgstr ""
+
+#: src/editor/main.cpp:352
+msgid "Fundo transparente"
+msgstr ""
+
+#: src/editor/main.cpp:353
+msgid "Os objetos serão mesclados à imagem."
+msgstr ""
+
+#: src/editor/main.cpp:361
+msgid "ou escala (%)"
+msgstr ""
+
+#: src/editor/main.cpp:361
+msgid "Manter proporção"
+msgstr ""
+
+#: src/editor/main.cpp:379
+msgid "Âncora"
+msgstr ""
+
+#: src/editor/main.cpp:379
+msgid "Superior esquerda"
+msgstr ""
+
+#: src/editor/main.cpp:379
+msgid "Superior"
+msgstr ""
+
+#: src/editor/main.cpp:379
+msgid "Superior direita"
+msgstr ""
+
+#: src/editor/main.cpp:379
+msgid "Centro"
+msgstr ""
+
+#: src/editor/main.cpp:380
+msgid "Inferior esquerda"
+msgstr ""
+
+#: src/editor/main.cpp:380
+msgid "Inferior"
+msgstr ""
+
+#: src/editor/main.cpp:380
+msgid "Inferior direita"
+msgstr ""
+
+#: src/editor/main.cpp:381
+msgid "Cor do canvas"
+msgstr ""
+
+#: src/editor/main.cpp:381 src/editor/main.cpp:483
+msgid "Transparente"
+msgstr ""
+
+#: src/editor/main.cpp:382
+msgid "Tamanho do canvas"
+msgstr ""
+
+#: src/editor/main.cpp:402
+msgid "Nada a cortar: as bordas não são uniformes."
+msgstr ""
+
+#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como"
+msgstr ""
+
+#: src/editor/main.cpp:446
+msgid "Qualidade JPEG (1–100)"
+msgstr ""
+
+#: src/editor/main.cpp:457
+msgid "Não foi possível salvar:\n"
+msgstr ""
+
+#: src/editor/main.cpp:458
+msgid "Salvo em "
+msgstr ""
+
+#: src/editor/main.cpp:469
+msgid "Salvo na biblioteca: "
+msgstr ""
+
+#: src/editor/main.cpp:477
+msgid "Da área de transferência"
+msgstr ""
+
+#: src/editor/main.cpp:478
+msgid "Imagem nova criada a partir da área de transferência."
+msgstr ""
+
+#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+msgid "Nova imagem"
+msgstr ""
+
+#: src/editor/main.cpp:485
+msgid "Imagem nova"
+msgstr ""
+
+#: src/editor/main.cpp:510
+msgid "Enviar para a Lixeira?\n"
+msgstr ""
+
+#: src/editor/main.cpp:511
+#, c-format
+msgid "Enviar %zu itens da biblioteca para a Lixeira?"
+msgstr ""
+
+#: src/editor/main.cpp:524
+msgid "Item enviado para a Lixeira."
+msgstr ""
+
+#: src/editor/main.cpp:524
+#, c-format
+msgid "%zu itens enviados para a Lixeira."
+msgstr ""
+
+#: src/editor/main.cpp:534
+msgid "Exportar para a pasta"
+msgstr ""
+
+#: src/editor/main.cpp:552
+msgid "Formato das imagens"
+msgstr ""
+
+#: src/editor/main.cpp:553
+msgid "Vídeos são copiados em MP4."
+msgstr ""
+
+#: src/editor/main.cpp:554
+#, c-format
+msgid "Exportar %zu item(ns)"
+msgstr ""
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid "%d item(ns) exportado(s) para %s"
+msgstr ""
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid " — %d falha(s)"
+msgstr ""
+
+#: src/editor/main.cpp:621
+msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
+msgstr ""
+
+#: src/editor/main.cpp:627
+msgid "Captura: "
+msgstr ""
+
+#: src/editor/main.cpp:631
+#, c-format
+msgid "Falha ao enviar e-mail (MAPI %u)."
+msgstr ""
+
+#: src/editor/main.cpp:638
+msgid "Abrir em programa externo"
+msgstr ""
+
+#: src/editor/main.cpp:651
+msgid "OCR indisponível: "
+msgstr ""
+
+#: src/editor/main.cpp:651 src/editor/main.cpp:820
+msgid "Grab Text"
+msgstr ""
+
+#: src/editor/main.cpp:652
+msgid "(nenhum texto reconhecido)"
+msgstr ""
+
+#: src/editor/main.cpp:653
+msgid "Grab Text — texto reconhecido"
+msgstr ""
+
+#: src/editor/main.cpp:668
+msgid "Nada para colar."
+msgstr ""
+
+#: src/editor/main.cpp:669
+msgid "Colado"
+msgstr ""
+
+#: src/editor/main.cpp:705
+msgid "Nova &captura\tCtrl+Shift+N"
+msgstr ""
+
+#: src/editor/main.cpp:705
+msgid "Nova &gravação de vídeo"
+msgstr ""
+
+#: src/editor/main.cpp:706
+msgid "Novo da área de &transferência"
+msgstr ""
+
+#: src/editor/main.cpp:706
+msgid "Nova &imagem…"
+msgstr ""
+
+#: src/editor/main.cpp:707
+msgid "&Abrir…\tCtrl+O"
+msgstr ""
+
+#: src/editor/main.cpp:707
+msgid "&Salvar\tCtrl+S"
+msgstr ""
+
+#: src/editor/main.cpp:707
+msgid "Salvar &como…\tCtrl+Shift+S"
+msgstr ""
+
+#: src/editor/main.cpp:708
+msgid "&Duplicar"
+msgstr ""
+
+#: src/editor/main.cpp:708
+msgid "&Excluir (Lixeira)"
+msgstr ""
+
+#: src/editor/main.cpp:709
+msgid "&Imprimir…\tCtrl+P"
+msgstr ""
+
+#: src/editor/main.cpp:709
+msgid "Enviar por &e-mail…"
+msgstr ""
+
+#: src/editor/main.cpp:709
+msgid "Abrir em &programa externo…"
+msgstr ""
+
+#: src/editor/main.cpp:710
+msgid "&Fechar documento\tCtrl+W"
+msgstr ""
+
+#: src/editor/main.cpp:710
+msgid "Sai&r"
+msgstr ""
+
+#: src/editor/main.cpp:711
+msgid "&Desfazer\tCtrl+Z"
+msgstr ""
+
+#: src/editor/main.cpp:711
+msgid "&Refazer\tCtrl+Y"
+msgstr ""
+
+#: src/editor/main.cpp:711
+msgid "Desfazer &tudo"
+msgstr ""
+
+#: src/editor/main.cpp:712
+msgid "Recor&tar\tCtrl+X"
+msgstr ""
+
+#: src/editor/main.cpp:712
+msgid "&Copiar\tCtrl+C"
+msgstr ""
+
+#: src/editor/main.cpp:712
+msgid "Copiar t&udo\tCtrl+Shift+C"
+msgstr ""
+
+#: src/editor/main.cpp:713
+msgid "C&olar\tCtrl+V"
+msgstr ""
+
+#: src/editor/main.cpp:713
+msgid "E&xcluir\tDel"
+msgstr ""
+
+#: src/editor/main.cpp:713
+msgid "Selecionar tu&do\tCtrl+A"
+msgstr ""
+
+#: src/editor/main.cpp:714
+msgid "Cortar para a &seleção"
+msgstr ""
+
+#: src/editor/main.cpp:715
+msgid "&Grab Text (OCR)\tCtrl+Shift+O"
+msgstr ""
+
+#: src/editor/main.cpp:717
+msgid "&Borda"
+msgstr ""
+
+#: src/editor/main.cpp:717
+msgid "Bor&das"
+msgstr ""
+
+#: src/editor/main.cpp:717
+msgid "&Informações da captura"
+msgstr ""
+
+#: src/editor/main.cpp:718
+msgid "&Perspectiva"
+msgstr ""
+
+#: src/editor/main.cpp:718
+msgid "D&obra de página"
+msgstr ""
+
+#: src/editor/main.cpp:718
+msgid "&Sombra"
+msgstr ""
+
+#: src/editor/main.cpp:719
+msgid "&Filtros"
+msgstr ""
+
+#: src/editor/main.cpp:719
+msgid "&Ajuste de cores"
+msgstr ""
+
+#: src/editor/main.cpp:719
+msgid "Substituição de co&r"
+msgstr ""
+
+#: src/editor/main.cpp:720
+msgid "Spotlight e &lupa"
+msgstr ""
+
+#: src/editor/main.cpp:720
+msgid "&Marca d'água"
+msgstr ""
+
+#: src/editor/main.cpp:726
+msgid "À &esquerda"
+msgstr ""
+
+#: src/editor/main.cpp:726
+msgid "Ao &centro"
+msgstr ""
+
+#: src/editor/main.cpp:726
+msgid "À &direita"
+msgstr ""
+
+#: src/editor/main.cpp:727
+msgid "Em &cima"
+msgstr ""
+
+#: src/editor/main.cpp:727
+msgid "No &meio"
+msgstr ""
+
+#: src/editor/main.cpp:727
+msgid "Em&baixo"
+msgstr ""
+
+#: src/editor/main.cpp:728
+msgid "Trazer para a &frente\tCtrl+Shift+F"
+msgstr ""
+
+#: src/editor/main.cpp:728
+msgid "Trazer para o &primeiro plano"
+msgstr ""
+
+#: src/editor/main.cpp:729
+msgid "Enviar para &trás\tCtrl+Shift+B"
+msgstr ""
+
+#: src/editor/main.cpp:729
+msgid "Enviar para o plano de &fundo"
+msgstr ""
+
+#: src/editor/main.cpp:731
+msgid "&Alinhar"
+msgstr ""
+
+#: src/editor/main.cpp:733
+msgid "Espelhar na &vertical"
+msgstr ""
+
+#: src/editor/main.cpp:734
+msgid "Espelhar na &horizontal"
+msgstr ""
+
+#: src/editor/main.cpp:735
+msgid "Sentido &horário\tCtrl+R"
+msgstr ""
+
+#: src/editor/main.cpp:735
+msgid "Sentido &anti-horário"
+msgstr ""
+
+#: src/editor/main.cpp:735
+msgid "&180 graus"
+msgstr ""
+
+#: src/editor/main.cpp:736
+msgid "Ângulo &personalizado…"
+msgstr ""
+
+#: src/editor/main.cpp:738
+msgid "Ferramen&tas"
+msgstr ""
+
+#: src/editor/main.cpp:739
+msgid "&Efeitos"
+msgstr ""
+
+#: src/editor/main.cpp:741
+msgid "&Organizar"
+msgstr ""
+
+#: src/editor/main.cpp:742
+msgid "A&grupar\tCtrl+Shift+G"
+msgstr ""
+
+#: src/editor/main.cpp:743
+msgid "Desagr&upar\tCtrl+Shift+U"
+msgstr ""
+
+#: src/editor/main.cpp:745
+msgid "&Mesclar\tCtrl+T"
+msgstr ""
+
+#: src/editor/main.cpp:746
+msgid "Mesclar t&udo\tCtrl+Shift+T"
+msgstr ""
+
+#: src/editor/main.cpp:748
+msgid "A&parar"
+msgstr ""
+
+#: src/editor/main.cpp:749
+msgid "&Redimensionar imagem…"
+msgstr ""
+
+#: src/editor/main.cpp:750
+msgid "Redimensionar &canvas…"
+msgstr ""
+
+#: src/editor/main.cpp:751
+msgid "Aplicar mode&lo…\tCtrl+Alt+C"
+msgstr ""
+
+#: src/editor/main.cpp:753
+msgid "&Girar"
+msgstr ""
+
+#: src/editor/main.cpp:754
+msgid "Encai&xe no canvas\tCtrl+;"
+msgstr ""
+
+#: src/editor/main.cpp:755
+msgid "Cor do canva&s…"
+msgstr ""
+
+#: src/editor/main.cpp:757
+msgid "Etiquetar &imagem…"
+msgstr ""
+
+#: src/editor/main.cpp:758
+msgid "&Ampliar\tCtrl++"
+msgstr ""
+
+#: src/editor/main.cpp:758
+msgid "&Reduzir\tCtrl+-"
+msgstr ""
+
+#: src/editor/main.cpp:758
+msgid "&Tamanho real\tCtrl+1"
+msgstr ""
+
+#: src/editor/main.cpp:759
+msgid "A&justar à janela\tCtrl+0"
+msgstr ""
+
+#: src/editor/main.cpp:759
+msgid "&Cor de fundo da área…"
+msgstr ""
+
+#: src/editor/main.cpp:760
+msgid "Painel de &efeitos"
+msgstr ""
+
+#: src/editor/main.cpp:760
+msgid "&Biblioteca"
+msgstr ""
+
+#: src/editor/main.cpp:761
+msgid "Capturas &recentes (bandeja)"
+msgstr ""
+
+#: src/editor/main.cpp:762
+msgid "&Personalizar a barra de ferramentas…"
+msgstr ""
+
+#: src/editor/main.cpp:763
+msgid "&Atalhos de teclado"
+msgstr ""
+
+#: src/editor/main.cpp:763
+msgid "&Sobre o Snapnab Editor"
+msgstr ""
+
+#: src/editor/main.cpp:764
+msgid "&Arquivo"
+msgstr ""
+
+#: src/editor/main.cpp:765
+msgid "&Editar"
+msgstr ""
+
+#: src/editor/main.cpp:766
+msgid "&Imagem"
+msgstr ""
+
+#: src/editor/main.cpp:767
+msgid "E&xibir"
+msgstr ""
+
+#: src/editor/main.cpp:768
+msgid "A&juda"
+msgstr ""
+
+#: src/editor/main.cpp:796
+msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
+msgstr ""
+
+#: src/editor/main.cpp:797
+msgid "Seta (A)"
+msgstr ""
+
+#: src/editor/main.cpp:797
+msgid "Texto (T)"
+msgstr ""
+
+#: src/editor/main.cpp:797
+msgid "Balão (C)"
+msgstr ""
+
+#: src/editor/main.cpp:798
+msgid "Forma: retângulo, elipse… (R)"
+msgstr ""
+
+#: src/editor/main.cpp:798
+msgid "Carimbo (K)"
+msgstr ""
+
+#: src/editor/main.cpp:799
+msgid "Preencher (F)"
+msgstr ""
+
+#: src/editor/main.cpp:799
+msgid "Seleção e Smart Move (S)"
+msgstr ""
+
+#: src/editor/main.cpp:800
+msgid "Varinha mágica: seleciona pela cor"
+msgstr ""
+
+#: src/editor/main.cpp:800
+msgid "Cortar (X)"
+msgstr ""
+
+#: src/editor/main.cpp:801
+msgid "Recortar faixa (U)"
+msgstr ""
+
+#: src/editor/main.cpp:801
+msgid "Caneta (P)"
+msgstr ""
+
+#: src/editor/main.cpp:801
+msgid "Linha (L)"
+msgstr ""
+
+#: src/editor/main.cpp:802
+msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
+msgstr ""
+
+#: src/editor/main.cpp:803
+msgid "Passos numerados (N)"
+msgstr ""
+
+#: src/editor/main.cpp:803
+msgid "Borracha (E)"
+msgstr ""
+
+#: src/editor/main.cpp:804
+msgid "Ocultar: desfoque/pixelado (B)"
+msgstr ""
+
+#: src/editor/main.cpp:804
+msgid "Mover e Smart Move (V)"
+msgstr ""
+
+#: src/editor/main.cpp:805
+msgid "Lupa (Z)"
+msgstr ""
+
+#: src/editor/main.cpp:805
+msgid "Destaque/spotlight (G)"
+msgstr ""
+
+#: src/editor/main.cpp:806
+msgid "Conta-gotas (I)"
+msgstr ""
+
+#: src/editor/main.cpp:812
+msgid "Salvar como arquivo (PNG, JPG, PDF…)"
+msgstr ""
+
+#: src/editor/main.cpp:812
+msgid "E-mail"
+msgstr ""
+
+#: src/editor/main.cpp:812
+msgid "Enviar por e-mail"
+msgstr ""
+
+#: src/editor/main.cpp:814
+msgid "Copiar a imagem inteira"
+msgstr ""
+
+#: src/editor/main.cpp:814
+msgid "Impressora"
+msgstr ""
+
+#: src/editor/main.cpp:814
+msgid "Imprimir a imagem"
+msgstr ""
+
+#: src/editor/main.cpp:816
+msgid "Desfazer"
+msgstr ""
+
+#: src/editor/main.cpp:816
+msgid "Desfazer (Ctrl+Z)"
+msgstr ""
+
+#: src/editor/main.cpp:816
+msgid "Refazer"
+msgstr ""
+
+#: src/editor/main.cpp:816
+msgid "Refazer (Ctrl+Y)"
+msgstr ""
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem em branco"
+msgstr ""
+
+#: src/editor/main.cpp:817
+msgid "Da área de transf."
+msgstr ""
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem da área de transferência"
+msgstr ""
+
+#: src/editor/main.cpp:818
+msgid "Abrir arquivo (Ctrl+O)"
+msgstr ""
+
+#: src/editor/main.cpp:818
+msgid "Salvar"
+msgstr ""
+
+#: src/editor/main.cpp:818
+msgid "Salvar na biblioteca (Ctrl+S)"
+msgstr ""
+
+#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como arquivo (Ctrl+Shift+S)"
+msgstr ""
+
+#: src/editor/main.cpp:819
+msgid "Duplicar a imagem"
+msgstr ""
+
+#: src/editor/main.cpp:820
+msgid "Excluir o objeto selecionado (Del)"
+msgstr ""
+
+#: src/editor/main.cpp:820
+msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
+msgstr ""
+
+#: src/editor/main.cpp:821
+msgid "Excluir imagem"
+msgstr ""
+
+#: src/editor/main.cpp:821
+msgid "Enviar a imagem para a Lixeira"
+msgstr ""
+
+#: src/editor/main.cpp:822
+msgid "Mesclar tudo"
+msgstr ""
+
+#: src/editor/main.cpp:822
+msgid "Mesclar todos os objetos na imagem"
+msgstr ""
+
+#: src/editor/main.cpp:822
+msgid "Girar 90° no sentido horário (Ctrl+R)"
+msgstr ""
+
+#: src/editor/main.cpp:823
+msgid "Cortar as bordas de cor uniforme"
+msgstr ""
+
+#: src/editor/main.cpp:854
+msgid "Efeito: "
+msgstr ""
+
+#: src/editor/main.cpp:854
+msgid " — abre os ajustes no painel de efeitos"
+msgstr ""
+
+#: src/editor/main.cpp:957
+msgid "Ferramenta: "
+msgstr ""
+
+#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+msgid "Ampliar parte da imagem"
+msgstr ""
+
+#: src/editor/main.cpp:1021
+msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr ""
+
+#: src/editor/main.cpp:1036
+msgid "Entendi!"
+msgstr ""
+
+#: src/editor/main.cpp:1083
+msgid "Ferramentas de desenho"
+msgstr ""
+
+#: src/editor/main.cpp:1084
+msgid "Itens de menu"
+msgstr ""
+
+#: src/editor/main.cpp:1085
+msgid "Destinos de compartilhamento"
+msgstr ""
+
+#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+msgid "Efeitos"
+msgstr ""
+
+#: src/editor/main.cpp:1090
+msgid "Diversos"
+msgstr ""
+
+#: src/editor/main.cpp:1106
+msgid "Personalização cancelada."
+msgstr ""
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas personalizada."
+msgstr ""
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas automática."
+msgstr ""
+
+#: src/editor/main.cpp:1134
+msgid "Personalizar a barra…"
+msgstr ""
+
+#: src/editor/main.cpp:1136
+msgid "Voltar ao padrão (automática)"
+msgstr ""
+
+#: src/editor/main.cpp:1143
+msgid "Atalhos do Snapnab Editor"
+msgstr ""
+
+#: src/editor/main.cpp:1144
+msgid ""
+"Ferramentas (com a área de pintura em foco):\n"
+"  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
+"  T Texto   C Balão   N Passo   K Carimbo   B Ocultar   G Destaque   Z Lupa\n"
+"  F Preencher   E Borracha   X Cortar   S Seleção   U Recortar faixa   I Conta-gotas\n"
+"\n"
+"Edição:  Ctrl+Z/Ctrl+Y desfazer/refazer • Ctrl+C/X/V • Ctrl+Shift+C copiar tudo • Del excluir\n"
+"         Setas movem o objeto (Shift = 10 px) • Shift restringe proporção/ângulo\n"
+"         Duplo clique edita texto • Esc cancela • Enter aplica o recorte\n"
+"Exibir:  Ctrl+roda = zoom • Ctrl+0 ajustar • Ctrl+1 tamanho real • botão do meio arrasta\n"
+"Arquivo: Ctrl+S salvar na biblioteca • Ctrl+Shift+S salvar como (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"Texto:   Ctrl+Shift+O Grab Text (OCR)\n"
+"Imagem:  Ctrl+Shift+F/B um passo à frente/atrás • Ctrl+T mesclar o objeto • Ctrl+Shift+T mesclar tudo • Ctrl+; encaixe\n"
+"Vídeo:   Espaço reproduz/pausa • ←/→ quadro • I/O marcam início/fim\n"
+msgstr ""
+
+#: src/editor/main.cpp:1169
+msgid "Imagem inteira copiada para a área de transferência."
+msgstr ""
+
+#: src/editor/main.cpp:1174
+msgid "Arquivo…"
+msgstr ""
+
+#: src/editor/main.cpp:1176
+msgid "E-mail…"
+msgstr ""
+
+#: src/editor/main.cpp:1177
+msgid "Impressora…"
+msgstr ""
+
+#: src/editor/main.cpp:1178
+msgid "Programa externo…"
+msgstr ""
+
+#: src/editor/main.cpp:1201
+msgid "Copiado."
+msgstr ""
+
+#: src/editor/main.cpp:1226
+msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
+msgstr ""
+
+#: src/editor/main.cpp:1228
+msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
+msgstr ""
+
+#: src/editor/main.cpp:1233
+msgid "Grupo desfeito."
+msgstr ""
+
+#: src/editor/main.cpp:1236
+msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
+msgstr ""
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
+msgstr ""
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas desligado."
+msgstr ""
+
+#: src/editor/main.cpp:1245
+msgid "Etiquetas"
+msgstr ""
+
+#: src/editor/main.cpp:1246
+msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
+msgstr ""
+
+#: src/editor/main.cpp:1247
+msgid "Etiquetar imagem"
+msgstr ""
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas removidas."
+msgstr ""
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas: "
+msgstr ""
+
+#: src/editor/main.cpp:1267
+msgid ""
+"Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
+"OCR, exportação PDF e edição de vídeo (cortes e GIF)."
+msgstr ""
+
+#: src/editor/main.cpp:1270
+msgid "Sobre"
+msgstr ""
+
+#: src/editor/main.cpp:1311
+msgid ""
+"SnapnabEditor.exe [opções] [arquivo…]\n"
+"\n"
+"/Open \"arquivo\"     abre um arquivo (.snap, imagem, .mp4)\n"
+"/NewFromClipboard   cria imagem a partir da área de transferência\n"
+"/restartwait        espera a instância anterior fechar"
+msgstr ""
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "Zoom %d%%  ▾"
+msgstr ""
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "%d × %d px  ▾"
+msgstr ""
+
+#: src/editor/main.cpp:1409
+msgid "Propriedades"
+msgstr ""
+
+#: src/editor/main.cpp:1440
+msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
+msgstr ""
+
+#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451 …
+msgid "Bordas e sombras"
+msgstr ""
+
+#: src/editor/main.cpp:1443
+msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
+msgstr ""
+
+#: src/editor/main.cpp:1444
+msgid "Deslocamento"
+msgstr ""
+
+#: src/editor/main.cpp:1447
+msgid "Perspectiva"
+msgstr ""
+
+#: src/editor/main.cpp:1447
+msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
+msgstr ""
+
+#: src/editor/main.cpp:1448
+msgid "Horizontal"
+msgstr ""
+
+#: src/editor/main.cpp:1449
+msgid "Vertical"
+msgstr ""
+
+#: src/editor/main.cpp:1450
+msgid "Inclinação"
+msgstr ""
+
+#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+msgid "Dobra de página"
+msgstr ""
+
+#: src/editor/main.cpp:1451
+msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
+msgstr ""
+
+#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+msgid "Tamanho"
+msgstr ""
+
+#: src/editor/main.cpp:1452
+msgid "Pequena"
+msgstr ""
+
+#: src/editor/main.cpp:1452
+msgid "Grande"
+msgstr ""
+
+#: src/editor/main.cpp:1453
+msgid "Canto"
+msgstr ""
+
+#: src/editor/main.cpp:1453
+msgid "Superior esquerdo"
+msgstr ""
+
+#: src/editor/main.cpp:1453
+msgid "Superior direito"
+msgstr ""
+
+#: src/editor/main.cpp:1453
+msgid "Inferior direito"
+msgstr ""
+
+#: src/editor/main.cpp:1453
+msgid "Inferior esquerdo"
+msgstr ""
+
+#: src/editor/main.cpp:1454
+msgid "Bordas"
+msgstr ""
+
+#: src/editor/main.cpp:1454
+msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
+msgstr ""
+
+#: src/editor/main.cpp:1459
+msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
+msgstr ""
+
+#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+msgid "Relevo"
+msgstr ""
+
+#: src/editor/main.cpp:1460
+msgid "Mosaico"
+msgstr ""
+
+#: src/editor/main.cpp:1460
+msgid "Nitidez"
+msgstr ""
+
+#: src/editor/main.cpp:1463
+msgid "Ajuste de cores"
+msgstr ""
+
+#: src/editor/main.cpp:1463
+msgid "Brilho, contraste, gama, matiz e saturação."
+msgstr ""
+
+#: src/editor/main.cpp:1466
+msgid "Gama"
+msgstr ""
+
+#: src/editor/main.cpp:1467
+msgid "Matiz"
+msgstr ""
+
+#: src/editor/main.cpp:1469
+msgid "Troca uma cor por outra (ou por transparente)."
+msgstr ""
+
+#: src/editor/main.cpp:1470
+msgid "Cor atual"
+msgstr ""
+
+#: src/editor/main.cpp:1470
+msgid "Tornar transparente"
+msgstr ""
+
+#: src/editor/main.cpp:1472
+msgid "Spotlight e lupa"
+msgstr ""
+
+#: src/editor/main.cpp:1472
+msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
+msgstr ""
+
+#: src/editor/main.cpp:1473
+msgid "Escurecer"
+msgstr ""
+
+#: src/editor/main.cpp:1475
+msgid "Ampliar"
+msgstr ""
+
+#: src/editor/main.cpp:1476
+msgid "Sombra na área em foco"
+msgstr ""
+
+#: src/editor/main.cpp:1477
+msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
+msgstr ""
+
+#: src/editor/main.cpp:1478
+msgid "Confidencial"
+msgstr ""
+
+#: src/editor/main.cpp:1479
+msgid "Repetir em mosaico"
+msgstr ""
+
+#: src/editor/main.cpp:1480
+msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
+msgstr ""
+
+#: src/editor/main.cpp:1483
+msgid "Cor da faixa"
+msgstr ""
+
+#: src/editor/main.cpp:1572
+msgid "Borda e sombra"
+msgstr ""
+
+#: src/editor/main.cpp:1573
+msgid "Papel rasgado"
+msgstr ""
+
+#: src/editor/main.cpp:1576
+msgid "Serrilhado"
+msgstr ""
+
+#: src/editor/main.cpp:1578
+msgid "Chanfrado"
+msgstr ""
+
+#: src/editor/main.cpp:1589
+msgid "Efeito"
+msgstr ""
+
+#: src/editor/main.cpp:1636
+msgid "Efeito aplicado: "
+msgstr ""
+
+#: src/editor/main.cpp:1636
+msgid " (Ctrl+Z desfaz)"
+msgstr ""
+
+#: src/editor/main.cpp:1644
+msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
+msgstr ""
+
+#: src/editor/main.cpp:1665
+#, c-format
+msgid "Meu efeito %zu"
+msgstr ""
+
+#: src/editor/main.cpp:1666
+msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
+msgstr ""
+
+#: src/editor/main.cpp:1670
+msgid "Adicionar aos efeitos rápidos"
+msgstr ""
+
+#: src/editor/main.cpp:1682
+msgid "Efeito rápido adicionado: "
+msgstr ""
+
+#: src/editor/main.cpp:1712
+msgid "Nova captura de imagem (pede ao Snapnab)"
+msgstr ""
+
+#: src/editor/main.cpp:1713
+msgid "Nova gravação de vídeo"
+msgstr ""
+
+#: src/editor/main.cpp:1714
+msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
+msgstr ""
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar"
+msgstr ""
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
+msgstr ""
+
+#: src/editor/main.cpp:1734
+#, c-format
+msgid "Excluir o efeito rápido \"%s\"?"
+msgstr ""
+
+#: src/editor/main.cpp:1758
+msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
+msgstr ""
+
+#: src/editor/main.cpp:1776
+#, c-format
+msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
+msgstr ""
+
+#: src/editor/main.cpp:1783
+msgid "Cor capturada: "
+msgstr ""
+
+#: src/editor/main.cpp:1783
+msgid " (aplicada às ferramentas de desenho)"
+msgstr ""
+
+#: src/editor/main.cpp:1803
+msgid "Quadro do vídeo"
+msgstr ""
+
+#: src/editor/main.cpp:1803
+msgid "Quadro de vídeo"
+msgstr ""
+
+#: src/editor/main.cpp:1804
+msgid "Vídeo salvo: "
+msgstr ""
+
+#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+msgid "Editar"
+msgstr ""
+
+#: src/editor/main.cpp:1865
+msgid "Ajustar à janela\tCtrl+0"
+msgstr ""

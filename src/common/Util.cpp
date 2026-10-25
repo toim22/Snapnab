@@ -28,10 +28,10 @@ std::string WToUtf8(const std::wstring& w) {
 std::wstring Format(const wchar_t* fmt, ...) {
     va_list ap; va_start(ap, fmt);
     va_list ap2; va_copy(ap2, ap);
-    int n = _vscwprintf(fmt, ap);
+    int n = _vscwprintf_p(fmt, ap);         // _p: aceita %1$s, para as traduções mudarem a ordem dos valores
     va_end(ap);
     std::wstring s(n > 0 ? n : 0, L'\0');
-    if (n > 0) vswprintf(s.data(), n + 1, fmt, ap2);
+    if (n > 0) _vswprintf_p(s.data(), n + 1, fmt, ap2);
     va_end(ap2);
     return s;
 }
@@ -257,6 +257,20 @@ bool IsProcessRunning(const wchar_t* mutexName) {
     return false;
 }
 
+void WaitForPreviousInstance(const wchar_t* wndClass) {
+    auto args = SplitCommandLine(GetCommandLineW());
+    for (size_t i = 0; i < args.size(); i++) {
+        if (_wcsicmp(args[i].c_str(), L"/restartwait") != 0) continue;
+        DWORD pid = i + 1 < args.size() ? (DWORD)wcstoul(args[i + 1].c_str(), nullptr, 10) : 0;
+        // a janela some antes de o processo soltar o mutex: com o pid, espera o processo inteiro
+        if (HANDLE p = pid ? OpenProcess(SYNCHRONIZE, FALSE, pid) : nullptr) { WaitForSingleObject(p, 15000); CloseHandle(p); }
+        else for (int k = 0; k < 75 && FindWindowW(wndClass, nullptr); k++) Sleep(200);
+        return;
+    }
+}
+
+std::wstring RestartArgs() { return Format(L"/restartwait %u", GetCurrentProcessId()); }
+
 bool LaunchSibling(const wchar_t* exeName, const std::wstring& args, bool lowPriority) {
     std::wstring exe = ExeDir() + L"\\" + exeName;
     std::wstring cmd = L"\"" + exe + L"\" " + args;
@@ -331,7 +345,7 @@ bool PickColor(HWND owner, COLORREF& c) {
 }
 
 std::wstring HotkeyToText(UINT mods, UINT vk) {
-    if (!vk) return L"(nenhum)";
+    if (!vk) return Tr(L"(nenhum)");
     std::wstring s;
     if (mods & MOD_CONTROL) s += L"Ctrl+";
     if (mods & MOD_SHIFT) s += L"Shift+";
@@ -340,7 +354,7 @@ std::wstring HotkeyToText(UINT mods, UINT vk) {
     UINT sc = MapVirtualKeyW(vk, MAPVK_VK_TO_VSC);
     LONG lp = sc << 16;
     switch (vk) {
-    case VK_SNAPSHOT: return s + L"Print Screen";
+    case VK_SNAPSHOT: return s + Tr(L"Print Screen");
     case VK_INSERT: case VK_DELETE: case VK_HOME: case VK_END: case VK_PRIOR: case VK_NEXT:
     case VK_LEFT: case VK_RIGHT: case VK_UP: case VK_DOWN: lp |= 1 << 24; break;
     }

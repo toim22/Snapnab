@@ -5,16 +5,22 @@ namespace snap::ui {
 
 int Scale(int v, int dpi) { return MulDiv(v, dpi, 96); }
 
+static bool FontExists(const wchar_t* face);
+
 HFONT UiFont(int dpi, int pt, bool bold) {
     static std::map<int, HFONT> cache;
     int key = dpi * 1000 + pt * 2 + (bold ? 1 : 0);
     auto it = cache.find(key);
     if (it != cache.end()) return it->second;
+    // Segoe UI Variable (Windows 11) tem desenho mais leve e espaçamento óptico; no Windows 10 fica a Segoe UI
+    // chinês, hindi e bengali usam a fonte com os caracteres do idioma (i18n::UiFontFace)
+    static const wchar_t* face = i18n::UiFontFace() ? i18n::UiFontFace()
+                               : FontExists(L"Segoe UI Variable Text") ? L"Segoe UI Variable Text" : L"Segoe UI";
     LOGFONTW lf{};
     lf.lfHeight = -MulDiv(pt, dpi, 72);
     lf.lfWeight = bold ? FW_SEMIBOLD : FW_NORMAL;
-    lf.lfQuality = CLEARTYPE_QUALITY;
-    wcscpy_s(lf.lfFaceName, L"Segoe UI");
+    lf.lfQuality = CLEARTYPE_NATURAL_QUALITY;
+    wcscpy_s(lf.lfFaceName, face);
     HFONT f = CreateFontIndirectW(&lf);
     cache[key] = f;
     return f;
@@ -155,6 +161,19 @@ bool RunForm(HWND owner, const std::wstring& title, std::vector<Field>& fields,
     int dpi = st.dpi;
     int W = Scale(width, dpi), pad = Scale(14, dpi), rowH = Scale(30, dpi), ctlH = Scale(24, dpi);
     int labelW = Scale(150, dpi);
+    {   // a coluna dos rótulos cresce com o rótulo mais longo (traduções), e a janela junto
+        HDC dc = GetDC(nullptr);
+        HGDIOBJ of = SelectObject(dc, UiFont(dpi));
+        int widest = 0;
+        for (auto& f : fields) {
+            if (f.type == Field::Label || f.type == Field::Separator || f.type == Field::Check) continue;
+            SIZE sz{}; GetTextExtentPoint32W(dc, f.label.c_str(), (int)f.label.size(), &sz);
+            widest = std::max(widest, (int)sz.cx);
+        }
+        SelectObject(dc, of); ReleaseDC(nullptr, dc);
+        int need = std::min(widest + Scale(14, dpi), Scale(320, dpi));
+        if (need > labelW) { W += need - labelW; labelW = need; }
+    }
     int rows = 0;
     for (auto& f : fields) rows += f.type == Field::Label ? 1 : 1;
     int clientH = pad * 2 + rows * rowH + Scale(46, dpi);
@@ -238,9 +257,9 @@ bool RunForm(HWND owner, const std::wstring& title, std::vector<Field>& fields,
     }
     int bw = Scale(96, dpi), bh = Scale(28, dpi);
     yy += Scale(6, dpi);
-    HWND ok = CreateWindowExW(0, L"BUTTON", L"OK", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON,
+    HWND ok = CreateWindowExW(0, L"BUTTON", Tr(L"OK"), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON,
                               W - pad - bw * 2 - Scale(8, dpi), yy, bw, bh, h, (HMENU)(INT_PTR)ID_OK, hi, nullptr);
-    HWND cancel = CreateWindowExW(0, L"BUTTON", L"Cancelar", WS_CHILD | WS_VISIBLE | WS_TABSTOP,
+    HWND cancel = CreateWindowExW(0, L"BUTTON", Tr(L"Cancelar"), WS_CHILD | WS_VISIBLE | WS_TABSTOP,
                                   W - pad - bw, yy, bw, bh, h, (HMENU)(INT_PTR)ID_CANCEL, hi, nullptr);
     SendMessageW(ok, WM_SETFONT, (WPARAM)font, TRUE);
     SendMessageW(cancel, WM_SETFONT, (WPARAM)font, TRUE);
@@ -303,7 +322,7 @@ void ShowTextWindow(HWND owner, const std::wstring& title, const std::wstring& t
     for (wchar_t c : text) { if (c == L'\n') t += L"\r\n"; else if (c != L'\r') t += c; }
     HWND e = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", t.c_str(), WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE |
                              ES_AUTOVSCROLL | ES_WANTRETURN, 0, 0, 10, 10, h, (HMENU)10, GetModuleHandleW(nullptr), nullptr);
-    HWND b = CreateWindowExW(0, L"BUTTON", L"Copiar tudo", WS_CHILD | WS_VISIBLE, 0, 0, 10, 10, h, (HMENU)11,
+    HWND b = CreateWindowExW(0, L"BUTTON", Tr(L"Copiar tudo"), WS_CHILD | WS_VISIBLE, 0, 0, 10, 10, h, (HMENU)11,
                              GetModuleHandleW(nullptr), nullptr);
     SendMessageW(e, WM_SETFONT, (WPARAM)UiFont(dpi, 10), TRUE);
     SendMessageW(b, WM_SETFONT, (WPARAM)UiFont(dpi), TRUE);

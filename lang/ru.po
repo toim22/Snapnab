@@ -1,0 +1,4803 @@
+# Snapnab — traduções da interface.
+# Copyright © 2026 Antonio Rezende. GPL-3.0.
+# Idioma: Русский.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Snapnab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: Русский\n"
+
+#: src/capture/CaptureEngine.cpp:39
+#, c-format
+msgid "Captura em %d s…"
+msgstr "Снимок через %d с…"
+
+#: src/capture/CaptureEngine.cpp:138
+msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
+msgstr "Фиксированная область за пределами экрана. Измените её положение в меню шестерёнки «Выделение»."
+
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+msgid "Região fixa"
+msgstr "Фиксированная область"
+
+#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+msgid "A área de transferência não contém imagem."
+msgstr "В буфере обмена нет изображения."
+
+#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669
+msgid "Área de transferência"
+msgstr "Буфер обмена"
+
+#: src/capture/CaptureEngine.cpp:170
+msgid "Capturar de arquivo gráfico"
+msgstr "Снимок из графического файла"
+
+#: src/capture/CaptureEngine.cpp:172
+msgid "Não foi possível abrir a imagem."
+msgstr "Не удалось открыть изображение."
+
+#: src/capture/CaptureEngine.cpp:181
+msgid "Nenhum menu aberto encontrado; selecione a região."
+msgstr "Открытое меню не найдено; выделите область."
+
+#: src/capture/CaptureEngine.cpp:281
+msgid ""
+"Não foi possível reconhecer o texto.\n"
+"\n"
+msgstr ""
+"Не удалось распознать текст.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+msgid "Snapnab — Capturar texto"
+msgstr "Snapnab — Захват текста"
+
+#: src/capture/CaptureEngine.cpp:282
+msgid "Nenhum texto encontrado na captura."
+msgstr "В снимке не найден текст."
+
+#: src/capture/CaptureEngine.cpp:293
+msgid "Capturar texto — copiado para a área de transferência"
+msgstr "Захват текста — скопировано в буфер обмена"
+
+#: src/capture/CaptureEngine.cpp:300
+msgid "copiada para a área de transferência"
+msgstr "скопирован в буфер обмена"
+
+#: src/capture/CaptureEngine.cpp:306
+msgid "salva em "
+msgstr "сохранён в "
+
+#: src/capture/CaptureEngine.cpp:322
+msgid "Captura adicionada à biblioteca"
+msgstr "Снимок добавлен в библиотеку"
+
+#: src/capture/CaptureEngine.cpp:447
+msgid "A janela será ampliada além da tela, capturada e restaurada."
+msgstr "Окно будет увеличено за пределы экрана, снято и восстановлено."
+
+#: src/capture/CaptureEngine.cpp:448
+msgid "Nova largura (px)"
+msgstr "Новая ширина (пкс)"
+
+#: src/capture/CaptureEngine.cpp:449
+msgid "Nova altura (px)"
+msgstr "Новая высота (пкс)"
+
+#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+msgid "Janela estendida"
+msgstr "Расширенное окно"
+
+#: src/capture/CaptureEngine.cpp:523
+msgid "Imagem durante gravação"
+msgstr "Изображение во время записи"
+
+#: src/capture/CaptureEngine.cpp:526
+msgid "Imagem capturada sem parar a gravação."
+msgstr "Изображение снято без остановки записи."
+
+#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+msgid "Snapnab — webcam"
+msgstr "Snapnab — веб-камера"
+
+#: src/capture/CaptureEngine.cpp:553
+msgid ""
+"Não foi possível iniciar a gravação.\n"
+"\n"
+msgstr ""
+"Не удалось начать запись.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:596
+msgid "Vídeo salvo na biblioteca: "
+msgstr "Видео сохранено в библиотеке: "
+
+#: src/capture/CaptureEngine.cpp:598
+msgid ""
+"A gravação falhou.\n"
+"\n"
+msgstr ""
+"Запись не удалась.\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Snapnab — pouco espaço em disco"
+msgstr "Snapnab — мало места на диске"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Restam menos de 1 GB livres na unidade da biblioteca."
+msgstr "На диске библиотеки свободно меньше 1 ГБ."
+
+#: src/capture/CaptureEngine.cpp:609
+msgid "Gravação interrompida: espaço em disco insuficiente."
+msgstr "Запись остановлена: недостаточно места на диске."
+
+#: src/capture/OneClick.h:39
+msgid "Iniciar uma captura"
+msgstr "Начать снимок"
+
+#: src/capture/Panoramic.cpp:132
+msgid "Snapnab — rolagem panorâmica"
+msgstr "Snapnab — панорамная прокрутка"
+
+#: src/capture/Panoramic.cpp:192
+msgid "Role o conteúdo dentro da moldura…"
+msgstr "Прокручивайте содержимое внутри рамки…"
+
+#: src/capture/Panoramic.cpp:193
+#, c-format
+msgid "Capturando: %d × %d px"
+msgstr "Захват: %d × %d пкс"
+
+#: src/capture/Panoramic.cpp:204
+msgid "Concluir"
+msgstr "Готово"
+
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
+msgid "Cancelar"
+msgstr "Отмена"
+
+#: src/capture/Presets.cpp:7
+msgid "Região"
+msgstr "Область"
+
+#: src/capture/Presets.cpp:8
+msgid "Janela"
+msgstr "Окно"
+
+#: src/capture/Presets.cpp:9
+msgid "Tela inteira (todos os monitores)"
+msgstr "Весь экран (все мониторы)"
+
+#: src/capture/Presets.cpp:10
+msgid "Monitor atual"
+msgstr "Текущий монитор"
+
+#: src/capture/Presets.cpp:11
+msgid "Região com tamanho fixo"
+msgstr "Область фиксированного размера"
+
+#: src/capture/Presets.cpp:12
+msgid "Mão livre"
+msgstr "Произвольная форма"
+
+#: src/capture/Presets.cpp:13
+msgid "Várias áreas"
+msgstr "Несколько областей"
+
+#: src/capture/Presets.cpp:14
+msgid "Objeto (controle sob o cursor)"
+msgstr "Объект (элемент под курсором)"
+
+#: src/capture/Presets.cpp:15
+msgid "Rolagem automática (janela)"
+msgstr "Автоматическая прокрутка (окно)"
+
+#: src/capture/Presets.cpp:16
+msgid "Rolagem panorâmica"
+msgstr "Панорамная прокрутка"
+
+#: src/capture/Presets.cpp:18
+msgid "Menu"
+msgstr "Меню"
+
+#: src/capture/Presets.cpp:20
+msgid "Arquivo gráfico"
+msgstr "Графический файл"
+
+#: src/capture/Presets.cpp:150
+msgid "Imagem — Região"
+msgstr "Изображение — Область"
+
+#: src/capture/Presets.cpp:151
+msgid "Imagem — Janela"
+msgstr "Изображение — Окно"
+
+#: src/capture/Presets.cpp:152
+msgid "Tela inteira → Área de transferência"
+msgstr "Весь экран → Буфер обмена"
+
+#: src/capture/Presets.cpp:154
+msgid "Rolagem (página inteira)"
+msgstr "Прокрутка (вся страница)"
+
+#: src/capture/Presets.cpp:155
+msgid "Vídeo — Região"
+msgstr "Видео — Область"
+
+#: src/capture/Presets.cpp:156
+msgid "Vídeo — Tela inteira"
+msgstr "Видео — Весь экран"
+
+#: src/capture/Presets.cpp:164
+msgid "Captura com rolagem panorâmica"
+msgstr "Снимок с панорамной прокруткой"
+
+#: src/capture/Presets.cpp:166
+msgid "Capturar texto"
+msgstr "Захват текста"
+
+#: src/capture/Recorder.cpp:252
+msgid "Área de gravação muito pequena."
+msgstr "Слишком маленькая область записи."
+
+#: src/capture/Recorder.cpp:259
+msgid "Media Foundation indisponível."
+msgstr "Media Foundation недоступен."
+
+#: src/capture/Recorder.cpp:274
+#, c-format
+msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
+msgstr "Не удалось запустить кодировщик MP4 (0x%08X)."
+
+#: src/capture/Recorder.cpp:386
+msgid "Falha ao gravar quadro de vídeo."
+msgstr "Ошибка записи видеокадра."
+
+#: src/capture/Recorder.cpp:478
+#, c-format
+msgid "Falha ao finalizar o MP4 (0x%08X)."
+msgstr "Ошибка завершения MP4 (0x%08X)."
+
+#: src/capture/RecorderHud.cpp:60
+msgid "Snapnab — gravação"
+msgstr "Snapnab — запись"
+
+#: src/capture/RecorderHud.cpp:153
+msgid "Pronto"
+msgstr "Готово"
+
+#: src/capture/RecorderHud.cpp:273
+msgid "Pular"
+msgstr "Пропустить"
+
+#: src/capture/SelectOverlay.cpp:244
+msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
+msgstr "Перетащите, чтобы выделить область • щёлкните, чтобы снять выделенное окно/область • Enter = монитор • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:245
+msgid "Clique na janela a capturar • Esc = cancelar"
+msgstr "Щёлкните окно для снимка • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:246
+msgid "Clique no controle/objeto a capturar • Esc = cancelar"
+msgstr "Щёлкните элемент/объект для снимка • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:247
+#, c-format
+msgid "Região fixa %d × %d — clique para capturar • Esc = cancelar"
+msgstr "Фиксированная область %d × %d — щёлкните для снимка • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:248
+msgid "Desenhe o contorno com o botão pressionado • Esc = cancelar"
+msgstr "Обведите контур, удерживая кнопку • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:249
+msgid "Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"
+msgstr "Выделите несколько областей • Backspace отменяет • Enter или правая кнопка завершает • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:250
+msgid "Clique na janela/área rolável • Esc = cancelar"
+msgstr "Щёлкните прокручиваемое окно/область • Esc = отмена"
+
+#: src/capture/SelectOverlay.cpp:252
+msgid "Gravação: "
+msgstr "Запись: "
+
+#: src/capture/SelectOverlay.cpp:380
+msgid "Snapnab — seleção"
+msgstr "Snapnab — выделение"
+
+#: src/capture/Webcam.cpp:50
+msgid "Círculo"
+msgstr "Круг"
+
+#: src/capture/Webcam.cpp:51
+msgid "Quadrado arredondado"
+msgstr "Скруглённый квадрат"
+
+#: src/capture/Webcam.cpp:52
+msgid "Quadrado"
+msgstr "Квадрат"
+
+#: src/capture/Webcam.cpp:53
+msgid "Retângulo 16:9"
+msgstr "Прямоугольник 16:9"
+
+#: src/capture/Webcam.cpp:54
+msgid "Retângulo 4:3"
+msgstr "Прямоугольник 4:3"
+
+#: src/capture/Webcam.cpp:80
+msgid "Nenhuma webcam encontrada."
+msgstr "Веб-камера не найдена."
+
+#: src/capture/Webcam.cpp:109
+msgid "O Windows bloqueou o acesso à câmera. Libere em Configurações › Privacidade e segurança › Câmera."
+msgstr "Windows заблокировала доступ к камере. Разрешите его в Параметры › Конфиденциальность и защита › Камера."
+
+#: src/capture/Webcam.cpp:110
+#, c-format
+msgid "Não foi possível abrir a webcam (0x%08X)."
+msgstr "Не удалось открыть веб-камеру (0x%08X)."
+
+#: src/capture/Webcam.cpp:136
+#, c-format
+msgid "A webcam não oferece um formato compatível (0x%08X)."
+msgstr "Веб-камера не поддерживает совместимый формат (0x%08X)."
+
+#: src/capture/main.cpp:120
+msgid "Snapnab — clique para capturar"
+msgstr "Snapnab — щёлкните для снимка"
+
+#: src/capture/main.cpp:147 src/capture/main.cpp:511
+msgid "Conflito de atalho"
+msgstr "Конфликт сочетаний клавиш"
+
+#: src/capture/main.cpp:147
+#, c-format
+msgid "O atalho do preset \"%s\" já está em uso por outra ação."
+msgstr "Сочетание клавиш шаблона \"%s\" уже занято другим действием."
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+msgid "Borda"
+msgstr "Рамка"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+msgid "Filtros"
+msgstr "Фильтры"
+
+#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498
+msgid "Sombra"
+msgstr "Тень"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+msgid "Informações da captura"
+msgstr "Сведения о снимке"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+msgid "Substituição de cor"
+msgstr "Замена цвета"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:362
+msgid "Redimensionar imagem"
+msgstr "Изменить размер изображения"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+msgid "Bordas especiais"
+msgstr "Особые края"
+
+#: src/capture/main.cpp:189
+msgid "Cortar bordas"
+msgstr "Обрезать края"
+
+#: src/capture/main.cpp:189
+msgid "Ajuste de cor"
+msgstr "Коррекция цвета"
+
+#: src/capture/main.cpp:189
+msgid "Girar imagem"
+msgstr "Повернуть изображение"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+msgid "Marca d'água"
+msgstr "Водяной знак"
+
+#: src/capture/main.cpp:189
+msgid "Resolução da imagem"
+msgstr "Разрешение изображения"
+
+#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360
+msgid "Largura (px)"
+msgstr "Ширина (пкс)"
+
+#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494
+msgid "Cor"
+msgstr "Цвет"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Filtro"
+msgstr "Фильтр"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Tons de cinza"
+msgstr "Оттенки серого"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Sépia"
+msgstr "Сепия"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Inverter cores"
+msgstr "Инвертировать цвета"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Preto e branco"
+msgstr "Чёрно-белое"
+
+#: src/capture/main.cpp:211
+msgid "Deslocamento (px)"
+msgstr "Смещение (пкс)"
+
+#: src/capture/main.cpp:211
+msgid "Desfoque (px)"
+msgstr "Размытие (пкс)"
+
+#: src/capture/main.cpp:212 src/capture/main.cpp:241
+msgid "Opacidade (%)"
+msgstr "Непрозрачность (%)"
+
+#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477
+msgid "Texto"
+msgstr "Текст"
+
+#: src/capture/main.cpp:215
+msgid "Campos: {date} {time} {computer} {user}"
+msgstr "Поля: {date} {time} {computer} {user}"
+
+#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+msgid "Posição"
+msgstr "Положение"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Embaixo"
+msgstr "Снизу"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Em cima"
+msgstr "Сверху"
+
+#: src/capture/main.cpp:219
+msgid "Cor a substituir"
+msgstr "Заменяемый цвет"
+
+#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+msgid "Nova cor"
+msgstr "Новый цвет"
+
+#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576
+msgid "Tolerância"
+msgstr "Допуск"
+
+#: src/capture/main.cpp:222
+msgid "Escala (%)"
+msgstr "Масштаб (%)"
+
+#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+msgid "Estilo"
+msgstr "Стиль"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Rasgada"
+msgstr "Рваный"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+msgid "Onda"
+msgstr "Волна"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de serra"
+msgstr "Пила"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de tubarão"
+msgstr "Акульи зубы"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+msgid "Esmaecer"
+msgstr "Растворение"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Chanfrada"
+msgstr "Скос"
+
+#: src/capture/main.cpp:225
+msgid "Tamanho (px)"
+msgstr "Размер (пкс)"
+
+#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+msgid "Direita"
+msgstr "Справа"
+
+#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+msgid "Esquerda"
+msgstr "Слева"
+
+#: src/capture/main.cpp:230
+msgid "Remove as faixas de cor uniforme em volta da captura."
+msgstr "Удаляет полосы однородного цвета вокруг снимка."
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+msgid "Brilho"
+msgstr "Яркость"
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+msgid "Contraste"
+msgstr "Контраст"
+
+#: src/capture/main.cpp:234
+msgid "Matiz (graus)"
+msgstr "Оттенок (градусы)"
+
+#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+msgid "Saturação"
+msgstr "Насыщенность"
+
+#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+msgid "Girar"
+msgstr "Повернуть"
+
+#: src/capture/main.cpp:237
+msgid "90° à direita"
+msgstr "90° вправо"
+
+#: src/capture/main.cpp:237
+msgid "90° à esquerda"
+msgstr "90° влево"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na horizontal"
+msgstr "Отразить по горизонтали"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na vertical"
+msgstr "Отразить по вертикали"
+
+#: src/capture/main.cpp:242
+msgid "Repetir por toda a imagem"
+msgstr "Повторять по всему изображению"
+
+#: src/capture/main.cpp:245
+msgid "Resolução (DPI)"
+msgstr "Разрешение (DPI)"
+
+#: src/capture/main.cpp:245
+msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
+msgstr "Записывается в сохраняемые файлы (PNG, JPEG, TIFF, BMP)."
+
+#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+msgid "Nenhum"
+msgstr "Нет"
+
+#: src/capture/main.cpp:303
+msgid "Adicionar outro efeito"
+msgstr "Добавить ещё эффект"
+
+#: src/capture/main.cpp:304
+msgid "Remover este efeito"
+msgstr "Удалить этот эффект"
+
+#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+msgid "Desligado"
+msgstr "Выкл."
+
+#: src/capture/main.cpp:339
+#, c-format
+msgid "%d s"
+msgstr "%d с"
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890
+msgid "Ligada"
+msgstr "Вкл."
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+msgid "Desligada"
+msgstr "Выкл."
+
+#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+msgid "Formato"
+msgstr "Формат"
+
+#: src/capture/main.cpp:421
+msgid "Prefixo do nome"
+msgstr "Префикс имени"
+
+#: src/capture/main.cpp:422
+msgid "Pasta"
+msgstr "Папка"
+
+#: src/capture/main.cpp:423
+msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
+msgstr "Автоматическое имя: <Префикс><Номер>, напр.: Снимок001.png"
+
+#: src/capture/main.cpp:427
+msgid "O prefixo contém caracteres inválidos."
+msgstr "Префикс содержит недопустимые символы."
+
+#: src/capture/main.cpp:430
+msgid "Salvar em arquivo"
+msgstr "Сохранить в файл"
+
+#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+msgid "Programa"
+msgstr "Программа"
+
+#: src/capture/main.cpp:438
+msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
+msgstr "Снимок открывается в этой программе (напр.: mspaint.exe)."
+
+#: src/capture/main.cpp:439 src/editor/main.cpp:813
+msgid "Abrir em um programa externo"
+msgstr "Открыть во внешней программе"
+
+#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+msgid "Altura (px)"
+msgstr "Высота (пкс)"
+
+#: src/capture/main.cpp:451
+msgid "Capturar sempre na mesma posição"
+msgstr "Всегда снимать в одном и том же месте"
+
+#: src/capture/main.cpp:452
+msgid "Esquerda (X)"
+msgstr "Слева (X)"
+
+#: src/capture/main.cpp:453
+msgid "Topo (Y)"
+msgstr "Сверху (Y)"
+
+#: src/capture/main.cpp:454
+msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
+msgstr "Без фиксированного положения вы перетаскиваете прямоугольник на место во время снимка."
+
+#: src/capture/main.cpp:468
+msgid "Selecionar a região na captura"
+msgstr "Выделять область во время снимка"
+
+#: src/capture/main.cpp:469
+msgid "Região fixa…"
+msgstr "Фиксированная область…"
+
+#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+msgid "Quadros por segundo"
+msgstr "Кадров в секунду"
+
+#: src/capture/main.cpp:491
+msgid "Reduzir para 1080p"
+msgstr "Уменьшать до 1080p"
+
+#: src/capture/main.cpp:492
+msgid "Codificação por hardware"
+msgstr "Аппаратное кодирование"
+
+#: src/capture/main.cpp:494
+msgid "Opções de vídeo"
+msgstr "Параметры видео"
+
+#: src/capture/main.cpp:503
+msgid "Atalho do preset"
+msgstr "Сочетание клавиш шаблона"
+
+#: src/capture/main.cpp:504
+msgid "Deixe vazio (Backspace) para remover."
+msgstr "Оставьте пустым (Backspace), чтобы удалить."
+
+#: src/capture/main.cpp:505
+msgid "Atalho — "
+msgstr "Сочетание клавиш — "
+
+#: src/capture/main.cpp:511
+msgid "Esse atalho já está em uso por outra ação do Snapnab."
+msgstr "Это сочетание уже занято другим действием Snapnab."
+
+#: src/capture/main.cpp:516
+msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
+msgstr "Это сочетание уже использует другая программа. Snapnab перехватит его через перехватчик клавиатуры."
+
+#: src/capture/main.cpp:517
+msgid "Atalho"
+msgstr "Сочетание клавиш"
+
+#: src/capture/main.cpp:523
+msgid "Nome do preset"
+msgstr "Имя шаблона"
+
+#: src/capture/main.cpp:531
+msgid "Renomear preset"
+msgstr "Переименовать шаблон"
+
+#: src/capture/main.cpp:551
+msgid ""
+"Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
+"\n"
+"•  Clique em um preset para carregá-lo na janela; clique duas vezes para capturar com ele.\n"
+"•  \"Adicionar atalho\" dá a ele uma tecla de atalho global.\n"
+"•  A engrenagem da linha renomeia, duplica ou exclui o preset.\n"
+"•  \"Novo preset com as configurações atuais\" salva o que está na janela agora."
+msgstr ""
+"Шаблон хранит всё, что показывает окно снимка: тип (изображение или видео), выделение, эффекты, назначение и параметры записи.\n"
+"\n"
+"•  Щёлкните шаблон, чтобы загрузить его в окно; двойной щелчок делает снимок с ним.\n"
+"•  \"Добавить сочетание\" назначает ему глобальную клавишу.\n"
+"•  Шестерёнка в строке переименовывает, дублирует или удаляет шаблон.\n"
+"•  \"Новый шаблон из текущих настроек\" сохраняет то, что сейчас в окне."
+
+#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+msgid "Presets"
+msgstr "Шаблоны"
+
+#: src/capture/main.cpp:588
+msgid "Automático (idioma do Windows)"
+msgstr "Автоматически (язык Windows)"
+
+#: src/capture/main.cpp:593
+msgid "Atalhos globais"
+msgstr "Глобальные сочетания клавиш"
+
+#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+msgid "Capturar imagem"
+msgstr "Снимок изображения"
+
+#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+msgid "Gravar vídeo"
+msgstr "Запись видео"
+
+#: src/capture/main.cpp:596
+msgid "Pausar/retomar vídeo"
+msgstr "Пауза/продолжение видео"
+
+#: src/capture/main.cpp:597
+msgid "Parar vídeo"
+msgstr "Остановить видео"
+
+#: src/capture/main.cpp:598
+msgid "Geral"
+msgstr "Общие"
+
+#: src/capture/main.cpp:599
+msgid "Pasta de saída"
+msgstr "Папка для сохранения"
+
+#: src/capture/main.cpp:600
+msgid "Monitorar área de transferência"
+msgstr "Следить за буфером обмена"
+
+#: src/capture/main.cpp:600
+msgid "Só a Ferramenta de Captura do Windows"
+msgstr "Только «Ножницы» Windows"
+
+#: src/capture/main.cpp:600
+msgid "Qualquer aplicativo"
+msgstr "Любое приложение"
+
+#: src/capture/main.cpp:602
+msgid "Iniciar com o Windows"
+msgstr "Запускать вместе с Windows"
+
+#: src/capture/main.cpp:603
+msgid "Mostrar a janela de captura ao iniciar"
+msgstr "Показывать окно снимка при запуске"
+
+#: src/capture/main.cpp:604
+msgid "Idioma"
+msgstr "Язык"
+
+#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+msgid "Biblioteca: "
+msgstr "Библиотека: "
+
+#: src/capture/main.cpp:611
+msgid "Dois atalhos iguais: "
+msgstr "Два одинаковых сочетания: "
+
+#: src/capture/main.cpp:616
+msgid "Opções do Snapnab"
+msgstr "Параметры Snapnab"
+
+#: src/capture/main.cpp:632
+msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
+msgstr "Новый язык применится после перезапуска Snapnab и Редактора. Перезапустить сейчас?"
+
+#: src/capture/main.cpp:655
+msgid " — captura de tela e gravação de vídeo"
+msgstr " — снимки экрана и запись видео"
+
+#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+msgid "Software livre sob a GNU General Public License versão 3."
+msgstr "Свободное ПО по лицензии GNU General Public License версии 3."
+
+#: src/capture/main.cpp:657
+msgid ""
+"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
+"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
+msgstr ""
+"Процесс снимков (Snapnab.exe) + Редактор (SnapnabEditor.exe), связанные через общую\n"
+"память (канал IPC) и WM_COPYDATA. Снимки хранятся в библиотеке:\n"
+
+#: src/capture/main.cpp:659
+msgid "Sobre o Snapnab"
+msgstr "О Snapnab"
+
+#: src/capture/main.cpp:681 src/capture/main.cpp:972
+msgid "Abrir a janela de captura"
+msgstr "Открыть окно снимка"
+
+#: src/capture/main.cpp:682
+msgid "Ocultar o One Click"
+msgstr "Скрыть One Click"
+
+#: src/capture/main.cpp:735
+msgid ""
+"Snapnab.exe [opções]\n"
+"\n"
+"/hide            inicia só na bandeja\n"
+"/capture         captura imagem com o preset de imagem atual\n"
+"/video           grava vídeo com o preset de vídeo atual\n"
+"/preset \"nome\"   executa um preset pelo nome\n"
+"/clipboard       captura a imagem da área de transferência\n"
+"/exit            encerra o Snapnab em execução"
+msgstr ""
+"Snapnab.exe [параметры]\n"
+"\n"
+"/hide            запуск только в области уведомлений\n"
+"/capture         снимок изображения текущим шаблоном изображения\n"
+"/video           запись видео текущим шаблоном видео\n"
+"/preset \"имя\"    запуск шаблона по имени\n"
+"/clipboard       снимок изображения из буфера обмена\n"
+"/exit            закрыть запущенный Snapnab"
+
+#: src/capture/main.cpp:741
+msgid "Snapnab — linha de comando"
+msgstr "Snapnab — командная строка"
+
+#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+msgid "Imagem"
+msgstr "Изображение"
+
+#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+msgid "Vídeo"
+msgstr "Видео"
+
+#: src/capture/main.cpp:772
+msgid "Seleção:"
+msgstr "Выделение:"
+
+#: src/capture/main.cpp:775
+msgid "Efeitos:"
+msgstr "Эффекты:"
+
+#: src/capture/main.cpp:778
+msgid "Compartilhar:"
+msgstr "Отправить:"
+
+#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839
+msgid "Arquivo"
+msgstr "Файл"
+
+#: src/capture/main.cpp:781
+msgid "Programa externo"
+msgstr "Внешняя программа"
+
+#: src/capture/main.cpp:781
+msgid "Texto (OCR)"
+msgstr "Текст (OCR)"
+
+#: src/capture/main.cpp:782
+msgid "Qualidade:"
+msgstr "Качество:"
+
+#: src/capture/main.cpp:785
+msgid "Muito baixa"
+msgstr "Очень низкое"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Baixa"
+msgstr "Низкое"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+msgid "Média"
+msgstr "Среднее"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Alta"
+msgstr "Высокое"
+
+#: src/capture/main.cpp:786
+msgid "Webcam:"
+msgstr "Веб-камера:"
+
+#: src/capture/main.cpp:789
+msgid "Visualizar no Editor"
+msgstr "Просмотр в Редакторе"
+
+#: src/capture/main.cpp:790
+msgid "Copiar para a área de transferência"
+msgstr "Копировать в буфер обмена"
+
+#: src/capture/main.cpp:791
+msgid "Capturar o cursor"
+msgstr "Снимать курсор"
+
+#: src/capture/main.cpp:792 src/capture/main.cpp:846
+msgid "Atraso"
+msgstr "Задержка"
+
+#: src/capture/main.cpp:794
+msgid "Gravar microfone"
+msgstr "Записывать микрофон"
+
+#: src/capture/main.cpp:795
+msgid "Gravar áudio do sistema"
+msgstr "Записывать системный звук"
+
+#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+msgid "Capturar"
+msgstr "Снять"
+
+#: src/capture/main.cpp:802
+msgid "Abrir Editor"
+msgstr "Открыть Редактор"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:436
+msgid "Captura"
+msgstr "Снимок"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+msgid "Exibir"
+msgstr "Вид"
+
+#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+msgid "Ajuda"
+msgstr "Справка"
+
+#: src/capture/main.cpp:933
+msgid "Abrir o &Editor"
+msgstr "Открыть &Редактор"
+
+#: src/capture/main.cpp:934 src/editor/main.cpp:710
+msgid "Abrir a pasta da &biblioteca"
+msgstr "Открыть папку &библиотеки"
+
+#: src/capture/main.cpp:935
+msgid "Abrir a pasta de &logs"
+msgstr "Открыть папку &журналов"
+
+#: src/capture/main.cpp:937
+msgid "&Importar presets…"
+msgstr "&Импорт шаблонов…"
+
+#: src/capture/main.cpp:938
+msgid "E&xportar presets…"
+msgstr "&Экспорт шаблонов…"
+
+#: src/capture/main.cpp:940
+msgid "&Opções…"
+msgstr "&Параметры…"
+
+#: src/capture/main.cpp:942
+msgid "&Sair do Snapnab"
+msgstr "&Выйти из Snapnab"
+
+#: src/capture/main.cpp:944
+msgid "Capturar &imagem"
+msgstr "Снимок &изображения"
+
+#: src/capture/main.cpp:945
+msgid "Gravar &vídeo"
+msgstr "Запись &видео"
+
+#: src/capture/main.cpp:946
+msgid "&Repetir a última captura"
+msgstr "&Повторить последний снимок"
+
+#: src/capture/main.cpp:948
+msgid "Da área de &transferência"
+msgstr "Из &буфера обмена"
+
+#: src/capture/main.cpp:949
+msgid "De um &arquivo gráfico…"
+msgstr "Из графического &файла…"
+
+#: src/capture/main.cpp:951
+msgid "Mostrar o &One Click"
+msgstr "Показать &One Click"
+
+#: src/capture/main.cpp:952
+msgid "Lista de &presets"
+msgstr "Список &шаблонов"
+
+#: src/capture/main.cpp:954
+msgid "Como usar os &presets"
+msgstr "Как пользоваться &шаблонами"
+
+#: src/capture/main.cpp:956
+msgid "&Sobre o Snapnab"
+msgstr "&О Snapnab"
+
+#: src/capture/main.cpp:973
+msgid "Mostrar o One Click"
+msgstr "Показать One Click"
+
+#: src/capture/main.cpp:974
+msgid "Abrir o Editor"
+msgstr "Открыть Редактор"
+
+#: src/capture/main.cpp:975
+msgid "Opções…"
+msgstr "Параметры…"
+
+#: src/capture/main.cpp:977
+msgid "Sair"
+msgstr "Выход"
+
+#: src/capture/main.cpp:999
+msgid "1 segundo"
+msgstr "1 секунда"
+
+#: src/capture/main.cpp:999
+#, c-format
+msgid "%d segundos"
+msgstr "%d с"
+
+#: src/capture/main.cpp:1011
+msgid "Remover o fundo da webcam"
+msgstr "Удалить фон веб-камеры"
+
+#: src/capture/main.cpp:1012
+msgid "Cor do fundo"
+msgstr "Цвет фона"
+
+#: src/capture/main.cpp:1013
+msgid "Tolerância (0–100)"
+msgstr "Допуск (0–100)"
+
+#: src/capture/main.cpp:1014
+msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
+msgstr "Используйте однотонный, хорошо освещённый фон (идеален зелёный экран)."
+
+#: src/capture/main.cpp:1015
+msgid "Com o fundo removido, a webcam aparece sem moldura."
+msgstr "Без фона веб-камера отображается без рамки."
+
+#: src/capture/main.cpp:1017
+msgid "Remover o fundo (chroma key)"
+msgstr "Удалить фон (хромакей)"
+
+#: src/capture/main.cpp:1035
+msgid "Nenhuma webcam encontrada"
+msgstr "Веб-камера не найдена"
+
+#: src/capture/main.cpp:1047
+msgid "Remover o fundo (chroma key)…"
+msgstr "Удалить фон (хромакей)…"
+
+#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+msgid "Novo preset com as configurações atuais"
+msgstr "Новый шаблон из текущих настроек"
+
+#: src/capture/main.cpp:1069
+msgid "Novo preset…"
+msgstr "Новый шаблон…"
+
+#: src/capture/main.cpp:1080
+msgid "Capturar com este preset"
+msgstr "Снять с этим шаблоном"
+
+#: src/capture/main.cpp:1082
+msgid "Renomear…"
+msgstr "Переименовать…"
+
+#: src/capture/main.cpp:1083
+msgid "Atalho…"
+msgstr "Сочетание клавиш…"
+
+#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+msgid "Duplicar"
+msgstr "Дублировать"
+
+#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+msgid "Excluir"
+msgstr "Удалить"
+
+#: src/capture/main.cpp:1094
+msgid "Adicionar atalho"
+msgstr "Добавить сочетание"
+
+#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+msgid "Gravar"
+msgstr "Записать"
+
+#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047
+msgid " (cópia)"
+msgstr " (копия)"
+
+#: src/capture/main.cpp:1262
+#, c-format
+msgid "Preset %zu"
+msgstr "Шаблон %zu"
+
+#: src/capture/main.cpp:1264
+msgid "Novo preset"
+msgstr "Новый шаблон"
+
+#: src/capture/main.cpp:1277
+msgid "É preciso manter pelo menos um preset."
+msgstr "Должен остаться хотя бы один шаблон."
+
+#: src/capture/main.cpp:1278
+#, c-format
+msgid "Excluir o preset \"%s\"?"
+msgstr "Удалить шаблон \"%s\"?"
+
+#: src/capture/main.cpp:1337
+msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
+msgstr "Шаблоны Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
+
+#: src/capture/main.cpp:1341
+msgid "Presets importados."
+msgstr "Шаблоны импортированы."
+
+#: src/capture/main.cpp:1342
+msgid "Arquivo de presets inválido."
+msgstr "Недопустимый файл шаблонов."
+
+#: src/capture/main.cpp:1347
+msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
+msgstr "Шаблоны Snapnab (*.snappresets)|*.snappresets|"
+
+#: src/capture/main.cpp:1351
+msgid "Não foi possível exportar."
+msgstr "Не удалось экспортировать."
+
+#: src/capture/main.cpp:1360
+msgid "Há uma gravação em andamento. Parar e sair?"
+msgstr "Идёт запись. Остановить и выйти?"
+
+#: src/capture/main.cpp:1461
+msgid "Gravar vídeo  ("
+msgstr "Запись видео  ("
+
+#: src/capture/main.cpp:1461
+msgid "Capturar imagem  ("
+msgstr "Снимок изображения  ("
+
+#: src/common/Image.cpp:285
+msgid "Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|"
+msgstr "Изображения и документы (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Документ Snapnab (*.snap)|*.snap|Видео MP4 (*.mp4)|*.mp4|Все файлы (*.*)|*.*|"
+
+#: src/common/Image.cpp:292
+msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
+msgstr "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Документ Snapnab (*.snap)|*.snap|"
+
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+msgid "Imagem vazia."
+msgstr "Пустое изображение."
+
+#: src/common/Ocr.cpp:36
+msgid "Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."
+msgstr "В Windows не установлен язык OCR (Параметры › Время и язык › Язык)."
+
+#: src/common/Ocr.cpp:44
+msgid "Falha desconhecida no OCR."
+msgstr "Неизвестная ошибка OCR."
+
+#: src/common/Ui.cpp:247
+msgid "OK"
+msgstr "ОК"
+
+#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+msgid "Copiar tudo"
+msgstr "Копировать всё"
+
+#: src/common/Util.cpp:340
+msgid "(nenhum)"
+msgstr "(нет)"
+
+#: src/common/Util.cpp:349
+msgid "Print Screen"
+msgstr "Print Screen"
+
+#: src/editor/Canvas.cpp:13
+msgid "Mover"
+msgstr "Перемещение"
+
+#: src/editor/Canvas.cpp:14
+msgid "Seta"
+msgstr "Стрелка"
+
+#: src/editor/Canvas.cpp:15
+msgid "Linha"
+msgstr "Линия"
+
+#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540
+msgid "Forma"
+msgstr "Фигура"
+
+#: src/editor/Canvas.cpp:17
+msgid "Caneta"
+msgstr "Перо"
+
+#: src/editor/Canvas.cpp:18
+msgid "Marcador"
+msgstr "Маркер"
+
+#: src/editor/Canvas.cpp:20
+msgid "Balão"
+msgstr "Выноска"
+
+#: src/editor/Canvas.cpp:21
+msgid "Passos"
+msgstr "Шаги"
+
+#: src/editor/Canvas.cpp:22
+msgid "Carimbo"
+msgstr "Штамп"
+
+#: src/editor/Canvas.cpp:23
+msgid "Ocultar"
+msgstr "Скрытие"
+
+#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+msgid "Destaque"
+msgstr "Прожектор"
+
+#: src/editor/Canvas.cpp:25
+msgid "Lupa"
+msgstr "Лупа"
+
+#: src/editor/Canvas.cpp:26
+msgid "Preencher"
+msgstr "Заливка"
+
+#: src/editor/Canvas.cpp:27
+msgid "Borracha"
+msgstr "Ластик"
+
+#: src/editor/Canvas.cpp:28
+msgid "Cortar"
+msgstr "Обрезка"
+
+#: src/editor/Canvas.cpp:29
+msgid "Seleção"
+msgstr "Выделение"
+
+#: src/editor/Canvas.cpp:30
+msgid "Recortar faixa"
+msgstr "Вырезать полосу"
+
+#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+msgid "Conta-gotas"
+msgstr "Пипетка"
+
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+msgid "Favoritos"
+msgstr "Избранное"
+
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+msgid "Varinha mágica"
+msgstr "Волшебная палочка"
+
+#: src/editor/Canvas.cpp:325
+msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
+msgstr "Нет открытых снимков — нажмите «Снять» или откройте файл (Ctrl+O)."
+
+#: src/editor/Canvas.cpp:350
+msgid "Prévia — Aplicar ou Cancelar no painel"
+msgstr "Предпросмотр — Применить или Отмена на панели"
+
+#: src/editor/Canvas.cpp:452
+#, c-format
+msgid "%d × %d  — Enter aplica, Esc cancela"
+msgstr "%d × %d  — Enter применяет, Esc отменяет"
+
+#: src/editor/Panels.cpp:251
+msgid "Mais"
+msgstr "Ещё"
+
+#: src/editor/Panels.cpp:295
+msgid "  •  arraste para mudar de lugar"
+msgstr "  •  перетащите, чтобы переместить"
+
+#: src/editor/Panels.cpp:296
+msgid "Mais ferramentas e personalização da barra"
+msgstr "Другие инструменты и настройка панели"
+
+#: src/editor/Panels.cpp:471
+msgid "Arraste suas ferramentas, efeitos e comandos favoritos para a barra…"
+msgstr "Перетащите любимые инструменты, эффекты и команды на панель…"
+
+#: src/editor/Panels.cpp:493 src/editor/Panels.cpp:550
+msgid "Espaçador"
+msgstr "Разделитель"
+
+#: src/editor/Panels.cpp:517
+msgid "Número de ferramentas na barra automática:"
+msgstr "Число инструментов на автоматической панели:"
+
+#: src/editor/Panels.cpp:525
+msgid "Restaurar padrões"
+msgstr "Восстановить по умолчанию"
+
+#: src/editor/Panels.cpp:526
+msgid "Concluído"
+msgstr "Готово"
+
+#: src/editor/Panels.cpp:596
+msgid ""
+"Arraste um item desta janela para a barra de ferramentas para acrescentá-lo; a barra mostra onde ele vai entrar.\n"
+"\n"
+"Na barra, arraste um item para mudar de lugar, ou para fora da barra para removê-lo.\n"
+"“Restaurar padrões” volta à barra automática: Mover, Seleção, Texto, Marcador, Forma, as usadas por último e Lupa. O número de ferramentas dela é escolhido embaixo (de 6 a 16)."
+msgstr ""
+"Перетащите элемент из этого окна на панель инструментов, чтобы добавить его; панель покажет, куда он встанет.\n"
+"\n"
+"На панели перетащите элемент, чтобы переместить его, или за пределы панели, чтобы убрать.\n"
+"«Восстановить по умолчанию» возвращает автоматическую панель: Перемещение, Выделение, Текст, Маркер, Фигура, недавно использованные и Лупа. Число её инструментов выбирается внизу (от 6 до 16)."
+
+#: src/editor/Panels.cpp:600 src/editor/Panels.cpp:645
+msgid "Personalizar a barra de ferramentas"
+msgstr "Настройка панели инструментов"
+
+#: src/editor/Panels.cpp:816 src/editor/Panels.cpp:1058
+msgid "Aplicar"
+msgstr "Применить"
+
+#: src/editor/Panels.cpp:916
+msgid "Efeitos rápidos"
+msgstr "Быстрые эффекты"
+
+#: src/editor/Panels.cpp:972
+msgid "Adicionar"
+msgstr "Добавить"
+
+#: src/editor/Panels.cpp:1060
+msgid "Excluir este efeito rápido"
+msgstr "Удалить этот быстрый эффект"
+
+#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+msgid "Capturas recentes"
+msgstr "Недавние снимки"
+
+#: src/editor/Panels.cpp:1650
+#, c-format
+msgid "Biblioteca  •  %zu capturas"
+msgstr "Библиотека  •  снимков: %zu"
+
+#: src/editor/Panels.cpp:1651
+#, c-format
+msgid "  •  %d selecionadas"
+msgstr "  •  выбрано: %d"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Exportar (%d)…"
+msgstr "Экспорт (%d)…"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Excluir (%d)"
+msgstr "Удалить (%d)"
+
+#: src/editor/Panels.cpp:1660
+msgid "Limpar seleção"
+msgstr "Снять выделение"
+
+#: src/editor/Panels.cpp:1661
+msgid "Biblioteca"
+msgstr "Библиотека"
+
+#: src/editor/Panels.cpp:1661
+msgid "Voltar ao editor"
+msgstr "Назад в редактор"
+
+#: src/editor/Panels.cpp:1666
+msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
+msgstr "Недавних снимков нет. Сделайте снимок в Snapnab (Print Screen) или перетащите файлы сюда."
+
+#: src/editor/Panels.cpp:1667
+msgid "A biblioteca está vazia."
+msgstr "Библиотека пуста."
+
+#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+msgid "Abrir"
+msgstr "Открыть"
+
+#: src/editor/Panels.cpp:1822
+msgid "Mostrar na pasta"
+msgstr "Показать в папке"
+
+#: src/editor/Panels.cpp:1825
+#, c-format
+msgid "Exportar %zu itens…"
+msgstr "Экспортировать элементы (%zu)…"
+
+#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+msgid "Exportar…"
+msgstr "Экспорт…"
+
+#: src/editor/Panels.cpp:1826
+msgid "Selecionar tudo\tCtrl+A"
+msgstr "Выделить всё\tCtrl+A"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja"
+msgstr "Убрать из ленты"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja (continua na biblioteca)"
+msgstr "Убрать из ленты (останется в библиотеке)"
+
+#: src/editor/Panels.cpp:1829
+#, c-format
+msgid "Excluir %zu itens (Lixeira)\tDel"
+msgstr "Удалить элементы: %zu (в корзину)\tDel"
+
+#: src/editor/Panels.cpp:1829
+msgid "Excluir (Lixeira)\tDel"
+msgstr "Удалить (в корзину)\tDel"
+
+#: src/editor/Pdf.cpp:11
+msgid "Falha ao codificar a imagem."
+msgstr "Ошибка кодирования изображения."
+
+#: src/editor/Pdf.cpp:44
+msgid "Não foi possível criar o arquivo."
+msgstr "Не удалось создать файл."
+
+#: src/editor/Pdf.cpp:48
+msgid "Falha ao gravar o arquivo."
+msgstr "Ошибка записи файла."
+
+#: src/editor/Popups.cpp:253
+msgid "Cores do tema"
+msgstr "Цвета темы"
+
+#: src/editor/Popups.cpp:255
+msgid "Cores padrão"
+msgstr "Стандартные цвета"
+
+#: src/editor/Popups.cpp:256
+msgid "Recentes"
+msgstr "Недавние"
+
+#: src/editor/Popups.cpp:265
+msgid "Sem cor"
+msgstr "Без цвета"
+
+#: src/editor/Popups.cpp:265
+msgid "Mais cores…"
+msgstr "Другие цвета…"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Retângulo"
+msgstr "Прямоугольник"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Retângulo arredondado"
+msgstr "Скруглённый прямоугольник"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Elipse"
+msgstr "Эллипс"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Triângulo"
+msgstr "Треугольник"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Losango"
+msgstr "Ромб"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Paralelogramo"
+msgstr "Параллелограмм"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Hexágono"
+msgstr "Шестиугольник"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Estrela"
+msgstr "Звезда"
+
+#: src/editor/PropsPanel.cpp:97
+msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
+msgstr "Перетащите, чтобы нарисовать стрелку. Shift фиксирует угол 45°. С «Кривой Безье» перетащите средний маркер, чтобы изогнуть её."
+
+#: src/editor/PropsPanel.cpp:98
+msgid "Arraste para desenhar uma linha. Shift trava em 45°."
+msgstr "Перетащите, чтобы нарисовать линию. Shift фиксирует угол 45°."
+
+#: src/editor/PropsPanel.cpp:99
+msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
+msgstr "Перетащите, чтобы нарисовать фигуру. Shift сохраняет пропорции (квадрат, круг)."
+
+#: src/editor/PropsPanel.cpp:100
+msgid "Arraste para desenhar à mão livre."
+msgstr "Перетащите, чтобы рисовать от руки."
+
+#: src/editor/PropsPanel.cpp:101
+msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
+msgstr "Обведите прямоугольником то, что нужно выделить маркером. Цвет и непрозрачность берутся из свойств."
+
+#: src/editor/PropsPanel.cpp:102
+msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
+msgstr "Щёлкните или перетащите, чтобы создать текстовое поле. Двойной щелчок изменяет текст."
+
+#: src/editor/PropsPanel.cpp:103
+msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
+msgstr "Перетащите, чтобы создать выноску, и введите текст. Жёлтый маркер двигает хвост (или направление стрелок)."
+
+#: src/editor/PropsPanel.cpp:104
+msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
+msgstr "Щёлкайте, чтобы нумеровать шаги по порядку. «Тип» выбирает цифры, буквы или римские цифры."
+
+#: src/editor/PropsPanel.cpp:105
+msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
+msgstr "Выберите штамп в галерее и щёлкните или перетащите по изображению. «Импорт…» добавляет ваши изображения."
+
+#: src/editor/PropsPanel.cpp:106
+msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
+msgstr "Щёлкните, чтобы залить область похожего цвета. Пипетка берёт цвет заливки с изображения."
+
+#: src/editor/PropsPanel.cpp:107
+msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
+msgstr "Перетащите, чтобы стереть пиксели изображения (они станут прозрачными)."
+
+#: src/editor/PropsPanel.cpp:108
+msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "Перетащите, чтобы создать лупу. При отдельной линзе жёлтый маркер выбирает увеличиваемую область."
+
+#: src/editor/PropsPanel.cpp:109
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
+msgstr "Проведите по области, которую нужно скрыть (размытие или пикселизация)."
+
+#: src/editor/PropsPanel.cpp:110
+msgid "Arraste a área em destaque; o resto da imagem escurece."
+msgstr "Выделите область для прожектора; остальное изображение затемнится."
+
+#: src/editor/PropsPanel.cpp:111
+msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
+msgstr "Щёлкните объект, чтобы выделить и перетащить его. С Smart Move перетащите область изображения, чтобы переместить её; фон будет заполнен."
+
+#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+msgid "Arraste a área a manter; Enter ou duplo clique aplica."
+msgstr "Выделите область, которую нужно оставить; Enter или двойной щелчок применяет."
+
+#: src/editor/PropsPanel.cpp:113
+msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
+msgstr "Выделите и перетащите для перемещения (Smart Move); Del стирает; Ctrl+C копирует."
+
+#: src/editor/PropsPanel.cpp:114
+msgid "Arraste sobre a faixa a remover; as partes são unidas."
+msgstr "Проведите по полосе, которую нужно удалить; части соединятся."
+
+#: src/editor/PropsPanel.cpp:115
+msgid "Clique na imagem para pegar a cor."
+msgstr "Щёлкните изображение, чтобы взять цвет."
+
+#: src/editor/PropsPanel.cpp:250
+msgid "Pesquisar carimbos"
+msgstr "Поиск штампов"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "I, II, III…"
+msgstr "I, II, III…"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "i, ii, iii…"
+msgstr "i, ii, iii…"
+
+#: src/editor/PropsPanel.cpp:257
+msgid "Laço (mão livre)"
+msgstr "Лассо (от руки)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Transparência"
+msgstr "Прозрачность"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Cor do canvas (branco)"
+msgstr "Цвет холста (белый)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Preenchimento inteligente"
+msgstr "Умная заливка"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Horizontal (remove linhas)"
+msgstr "По горизонтали (удаляет строки)"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Vertical (remove colunas)"
+msgstr "По вертикали (удаляет столбцы)"
+
+#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460
+msgid "Desfoque"
+msgstr "Размытие"
+
+#: src/editor/PropsPanel.cpp:263
+msgid "Pixelado"
+msgstr "Пикселизация"
+
+#: src/editor/PropsPanel.cpp:264
+msgid "Organizar carimbos…"
+msgstr "Упорядочить штампы…"
+
+#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+msgid "Importar…"
+msgstr "Импорт…"
+
+#: src/editor/PropsPanel.cpp:269
+msgid "Trazer para a frente"
+msgstr "Переместить вперёд"
+
+#: src/editor/PropsPanel.cpp:270
+msgid "Enviar para trás"
+msgstr "Переместить назад"
+
+#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+msgid "Excluir objeto"
+msgstr "Удалить объект"
+
+#: src/editor/PropsPanel.cpp:272
+msgid "Agrupar"
+msgstr "Сгруппировать"
+
+#: src/editor/PropsPanel.cpp:273
+msgid "Desagrupar"
+msgstr "Разгруппировать"
+
+#: src/editor/PropsPanel.cpp:294
+msgid "Novo tema…"
+msgstr "Новая тема…"
+
+#: src/editor/PropsPanel.cpp:351
+msgid "Aplicar recorte"
+msgstr "Применить вырезание"
+
+#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+msgid "Corte automático"
+msgstr "Автообрезка"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Cortar para a seleção"
+msgstr "Обрезать по выделению"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Copiar seleção"
+msgstr "Копировать выделение"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Excluir seleção"
+msgstr "Удалить выделение"
+
+#: src/editor/PropsPanel.cpp:378
+msgid "Tema:"
+msgstr "Тема:"
+
+#: src/editor/PropsPanel.cpp:446
+msgid "Ponta inicial"
+msgstr "Начало линии"
+
+#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+msgid "Tracejado"
+msgstr "Штрихи"
+
+#: src/editor/PropsPanel.cpp:448
+msgid "Ponta final"
+msgstr "Конец линии"
+
+#: src/editor/PropsPanel.cpp:456
+msgid "Avançado"
+msgstr "Дополнительно"
+
+#: src/editor/PropsPanel.cpp:462
+msgid "Alinhamento"
+msgstr "Выравнивание"
+
+#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495
+msgid "Opacidade"
+msgstr "Непрозрачность"
+
+#: src/editor/PropsPanel.cpp:467
+msgid "Margem interna"
+msgstr "Внутренний отступ"
+
+#: src/editor/PropsPanel.cpp:468
+msgid "Sombreado (degradê)"
+msgstr "Затенение (градиент)"
+
+#: src/editor/PropsPanel.cpp:474
+#, c-format
+msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
+msgstr "Выделено объектов: %d. Изменения стиля применяются к объектам того же типа, что и последний щёлкнутый."
+
+#: src/editor/PropsPanel.cpp:475
+#, c-format
+msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
+msgstr "Группа из %zu объектов: перетаскивайте для перемещения, маркерами меняйте размер."
+
+#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+msgid "Largura"
+msgstr "Ширина"
+
+#: src/editor/PropsPanel.cpp:483
+msgid "Tamanho inicial"
+msgstr "Начальный размер"
+
+#: src/editor/PropsPanel.cpp:484
+msgid "Tamanho final"
+msgstr "Конечный размер"
+
+#: src/editor/PropsPanel.cpp:485
+msgid "Curva de Bézier"
+msgstr "Кривая Безье"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534
+msgid "Preenchimento"
+msgstr "Заливка"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+msgid "Contorno"
+msgstr "Контур"
+
+#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+msgid "Fonte"
+msgstr "Шрифт"
+
+#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+msgid "Tamanho da fonte"
+msgstr "Размер шрифта"
+
+#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+msgid "Espessura"
+msgstr "Толщина"
+
+#: src/editor/PropsPanel.cpp:513
+msgid "Estilo da seta"
+msgstr "Стиль стрелки"
+
+#: src/editor/PropsPanel.cpp:515
+msgid "Ponta"
+msgstr "Окончание"
+
+#: src/editor/PropsPanel.cpp:517
+msgid "Cor da seta"
+msgstr "Цвет стрелки"
+
+#: src/editor/PropsPanel.cpp:520
+msgid "Tamanho da seta"
+msgstr "Размер стрелки"
+
+#: src/editor/PropsPanel.cpp:537
+msgid "Mesma cor em toda a imagem"
+msgstr "Один цвет по всему изображению"
+
+#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+msgid "Cor do texto"
+msgstr "Цвет текста"
+
+#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
+msgid "Tipo"
+msgstr "Тип"
+
+#: src/editor/PropsPanel.cpp:543
+msgid "Reiniciar a sequência"
+msgstr "Начать нумерацию заново"
+
+#: src/editor/PropsPanel.cpp:548
+msgid "Suavizar as bordas"
+msgstr "Сглаживать края"
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Ampliação (%)"
+msgstr "Увеличение (%)"
+
+#: src/editor/PropsPanel.cpp:554
+msgid "Lente separada da área ampliada"
+msgstr "Линза отдельно от увеличиваемой области"
+
+#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+msgid "Intensidade"
+msgstr "Интенсивность"
+
+#: src/editor/PropsPanel.cpp:565
+msgid "Smart Move"
+msgstr "Smart Move"
+
+#: src/editor/PropsPanel.cpp:567
+msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
+msgstr "Выделите область изображения, а затем перетащите её в другое место; фон будет заполнен."
+
+#: src/editor/PropsPanel.cpp:568
+msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
+msgstr "Щёлкните объект, чтобы выделить его. Ctrl+щелчок или рамка выделяют несколько."
+
+#: src/editor/PropsPanel.cpp:575
+msgid "Modo"
+msgstr "Режим"
+
+#: src/editor/PropsPanel.cpp:577
+msgid "Seleção global (mesma cor)"
+msgstr "Глобальное выделение (тот же цвет)"
+
+#: src/editor/PropsPanel.cpp:578
+msgid "Ao mover, preencher"
+msgstr "Заполнять при перемещении"
+
+#: src/editor/PropsPanel.cpp:582
+msgid "Direção"
+msgstr "Направление"
+
+#: src/editor/PropsPanel.cpp:583
+msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
+msgstr "Проведите по полосе, которую нужно удалить; части изображения соединятся."
+
+#: src/editor/PropsPanel.cpp:587
+msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
+msgstr "Щёлкните изображение, чтобы взять цвет; он перейдёт к инструментам рисования."
+
+#: src/editor/PropsPanel.cpp:681
+msgid "Sombra ▾"
+msgstr "Тень ▾"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Carimbos"
+msgstr "Штампы"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Estilos rápidos"
+msgstr "Быстрые стили"
+
+#: src/editor/PropsPanel.cpp:884
+msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
+msgstr "Щёлкните звёздочку быстрого стиля, чтобы добавить его в избранное."
+
+#: src/editor/PropsPanel.cpp:885
+msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
+msgstr "В этой категории нет штампов. Нажмите «Импорт…», чтобы добавить изображения."
+
+#: src/editor/PropsPanel.cpp:886
+msgid "Nenhum carimbo encontrado."
+msgstr "Штампы не найдены."
+
+#: src/editor/PropsPanel.cpp:952
+msgid "Propriedades da ferramenta"
+msgstr "Свойства инструмента"
+
+#: src/editor/PropsPanel.cpp:1012
+msgid "Aplicar este estilo"
+msgstr "Применить этот стиль"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Remover dos favoritos"
+msgstr "Убрать из избранного"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Adicionar aos favoritos"
+msgstr "Добавить в избранное"
+
+#: src/editor/PropsPanel.cpp:1014
+msgid "Excluir este estilo rápido"
+msgstr "Удалить этот быстрый стиль"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar uma cópia do tema…"
+msgstr "Изменить копию темы…"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar o tema…"
+msgstr "Изменить тему…"
+
+#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
+msgid "Nome"
+msgstr "Имя"
+
+#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#, c-format
+msgid "Cor %d"
+msgstr "Цвет %d"
+
+#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
+msgstr "Быстрые стили всех инструментов создаются из этих цветов."
+
+#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+msgid "Novo tema"
+msgstr "Новая тема"
+
+#: src/editor/PropsPanel.cpp:1039
+msgid "Editar tema"
+msgstr "Изменить тему"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
+msgstr "Тема Snapnab (*.snaptheme)|*.snaptheme|"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Exportar tema"
+msgstr "Экспорт темы"
+
+#: src/editor/PropsPanel.cpp:1052
+msgid "Não foi possível exportar o tema."
+msgstr "Не удалось экспортировать тему."
+
+#: src/editor/PropsPanel.cpp:1056
+#, c-format
+msgid "Excluir o tema \"%s\"?"
+msgstr "Удалить тему \"%s\"?"
+
+#: src/editor/PropsPanel.cpp:1079
+msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
+msgstr "Пипетка: щёлкните изображение, чтобы взять цвет заливки."
+
+#: src/editor/PropsPanel.cpp:1099
+msgid "Mostrar sombra"
+msgstr "Показывать тень"
+
+#: src/editor/PropsPanel.cpp:1100
+msgid "Cor da sombra…"
+msgstr "Цвет тени…"
+
+#: src/editor/PropsPanel.cpp:1103
+msgid "Distância"
+msgstr "Расстояние"
+
+#: src/editor/PropsPanel.cpp:1201
+msgid "A sequência de passos recomeça em 1."
+msgstr "Нумерация шагов начнётся снова с 1."
+
+#: src/editor/PropsPanel.cpp:1363
+msgid "Meu tema"
+msgstr "Моя тема"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
+msgstr "Тема Snapnab (*.snaptheme)|*.snaptheme|Все файлы|*.*|"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Importar tema"
+msgstr "Импорт темы"
+
+#: src/editor/PropsPanel.cpp:1408
+#, c-format
+msgid "%d carimbo(s) importado(s) para Meus carimbos."
+msgstr "Импортировано штампов в «Мои штампы»: %d."
+
+#: src/editor/QuickStyles.cpp:200
+msgid "Básico"
+msgstr "Базовая"
+
+#: src/editor/QuickStyles.cpp:201
+msgid "Industrial"
+msgstr "Индустриальная"
+
+#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+msgid "Tema"
+msgstr "Тема"
+
+#: src/editor/QuickStyles.cpp:323
+msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
+msgstr "Файл не является темой Snapnab (.snaptheme)."
+
+#: src/editor/Stamps.cpp:16
+msgid "Negócios"
+msgstr "Бизнес"
+
+#: src/editor/Stamps.cpp:23
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/editor/Stamps.cpp:29
+msgid "Atividades"
+msgstr "Занятия"
+
+#: src/editor/Stamps.cpp:33
+msgid "Comida e bebida"
+msgstr "Еда и напитки"
+
+#: src/editor/Stamps.cpp:37
+msgid "Feriados"
+msgstr "Праздники"
+
+#: src/editor/Stamps.cpp:40
+msgid "Smileys e pessoas"
+msgstr "Смайлики и люди"
+
+#: src/editor/Stamps.cpp:46
+msgid "Adesivos"
+msgstr "Наклейки"
+
+#: src/editor/Stamps.cpp:49
+msgid "Símbolos"
+msgstr "Символы"
+
+#: src/editor/Stamps.cpp:54
+msgid "Viagem e lugares"
+msgstr "Путешествия и места"
+
+#: src/editor/Stamps.cpp:92
+msgid "Meus carimbos"
+msgstr "Мои штампы"
+
+#: src/editor/Stamps.cpp:100
+msgid "Meus carimbos › "
+msgstr "Мои штампы › "
+
+#: src/editor/Stamps.cpp:125
+msgid "Importar carimbos"
+msgstr "Импорт штампов"
+
+#: src/editor/Stamps.cpp:126
+msgid "Imagens"
+msgstr "Изображения"
+
+#: src/editor/Stamps.cpp:16
+msgid "clipe anexo"
+msgstr "скрепка вложение"
+
+#: src/editor/Stamps.cpp:16
+msgid "lupa pesquisar"
+msgstr "лупа поиск"
+
+#: src/editor/Stamps.cpp:16
+msgid "engrenagem configurações"
+msgstr "шестерёнка настройки"
+
+#: src/editor/Stamps.cpp:16
+msgid "relógio hora"
+msgstr "часы время"
+
+#: src/editor/Stamps.cpp:16
+msgid "usuário pessoa"
+msgstr "пользователь человек"
+
+#: src/editor/Stamps.cpp:16
+msgid "equipe pessoas"
+msgstr "команда люди"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado fechado segurança"
+msgstr "закрытый замок безопасность"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado aberto"
+msgstr "открытый замок"
+
+#: src/editor/Stamps.cpp:16
+msgid "marcador"
+msgstr "закладка"
+
+#: src/editor/Stamps.cpp:16
+msgid "sinal wi-fi"
+msgstr "сигнал wi-fi"
+
+#: src/editor/Stamps.cpp:16
+msgid "notebook código"
+msgstr "ноутбук код"
+
+#: src/editor/Stamps.cpp:16
+msgid "baixar download"
+msgstr "скачать"
+
+#: src/editor/Stamps.cpp:16
+msgid "enviar upload"
+msgstr "загрузить"
+
+#: src/editor/Stamps.cpp:16
+msgid "mesclar"
+msgstr "объединить"
+
+#: src/editor/Stamps.cpp:16
+msgid "repetir"
+msgstr "повторить"
+
+#: src/editor/Stamps.cpp:16
+msgid "gráfico barras"
+msgstr "столбчатая диаграмма"
+
+#: src/editor/Stamps.cpp:16
+msgid "crescimento"
+msgstr "рост"
+
+#: src/editor/Stamps.cpp:16
+msgid "queda"
+msgstr "спад"
+
+#: src/editor/Stamps.cpp:16
+msgid "lista concluído"
+msgstr "список выполнено"
+
+#: src/editor/Stamps.cpp:16
+msgid "link compartilhar"
+msgstr "ссылка поделиться"
+
+#: src/editor/Stamps.cpp:16
+msgid "reproduzir play"
+msgstr "воспроизвести play"
+
+#: src/editor/Stamps.cpp:16
+msgid "parar"
+msgstr "стоп"
+
+#: src/editor/Stamps.cpp:16
+msgid "pausar"
+msgstr "пауза"
+
+#: src/editor/Stamps.cpp:16
+msgid "avançar"
+msgstr "вперёд"
+
+#: src/editor/Stamps.cpp:16
+msgid "voltar"
+msgstr "назад"
+
+#: src/editor/Stamps.cpp:16
+msgid "dinheiro moedas"
+msgstr "деньги монеты"
+
+#: src/editor/Stamps.cpp:16
+msgid "cartão pagamento"
+msgstr "карта оплата"
+
+#: src/editor/Stamps.cpp:16
+msgid "globo internet"
+msgstr "глобус интернет"
+
+#: src/editor/Stamps.cpp:16
+msgid "prêmio medalha"
+msgstr "приз медаль"
+
+#: src/editor/Stamps.cpp:16
+msgid "caneta"
+msgstr "ручка"
+
+#: src/editor/Stamps.cpp:16
+msgid "lápis"
+msgstr "карандаш"
+
+#: src/editor/Stamps.cpp:16
+msgid "documento"
+msgstr "документ"
+
+#: src/editor/Stamps.cpp:16
+msgid "nota"
+msgstr "заметка"
+
+#: src/editor/Stamps.cpp:16
+msgid "telefone"
+msgstr "телефон"
+
+#: src/editor/Stamps.cpp:16
+msgid "e-mail carta"
+msgstr "почта письмо"
+
+#: src/editor/Stamps.cpp:16
+msgid "conversa comentário"
+msgstr "разговор комментарий"
+
+#: src/editor/Stamps.cpp:16
+msgid "monitor computador"
+msgstr "монитор компьютер"
+
+#: src/editor/Stamps.cpp:16
+msgid "celular"
+msgstr "мобильный телефон"
+
+#: src/editor/Stamps.cpp:16
+msgid "mouse"
+msgstr "мышь"
+
+#: src/editor/Stamps.cpp:16
+msgid "nuvem"
+msgstr "облако"
+
+#: src/editor/Stamps.cpp:16
+msgid "pasta"
+msgstr "папка"
+
+#: src/editor/Stamps.cpp:16
+msgid "calendário"
+msgstr "календарь"
+
+#: src/editor/Stamps.cpp:16
+msgid "maleta trabalho"
+msgstr "портфель работа"
+
+#: src/editor/Stamps.cpp:16
+msgid "alfinete"
+msgstr "булавка"
+
+#: src/editor/Stamps.cpp:16
+msgid "lixeira"
+msgstr "корзина"
+
+#: src/editor/Stamps.cpp:16
+msgid "sino notificação"
+msgstr "колокольчик уведомление"
+
+#: src/editor/Stamps.cpp:16
+msgid "ideia lâmpada"
+msgstr "идея лампочка"
+
+#: src/editor/Stamps.cpp:16
+msgid "alvo meta"
+msgstr "мишень цель"
+
+#: src/editor/Stamps.cpp:16
+msgid "foguete lançamento"
+msgstr "ракета запуск"
+
+#: src/editor/Stamps.cpp:16
+msgid "troféu"
+msgstr "кубок"
+
+#: src/editor/Stamps.cpp:23
+msgid "concluído certo"
+msgstr "выполнено верно"
+
+#: src/editor/Stamps.cpp:23
+msgid "errado fechar"
+msgstr "неверно закрыть"
+
+#: src/editor/Stamps.cpp:23
+msgid "atenção aviso"
+msgstr "внимание предупреждение"
+
+#: src/editor/Stamps.cpp:23
+msgid "informação"
+msgstr "информация"
+
+#: src/editor/Stamps.cpp:23
+msgid "pergunta dúvida"
+msgstr "вопрос сомнение"
+
+#: src/editor/Stamps.cpp:23
+msgid "exclamação importante"
+msgstr "восклицание важно"
+
+#: src/editor/Stamps.cpp:23
+msgid "estrela favorito"
+msgstr "звезда избранное"
+
+#: src/editor/Stamps.cpp:23
+msgid "coração"
+msgstr "сердце"
+
+#: src/editor/Stamps.cpp:23
+msgid "positivo curtir"
+msgstr "палец вверх нравится"
+
+#: src/editor/Stamps.cpp:23
+msgid "negativo"
+msgstr "палец вниз"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta direita"
+msgstr "стрелка вправо"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta esquerda"
+msgstr "стрелка влево"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta cima"
+msgstr "стрелка вверх"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta baixo"
+msgstr "стрелка вниз"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta diagonal"
+msgstr "стрелка по диагонали"
+
+#: src/editor/Stamps.cpp:23
+msgid "atualizar"
+msgstr "обновить"
+
+#: src/editor/Stamps.cpp:23
+msgid "adicionar mais"
+msgstr "добавить плюс"
+
+#: src/editor/Stamps.cpp:23
+msgid "remover menos"
+msgstr "убрать минус"
+
+#: src/editor/Stamps.cpp:23
+msgid "marca certo"
+msgstr "галочка"
+
+#: src/editor/Stamps.cpp:23
+msgid "multiplicar fechar"
+msgstr "умножить закрыть"
+
+#: src/editor/Stamps.cpp:23
+msgid "vermelho"
+msgstr "красный"
+
+#: src/editor/Stamps.cpp:23
+msgid "laranja"
+msgstr "оранжевый"
+
+#: src/editor/Stamps.cpp:23
+msgid "amarelo"
+msgstr "жёлтый"
+
+#: src/editor/Stamps.cpp:23
+msgid "verde"
+msgstr "зелёный"
+
+#: src/editor/Stamps.cpp:23
+msgid "azul"
+msgstr "синий"
+
+#: src/editor/Stamps.cpp:23
+msgid "roxo"
+msgstr "фиолетовый"
+
+#: src/editor/Stamps.cpp:23
+msgid "preto"
+msgstr "чёрный"
+
+#: src/editor/Stamps.cpp:23
+msgid "branco"
+msgstr "белый"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado vermelho"
+msgstr "красный квадрат"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado verde"
+msgstr "зелёный квадрат"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado azul"
+msgstr "синий квадрат"
+
+#: src/editor/Stamps.cpp:23
+msgid "botão rádio"
+msgstr "переключатель"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa"
+msgstr "флажок"
+
+#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+msgid "caixa marcada"
+msgstr "отмеченный флажок"
+
+#: src/editor/Stamps.cpp:23
+msgid "som alto"
+msgstr "громкий звук"
+
+#: src/editor/Stamps.cpp:23
+msgid "sem som mudo"
+msgstr "без звука"
+
+#: src/editor/Stamps.cpp:23
+msgid "início casa"
+msgstr "главная дом"
+
+#: src/editor/Stamps.cpp:23
+msgid "chave senha"
+msgstr "ключ пароль"
+
+#: src/editor/Stamps.cpp:23
+msgid "carrinho compras"
+msgstr "корзина покупок"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de entrada"
+msgstr "входящие"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de saída"
+msgstr "исходящие"
+
+#: src/editor/Stamps.cpp:23
+msgid "zoom pesquisa"
+msgstr "масштаб поиск"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol"
+msgstr "футбол"
+
+#: src/editor/Stamps.cpp:29
+msgid "basquete"
+msgstr "баскетбол"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol americano"
+msgstr "американский футбол"
+
+#: src/editor/Stamps.cpp:29
+msgid "beisebol"
+msgstr "бейсбол"
+
+#: src/editor/Stamps.cpp:29
+msgid "tênis"
+msgstr "теннис"
+
+#: src/editor/Stamps.cpp:29
+msgid "vôlei"
+msgstr "волейбол"
+
+#: src/editor/Stamps.cpp:29
+msgid "pingue-pongue"
+msgstr "настольный теннис"
+
+#: src/editor/Stamps.cpp:29
+msgid "badminton"
+msgstr "бадминтон"
+
+#: src/editor/Stamps.cpp:29
+msgid "boxe"
+msgstr "бокс"
+
+#: src/editor/Stamps.cpp:29
+msgid "boliche"
+msgstr "боулинг"
+
+#: src/editor/Stamps.cpp:29
+msgid "golfe"
+msgstr "гольф"
+
+#: src/editor/Stamps.cpp:29
+msgid "pesca"
+msgstr "рыбалка"
+
+#: src/editor/Stamps.cpp:29
+msgid "esqui"
+msgstr "лыжи"
+
+#: src/editor/Stamps.cpp:29
+msgid "snowboard"
+msgstr "сноуборд"
+
+#: src/editor/Stamps.cpp:29
+msgid "surfe"
+msgstr "сёрфинг"
+
+#: src/editor/Stamps.cpp:29
+msgid "ciclismo bicicleta"
+msgstr "велоспорт велосипед"
+
+#: src/editor/Stamps.cpp:29
+msgid "natação"
+msgstr "плавание"
+
+#: src/editor/Stamps.cpp:29
+msgid "musculação"
+msgstr "тяжёлая атлетика"
+
+#: src/editor/Stamps.cpp:29
+msgid "videogame jogo"
+msgstr "видеоигра игра"
+
+#: src/editor/Stamps.cpp:29
+msgid "dado"
+msgstr "игральная кость"
+
+#: src/editor/Stamps.cpp:29
+msgid "quebra-cabeça"
+msgstr "пазл"
+
+#: src/editor/Stamps.cpp:29
+msgid "pintura arte"
+msgstr "живопись искусство"
+
+#: src/editor/Stamps.cpp:29
+msgid "teatro"
+msgstr "театр"
+
+#: src/editor/Stamps.cpp:29
+msgid "microfone"
+msgstr "микрофон"
+
+#: src/editor/Stamps.cpp:29
+msgid "fone"
+msgstr "наушники"
+
+#: src/editor/Stamps.cpp:29
+msgid "guitarra"
+msgstr "гитара"
+
+#: src/editor/Stamps.cpp:29
+msgid "piano"
+msgstr "пианино"
+
+#: src/editor/Stamps.cpp:29
+msgid "bateria"
+msgstr "барабаны"
+
+#: src/editor/Stamps.cpp:29
+msgid "cinema filme"
+msgstr "кино фильм"
+
+#: src/editor/Stamps.cpp:29
+msgid "primeiro lugar"
+msgstr "первое место"
+
+#: src/editor/Stamps.cpp:29
+msgid "ingresso"
+msgstr "билет"
+
+#: src/editor/Stamps.cpp:29
+msgid "foto câmera"
+msgstr "фото камера"
+
+#: src/editor/Stamps.cpp:33
+msgid "maçã"
+msgstr "яблоко"
+
+#: src/editor/Stamps.cpp:33
+msgid "banana"
+msgstr "банан"
+
+#: src/editor/Stamps.cpp:33
+msgid "uva"
+msgstr "виноград"
+
+#: src/editor/Stamps.cpp:33
+msgid "morango"
+msgstr "клубника"
+
+#: src/editor/Stamps.cpp:33
+msgid "melancia"
+msgstr "арбуз"
+
+#: src/editor/Stamps.cpp:33
+msgid "cereja"
+msgstr "вишня"
+
+#: src/editor/Stamps.cpp:33
+msgid "pêssego"
+msgstr "персик"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacaxi"
+msgstr "ананас"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacate"
+msgstr "авокадо"
+
+#: src/editor/Stamps.cpp:33
+msgid "cenoura"
+msgstr "морковь"
+
+#: src/editor/Stamps.cpp:33
+msgid "milho"
+msgstr "кукуруза"
+
+#: src/editor/Stamps.cpp:33
+msgid "pão"
+msgstr "хлеб"
+
+#: src/editor/Stamps.cpp:33
+msgid "queijo"
+msgstr "сыр"
+
+#: src/editor/Stamps.cpp:33
+msgid "hambúrguer"
+msgstr "гамбургер"
+
+#: src/editor/Stamps.cpp:33
+msgid "batata frita"
+msgstr "картофель фри"
+
+#: src/editor/Stamps.cpp:33
+msgid "pizza"
+msgstr "пицца"
+
+#: src/editor/Stamps.cpp:33
+msgid "cachorro-quente"
+msgstr "хот-дог"
+
+#: src/editor/Stamps.cpp:33
+msgid "taco"
+msgstr "тако"
+
+#: src/editor/Stamps.cpp:33
+msgid "sushi"
+msgstr "суши"
+
+#: src/editor/Stamps.cpp:33
+msgid "lámen sopa"
+msgstr "рамен суп"
+
+#: src/editor/Stamps.cpp:33
+msgid "rosquinha"
+msgstr "пончик"
+
+#: src/editor/Stamps.cpp:33
+msgid "biscoito"
+msgstr "печенье"
+
+#: src/editor/Stamps.cpp:33
+msgid "bolo aniversário"
+msgstr "торт день рождения"
+
+#: src/editor/Stamps.cpp:33
+msgid "torta"
+msgstr "пирог"
+
+#: src/editor/Stamps.cpp:33
+msgid "chocolate"
+msgstr "шоколад"
+
+#: src/editor/Stamps.cpp:33
+msgid "pipoca"
+msgstr "попкорн"
+
+#: src/editor/Stamps.cpp:33
+msgid "café"
+msgstr "кофе"
+
+#: src/editor/Stamps.cpp:33
+msgid "chá"
+msgstr "чай"
+
+#: src/editor/Stamps.cpp:33
+msgid "refrigerante"
+msgstr "газировка"
+
+#: src/editor/Stamps.cpp:33
+msgid "cerveja"
+msgstr "пиво"
+
+#: src/editor/Stamps.cpp:33
+msgid "vinho"
+msgstr "вино"
+
+#: src/editor/Stamps.cpp:33
+msgid "brinde"
+msgstr "тост бокалы"
+
+#: src/editor/Stamps.cpp:37
+msgid "natal árvore"
+msgstr "рождество ёлка"
+
+#: src/editor/Stamps.cpp:37
+msgid "papai noel"
+msgstr "дед мороз"
+
+#: src/editor/Stamps.cpp:37
+msgid "presente"
+msgstr "подарок"
+
+#: src/editor/Stamps.cpp:37
+msgid "abóbora halloween"
+msgstr "тыква хэллоуин"
+
+#: src/editor/Stamps.cpp:37
+msgid "fantasma"
+msgstr "привидение"
+
+#: src/editor/Stamps.cpp:37
+msgid "peru"
+msgstr "индейка"
+
+#: src/editor/Stamps.cpp:37
+msgid "coelho páscoa"
+msgstr "пасхальный кролик"
+
+#: src/editor/Stamps.cpp:37
+msgid "ovo"
+msgstr "яйцо"
+
+#: src/editor/Stamps.cpp:37
+msgid "coração presente"
+msgstr "сердце подарок"
+
+#: src/editor/Stamps.cpp:37
+msgid "flores"
+msgstr "цветы"
+
+#: src/editor/Stamps.cpp:37
+msgid "fogos"
+msgstr "фейерверк"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrelinha"
+msgstr "бенгальский огонь"
+
+#: src/editor/Stamps.cpp:37
+msgid "festa"
+msgstr "праздник"
+
+#: src/editor/Stamps.cpp:37
+msgid "confete"
+msgstr "конфетти"
+
+#: src/editor/Stamps.cpp:37
+msgid "balão"
+msgstr "воздушный шар"
+
+#: src/editor/Stamps.cpp:37
+msgid "vela"
+msgstr "свеча"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrela brilhante"
+msgstr "сияющая звезда"
+
+#: src/editor/Stamps.cpp:37
+msgid "neve floco"
+msgstr "снежинка"
+
+#: src/editor/Stamps.cpp:37
+msgid "boneco de neve"
+msgstr "снеговик"
+
+#: src/editor/Stamps.cpp:37
+msgid "laço"
+msgstr "бант"
+
+#: src/editor/Stamps.cpp:37
+msgid "envelope"
+msgstr "конверт"
+
+#: src/editor/Stamps.cpp:37
+msgid "trevo sorte"
+msgstr "клевер удача"
+
+#: src/editor/Stamps.cpp:37
+msgid "piñata"
+msgstr "пиньята"
+
+#: src/editor/Stamps.cpp:37
+msgid "menorá"
+msgstr "менора"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso feliz"
+msgstr "улыбка радость"
+
+#: src/editor/Stamps.cpp:40
+msgid "alegre"
+msgstr "весёлый"
+
+#: src/editor/Stamps.cpp:40
+msgid "rindo"
+msgstr "смеётся"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorrisão"
+msgstr "широкая улыбка"
+
+#: src/editor/Stamps.cpp:40
+msgid "gargalhada"
+msgstr "хохот"
+
+#: src/editor/Stamps.cpp:40
+msgid "aliviado"
+msgstr "облегчение"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando de rir"
+msgstr "слёзы от смеха"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso leve"
+msgstr "лёгкая улыбка"
+
+#: src/editor/Stamps.cpp:40
+msgid "piscada"
+msgstr "подмигивание"
+
+#: src/editor/Stamps.cpp:40
+msgid "contente"
+msgstr "довольный"
+
+#: src/editor/Stamps.cpp:40
+msgid "apaixonado"
+msgstr "влюблённый"
+
+#: src/editor/Stamps.cpp:40
+msgid "beijo"
+msgstr "поцелуй"
+
+#: src/editor/Stamps.cpp:40
+msgid "legal óculos"
+msgstr "круто очки"
+
+#: src/editor/Stamps.cpp:40
+msgid "pensando"
+msgstr "размышляет"
+
+#: src/editor/Stamps.cpp:40
+msgid "neutro"
+msgstr "нейтральный"
+
+#: src/editor/Stamps.cpp:40
+msgid "dormindo"
+msgstr "спит"
+
+#: src/editor/Stamps.cpp:40
+msgid "surpreso"
+msgstr "удивлённый"
+
+#: src/editor/Stamps.cpp:40
+msgid "espantado"
+msgstr "изумлённый"
+
+#: src/editor/Stamps.cpp:40
+msgid "triste"
+msgstr "грустный"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando"
+msgstr "плачет"
+
+#: src/editor/Stamps.cpp:40
+msgid "bravo"
+msgstr "злой"
+
+#: src/editor/Stamps.cpp:40
+msgid "cabeça explodindo"
+msgstr "взрыв мозга"
+
+#: src/editor/Stamps.cpp:40
+msgid "comemorando"
+msgstr "празднует"
+
+#: src/editor/Stamps.cpp:40
+msgid "encantado"
+msgstr "восхищённый"
+
+#: src/editor/Stamps.cpp:40
+msgid "anjo"
+msgstr "ангел"
+
+#: src/editor/Stamps.cpp:40
+msgid "de cabeça para baixo"
+msgstr "вверх ногами"
+
+#: src/editor/Stamps.cpp:40
+msgid "abraço"
+msgstr "объятие"
+
+#: src/editor/Stamps.cpp:40
+msgid "revirando olhos"
+msgstr "закатывает глаза"
+
+#: src/editor/Stamps.cpp:40
+msgid "careta"
+msgstr "гримаса"
+
+#: src/editor/Stamps.cpp:40
+msgid "olá tchau"
+msgstr "привет пока"
+
+#: src/editor/Stamps.cpp:40
+msgid "palmas"
+msgstr "аплодисменты"
+
+#: src/editor/Stamps.cpp:40
+msgid "viva"
+msgstr "ура"
+
+#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+msgid "ok"
+msgstr "ок"
+
+#: src/editor/Stamps.cpp:40
+msgid "paz"
+msgstr "мир"
+
+#: src/editor/Stamps.cpp:40
+msgid "dedos cruzados"
+msgstr "скрещённые пальцы"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando direita"
+msgstr "указывает вправо"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando esquerda"
+msgstr "указывает влево"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando cima"
+msgstr "указывает вверх"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando baixo"
+msgstr "указывает вниз"
+
+#: src/editor/Stamps.cpp:40
+msgid "força"
+msgstr "сила"
+
+#: src/editor/Stamps.cpp:40
+msgid "por favor obrigado"
+msgstr "пожалуйста спасибо"
+
+#: src/editor/Stamps.cpp:40
+msgid "acordo aperto de mão"
+msgstr "договорились рукопожатие"
+
+#: src/editor/Stamps.cpp:46
+msgid "cem pontos"
+msgstr "сто баллов"
+
+#: src/editor/Stamps.cpp:46
+msgid "fogo"
+msgstr "огонь"
+
+#: src/editor/Stamps.cpp:46
+msgid "brilho"
+msgstr "блеск"
+
+#: src/editor/Stamps.cpp:46
+msgid "explosão"
+msgstr "взрыв"
+
+#: src/editor/Stamps.cpp:46
+msgid "tontura"
+msgstr "головокружение"
+
+#: src/editor/Stamps.cpp:46
+msgid "raiva"
+msgstr "гнев"
+
+#: src/editor/Stamps.cpp:46
+msgid "sono"
+msgstr "сон"
+
+#: src/editor/Stamps.cpp:46
+msgid "gotas"
+msgstr "капли"
+
+#: src/editor/Stamps.cpp:46
+msgid "novo"
+msgstr "новое"
+
+#: src/editor/Stamps.cpp:46
+msgid "legal"
+msgstr "круто"
+
+#: src/editor/Stamps.cpp:46
+msgid "grátis"
+msgstr "бесплатно"
+
+#: src/editor/Stamps.cpp:46
+msgid "up"
+msgstr "up"
+
+#: src/editor/Stamps.cpp:46
+msgid "topo"
+msgstr "топ"
+
+#: src/editor/Stamps.cpp:46
+msgid "em breve"
+msgstr "скоро"
+
+#: src/editor/Stamps.cpp:46
+msgid "arco-íris"
+msgstr "радуга"
+
+#: src/editor/Stamps.cpp:46
+msgid "coroa"
+msgstr "корона"
+
+#: src/editor/Stamps.cpp:46
+msgid "diamante"
+msgstr "бриллиант"
+
+#: src/editor/Stamps.cpp:46
+msgid "bandeira"
+msgstr "флаг"
+
+#: src/editor/Stamps.cpp:46
+msgid "chegada"
+msgstr "финиш"
+
+#: src/editor/Stamps.cpp:46
+msgid "megafone"
+msgstr "мегафон"
+
+#: src/editor/Stamps.cpp:46
+msgid "anúncio"
+msgstr "объявление"
+
+#: src/editor/Stamps.cpp:46
+msgid "etiqueta"
+msgstr "ярлык"
+
+#: src/editor/Stamps.cpp:46
+msgid "medalha"
+msgstr "медаль"
+
+#: src/editor/Stamps.cpp:46
+msgid "ímã"
+msgstr "магнит"
+
+#: src/editor/Stamps.cpp:46
+msgid "bola de cristal"
+msgstr "хрустальный шар"
+
+#: src/editor/Stamps.cpp:46
+msgid "varinha mágica"
+msgstr "волшебная палочка"
+
+#: src/editor/Stamps.cpp:46
+msgid "bomba"
+msgstr "бомба"
+
+#: src/editor/Stamps.cpp:46
+msgid "trevo"
+msgstr "клевер"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla horizontal"
+msgstr "двойная стрелка по горизонтали"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla vertical"
+msgstr "двойная стрелка по вертикали"
+
+#: src/editor/Stamps.cpp:49
+msgid "girar"
+msgstr "повернуть"
+
+#: src/editor/Stamps.cpp:49
+msgid "dividir"
+msgstr "разделить"
+
+#: src/editor/Stamps.cpp:49
+msgid "infinito"
+msgstr "бесконечность"
+
+#: src/editor/Stamps.cpp:49
+msgid "dupla exclamação"
+msgstr "двойной восклицательный знак"
+
+#: src/editor/Stamps.cpp:49
+msgid "exclamação pergunta"
+msgstr "восклицание вопрос"
+
+#: src/editor/Stamps.cpp:49
+msgid "proibido"
+msgstr "запрещено"
+
+#: src/editor/Stamps.cpp:49
+msgid "entrada proibida"
+msgstr "въезд запрещён"
+
+#: src/editor/Stamps.cpp:49
+msgid "círculo"
+msgstr "круг"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango laranja"
+msgstr "оранжевый ромб"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango azul"
+msgstr "синий ромб"
+
+#: src/editor/Stamps.cpp:49
+msgid "reciclar"
+msgstr "переработка"
+
+#: src/editor/Stamps.cpp:49
+msgid "raio energia"
+msgstr "молния энергия"
+
+#: src/editor/Stamps.cpp:49
+msgid "radioativo"
+msgstr "радиоактивно"
+
+#: src/editor/Stamps.cpp:49
+msgid "risco biológico"
+msgstr "биологическая опасность"
+
+#: src/editor/Stamps.cpp:49
+msgid "copyright"
+msgstr "копирайт"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca registrada"
+msgstr "зарегистрированный товарный знак"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca"
+msgstr "товарный знак"
+
+#: src/editor/Stamps.cpp:49
+msgid "hashtag"
+msgstr "хештег"
+
+#: src/editor/Stamps.cpp:49
+msgid "um"
+msgstr "один"
+
+#: src/editor/Stamps.cpp:49
+msgid "dois"
+msgstr "два"
+
+#: src/editor/Stamps.cpp:49
+msgid "três"
+msgstr "три"
+
+#: src/editor/Stamps.cpp:49
+msgid "quatro"
+msgstr "четыре"
+
+#: src/editor/Stamps.cpp:49
+msgid "cinco"
+msgstr "пять"
+
+#: src/editor/Stamps.cpp:49
+msgid "seis"
+msgstr "шесть"
+
+#: src/editor/Stamps.cpp:49
+msgid "sete"
+msgstr "семь"
+
+#: src/editor/Stamps.cpp:49
+msgid "oito"
+msgstr "восемь"
+
+#: src/editor/Stamps.cpp:49
+msgid "nove"
+msgstr "девять"
+
+#: src/editor/Stamps.cpp:49
+msgid "dez"
+msgstr "десять"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra a"
+msgstr "буква a"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra b"
+msgstr "буква b"
+
+#: src/editor/Stamps.cpp:49
+msgid "ab"
+msgstr "ab"
+
+#: src/editor/Stamps.cpp:49
+msgid "abc"
+msgstr "abc"
+
+#: src/editor/Stamps.cpp:49
+msgid "cifrão"
+msgstr "знак доллара"
+
+#: src/editor/Stamps.cpp:49
+msgid "câmbio"
+msgstr "обмен валюты"
+
+#: src/editor/Stamps.cpp:54
+msgid "carro"
+msgstr "автомобиль"
+
+#: src/editor/Stamps.cpp:54
+msgid "táxi"
+msgstr "такси"
+
+#: src/editor/Stamps.cpp:54
+msgid "ônibus"
+msgstr "автобус"
+
+#: src/editor/Stamps.cpp:54
+msgid "ambulância"
+msgstr "скорая помощь"
+
+#: src/editor/Stamps.cpp:54
+msgid "bombeiros"
+msgstr "пожарные"
+
+#: src/editor/Stamps.cpp:54
+msgid "polícia"
+msgstr "полиция"
+
+#: src/editor/Stamps.cpp:54
+msgid "bicicleta"
+msgstr "велосипед"
+
+#: src/editor/Stamps.cpp:54
+msgid "moto"
+msgstr "мопед"
+
+#: src/editor/Stamps.cpp:54
+msgid "trem"
+msgstr "поезд"
+
+#: src/editor/Stamps.cpp:54
+msgid "avião"
+msgstr "самолёт"
+
+#: src/editor/Stamps.cpp:54
+msgid "navio"
+msgstr "корабль"
+
+#: src/editor/Stamps.cpp:54
+msgid "veleiro"
+msgstr "парусник"
+
+#: src/editor/Stamps.cpp:54
+msgid "helicóptero"
+msgstr "вертолёт"
+
+#: src/editor/Stamps.cpp:54
+msgid "mapa"
+msgstr "карта"
+
+#: src/editor/Stamps.cpp:54
+msgid "bússola"
+msgstr "компас"
+
+#: src/editor/Stamps.cpp:54
+msgid "montanha"
+msgstr "гора"
+
+#: src/editor/Stamps.cpp:54
+msgid "praia"
+msgstr "пляж"
+
+#: src/editor/Stamps.cpp:54
+msgid "ilha"
+msgstr "остров"
+
+#: src/editor/Stamps.cpp:54
+msgid "acampamento"
+msgstr "кемпинг"
+
+#: src/editor/Stamps.cpp:54
+msgid "cidade"
+msgstr "город"
+
+#: src/editor/Stamps.cpp:54
+msgid "prédio escritório"
+msgstr "офисное здание"
+
+#: src/editor/Stamps.cpp:54
+msgid "hospital"
+msgstr "больница"
+
+#: src/editor/Stamps.cpp:54
+msgid "banco"
+msgstr "банк"
+
+#: src/editor/Stamps.cpp:54
+msgid "hotel"
+msgstr "отель"
+
+#: src/editor/Stamps.cpp:54
+msgid "escola"
+msgstr "школа"
+
+#: src/editor/Stamps.cpp:54
+msgid "igreja"
+msgstr "церковь"
+
+#: src/editor/Stamps.cpp:54
+msgid "estátua"
+msgstr "статуя"
+
+#: src/editor/Stamps.cpp:54
+msgid "torre"
+msgstr "башня"
+
+#: src/editor/Stamps.cpp:54
+msgid "terra mundo"
+msgstr "земля мир"
+
+#: src/editor/Stamps.cpp:54
+msgid "posto combustível"
+msgstr "заправка"
+
+#: src/editor/Stamps.cpp:54
+msgid "semáforo"
+msgstr "светофор"
+
+#: src/editor/Stamps.cpp:54
+msgid "estacionamento"
+msgstr "парковка"
+
+#: src/editor/Stamps.cpp:54
+msgid "mala"
+msgstr "чемодан"
+
+#: src/editor/Stamps.cpp:54
+msgid "local pino"
+msgstr "метка места"
+
+#: src/editor/Video.cpp:153 src/editor/Video.cpp:288
+msgid "Não foi possível abrir o vídeo."
+msgstr "Не удалось открыть видео."
+
+#: src/editor/Video.cpp:159
+msgid "Formato de vídeo não suportado."
+msgstr "Неподдерживаемый формат видео."
+
+#: src/editor/Video.cpp:188
+msgid "Não foi possível criar o arquivo de saída."
+msgstr "Не удалось создать выходной файл."
+
+#: src/editor/Video.cpp:198
+msgid "Codificador H.264 indisponível."
+msgstr "Кодировщик H.264 недоступен."
+
+#: src/editor/Video.cpp:205
+msgid "Entrada de vídeo recusada."
+msgstr "Видеовход отклонён."
+
+#: src/editor/Video.cpp:216
+msgid "Codificador AAC indisponível."
+msgstr "Кодировщик AAC недоступен."
+
+#: src/editor/Video.cpp:218
+msgid "Falha ao iniciar a gravação."
+msgstr "Не удалось начать запись файла."
+
+#: src/editor/Video.cpp:230
+#, c-format
+msgid "Falha ao ler o vídeo (0x%08X)."
+msgstr "Ошибка чтения видео (0x%08X)."
+
+#: src/editor/Video.cpp:263
+msgid "Falha ao codificar quadro."
+msgstr "Ошибка кодирования кадра."
+
+#: src/editor/Video.cpp:270
+msgid "Falha ao codificar áudio."
+msgstr "Ошибка кодирования звука."
+
+#: src/editor/Video.cpp:273 src/editor/Video.cpp:313
+msgid "Cancelado."
+msgstr "Отменено."
+
+#: src/editor/Video.cpp:274
+msgid "Falha ao finalizar o MP4."
+msgstr "Ошибка завершения MP4."
+
+#: src/editor/Video.cpp:294
+msgid "Não foi possível criar o GIF."
+msgstr "Не удалось создать GIF."
+
+#: src/editor/Video.cpp:314
+msgid "Nenhum quadro no intervalo."
+msgstr "В диапазоне нет кадров."
+
+#: src/editor/Video.cpp:464 src/editor/Video.cpp:559
+msgid "▶ Reproduzir"
+msgstr "▶ Воспроизвести"
+
+#: src/editor/Video.cpp:464
+msgid "◀ Quadro"
+msgstr "◀ Кадр"
+
+#: src/editor/Video.cpp:464
+msgid "Quadro ▶"
+msgstr "Кадр ▶"
+
+#: src/editor/Video.cpp:464
+msgid "[ Início"
+msgstr "[ Начало"
+
+#: src/editor/Video.cpp:464
+msgid "Fim ]"
+msgstr "Конец ]"
+
+#: src/editor/Video.cpp:465
+msgid "✂ Cortar seleção"
+msgstr "✂ Вырезать выделение"
+
+#: src/editor/Video.cpp:465
+msgid "Desfazer corte"
+msgstr "Отменить вырезание"
+
+#: src/editor/Video.cpp:465
+msgid "Salvar quadro"
+msgstr "Сохранить кадр"
+
+#: src/editor/Video.cpp:465
+msgid "Criar GIF…"
+msgstr "Создать GIF…"
+
+#: src/editor/Video.cpp:466
+msgid "Salvar MP4…"
+msgstr "Сохранить MP4…"
+
+#: src/editor/Video.cpp:466
+msgid "Abrir no player"
+msgstr "Открыть в проигрывателе"
+
+#: src/editor/Video.cpp:549
+msgid "❚❚ Pausar"
+msgstr "❚❚ Пауза"
+
+#: src/editor/Video.cpp:580
+msgid "Não foi possível abrir o vídeo (somente MP4)."
+msgstr "Не удалось открыть видео (только MP4)."
+
+#: src/editor/Video.cpp:589
+msgid "trecho cortado"
+msgstr "вырезанный фрагмент"
+
+#: src/editor/Video.cpp:613
+#, c-format
+msgid "   •   %d×%d @ %.0f qps"
+msgstr "   •   %d×%d @ %.0f к/с"
+
+#: src/editor/Video.cpp:614
+msgid "   •   duração após cortes: "
+msgstr "   •   длительность после вырезок: "
+
+#: src/editor/Video.cpp:615
+msgid "   •   seleção: "
+msgstr "   •   выделение: "
+
+#: src/editor/Video.cpp:627
+msgid "Vídeo MP4 (*.mp4)|*.mp4|"
+msgstr "Видео MP4 (*.mp4)|*.mp4|"
+
+#: src/editor/Video.cpp:629
+msgid "Salvar vídeo"
+msgstr "Сохранить видео"
+
+#: src/editor/Video.cpp:630
+msgid "Escolha um arquivo diferente do original."
+msgstr "Выберите файл, отличный от исходного."
+
+#: src/editor/Video.cpp:633
+msgid "Salvando vídeo…"
+msgstr "Сохранение видео…"
+
+#: src/editor/Video.cpp:634
+msgid "Não foi possível salvar o vídeo.\n"
+msgstr "Не удалось сохранить видео.\n"
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: a seleção marcada."
+msgstr "Диапазон: отмеченное выделение."
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
+msgstr "Диапазон: всё видео (отметьте начало/конец, чтобы ограничить)."
+
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+msgid "Cores"
+msgstr "Цвета"
+
+#: src/editor/Video.cpp:644
+msgid "256 cores"
+msgstr "256 цветов"
+
+#: src/editor/Video.cpp:644
+msgid "16 cores (arquivo menor)"
+msgstr "16 цветов (файл меньше)"
+
+#: src/editor/Video.cpp:645
+msgid "Pontilhado (dithering)"
+msgstr "Дизеринг"
+
+#: src/editor/Video.cpp:646
+msgid "Quadros delta (só o que mudou)"
+msgstr "Дельта-кадры (только изменения)"
+
+#: src/editor/Video.cpp:648
+msgid "Criar GIF animado"
+msgstr "Создать анимированный GIF"
+
+#: src/editor/Video.cpp:649
+msgid "GIF animado (*.gif)|*.gif|"
+msgstr "Анимированный GIF (*.gif)|*.gif|"
+
+#: src/editor/Video.cpp:651
+msgid "Salvar GIF"
+msgstr "Сохранить GIF"
+
+#: src/editor/Video.cpp:657
+msgid "Criando GIF…"
+msgstr "Создание GIF…"
+
+#: src/editor/Video.cpp:660
+msgid "Não foi possível criar o GIF.\n"
+msgstr "Не удалось создать GIF.\n"
+
+#: src/editor/Video.cpp:733
+msgid "Marque o início e o fim do trecho a remover."
+msgstr "Отметьте начало и конец удаляемого фрагмента."
+
+#: src/editor/main.cpp:96
+msgid " — Snapnab Editor"
+msgstr " — Snapnab Editor"
+
+#: src/editor/main.cpp:112
+msgid "Vídeo: "
+msgstr "Видео: "
+
+#: src/editor/main.cpp:113
+#, c-format
+msgid "%d × %d px"
+msgstr "%d × %d пкс"
+
+#: src/editor/main.cpp:114
+msgid ""
+"\n"
+"Captura: "
+msgstr ""
+"\n"
+"Снимок: "
+
+#: src/editor/main.cpp:115
+msgid ""
+"\n"
+"Aplicativo: "
+msgstr ""
+"\n"
+"Приложение: "
+
+#: src/editor/main.cpp:116
+msgid ""
+"\n"
+"Janela: "
+msgstr ""
+"\n"
+"Окно: "
+
+#: src/editor/main.cpp:117
+#, c-format
+msgid ""
+"\n"
+"Objetos: %zu"
+msgstr ""
+"\n"
+"Объекты: %zu"
+
+#: src/editor/main.cpp:118
+msgid ""
+"\n"
+"Etiquetas: "
+msgstr ""
+"\n"
+"Теги: "
+
+#: src/editor/main.cpp:255
+msgid "Arquivo não encontrado:\n"
+msgstr "Файл не найден:\n"
+
+#: src/editor/main.cpp:258
+msgid "Não foi possível abrir:\n"
+msgstr "Не удалось открыть:\n"
+
+#: src/editor/main.cpp:262
+msgid "Arquivo importado"
+msgstr "Импортированный файл"
+
+#: src/editor/main.cpp:283
+#, c-format
+msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
+msgstr "%d × %d пкс  •  объектов: %zu  •  шагов отмены: %zu"
+
+#: src/editor/main.cpp:348
+msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
+msgstr "Сначала сделайте выделение (инструмент «Выделение») или вырезание."
+
+#: src/editor/main.cpp:351
+msgid "Ângulo (graus, horário)"
+msgstr "Угол (градусы, по часовой стрелке)"
+
+#: src/editor/main.cpp:351 src/editor/main.cpp:483
+msgid "Cor de fundo"
+msgstr "Цвет фона"
+
+#: src/editor/main.cpp:352
+msgid "Fundo transparente"
+msgstr "Прозрачный фон"
+
+#: src/editor/main.cpp:353
+msgid "Os objetos serão mesclados à imagem."
+msgstr "Объекты будут объединены с изображением."
+
+#: src/editor/main.cpp:361
+msgid "ou escala (%)"
+msgstr "или масштаб (%)"
+
+#: src/editor/main.cpp:361
+msgid "Manter proporção"
+msgstr "Сохранять пропорции"
+
+#: src/editor/main.cpp:379
+msgid "Âncora"
+msgstr "Привязка"
+
+#: src/editor/main.cpp:379
+msgid "Superior esquerda"
+msgstr "Вверху слева"
+
+#: src/editor/main.cpp:379
+msgid "Superior"
+msgstr "Вверху"
+
+#: src/editor/main.cpp:379
+msgid "Superior direita"
+msgstr "Вверху справа"
+
+#: src/editor/main.cpp:379
+msgid "Centro"
+msgstr "По центру"
+
+#: src/editor/main.cpp:380
+msgid "Inferior esquerda"
+msgstr "Внизу слева"
+
+#: src/editor/main.cpp:380
+msgid "Inferior"
+msgstr "Внизу"
+
+#: src/editor/main.cpp:380
+msgid "Inferior direita"
+msgstr "Внизу справа"
+
+#: src/editor/main.cpp:381
+msgid "Cor do canvas"
+msgstr "Цвет холста"
+
+#: src/editor/main.cpp:381 src/editor/main.cpp:483
+msgid "Transparente"
+msgstr "Прозрачный"
+
+#: src/editor/main.cpp:382
+msgid "Tamanho do canvas"
+msgstr "Размер холста"
+
+#: src/editor/main.cpp:402
+msgid "Nada a cortar: as bordas não são uniformes."
+msgstr "Нечего обрезать: края неоднородны."
+
+#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como"
+msgstr "Сохранить как"
+
+#: src/editor/main.cpp:446
+msgid "Qualidade JPEG (1–100)"
+msgstr "Качество JPEG (1–100)"
+
+#: src/editor/main.cpp:457
+msgid "Não foi possível salvar:\n"
+msgstr "Не удалось сохранить:\n"
+
+#: src/editor/main.cpp:458
+msgid "Salvo em "
+msgstr "Сохранено в "
+
+#: src/editor/main.cpp:469
+msgid "Salvo na biblioteca: "
+msgstr "Сохранено в библиотеке: "
+
+#: src/editor/main.cpp:477
+msgid "Da área de transferência"
+msgstr "Из буфера обмена"
+
+#: src/editor/main.cpp:478
+msgid "Imagem nova criada a partir da área de transferência."
+msgstr "Создано новое изображение из буфера обмена."
+
+#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+msgid "Nova imagem"
+msgstr "Новое изображение"
+
+#: src/editor/main.cpp:485
+msgid "Imagem nova"
+msgstr "Новое изображение"
+
+#: src/editor/main.cpp:510
+msgid "Enviar para a Lixeira?\n"
+msgstr "Отправить в корзину?\n"
+
+#: src/editor/main.cpp:511
+#, c-format
+msgid "Enviar %zu itens da biblioteca para a Lixeira?"
+msgstr "Отправить элементы библиотеки в корзину (%zu)?"
+
+#: src/editor/main.cpp:524
+msgid "Item enviado para a Lixeira."
+msgstr "Элемент отправлен в корзину."
+
+#: src/editor/main.cpp:524
+#, c-format
+msgid "%zu itens enviados para a Lixeira."
+msgstr "Элементов отправлено в корзину: %zu."
+
+#: src/editor/main.cpp:534
+msgid "Exportar para a pasta"
+msgstr "Экспорт в папку"
+
+#: src/editor/main.cpp:552
+msgid "Formato das imagens"
+msgstr "Формат изображений"
+
+#: src/editor/main.cpp:553
+msgid "Vídeos são copiados em MP4."
+msgstr "Видео копируются в MP4."
+
+#: src/editor/main.cpp:554
+#, c-format
+msgid "Exportar %zu item(ns)"
+msgstr "Экспорт элементов: %zu"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid "%d item(ns) exportado(s) para %s"
+msgstr "Экспортировано элементов: %d в %s"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid " — %d falha(s)"
+msgstr " — ошибок: %d"
+
+#: src/editor/main.cpp:621
+msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
+msgstr "Почтовый клиент MAPI не настроен. Изображение сохранено в:\n"
+
+#: src/editor/main.cpp:627
+msgid "Captura: "
+msgstr "Снимок: "
+
+#: src/editor/main.cpp:631
+#, c-format
+msgid "Falha ao enviar e-mail (MAPI %u)."
+msgstr "Ошибка отправки письма (MAPI %u)."
+
+#: src/editor/main.cpp:638
+msgid "Abrir em programa externo"
+msgstr "Открыть во внешней программе"
+
+#: src/editor/main.cpp:651
+msgid "OCR indisponível: "
+msgstr "OCR недоступен: "
+
+#: src/editor/main.cpp:651 src/editor/main.cpp:820
+msgid "Grab Text"
+msgstr "Захват текста"
+
+#: src/editor/main.cpp:652
+msgid "(nenhum texto reconhecido)"
+msgstr "(текст не распознан)"
+
+#: src/editor/main.cpp:653
+msgid "Grab Text — texto reconhecido"
+msgstr "Захват текста — распознанный текст"
+
+#: src/editor/main.cpp:668
+msgid "Nada para colar."
+msgstr "Нечего вставить."
+
+#: src/editor/main.cpp:669
+msgid "Colado"
+msgstr "Вставлено"
+
+#: src/editor/main.cpp:705
+msgid "Nova &captura\tCtrl+Shift+N"
+msgstr "Новый &снимок\tCtrl+Shift+N"
+
+#: src/editor/main.cpp:705
+msgid "Nova &gravação de vídeo"
+msgstr "Новая &запись видео"
+
+#: src/editor/main.cpp:706
+msgid "Novo da área de &transferência"
+msgstr "Новый из &буфера обмена"
+
+#: src/editor/main.cpp:706
+msgid "Nova &imagem…"
+msgstr "Новое &изображение…"
+
+#: src/editor/main.cpp:707
+msgid "&Abrir…\tCtrl+O"
+msgstr "&Открыть…\tCtrl+O"
+
+#: src/editor/main.cpp:707
+msgid "&Salvar\tCtrl+S"
+msgstr "&Сохранить\tCtrl+S"
+
+#: src/editor/main.cpp:707
+msgid "Salvar &como…\tCtrl+Shift+S"
+msgstr "Сохранить &как…\tCtrl+Shift+S"
+
+#: src/editor/main.cpp:708
+msgid "&Duplicar"
+msgstr "&Дублировать"
+
+#: src/editor/main.cpp:708
+msgid "&Excluir (Lixeira)"
+msgstr "&Удалить (в корзину)"
+
+#: src/editor/main.cpp:709
+msgid "&Imprimir…\tCtrl+P"
+msgstr "&Печать…\tCtrl+P"
+
+#: src/editor/main.cpp:709
+msgid "Enviar por &e-mail…"
+msgstr "Отправить по &почте…"
+
+#: src/editor/main.cpp:709
+msgid "Abrir em &programa externo…"
+msgstr "Открыть во в&нешней программе…"
+
+#: src/editor/main.cpp:710
+msgid "&Fechar documento\tCtrl+W"
+msgstr "&Закрыть документ\tCtrl+W"
+
+#: src/editor/main.cpp:710
+msgid "Sai&r"
+msgstr "В&ыход"
+
+#: src/editor/main.cpp:711
+msgid "&Desfazer\tCtrl+Z"
+msgstr "&Отменить\tCtrl+Z"
+
+#: src/editor/main.cpp:711
+msgid "&Refazer\tCtrl+Y"
+msgstr "&Повторить\tCtrl+Y"
+
+#: src/editor/main.cpp:711
+msgid "Desfazer &tudo"
+msgstr "Отменить &всё"
+
+#: src/editor/main.cpp:712
+msgid "Recor&tar\tCtrl+X"
+msgstr "&Вырезать\tCtrl+X"
+
+#: src/editor/main.cpp:712
+msgid "&Copiar\tCtrl+C"
+msgstr "&Копировать\tCtrl+C"
+
+#: src/editor/main.cpp:712
+msgid "Copiar t&udo\tCtrl+Shift+C"
+msgstr "Копировать в&сё\tCtrl+Shift+C"
+
+#: src/editor/main.cpp:713
+msgid "C&olar\tCtrl+V"
+msgstr "Вст&авить\tCtrl+V"
+
+#: src/editor/main.cpp:713
+msgid "E&xcluir\tDel"
+msgstr "&Удалить\tDel"
+
+#: src/editor/main.cpp:713
+msgid "Selecionar tu&do\tCtrl+A"
+msgstr "Выделить &всё\tCtrl+A"
+
+#: src/editor/main.cpp:714
+msgid "Cortar para a &seleção"
+msgstr "Обрезать по &выделению"
+
+#: src/editor/main.cpp:715
+msgid "&Grab Text (OCR)\tCtrl+Shift+O"
+msgstr "&Захват текста (OCR)\tCtrl+Shift+O"
+
+#: src/editor/main.cpp:717
+msgid "&Borda"
+msgstr "&Рамка"
+
+#: src/editor/main.cpp:717
+msgid "Bor&das"
+msgstr "&Края"
+
+#: src/editor/main.cpp:717
+msgid "&Informações da captura"
+msgstr "&Сведения о снимке"
+
+#: src/editor/main.cpp:718
+msgid "&Perspectiva"
+msgstr "&Перспектива"
+
+#: src/editor/main.cpp:718
+msgid "D&obra de página"
+msgstr "&Загнутый угол"
+
+#: src/editor/main.cpp:718
+msgid "&Sombra"
+msgstr "&Тень"
+
+#: src/editor/main.cpp:719
+msgid "&Filtros"
+msgstr "&Фильтры"
+
+#: src/editor/main.cpp:719
+msgid "&Ajuste de cores"
+msgstr "&Коррекция цветов"
+
+#: src/editor/main.cpp:719
+msgid "Substituição de co&r"
+msgstr "&Замена цвета"
+
+#: src/editor/main.cpp:720
+msgid "Spotlight e &lupa"
+msgstr "Прожектор и &лупа"
+
+#: src/editor/main.cpp:720
+msgid "&Marca d'água"
+msgstr "&Водяной знак"
+
+#: src/editor/main.cpp:726
+msgid "À &esquerda"
+msgstr "По &левому краю"
+
+#: src/editor/main.cpp:726
+msgid "Ao &centro"
+msgstr "По &центру"
+
+#: src/editor/main.cpp:726
+msgid "À &direita"
+msgstr "По &правому краю"
+
+#: src/editor/main.cpp:727
+msgid "Em &cima"
+msgstr "По &верху"
+
+#: src/editor/main.cpp:727
+msgid "No &meio"
+msgstr "По &середине"
+
+#: src/editor/main.cpp:727
+msgid "Em&baixo"
+msgstr "По &низу"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para a &frente\tCtrl+Shift+F"
+msgstr "Переместить &вперёд\tCtrl+Shift+F"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para o &primeiro plano"
+msgstr "На &передний план"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para &trás\tCtrl+Shift+B"
+msgstr "Переместить &назад\tCtrl+Shift+B"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para o plano de &fundo"
+msgstr "На &задний план"
+
+#: src/editor/main.cpp:731
+msgid "&Alinhar"
+msgstr "&Выровнять"
+
+#: src/editor/main.cpp:733
+msgid "Espelhar na &vertical"
+msgstr "Отразить по &вертикали"
+
+#: src/editor/main.cpp:734
+msgid "Espelhar na &horizontal"
+msgstr "Отразить по &горизонтали"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &horário\tCtrl+R"
+msgstr "По &часовой стрелке\tCtrl+R"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &anti-horário"
+msgstr "Против ч&асовой стрелки"
+
+#: src/editor/main.cpp:735
+msgid "&180 graus"
+msgstr "&180 градусов"
+
+#: src/editor/main.cpp:736
+msgid "Ângulo &personalizado…"
+msgstr "&Произвольный угол…"
+
+#: src/editor/main.cpp:738
+msgid "Ferramen&tas"
+msgstr "&Инструменты"
+
+#: src/editor/main.cpp:739
+msgid "&Efeitos"
+msgstr "&Эффекты"
+
+#: src/editor/main.cpp:741
+msgid "&Organizar"
+msgstr "&Упорядочить"
+
+#: src/editor/main.cpp:742
+msgid "A&grupar\tCtrl+Shift+G"
+msgstr "&Сгруппировать\tCtrl+Shift+G"
+
+#: src/editor/main.cpp:743
+msgid "Desagr&upar\tCtrl+Shift+U"
+msgstr "&Разгруппировать\tCtrl+Shift+U"
+
+#: src/editor/main.cpp:745
+msgid "&Mesclar\tCtrl+T"
+msgstr "&Объединить\tCtrl+T"
+
+#: src/editor/main.cpp:746
+msgid "Mesclar t&udo\tCtrl+Shift+T"
+msgstr "Объединить &всё\tCtrl+Shift+T"
+
+#: src/editor/main.cpp:748
+msgid "A&parar"
+msgstr "О&брезать края"
+
+#: src/editor/main.cpp:749
+msgid "&Redimensionar imagem…"
+msgstr "&Размер изображения…"
+
+#: src/editor/main.cpp:750
+msgid "Redimensionar &canvas…"
+msgstr "Размер &холста…"
+
+#: src/editor/main.cpp:751
+msgid "Aplicar mode&lo…\tCtrl+Alt+C"
+msgstr "Применить &шаблон…\tCtrl+Alt+C"
+
+#: src/editor/main.cpp:753
+msgid "&Girar"
+msgstr "&Повернуть"
+
+#: src/editor/main.cpp:754
+msgid "Encai&xe no canvas\tCtrl+;"
+msgstr "При&вязка к холсту\tCtrl+;"
+
+#: src/editor/main.cpp:755
+msgid "Cor do canva&s…"
+msgstr "Цвет х&олста…"
+
+#: src/editor/main.cpp:757
+msgid "Etiquetar &imagem…"
+msgstr "Пометить &изображение…"
+
+#: src/editor/main.cpp:758
+msgid "&Ampliar\tCtrl++"
+msgstr "&Увеличить\tCtrl++"
+
+#: src/editor/main.cpp:758
+msgid "&Reduzir\tCtrl+-"
+msgstr "У&меньшить\tCtrl+-"
+
+#: src/editor/main.cpp:758
+msgid "&Tamanho real\tCtrl+1"
+msgstr "&Реальный размер\tCtrl+1"
+
+#: src/editor/main.cpp:759
+msgid "A&justar à janela\tCtrl+0"
+msgstr "По размеру &окна\tCtrl+0"
+
+#: src/editor/main.cpp:759
+msgid "&Cor de fundo da área…"
+msgstr "&Цвет фона области…"
+
+#: src/editor/main.cpp:760
+msgid "Painel de &efeitos"
+msgstr "Панель &эффектов"
+
+#: src/editor/main.cpp:760
+msgid "&Biblioteca"
+msgstr "&Библиотека"
+
+#: src/editor/main.cpp:761
+msgid "Capturas &recentes (bandeja)"
+msgstr "&Недавние снимки (лента)"
+
+#: src/editor/main.cpp:762
+msgid "&Personalizar a barra de ferramentas…"
+msgstr "&Настроить панель инструментов…"
+
+#: src/editor/main.cpp:763
+msgid "&Atalhos de teclado"
+msgstr "&Сочетания клавиш"
+
+#: src/editor/main.cpp:763
+msgid "&Sobre o Snapnab Editor"
+msgstr "&О Snapnab Editor"
+
+#: src/editor/main.cpp:764
+msgid "&Arquivo"
+msgstr "&Файл"
+
+#: src/editor/main.cpp:765
+msgid "&Editar"
+msgstr "&Правка"
+
+#: src/editor/main.cpp:766
+msgid "&Imagem"
+msgstr "&Изображение"
+
+#: src/editor/main.cpp:767
+msgid "E&xibir"
+msgstr "&Вид"
+
+#: src/editor/main.cpp:768
+msgid "A&juda"
+msgstr "&Справка"
+
+#: src/editor/main.cpp:796
+msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
+msgstr "Избранное: ваши любимые стили всех инструментов"
+
+#: src/editor/main.cpp:797
+msgid "Seta (A)"
+msgstr "Стрелка (A)"
+
+#: src/editor/main.cpp:797
+msgid "Texto (T)"
+msgstr "Текст (T)"
+
+#: src/editor/main.cpp:797
+msgid "Balão (C)"
+msgstr "Выноска (C)"
+
+#: src/editor/main.cpp:798
+msgid "Forma: retângulo, elipse… (R)"
+msgstr "Фигура: прямоугольник, эллипс… (R)"
+
+#: src/editor/main.cpp:798
+msgid "Carimbo (K)"
+msgstr "Штамп (K)"
+
+#: src/editor/main.cpp:799
+msgid "Preencher (F)"
+msgstr "Заливка (F)"
+
+#: src/editor/main.cpp:799
+msgid "Seleção e Smart Move (S)"
+msgstr "Выделение и Smart Move (S)"
+
+#: src/editor/main.cpp:800
+msgid "Varinha mágica: seleciona pela cor"
+msgstr "Волшебная палочка: выделяет по цвету"
+
+#: src/editor/main.cpp:800
+msgid "Cortar (X)"
+msgstr "Обрезка (X)"
+
+#: src/editor/main.cpp:801
+msgid "Recortar faixa (U)"
+msgstr "Вырезать полосу (U)"
+
+#: src/editor/main.cpp:801
+msgid "Caneta (P)"
+msgstr "Перо (P)"
+
+#: src/editor/main.cpp:801
+msgid "Linha (L)"
+msgstr "Линия (L)"
+
+#: src/editor/main.cpp:802
+msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
+msgstr "Маркер: нарисуйте прямоугольник выбранного цвета и непрозрачности (H)"
+
+#: src/editor/main.cpp:803
+msgid "Passos numerados (N)"
+msgstr "Нумерованные шаги (N)"
+
+#: src/editor/main.cpp:803
+msgid "Borracha (E)"
+msgstr "Ластик (E)"
+
+#: src/editor/main.cpp:804
+msgid "Ocultar: desfoque/pixelado (B)"
+msgstr "Скрытие: размытие/пикселизация (B)"
+
+#: src/editor/main.cpp:804
+msgid "Mover e Smart Move (V)"
+msgstr "Перемещение и Smart Move (V)"
+
+#: src/editor/main.cpp:805
+msgid "Lupa (Z)"
+msgstr "Лупа (Z)"
+
+#: src/editor/main.cpp:805
+msgid "Destaque/spotlight (G)"
+msgstr "Прожектор (G)"
+
+#: src/editor/main.cpp:806
+msgid "Conta-gotas (I)"
+msgstr "Пипетка (I)"
+
+#: src/editor/main.cpp:812
+msgid "Salvar como arquivo (PNG, JPG, PDF…)"
+msgstr "Сохранить в файл (PNG, JPG, PDF…)"
+
+#: src/editor/main.cpp:812
+msgid "E-mail"
+msgstr "Почта"
+
+#: src/editor/main.cpp:812
+msgid "Enviar por e-mail"
+msgstr "Отправить по почте"
+
+#: src/editor/main.cpp:814
+msgid "Copiar a imagem inteira"
+msgstr "Копировать всё изображение"
+
+#: src/editor/main.cpp:814
+msgid "Impressora"
+msgstr "Принтер"
+
+#: src/editor/main.cpp:814
+msgid "Imprimir a imagem"
+msgstr "Напечатать изображение"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer"
+msgstr "Отменить"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer (Ctrl+Z)"
+msgstr "Отменить (Ctrl+Z)"
+
+#: src/editor/main.cpp:816
+msgid "Refazer"
+msgstr "Повторить"
+
+#: src/editor/main.cpp:816
+msgid "Refazer (Ctrl+Y)"
+msgstr "Повторить (Ctrl+Y)"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem em branco"
+msgstr "Новое пустое изображение"
+
+#: src/editor/main.cpp:817
+msgid "Da área de transf."
+msgstr "Из буфера"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem da área de transferência"
+msgstr "Новое изображение из буфера обмена"
+
+#: src/editor/main.cpp:818
+msgid "Abrir arquivo (Ctrl+O)"
+msgstr "Открыть файл (Ctrl+O)"
+
+#: src/editor/main.cpp:818
+msgid "Salvar"
+msgstr "Сохранить"
+
+#: src/editor/main.cpp:818
+msgid "Salvar na biblioteca (Ctrl+S)"
+msgstr "Сохранить в библиотеку (Ctrl+S)"
+
+#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como arquivo (Ctrl+Shift+S)"
+msgstr "Сохранить в файл (Ctrl+Shift+S)"
+
+#: src/editor/main.cpp:819
+msgid "Duplicar a imagem"
+msgstr "Дублировать изображение"
+
+#: src/editor/main.cpp:820
+msgid "Excluir o objeto selecionado (Del)"
+msgstr "Удалить выбранный объект (Del)"
+
+#: src/editor/main.cpp:820
+msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
+msgstr "Распознать текст на изображении (Ctrl+Shift+T)"
+
+#: src/editor/main.cpp:821
+msgid "Excluir imagem"
+msgstr "Удалить изображение"
+
+#: src/editor/main.cpp:821
+msgid "Enviar a imagem para a Lixeira"
+msgstr "Отправить изображение в корзину"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar tudo"
+msgstr "Объединить всё"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar todos os objetos na imagem"
+msgstr "Объединить все объекты с изображением"
+
+#: src/editor/main.cpp:822
+msgid "Girar 90° no sentido horário (Ctrl+R)"
+msgstr "Повернуть на 90° по часовой стрелке (Ctrl+R)"
+
+#: src/editor/main.cpp:823
+msgid "Cortar as bordas de cor uniforme"
+msgstr "Обрезать края однородного цвета"
+
+#: src/editor/main.cpp:854
+msgid "Efeito: "
+msgstr "Эффект: "
+
+#: src/editor/main.cpp:854
+msgid " — abre os ajustes no painel de efeitos"
+msgstr " — открывает настройки на панели эффектов"
+
+#: src/editor/main.cpp:957
+msgid "Ferramenta: "
+msgstr "Инструмент: "
+
+#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+msgid "Ampliar parte da imagem"
+msgstr "Увеличить часть изображения"
+
+#: src/editor/main.cpp:1021
+msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "Увеличивайте части изображения, чтобы выделить важные детали. Перетащите, чтобы создать лупу; при отдельной линзе жёлтый маркер выбирает увеличиваемую область."
+
+#: src/editor/main.cpp:1036
+msgid "Entendi!"
+msgstr "Понятно!"
+
+#: src/editor/main.cpp:1083
+msgid "Ferramentas de desenho"
+msgstr "Инструменты рисования"
+
+#: src/editor/main.cpp:1084
+msgid "Itens de menu"
+msgstr "Пункты меню"
+
+#: src/editor/main.cpp:1085
+msgid "Destinos de compartilhamento"
+msgstr "Способы отправки"
+
+#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+msgid "Efeitos"
+msgstr "Эффекты"
+
+#: src/editor/main.cpp:1090
+msgid "Diversos"
+msgstr "Разное"
+
+#: src/editor/main.cpp:1106
+msgid "Personalização cancelada."
+msgstr "Настройка отменена."
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas personalizada."
+msgstr "Пользовательская панель инструментов."
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas automática."
+msgstr "Автоматическая панель инструментов."
+
+#: src/editor/main.cpp:1134
+msgid "Personalizar a barra…"
+msgstr "Настроить панель…"
+
+#: src/editor/main.cpp:1136
+msgid "Voltar ao padrão (automática)"
+msgstr "Вернуть по умолчанию (автоматическая)"
+
+#: src/editor/main.cpp:1143
+msgid "Atalhos do Snapnab Editor"
+msgstr "Сочетания клавиш Snapnab Editor"
+
+#: src/editor/main.cpp:1144
+msgid ""
+"Ferramentas (com a área de pintura em foco):\n"
+"  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
+"  T Texto   C Balão   N Passo   K Carimbo   B Ocultar   G Destaque   Z Lupa\n"
+"  F Preencher   E Borracha   X Cortar   S Seleção   U Recortar faixa   I Conta-gotas\n"
+"\n"
+"Edição:  Ctrl+Z/Ctrl+Y desfazer/refazer • Ctrl+C/X/V • Ctrl+Shift+C copiar tudo • Del excluir\n"
+"         Setas movem o objeto (Shift = 10 px) • Shift restringe proporção/ângulo\n"
+"         Duplo clique edita texto • Esc cancela • Enter aplica o recorte\n"
+"Exibir:  Ctrl+roda = zoom • Ctrl+0 ajustar • Ctrl+1 tamanho real • botão do meio arrasta\n"
+"Arquivo: Ctrl+S salvar na biblioteca • Ctrl+Shift+S salvar como (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"Texto:   Ctrl+Shift+O Grab Text (OCR)\n"
+"Imagem:  Ctrl+Shift+F/B um passo à frente/atrás • Ctrl+T mesclar o objeto • Ctrl+Shift+T mesclar tudo • Ctrl+; encaixe\n"
+"Vídeo:   Espaço reproduz/pausa • ←/→ quadro • I/O marcam início/fim\n"
+msgstr ""
+"Инструменты (когда активен холст):\n"
+"  V Перемещение   A Стрелка   L Линия   R Фигура   P Перо   H Маркер\n"
+"  T Текст   C Выноска   N Шаг   K Штамп   B Скрытие   G Прожектор   Z Лупа\n"
+"  F Заливка   E Ластик   X Обрезка   S Выделение   U Вырезать полосу   I Пипетка\n"
+"\n"
+"Правка:   Ctrl+Z/Ctrl+Y отменить/повторить • Ctrl+C/X/V • Ctrl+Shift+C копировать всё • Del удалить\n"
+"          Стрелки двигают объект (Shift = 10 пкс) • Shift сохраняет пропорции/угол\n"
+"          Двойной щелчок изменяет текст • Esc отменяет • Enter применяет обрезку\n"
+"Вид:      Ctrl+колесо = масштаб • Ctrl+0 по размеру • Ctrl+1 реальный размер • средняя кнопка двигает\n"
+"Файл:     Ctrl+S сохранить в библиотеку • Ctrl+Shift+S сохранить как (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"Текст:    Ctrl+Shift+O Захват текста (OCR)\n"
+"Изображение: Ctrl+Shift+F/B на уровень вперёд/назад • Ctrl+T объединить объект • Ctrl+Shift+T объединить всё • Ctrl+; привязка\n"
+"Видео:    Пробел воспроизводит/ставит на паузу • ←/→ кадр • I/O отмечают начало/конец\n"
+
+#: src/editor/main.cpp:1169
+msgid "Imagem inteira copiada para a área de transferência."
+msgstr "Всё изображение скопировано в буфер обмена."
+
+#: src/editor/main.cpp:1174
+msgid "Arquivo…"
+msgstr "Файл…"
+
+#: src/editor/main.cpp:1176
+msgid "E-mail…"
+msgstr "Почта…"
+
+#: src/editor/main.cpp:1177
+msgid "Impressora…"
+msgstr "Принтер…"
+
+#: src/editor/main.cpp:1178
+msgid "Programa externo…"
+msgstr "Внешняя программа…"
+
+#: src/editor/main.cpp:1201
+msgid "Copiado."
+msgstr "Скопировано."
+
+#: src/editor/main.cpp:1226
+msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
+msgstr "Выберите два или больше объектов (Ctrl+щелчок или рамка инструментом «Перемещение»), чтобы сгруппировать их."
+
+#: src/editor/main.cpp:1228
+msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
+msgstr "Объекты сгруппированы. Изображение › Разгруппировать (Ctrl+Shift+U) разделяет их."
+
+#: src/editor/main.cpp:1233
+msgid "Grupo desfeito."
+msgstr "Группа расформирована."
+
+#: src/editor/main.cpp:1236
+msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
+msgstr "Шаблоны (объединение изображений) пока недоступны в Snapnab."
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
+msgstr "Привязка к холсту включена (Alt при перетаскивании временно отключает её)."
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas desligado."
+msgstr "Привязка к холсту выключена."
+
+#: src/editor/main.cpp:1245
+msgid "Etiquetas"
+msgstr "Теги"
+
+#: src/editor/main.cpp:1246
+msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
+msgstr "Разделяйте теги запятыми. Они сохраняются в снимке."
+
+#: src/editor/main.cpp:1247
+msgid "Etiquetar imagem"
+msgstr "Пометить изображение"
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas removidas."
+msgstr "Теги удалены."
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas: "
+msgstr "Теги: "
+
+#: src/editor/main.cpp:1267
+msgid ""
+"Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
+"OCR, exportação PDF e edição de vídeo (cortes e GIF)."
+msgstr ""
+"Редактирование снимков с векторными объектами, эффектами, Smart Move,\n"
+"OCR, экспортом в PDF и монтажом видео (вырезки и GIF)."
+
+#: src/editor/main.cpp:1270
+msgid "Sobre"
+msgstr "О программе"
+
+#: src/editor/main.cpp:1311
+msgid ""
+"SnapnabEditor.exe [opções] [arquivo…]\n"
+"\n"
+"/Open \"arquivo\"     abre um arquivo (.snap, imagem, .mp4)\n"
+"/NewFromClipboard   cria imagem a partir da área de transferência\n"
+"/restartwait        espera a instância anterior fechar"
+msgstr ""
+"SnapnabEditor.exe [параметры] [файл…]\n"
+"\n"
+"/Open \"файл\"       открывает файл (.snap, изображение, .mp4)\n"
+"/NewFromClipboard   создаёт изображение из буфера обмена\n"
+"/restartwait        ждёт закрытия предыдущего экземпляра"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "Zoom %d%%  ▾"
+msgstr "Масштаб %d%%  ▾"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "%d × %d px  ▾"
+msgstr "%d × %d пкс  ▾"
+
+#: src/editor/main.cpp:1409
+msgid "Propriedades"
+msgstr "Свойства"
+
+#: src/editor/main.cpp:1440
+msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
+msgstr "Сплошной контур вокруг изображения выбранной ширины и цвета."
+
+#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451
+msgid "Bordas e sombras"
+msgstr "Рамки и тени"
+
+#: src/editor/main.cpp:1443
+msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
+msgstr "Мягкая тень за изображением, отделяющая снимок от фона."
+
+#: src/editor/main.cpp:1444
+msgid "Deslocamento"
+msgstr "Смещение"
+
+#: src/editor/main.cpp:1447
+msgid "Perspectiva"
+msgstr "Перспектива"
+
+#: src/editor/main.cpp:1447
+msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
+msgstr "Наклоняет изображение, будто оно повёрнуто боком, стоит или лежит."
+
+#: src/editor/main.cpp:1448
+msgid "Horizontal"
+msgstr "По горизонтали"
+
+#: src/editor/main.cpp:1449
+msgid "Vertical"
+msgstr "По вертикали"
+
+#: src/editor/main.cpp:1450
+msgid "Inclinação"
+msgstr "Наклон"
+
+#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+msgid "Dobra de página"
+msgstr "Загнутый угол"
+
+#: src/editor/main.cpp:1451
+msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
+msgstr "Загибает угол изображения, как кончик листа бумаги."
+
+#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+msgid "Tamanho"
+msgstr "Размер"
+
+#: src/editor/main.cpp:1452
+msgid "Pequena"
+msgstr "Маленький"
+
+#: src/editor/main.cpp:1452
+msgid "Grande"
+msgstr "Большой"
+
+#: src/editor/main.cpp:1453
+msgid "Canto"
+msgstr "Угол"
+
+#: src/editor/main.cpp:1453
+msgid "Superior esquerdo"
+msgstr "Вверху слева"
+
+#: src/editor/main.cpp:1453
+msgid "Superior direito"
+msgstr "Вверху справа"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior direito"
+msgstr "Внизу справа"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior esquerdo"
+msgstr "Внизу слева"
+
+#: src/editor/main.cpp:1454
+msgid "Bordas"
+msgstr "Края"
+
+#: src/editor/main.cpp:1454
+msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
+msgstr "Рваный, волна, пила, акульи зубы, растворение или скос."
+
+#: src/editor/main.cpp:1459
+msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
+msgstr "Серый, сепия, инверсия, Ч/Б, рельеф, мозаика, резкость, размытие."
+
+#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+msgid "Relevo"
+msgstr "Рельеф"
+
+#: src/editor/main.cpp:1460
+msgid "Mosaico"
+msgstr "Мозаика"
+
+#: src/editor/main.cpp:1460
+msgid "Nitidez"
+msgstr "Резкость"
+
+#: src/editor/main.cpp:1463
+msgid "Ajuste de cores"
+msgstr "Коррекция цветов"
+
+#: src/editor/main.cpp:1463
+msgid "Brilho, contraste, gama, matiz e saturação."
+msgstr "Яркость, контраст, гамма, оттенок и насыщенность."
+
+#: src/editor/main.cpp:1466
+msgid "Gama"
+msgstr "Гамма"
+
+#: src/editor/main.cpp:1467
+msgid "Matiz"
+msgstr "Оттенок"
+
+#: src/editor/main.cpp:1469
+msgid "Troca uma cor por outra (ou por transparente)."
+msgstr "Заменяет один цвет другим (или прозрачностью)."
+
+#: src/editor/main.cpp:1470
+msgid "Cor atual"
+msgstr "Текущий цвет"
+
+#: src/editor/main.cpp:1470
+msgid "Tornar transparente"
+msgstr "Сделать прозрачным"
+
+#: src/editor/main.cpp:1472
+msgid "Spotlight e lupa"
+msgstr "Прожектор и лупа"
+
+#: src/editor/main.cpp:1472
+msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
+msgstr "Выделяет выбранную область (или центр изображения) и затемняет остальное."
+
+#: src/editor/main.cpp:1473
+msgid "Escurecer"
+msgstr "Затемнение"
+
+#: src/editor/main.cpp:1475
+msgid "Ampliar"
+msgstr "Увеличение"
+
+#: src/editor/main.cpp:1476
+msgid "Sombra na área em foco"
+msgstr "Тень в выделенной области"
+
+#: src/editor/main.cpp:1477
+msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
+msgstr "Полупрозрачный текст поверх изображения, один раз или мозаикой."
+
+#: src/editor/main.cpp:1478
+msgid "Confidencial"
+msgstr "Конфиденциально"
+
+#: src/editor/main.cpp:1479
+msgid "Repetir em mosaico"
+msgstr "Мозаикой"
+
+#: src/editor/main.cpp:1480
+msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
+msgstr "Текстовая полоса сверху или снизу; поддерживает {date} и {time}."
+
+#: src/editor/main.cpp:1483
+msgid "Cor da faixa"
+msgstr "Цвет полосы"
+
+#: src/editor/main.cpp:1572
+msgid "Borda e sombra"
+msgstr "Рамка и тень"
+
+#: src/editor/main.cpp:1573
+msgid "Papel rasgado"
+msgstr "Рваная бумага"
+
+#: src/editor/main.cpp:1576
+msgid "Serrilhado"
+msgstr "Зубчатый"
+
+#: src/editor/main.cpp:1578
+msgid "Chanfrado"
+msgstr "Скошенный"
+
+#: src/editor/main.cpp:1589
+msgid "Efeito"
+msgstr "Эффект"
+
+#: src/editor/main.cpp:1636
+msgid "Efeito aplicado: "
+msgstr "Эффект применён: "
+
+#: src/editor/main.cpp:1636
+msgid " (Ctrl+Z desfaz)"
+msgstr " (Ctrl+Z отменяет)"
+
+#: src/editor/main.cpp:1644
+msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
+msgstr "Прожектор: без выделения в фокусе центр изображения. Выберите область инструментом «Выделение»."
+
+#: src/editor/main.cpp:1665
+#, c-format
+msgid "Meu efeito %zu"
+msgstr "Мой эффект %zu"
+
+#: src/editor/main.cpp:1666
+msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
+msgstr "Настройки берутся из эффектов на панели (откройте каждый, чтобы изменить):"
+
+#: src/editor/main.cpp:1670
+msgid "Adicionar aos efeitos rápidos"
+msgstr "Добавить в быстрые эффекты"
+
+#: src/editor/main.cpp:1682
+msgid "Efeito rápido adicionado: "
+msgstr "Быстрый эффект добавлен: "
+
+#: src/editor/main.cpp:1712
+msgid "Nova captura de imagem (pede ao Snapnab)"
+msgstr "Новый снимок изображения (запрос к Snapnab)"
+
+#: src/editor/main.cpp:1713
+msgid "Nova gravação de vídeo"
+msgstr "Новая запись видео"
+
+#: src/editor/main.cpp:1714
+msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
+msgstr "Копировать всё изображение (Ctrl+Shift+C)"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar"
+msgstr "Отправить"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
+msgstr "Отправить: файл, буфер обмена, почта, принтер, программа"
+
+#: src/editor/main.cpp:1734
+#, c-format
+msgid "Excluir o efeito rápido \"%s\"?"
+msgstr "Удалить быстрый эффект \"%s\"?"
+
+#: src/editor/main.cpp:1758
+msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
+msgstr "Пользовательская панель инструментов. Ещё › Вернуть по умолчанию отменяет это."
+
+#: src/editor/main.cpp:1776
+#, c-format
+msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
+msgstr "Выделено объектов: %d  •  Ctrl+Shift+G группирует  •  Упорядочить › Выровнять выравнивает их между собой"
+
+#: src/editor/main.cpp:1783
+msgid "Cor capturada: "
+msgstr "Взятый цвет: "
+
+#: src/editor/main.cpp:1783
+msgid " (aplicada às ferramentas de desenho)"
+msgstr " (применён к инструментам рисования)"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro do vídeo"
+msgstr "Кадр видео"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro de vídeo"
+msgstr "Видеокадр"
+
+#: src/editor/main.cpp:1804
+msgid "Vídeo salvo: "
+msgstr "Видео сохранено: "
+
+#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+msgid "Editar"
+msgstr "Правка"
+
+#: src/editor/main.cpp:1865
+msgid "Ajustar à janela\tCtrl+0"
+msgstr "По размеру окна\tCtrl+0"

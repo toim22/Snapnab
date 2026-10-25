@@ -7,6 +7,8 @@
 #include "Recorder.h"
 #include "RecorderHud.h"
 #include "SelectOverlay.h"
+#include "Panoramic.h"
+#include "Webcam.h"
 
 namespace snap {
 
@@ -43,6 +45,8 @@ private:
     void StartRecording();
     void FinishVideo(bool ok);
     void ShowDelay(int seconds, std::function<void()> then);
+    void GrabText(const Image& img);
+    void StopWebcam();
     Image FreezeScreen(RECT vs, bool withCursor);
     Image ScrollCapture(HWND top, HWND child, POINT at);
     Image ExtendedWindowCapture(HWND top);
@@ -55,6 +59,8 @@ private:
     Image frozen_;
     RECT vs_{};
     RecorderHud hud_;
+    PanoramicSession pano_;
+    WebcamOverlay webcam_;
     RECT videoArea_{};
     HWND delayWnd_ = nullptr;
 };

@@ -1,0 +1,4803 @@
+# Snapnab — traduções da interface.
+# Copyright © 2026 Antonio Rezende. GPL-3.0.
+# Idioma: 中文（简体）.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Snapnab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: 中文（简体）\n"
+
+#: src/capture/CaptureEngine.cpp:39
+#, c-format
+msgid "Captura em %d s…"
+msgstr "%d 秒后截图…"
+
+#: src/capture/CaptureEngine.cpp:138
+msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
+msgstr "固定区域在屏幕之外。请在“选择”的齿轮菜单中调整位置。"
+
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+msgid "Região fixa"
+msgstr "固定区域"
+
+#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+msgid "A área de transferência não contém imagem."
+msgstr "剪贴板中没有图像。"
+
+#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669
+msgid "Área de transferência"
+msgstr "剪贴板"
+
+#: src/capture/CaptureEngine.cpp:170
+msgid "Capturar de arquivo gráfico"
+msgstr "从图形文件截取"
+
+#: src/capture/CaptureEngine.cpp:172
+msgid "Não foi possível abrir a imagem."
+msgstr "无法打开图像。"
+
+#: src/capture/CaptureEngine.cpp:181
+msgid "Nenhum menu aberto encontrado; selecione a região."
+msgstr "未找到打开的菜单；请选择区域。"
+
+#: src/capture/CaptureEngine.cpp:281
+msgid ""
+"Não foi possível reconhecer o texto.\n"
+"\n"
+msgstr ""
+"无法识别文本。\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+msgid "Snapnab — Capturar texto"
+msgstr "Snapnab — 提取文本"
+
+#: src/capture/CaptureEngine.cpp:282
+msgid "Nenhum texto encontrado na captura."
+msgstr "截图中未找到文本。"
+
+#: src/capture/CaptureEngine.cpp:293
+msgid "Capturar texto — copiado para a área de transferência"
+msgstr "提取文本 — 已复制到剪贴板"
+
+#: src/capture/CaptureEngine.cpp:300
+msgid "copiada para a área de transferência"
+msgstr "已复制到剪贴板"
+
+#: src/capture/CaptureEngine.cpp:306
+msgid "salva em "
+msgstr "已保存到 "
+
+#: src/capture/CaptureEngine.cpp:322
+msgid "Captura adicionada à biblioteca"
+msgstr "截图已添加到库"
+
+#: src/capture/CaptureEngine.cpp:447
+msgid "A janela será ampliada além da tela, capturada e restaurada."
+msgstr "窗口将被放大到超出屏幕，截取后再恢复。"
+
+#: src/capture/CaptureEngine.cpp:448
+msgid "Nova largura (px)"
+msgstr "新宽度 (像素)"
+
+#: src/capture/CaptureEngine.cpp:449
+msgid "Nova altura (px)"
+msgstr "新高度 (像素)"
+
+#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+msgid "Janela estendida"
+msgstr "扩展窗口"
+
+#: src/capture/CaptureEngine.cpp:523
+msgid "Imagem durante gravação"
+msgstr "录制期间的图像"
+
+#: src/capture/CaptureEngine.cpp:526
+msgid "Imagem capturada sem parar a gravação."
+msgstr "已截取图像，录制未停止。"
+
+#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+msgid "Snapnab — webcam"
+msgstr "Snapnab — 摄像头"
+
+#: src/capture/CaptureEngine.cpp:553
+msgid ""
+"Não foi possível iniciar a gravação.\n"
+"\n"
+msgstr ""
+"无法开始录制。\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:596
+msgid "Vídeo salvo na biblioteca: "
+msgstr "视频已保存到库： "
+
+#: src/capture/CaptureEngine.cpp:598
+msgid ""
+"A gravação falhou.\n"
+"\n"
+msgstr ""
+"录制失败。\n"
+"\n"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Snapnab — pouco espaço em disco"
+msgstr "Snapnab — 磁盘空间不足"
+
+#: src/capture/CaptureEngine.cpp:606
+msgid "Restam menos de 1 GB livres na unidade da biblioteca."
+msgstr "库所在驱动器的可用空间不足 1 GB。"
+
+#: src/capture/CaptureEngine.cpp:609
+msgid "Gravação interrompida: espaço em disco insuficiente."
+msgstr "录制已停止：磁盘空间不足。"
+
+#: src/capture/OneClick.h:39
+msgid "Iniciar uma captura"
+msgstr "开始截图"
+
+#: src/capture/Panoramic.cpp:132
+msgid "Snapnab — rolagem panorâmica"
+msgstr "Snapnab — 全景滚动"
+
+#: src/capture/Panoramic.cpp:192
+msgid "Role o conteúdo dentro da moldura…"
+msgstr "请在框内滚动内容…"
+
+#: src/capture/Panoramic.cpp:193
+#, c-format
+msgid "Capturando: %d × %d px"
+msgstr "正在截取：%d × %d 像素"
+
+#: src/capture/Panoramic.cpp:204
+msgid "Concluir"
+msgstr "完成"
+
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
+msgid "Cancelar"
+msgstr "取消"
+
+#: src/capture/Presets.cpp:7
+msgid "Região"
+msgstr "区域"
+
+#: src/capture/Presets.cpp:8
+msgid "Janela"
+msgstr "窗口"
+
+#: src/capture/Presets.cpp:9
+msgid "Tela inteira (todos os monitores)"
+msgstr "全屏 (所有显示器)"
+
+#: src/capture/Presets.cpp:10
+msgid "Monitor atual"
+msgstr "当前显示器"
+
+#: src/capture/Presets.cpp:11
+msgid "Região com tamanho fixo"
+msgstr "固定大小区域"
+
+#: src/capture/Presets.cpp:12
+msgid "Mão livre"
+msgstr "任意形状"
+
+#: src/capture/Presets.cpp:13
+msgid "Várias áreas"
+msgstr "多个区域"
+
+#: src/capture/Presets.cpp:14
+msgid "Objeto (controle sob o cursor)"
+msgstr "对象 (光标下的控件)"
+
+#: src/capture/Presets.cpp:15
+msgid "Rolagem automática (janela)"
+msgstr "自动滚动 (窗口)"
+
+#: src/capture/Presets.cpp:16
+msgid "Rolagem panorâmica"
+msgstr "全景滚动"
+
+#: src/capture/Presets.cpp:18
+msgid "Menu"
+msgstr "菜单"
+
+#: src/capture/Presets.cpp:20
+msgid "Arquivo gráfico"
+msgstr "图形文件"
+
+#: src/capture/Presets.cpp:150
+msgid "Imagem — Região"
+msgstr "图像 — 区域"
+
+#: src/capture/Presets.cpp:151
+msgid "Imagem — Janela"
+msgstr "图像 — 窗口"
+
+#: src/capture/Presets.cpp:152
+msgid "Tela inteira → Área de transferência"
+msgstr "全屏 → 剪贴板"
+
+#: src/capture/Presets.cpp:154
+msgid "Rolagem (página inteira)"
+msgstr "滚动 (整页)"
+
+#: src/capture/Presets.cpp:155
+msgid "Vídeo — Região"
+msgstr "视频 — 区域"
+
+#: src/capture/Presets.cpp:156
+msgid "Vídeo — Tela inteira"
+msgstr "视频 — 全屏"
+
+#: src/capture/Presets.cpp:164
+msgid "Captura com rolagem panorâmica"
+msgstr "全景滚动截图"
+
+#: src/capture/Presets.cpp:166
+msgid "Capturar texto"
+msgstr "提取文本"
+
+#: src/capture/Recorder.cpp:252
+msgid "Área de gravação muito pequena."
+msgstr "录制区域太小。"
+
+#: src/capture/Recorder.cpp:259
+msgid "Media Foundation indisponível."
+msgstr "Media Foundation 不可用。"
+
+#: src/capture/Recorder.cpp:274
+#, c-format
+msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
+msgstr "无法启动 MP4 编码器 (0x%08X)。"
+
+#: src/capture/Recorder.cpp:386
+msgid "Falha ao gravar quadro de vídeo."
+msgstr "录制视频帧失败。"
+
+#: src/capture/Recorder.cpp:478
+#, c-format
+msgid "Falha ao finalizar o MP4 (0x%08X)."
+msgstr "完成 MP4 失败 (0x%08X)。"
+
+#: src/capture/RecorderHud.cpp:60
+msgid "Snapnab — gravação"
+msgstr "Snapnab — 录制"
+
+#: src/capture/RecorderHud.cpp:153
+msgid "Pronto"
+msgstr "就绪"
+
+#: src/capture/RecorderHud.cpp:273
+msgid "Pular"
+msgstr "跳过"
+
+#: src/capture/SelectOverlay.cpp:244
+msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
+msgstr "拖动以选择区域 • 单击截取高亮的窗口/区域 • Enter = 显示器 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:245
+msgid "Clique na janela a capturar • Esc = cancelar"
+msgstr "单击要截取的窗口 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:246
+msgid "Clique no controle/objeto a capturar • Esc = cancelar"
+msgstr "单击要截取的控件/对象 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:247
+#, c-format
+msgid "Região fixa %d × %d — clique para capturar • Esc = cancelar"
+msgstr "固定区域 %d × %d — 单击截取 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:248
+msgid "Desenhe o contorno com o botão pressionado • Esc = cancelar"
+msgstr "按住鼠标按钮绘制轮廓 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:249
+msgid "Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"
+msgstr "拖动多个区域 • Backspace 撤销 • Enter 或右键完成 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:250
+msgid "Clique na janela/área rolável • Esc = cancelar"
+msgstr "单击可滚动的窗口/区域 • Esc = 取消"
+
+#: src/capture/SelectOverlay.cpp:252
+msgid "Gravação: "
+msgstr "录制： "
+
+#: src/capture/SelectOverlay.cpp:380
+msgid "Snapnab — seleção"
+msgstr "Snapnab — 选择"
+
+#: src/capture/Webcam.cpp:50
+msgid "Círculo"
+msgstr "圆形"
+
+#: src/capture/Webcam.cpp:51
+msgid "Quadrado arredondado"
+msgstr "圆角正方形"
+
+#: src/capture/Webcam.cpp:52
+msgid "Quadrado"
+msgstr "正方形"
+
+#: src/capture/Webcam.cpp:53
+msgid "Retângulo 16:9"
+msgstr "矩形 16:9"
+
+#: src/capture/Webcam.cpp:54
+msgid "Retângulo 4:3"
+msgstr "矩形 4:3"
+
+#: src/capture/Webcam.cpp:80
+msgid "Nenhuma webcam encontrada."
+msgstr "未找到摄像头。"
+
+#: src/capture/Webcam.cpp:109
+msgid "O Windows bloqueou o acesso à câmera. Libere em Configurações › Privacidade e segurança › Câmera."
+msgstr "Windows 阻止了对相机的访问。请在“设置 › 隐私和安全性 › 相机”中允许。"
+
+#: src/capture/Webcam.cpp:110
+#, c-format
+msgid "Não foi possível abrir a webcam (0x%08X)."
+msgstr "无法打开摄像头 (0x%08X)。"
+
+#: src/capture/Webcam.cpp:136
+#, c-format
+msgid "A webcam não oferece um formato compatível (0x%08X)."
+msgstr "摄像头未提供兼容的格式 (0x%08X)。"
+
+#: src/capture/main.cpp:120
+msgid "Snapnab — clique para capturar"
+msgstr "Snapnab — 单击截图"
+
+#: src/capture/main.cpp:147 src/capture/main.cpp:511
+msgid "Conflito de atalho"
+msgstr "快捷键冲突"
+
+#: src/capture/main.cpp:147
+#, c-format
+msgid "O atalho do preset \"%s\" já está em uso por outra ação."
+msgstr "预设“%s”的快捷键已被其他操作占用。"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+msgid "Borda"
+msgstr "边框"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+msgid "Filtros"
+msgstr "滤镜"
+
+#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498
+msgid "Sombra"
+msgstr "阴影"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+msgid "Informações da captura"
+msgstr "截图信息"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+msgid "Substituição de cor"
+msgstr "颜色替换"
+
+#: src/capture/main.cpp:188 src/editor/main.cpp:362
+msgid "Redimensionar imagem"
+msgstr "调整图像大小"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+msgid "Bordas especiais"
+msgstr "特殊边缘"
+
+#: src/capture/main.cpp:189
+msgid "Cortar bordas"
+msgstr "裁剪边缘"
+
+#: src/capture/main.cpp:189
+msgid "Ajuste de cor"
+msgstr "颜色调整"
+
+#: src/capture/main.cpp:189
+msgid "Girar imagem"
+msgstr "旋转图像"
+
+#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+msgid "Marca d'água"
+msgstr "水印"
+
+#: src/capture/main.cpp:189
+msgid "Resolução da imagem"
+msgstr "图像分辨率"
+
+#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360
+msgid "Largura (px)"
+msgstr "宽度 (像素)"
+
+#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494
+msgid "Cor"
+msgstr "颜色"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Filtro"
+msgstr "滤镜"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Tons de cinza"
+msgstr "灰度"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Sépia"
+msgstr "棕褐色"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Inverter cores"
+msgstr "反转颜色"
+
+#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+msgid "Preto e branco"
+msgstr "黑白"
+
+#: src/capture/main.cpp:211
+msgid "Deslocamento (px)"
+msgstr "偏移 (像素)"
+
+#: src/capture/main.cpp:211
+msgid "Desfoque (px)"
+msgstr "模糊 (像素)"
+
+#: src/capture/main.cpp:212 src/capture/main.cpp:241
+msgid "Opacidade (%)"
+msgstr "不透明度 (%)"
+
+#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477
+msgid "Texto"
+msgstr "文本"
+
+#: src/capture/main.cpp:215
+msgid "Campos: {date} {time} {computer} {user}"
+msgstr "字段：{date} {time} {computer} {user}"
+
+#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+msgid "Posição"
+msgstr "位置"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Embaixo"
+msgstr "底部"
+
+#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+msgid "Em cima"
+msgstr "顶部"
+
+#: src/capture/main.cpp:219
+msgid "Cor a substituir"
+msgstr "要替换的颜色"
+
+#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+msgid "Nova cor"
+msgstr "新颜色"
+
+#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576
+msgid "Tolerância"
+msgstr "容差"
+
+#: src/capture/main.cpp:222
+msgid "Escala (%)"
+msgstr "缩放 (%)"
+
+#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+msgid "Estilo"
+msgstr "样式"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Rasgada"
+msgstr "撕裂"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+msgid "Onda"
+msgstr "波浪"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de serra"
+msgstr "锯齿"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Dente de tubarão"
+msgstr "鲨鱼齿"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+msgid "Esmaecer"
+msgstr "淡出"
+
+#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+msgid "Chanfrada"
+msgstr "斜角"
+
+#: src/capture/main.cpp:225
+msgid "Tamanho (px)"
+msgstr "大小 (像素)"
+
+#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+msgid "Direita"
+msgstr "右"
+
+#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+msgid "Esquerda"
+msgstr "左"
+
+#: src/capture/main.cpp:230
+msgid "Remove as faixas de cor uniforme em volta da captura."
+msgstr "去除截图四周颜色一致的边带。"
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+msgid "Brilho"
+msgstr "亮度"
+
+#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+msgid "Contraste"
+msgstr "对比度"
+
+#: src/capture/main.cpp:234
+msgid "Matiz (graus)"
+msgstr "色相 (度)"
+
+#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+msgid "Saturação"
+msgstr "饱和度"
+
+#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+msgid "Girar"
+msgstr "旋转"
+
+#: src/capture/main.cpp:237
+msgid "90° à direita"
+msgstr "向右 90°"
+
+#: src/capture/main.cpp:237
+msgid "90° à esquerda"
+msgstr "向左 90°"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na horizontal"
+msgstr "水平翻转"
+
+#: src/capture/main.cpp:237
+msgid "Espelhar na vertical"
+msgstr "垂直翻转"
+
+#: src/capture/main.cpp:242
+msgid "Repetir por toda a imagem"
+msgstr "在整张图像上重复"
+
+#: src/capture/main.cpp:245
+msgid "Resolução (DPI)"
+msgstr "分辨率 (DPI)"
+
+#: src/capture/main.cpp:245
+msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
+msgstr "写入保存的文件 (PNG、JPEG、TIFF、BMP)。"
+
+#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+msgid "Nenhum"
+msgstr "无"
+
+#: src/capture/main.cpp:303
+msgid "Adicionar outro efeito"
+msgstr "添加其他效果"
+
+#: src/capture/main.cpp:304
+msgid "Remover este efeito"
+msgstr "移除此效果"
+
+#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+msgid "Desligado"
+msgstr "关闭"
+
+#: src/capture/main.cpp:339
+#, c-format
+msgid "%d s"
+msgstr "%d 秒"
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890
+msgid "Ligada"
+msgstr "开启"
+
+#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+msgid "Desligada"
+msgstr "关闭"
+
+#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+msgid "Formato"
+msgstr "格式"
+
+#: src/capture/main.cpp:421
+msgid "Prefixo do nome"
+msgstr "名称前缀"
+
+#: src/capture/main.cpp:422
+msgid "Pasta"
+msgstr "文件夹"
+
+#: src/capture/main.cpp:423
+msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
+msgstr "自动命名：<前缀><编号>，例如：截图001.png"
+
+#: src/capture/main.cpp:427
+msgid "O prefixo contém caracteres inválidos."
+msgstr "前缀包含无效字符。"
+
+#: src/capture/main.cpp:430
+msgid "Salvar em arquivo"
+msgstr "保存到文件"
+
+#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+msgid "Programa"
+msgstr "程序"
+
+#: src/capture/main.cpp:438
+msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
+msgstr "截图将在此程序中打开 (例如：mspaint.exe)。"
+
+#: src/capture/main.cpp:439 src/editor/main.cpp:813
+msgid "Abrir em um programa externo"
+msgstr "在外部程序中打开"
+
+#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+msgid "Altura (px)"
+msgstr "高度 (像素)"
+
+#: src/capture/main.cpp:451
+msgid "Capturar sempre na mesma posição"
+msgstr "始终在同一位置截取"
+
+#: src/capture/main.cpp:452
+msgid "Esquerda (X)"
+msgstr "左 (X)"
+
+#: src/capture/main.cpp:453
+msgid "Topo (Y)"
+msgstr "上 (Y)"
+
+#: src/capture/main.cpp:454
+msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
+msgstr "没有固定位置时，截图时拖动矩形到合适位置。"
+
+#: src/capture/main.cpp:468
+msgid "Selecionar a região na captura"
+msgstr "截图时选择区域"
+
+#: src/capture/main.cpp:469
+msgid "Região fixa…"
+msgstr "固定区域…"
+
+#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+msgid "Quadros por segundo"
+msgstr "每秒帧数"
+
+#: src/capture/main.cpp:491
+msgid "Reduzir para 1080p"
+msgstr "缩小到 1080p"
+
+#: src/capture/main.cpp:492
+msgid "Codificação por hardware"
+msgstr "硬件编码"
+
+#: src/capture/main.cpp:494
+msgid "Opções de vídeo"
+msgstr "视频选项"
+
+#: src/capture/main.cpp:503
+msgid "Atalho do preset"
+msgstr "预设快捷键"
+
+#: src/capture/main.cpp:504
+msgid "Deixe vazio (Backspace) para remover."
+msgstr "留空 (Backspace) 以移除。"
+
+#: src/capture/main.cpp:505
+msgid "Atalho — "
+msgstr "快捷键 — "
+
+#: src/capture/main.cpp:511
+msgid "Esse atalho já está em uso por outra ação do Snapnab."
+msgstr "此快捷键已被 Snapnab 的其他操作占用。"
+
+#: src/capture/main.cpp:516
+msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
+msgstr "其他程序已在使用此快捷键。Snapnab 将通过键盘钩子拦截它。"
+
+#: src/capture/main.cpp:517
+msgid "Atalho"
+msgstr "快捷键"
+
+#: src/capture/main.cpp:523
+msgid "Nome do preset"
+msgstr "预设名称"
+
+#: src/capture/main.cpp:531
+msgid "Renomear preset"
+msgstr "重命名预设"
+
+#: src/capture/main.cpp:551
+msgid ""
+"Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
+"\n"
+"•  Clique em um preset para carregá-lo na janela; clique duas vezes para capturar com ele.\n"
+"•  \"Adicionar atalho\" dá a ele uma tecla de atalho global.\n"
+"•  A engrenagem da linha renomeia, duplica ou exclui o preset.\n"
+"•  \"Novo preset com as configurações atuais\" salva o que está na janela agora."
+msgstr ""
+"预设会保存截图窗口显示的所有内容：类型 (图像或视频)、选择、效果、目标和录制选项。\n"
+"\n"
+"•  单击预设可将其载入窗口；双击即用它截图。\n"
+"•  “添加快捷键”为它分配全局快捷键。\n"
+"•  行上的齿轮可重命名、复制或删除预设。\n"
+"•  “用当前设置新建预设”会保存窗口中的当前内容。"
+
+#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+msgid "Presets"
+msgstr "预设"
+
+#: src/capture/main.cpp:588
+msgid "Automático (idioma do Windows)"
+msgstr "自动 (Windows 语言)"
+
+#: src/capture/main.cpp:593
+msgid "Atalhos globais"
+msgstr "全局快捷键"
+
+#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+msgid "Capturar imagem"
+msgstr "截取图像"
+
+#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+msgid "Gravar vídeo"
+msgstr "录制视频"
+
+#: src/capture/main.cpp:596
+msgid "Pausar/retomar vídeo"
+msgstr "暂停/继续视频"
+
+#: src/capture/main.cpp:597
+msgid "Parar vídeo"
+msgstr "停止视频"
+
+#: src/capture/main.cpp:598
+msgid "Geral"
+msgstr "常规"
+
+#: src/capture/main.cpp:599
+msgid "Pasta de saída"
+msgstr "输出文件夹"
+
+#: src/capture/main.cpp:600
+msgid "Monitorar área de transferência"
+msgstr "监视剪贴板"
+
+#: src/capture/main.cpp:600
+msgid "Só a Ferramenta de Captura do Windows"
+msgstr "仅 Windows 截图工具"
+
+#: src/capture/main.cpp:600
+msgid "Qualquer aplicativo"
+msgstr "任意应用程序"
+
+#: src/capture/main.cpp:602
+msgid "Iniciar com o Windows"
+msgstr "随 Windows 启动"
+
+#: src/capture/main.cpp:603
+msgid "Mostrar a janela de captura ao iniciar"
+msgstr "启动时显示截图窗口"
+
+#: src/capture/main.cpp:604
+msgid "Idioma"
+msgstr "语言"
+
+#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+msgid "Biblioteca: "
+msgstr "库： "
+
+#: src/capture/main.cpp:611
+msgid "Dois atalhos iguais: "
+msgstr "两个相同的快捷键： "
+
+#: src/capture/main.cpp:616
+msgid "Opções do Snapnab"
+msgstr "Snapnab 选项"
+
+#: src/capture/main.cpp:632
+msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
+msgstr "新语言将在 Snapnab 和编辑器重启后生效。现在重启吗？"
+
+#: src/capture/main.cpp:655
+msgid " — captura de tela e gravação de vídeo"
+msgstr " — 屏幕截图和视频录制"
+
+#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+msgid "Software livre sob a GNU General Public License versão 3."
+msgstr "基于 GNU 通用公共许可证第 3 版的自由软件。"
+
+#: src/capture/main.cpp:657
+msgid ""
+"Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
+"compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
+msgstr ""
+"截图进程 (Snapnab.exe) + 编辑器 (SnapnabEditor.exe)，通过共享内存\n"
+"(IPC 通道) 和 WM_COPYDATA 通信。截图保存在库中：\n"
+
+#: src/capture/main.cpp:659
+msgid "Sobre o Snapnab"
+msgstr "关于 Snapnab"
+
+#: src/capture/main.cpp:681 src/capture/main.cpp:972
+msgid "Abrir a janela de captura"
+msgstr "打开截图窗口"
+
+#: src/capture/main.cpp:682
+msgid "Ocultar o One Click"
+msgstr "隐藏 One Click"
+
+#: src/capture/main.cpp:735
+msgid ""
+"Snapnab.exe [opções]\n"
+"\n"
+"/hide            inicia só na bandeja\n"
+"/capture         captura imagem com o preset de imagem atual\n"
+"/video           grava vídeo com o preset de vídeo atual\n"
+"/preset \"nome\"   executa um preset pelo nome\n"
+"/clipboard       captura a imagem da área de transferência\n"
+"/exit            encerra o Snapnab em execução"
+msgstr ""
+"Snapnab.exe [选项]\n"
+"\n"
+"/hide            仅在通知区域启动\n"
+"/capture         使用当前图像预设截取图像\n"
+"/video           使用当前视频预设录制视频\n"
+"/preset \"名称\"   按名称运行预设\n"
+"/clipboard       截取剪贴板中的图像\n"
+"/exit            关闭正在运行的 Snapnab"
+
+#: src/capture/main.cpp:741
+msgid "Snapnab — linha de comando"
+msgstr "Snapnab — 命令行"
+
+#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+msgid "Imagem"
+msgstr "图像"
+
+#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+msgid "Vídeo"
+msgstr "视频"
+
+#: src/capture/main.cpp:772
+msgid "Seleção:"
+msgstr "选择："
+
+#: src/capture/main.cpp:775
+msgid "Efeitos:"
+msgstr "效果："
+
+#: src/capture/main.cpp:778
+msgid "Compartilhar:"
+msgstr "分享："
+
+#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839
+msgid "Arquivo"
+msgstr "文件"
+
+#: src/capture/main.cpp:781
+msgid "Programa externo"
+msgstr "外部程序"
+
+#: src/capture/main.cpp:781
+msgid "Texto (OCR)"
+msgstr "文本 (OCR)"
+
+#: src/capture/main.cpp:782
+msgid "Qualidade:"
+msgstr "质量："
+
+#: src/capture/main.cpp:785
+msgid "Muito baixa"
+msgstr "很低"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Baixa"
+msgstr "低"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+msgid "Média"
+msgstr "中"
+
+#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+msgid "Alta"
+msgstr "高"
+
+#: src/capture/main.cpp:786
+msgid "Webcam:"
+msgstr "摄像头："
+
+#: src/capture/main.cpp:789
+msgid "Visualizar no Editor"
+msgstr "在编辑器中预览"
+
+#: src/capture/main.cpp:790
+msgid "Copiar para a área de transferência"
+msgstr "复制到剪贴板"
+
+#: src/capture/main.cpp:791
+msgid "Capturar o cursor"
+msgstr "截取光标"
+
+#: src/capture/main.cpp:792 src/capture/main.cpp:846
+msgid "Atraso"
+msgstr "延时"
+
+#: src/capture/main.cpp:794
+msgid "Gravar microfone"
+msgstr "录制麦克风"
+
+#: src/capture/main.cpp:795
+msgid "Gravar áudio do sistema"
+msgstr "录制系统声音"
+
+#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+msgid "Capturar"
+msgstr "截图"
+
+#: src/capture/main.cpp:802
+msgid "Abrir Editor"
+msgstr "打开编辑器"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:436
+msgid "Captura"
+msgstr "截图"
+
+#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+msgid "Exibir"
+msgstr "查看"
+
+#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+msgid "Ajuda"
+msgstr "帮助"
+
+#: src/capture/main.cpp:933
+msgid "Abrir o &Editor"
+msgstr "打开编辑器(&E)"
+
+#: src/capture/main.cpp:934 src/editor/main.cpp:710
+msgid "Abrir a pasta da &biblioteca"
+msgstr "打开库文件夹(&L)"
+
+#: src/capture/main.cpp:935
+msgid "Abrir a pasta de &logs"
+msgstr "打开日志文件夹(&G)"
+
+#: src/capture/main.cpp:937
+msgid "&Importar presets…"
+msgstr "导入预设(&I)…"
+
+#: src/capture/main.cpp:938
+msgid "E&xportar presets…"
+msgstr "导出预设(&X)…"
+
+#: src/capture/main.cpp:940
+msgid "&Opções…"
+msgstr "选项(&O)…"
+
+#: src/capture/main.cpp:942
+msgid "&Sair do Snapnab"
+msgstr "退出 Snapnab(&Q)"
+
+#: src/capture/main.cpp:944
+msgid "Capturar &imagem"
+msgstr "截取图像(&I)"
+
+#: src/capture/main.cpp:945
+msgid "Gravar &vídeo"
+msgstr "录制视频(&V)"
+
+#: src/capture/main.cpp:946
+msgid "&Repetir a última captura"
+msgstr "重复上次截图(&R)"
+
+#: src/capture/main.cpp:948
+msgid "Da área de &transferência"
+msgstr "从剪贴板(&C)"
+
+#: src/capture/main.cpp:949
+msgid "De um &arquivo gráfico…"
+msgstr "从图形文件(&F)…"
+
+#: src/capture/main.cpp:951
+msgid "Mostrar o &One Click"
+msgstr "显示 One Click(&O)"
+
+#: src/capture/main.cpp:952
+msgid "Lista de &presets"
+msgstr "预设列表(&P)"
+
+#: src/capture/main.cpp:954
+msgid "Como usar os &presets"
+msgstr "如何使用预设(&H)"
+
+#: src/capture/main.cpp:956
+msgid "&Sobre o Snapnab"
+msgstr "关于 Snapnab(&A)"
+
+#: src/capture/main.cpp:973
+msgid "Mostrar o One Click"
+msgstr "显示 One Click"
+
+#: src/capture/main.cpp:974
+msgid "Abrir o Editor"
+msgstr "打开编辑器"
+
+#: src/capture/main.cpp:975
+msgid "Opções…"
+msgstr "选项…"
+
+#: src/capture/main.cpp:977
+msgid "Sair"
+msgstr "退出"
+
+#: src/capture/main.cpp:999
+msgid "1 segundo"
+msgstr "1 秒"
+
+#: src/capture/main.cpp:999
+#, c-format
+msgid "%d segundos"
+msgstr "%d 秒"
+
+#: src/capture/main.cpp:1011
+msgid "Remover o fundo da webcam"
+msgstr "移除摄像头背景"
+
+#: src/capture/main.cpp:1012
+msgid "Cor do fundo"
+msgstr "背景颜色"
+
+#: src/capture/main.cpp:1013
+msgid "Tolerância (0–100)"
+msgstr "容差 (0–100)"
+
+#: src/capture/main.cpp:1014
+msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
+msgstr "请使用纯色、光线充足的背景 (绿幕最理想)。"
+
+#: src/capture/main.cpp:1015
+msgid "Com o fundo removido, a webcam aparece sem moldura."
+msgstr "移除背景后，摄像头画面不带边框。"
+
+#: src/capture/main.cpp:1017
+msgid "Remover o fundo (chroma key)"
+msgstr "移除背景 (色度键)"
+
+#: src/capture/main.cpp:1035
+msgid "Nenhuma webcam encontrada"
+msgstr "未找到摄像头"
+
+#: src/capture/main.cpp:1047
+msgid "Remover o fundo (chroma key)…"
+msgstr "移除背景 (色度键)…"
+
+#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+msgid "Novo preset com as configurações atuais"
+msgstr "用当前设置新建预设"
+
+#: src/capture/main.cpp:1069
+msgid "Novo preset…"
+msgstr "新建预设…"
+
+#: src/capture/main.cpp:1080
+msgid "Capturar com este preset"
+msgstr "用此预设截图"
+
+#: src/capture/main.cpp:1082
+msgid "Renomear…"
+msgstr "重命名…"
+
+#: src/capture/main.cpp:1083
+msgid "Atalho…"
+msgstr "快捷键…"
+
+#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+msgid "Duplicar"
+msgstr "复制"
+
+#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+msgid "Excluir"
+msgstr "删除"
+
+#: src/capture/main.cpp:1094
+msgid "Adicionar atalho"
+msgstr "添加快捷键"
+
+#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+msgid "Gravar"
+msgstr "录制"
+
+#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047
+msgid " (cópia)"
+msgstr " (副本)"
+
+#: src/capture/main.cpp:1262
+#, c-format
+msgid "Preset %zu"
+msgstr "预设 %zu"
+
+#: src/capture/main.cpp:1264
+msgid "Novo preset"
+msgstr "新建预设"
+
+#: src/capture/main.cpp:1277
+msgid "É preciso manter pelo menos um preset."
+msgstr "至少需要保留一个预设。"
+
+#: src/capture/main.cpp:1278
+#, c-format
+msgid "Excluir o preset \"%s\"?"
+msgstr "删除预设“%s”吗？"
+
+#: src/capture/main.cpp:1337
+msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
+msgstr "Snapnab 预设 (*.snappresets;*.xml)|*.snappresets;*.xml|"
+
+#: src/capture/main.cpp:1341
+msgid "Presets importados."
+msgstr "已导入预设。"
+
+#: src/capture/main.cpp:1342
+msgid "Arquivo de presets inválido."
+msgstr "预设文件无效。"
+
+#: src/capture/main.cpp:1347
+msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
+msgstr "Snapnab 预设 (*.snappresets)|*.snappresets|"
+
+#: src/capture/main.cpp:1351
+msgid "Não foi possível exportar."
+msgstr "无法导出。"
+
+#: src/capture/main.cpp:1360
+msgid "Há uma gravação em andamento. Parar e sair?"
+msgstr "正在录制。要停止并退出吗？"
+
+#: src/capture/main.cpp:1461
+msgid "Gravar vídeo  ("
+msgstr "录制视频  ("
+
+#: src/capture/main.cpp:1461
+msgid "Capturar imagem  ("
+msgstr "截取图像  ("
+
+#: src/common/Image.cpp:285
+msgid "Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|"
+msgstr "图像和文档 (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|Snapnab 文档 (*.snap)|*.snap|MP4 视频 (*.mp4)|*.mp4|所有文件 (*.*)|*.*|"
+
+#: src/common/Image.cpp:292
+msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
+msgstr "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Snapnab 文档 (*.snap)|*.snap|"
+
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+msgid "Imagem vazia."
+msgstr "空图像。"
+
+#: src/common/Ocr.cpp:36
+msgid "Nenhum idioma de OCR instalado no Windows (Configurações › Hora e idioma › Idioma)."
+msgstr "Windows 中未安装 OCR 语言 (设置 › 时间和语言 › 语言)。"
+
+#: src/common/Ocr.cpp:44
+msgid "Falha desconhecida no OCR."
+msgstr "未知的 OCR 错误。"
+
+#: src/common/Ui.cpp:247
+msgid "OK"
+msgstr "确定"
+
+#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+msgid "Copiar tudo"
+msgstr "全部复制"
+
+#: src/common/Util.cpp:340
+msgid "(nenhum)"
+msgstr "(无)"
+
+#: src/common/Util.cpp:349
+msgid "Print Screen"
+msgstr "Print Screen"
+
+#: src/editor/Canvas.cpp:13
+msgid "Mover"
+msgstr "移动"
+
+#: src/editor/Canvas.cpp:14
+msgid "Seta"
+msgstr "箭头"
+
+#: src/editor/Canvas.cpp:15
+msgid "Linha"
+msgstr "直线"
+
+#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540
+msgid "Forma"
+msgstr "形状"
+
+#: src/editor/Canvas.cpp:17
+msgid "Caneta"
+msgstr "画笔"
+
+#: src/editor/Canvas.cpp:18
+msgid "Marcador"
+msgstr "荧光笔"
+
+#: src/editor/Canvas.cpp:20
+msgid "Balão"
+msgstr "标注"
+
+#: src/editor/Canvas.cpp:21
+msgid "Passos"
+msgstr "步骤"
+
+#: src/editor/Canvas.cpp:22
+msgid "Carimbo"
+msgstr "图章"
+
+#: src/editor/Canvas.cpp:23
+msgid "Ocultar"
+msgstr "模糊"
+
+#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+msgid "Destaque"
+msgstr "聚光灯"
+
+#: src/editor/Canvas.cpp:25
+msgid "Lupa"
+msgstr "放大镜"
+
+#: src/editor/Canvas.cpp:26
+msgid "Preencher"
+msgstr "填充"
+
+#: src/editor/Canvas.cpp:27
+msgid "Borracha"
+msgstr "橡皮擦"
+
+#: src/editor/Canvas.cpp:28
+msgid "Cortar"
+msgstr "裁剪"
+
+#: src/editor/Canvas.cpp:29
+msgid "Seleção"
+msgstr "选择"
+
+#: src/editor/Canvas.cpp:30
+msgid "Recortar faixa"
+msgstr "剪切条带"
+
+#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+msgid "Conta-gotas"
+msgstr "取色器"
+
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+msgid "Favoritos"
+msgstr "收藏"
+
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+msgid "Varinha mágica"
+msgstr "魔棒"
+
+#: src/editor/Canvas.cpp:325
+msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
+msgstr "没有打开的截图 — 请使用“截图”或打开文件 (Ctrl+O)。"
+
+#: src/editor/Canvas.cpp:350
+msgid "Prévia — Aplicar ou Cancelar no painel"
+msgstr "预览 — 在面板中应用或取消"
+
+#: src/editor/Canvas.cpp:452
+#, c-format
+msgid "%d × %d  — Enter aplica, Esc cancela"
+msgstr "%d × %d  — Enter 应用，Esc 取消"
+
+#: src/editor/Panels.cpp:251
+msgid "Mais"
+msgstr "更多"
+
+#: src/editor/Panels.cpp:295
+msgid "  •  arraste para mudar de lugar"
+msgstr "  •  拖动以调整位置"
+
+#: src/editor/Panels.cpp:296
+msgid "Mais ferramentas e personalização da barra"
+msgstr "更多工具和工具栏自定义"
+
+#: src/editor/Panels.cpp:471
+msgid "Arraste suas ferramentas, efeitos e comandos favoritos para a barra…"
+msgstr "将常用的工具、效果和命令拖到工具栏…"
+
+#: src/editor/Panels.cpp:493 src/editor/Panels.cpp:550
+msgid "Espaçador"
+msgstr "间隔"
+
+#: src/editor/Panels.cpp:517
+msgid "Número de ferramentas na barra automática:"
+msgstr "自动工具栏中的工具数量："
+
+#: src/editor/Panels.cpp:525
+msgid "Restaurar padrões"
+msgstr "恢复默认值"
+
+#: src/editor/Panels.cpp:526
+msgid "Concluído"
+msgstr "完成"
+
+#: src/editor/Panels.cpp:596
+msgid ""
+"Arraste um item desta janela para a barra de ferramentas para acrescentá-lo; a barra mostra onde ele vai entrar.\n"
+"\n"
+"Na barra, arraste um item para mudar de lugar, ou para fora da barra para removê-lo.\n"
+"“Restaurar padrões” volta à barra automática: Mover, Seleção, Texto, Marcador, Forma, as usadas por último e Lupa. O número de ferramentas dela é escolhido embaixo (de 6 a 16)."
+msgstr ""
+"将此窗口中的项目拖到工具栏即可添加；工具栏会显示它的放置位置。\n"
+"\n"
+"在工具栏上，拖动项目可调整位置，拖出工具栏可将其移除。\n"
+"“恢复默认值”会恢复为自动工具栏：移动、选择、文本、荧光笔、形状、最近使用的工具和放大镜。其工具数量在下方选择 (6 到 16)。"
+
+#: src/editor/Panels.cpp:600 src/editor/Panels.cpp:645
+msgid "Personalizar a barra de ferramentas"
+msgstr "自定义工具栏"
+
+#: src/editor/Panels.cpp:816 src/editor/Panels.cpp:1058
+msgid "Aplicar"
+msgstr "应用"
+
+#: src/editor/Panels.cpp:916
+msgid "Efeitos rápidos"
+msgstr "快速效果"
+
+#: src/editor/Panels.cpp:972
+msgid "Adicionar"
+msgstr "添加"
+
+#: src/editor/Panels.cpp:1060
+msgid "Excluir este efeito rápido"
+msgstr "删除此快速效果"
+
+#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+msgid "Capturas recentes"
+msgstr "最近的截图"
+
+#: src/editor/Panels.cpp:1650
+#, c-format
+msgid "Biblioteca  •  %zu capturas"
+msgstr "库  •  %zu 张截图"
+
+#: src/editor/Panels.cpp:1651
+#, c-format
+msgid "  •  %d selecionadas"
+msgstr "  •  已选择 %d 个"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Exportar (%d)…"
+msgstr "导出 (%d)…"
+
+#: src/editor/Panels.cpp:1660
+#, c-format
+msgid "Excluir (%d)"
+msgstr "删除 (%d)"
+
+#: src/editor/Panels.cpp:1660
+msgid "Limpar seleção"
+msgstr "清除选择"
+
+#: src/editor/Panels.cpp:1661
+msgid "Biblioteca"
+msgstr "库"
+
+#: src/editor/Panels.cpp:1661
+msgid "Voltar ao editor"
+msgstr "返回编辑器"
+
+#: src/editor/Panels.cpp:1666
+msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
+msgstr "没有最近的截图。请用 Snapnab 截图 (Print Screen) 或将文件拖放到此处。"
+
+#: src/editor/Panels.cpp:1667
+msgid "A biblioteca está vazia."
+msgstr "库为空。"
+
+#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+msgid "Abrir"
+msgstr "打开"
+
+#: src/editor/Panels.cpp:1822
+msgid "Mostrar na pasta"
+msgstr "在文件夹中显示"
+
+#: src/editor/Panels.cpp:1825
+#, c-format
+msgid "Exportar %zu itens…"
+msgstr "导出 %zu 个项目…"
+
+#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+msgid "Exportar…"
+msgstr "导出…"
+
+#: src/editor/Panels.cpp:1826
+msgid "Selecionar tudo\tCtrl+A"
+msgstr "全选\tCtrl+A"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja"
+msgstr "从托盘移除"
+
+#: src/editor/Panels.cpp:1827
+msgid "Remover da bandeja (continua na biblioteca)"
+msgstr "从托盘移除 (仍保留在库中)"
+
+#: src/editor/Panels.cpp:1829
+#, c-format
+msgid "Excluir %zu itens (Lixeira)\tDel"
+msgstr "删除 %zu 个项目 (回收站)\tDel"
+
+#: src/editor/Panels.cpp:1829
+msgid "Excluir (Lixeira)\tDel"
+msgstr "删除 (回收站)\tDel"
+
+#: src/editor/Pdf.cpp:11
+msgid "Falha ao codificar a imagem."
+msgstr "图像编码失败。"
+
+#: src/editor/Pdf.cpp:44
+msgid "Não foi possível criar o arquivo."
+msgstr "无法创建文件。"
+
+#: src/editor/Pdf.cpp:48
+msgid "Falha ao gravar o arquivo."
+msgstr "写入文件失败。"
+
+#: src/editor/Popups.cpp:253
+msgid "Cores do tema"
+msgstr "主题颜色"
+
+#: src/editor/Popups.cpp:255
+msgid "Cores padrão"
+msgstr "标准颜色"
+
+#: src/editor/Popups.cpp:256
+msgid "Recentes"
+msgstr "最近使用"
+
+#: src/editor/Popups.cpp:265
+msgid "Sem cor"
+msgstr "无颜色"
+
+#: src/editor/Popups.cpp:265
+msgid "Mais cores…"
+msgstr "更多颜色…"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Retângulo"
+msgstr "矩形"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Retângulo arredondado"
+msgstr "圆角矩形"
+
+#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
+msgid "Elipse"
+msgstr "椭圆"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Triângulo"
+msgstr "三角形"
+
+#: src/editor/PropsPanel.cpp:32
+msgid "Losango"
+msgstr "菱形"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Paralelogramo"
+msgstr "平行四边形"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Hexágono"
+msgstr "六边形"
+
+#: src/editor/PropsPanel.cpp:33
+msgid "Estrela"
+msgstr "星形"
+
+#: src/editor/PropsPanel.cpp:97
+msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
+msgstr "拖动以绘制箭头。Shift 锁定为 45°。启用“贝塞尔曲线”后，拖动中间的控制点可使其弯曲。"
+
+#: src/editor/PropsPanel.cpp:98
+msgid "Arraste para desenhar uma linha. Shift trava em 45°."
+msgstr "拖动以绘制直线。Shift 锁定为 45°。"
+
+#: src/editor/PropsPanel.cpp:99
+msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
+msgstr "拖动以绘制形状。Shift 保持比例 (正方形、圆形)。"
+
+#: src/editor/PropsPanel.cpp:100
+msgid "Arraste para desenhar à mão livre."
+msgstr "拖动以徒手绘制。"
+
+#: src/editor/PropsPanel.cpp:101
+msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
+msgstr "在要突出显示的内容上拖出矩形。颜色和不透明度来自属性。"
+
+#: src/editor/PropsPanel.cpp:102
+msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
+msgstr "单击或拖动以创建文本框。双击可编辑文本。"
+
+#: src/editor/PropsPanel.cpp:103
+msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
+msgstr "拖动以创建标注并输入文字。黄色控制点可移动尖角 (或箭头方向)。"
+
+#: src/editor/PropsPanel.cpp:104
+msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
+msgstr "单击以按顺序编号步骤。“类型”可选择数字、字母或罗马数字。"
+
+#: src/editor/PropsPanel.cpp:105
+msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
+msgstr "在库中选择图章，然后在图像上单击或拖动。“导入…”可添加你自己的图像。"
+
+#: src/editor/PropsPanel.cpp:106
+msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
+msgstr "单击以填充颜色相近的区域。取色器从图像中拾取填充颜色。"
+
+#: src/editor/PropsPanel.cpp:107
+msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
+msgstr "拖动以擦除图像像素 (变为透明)。"
+
+#: src/editor/PropsPanel.cpp:108
+msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "拖动以创建放大镜。镜头分离时，黄色控制点用于选择放大区域。"
+
+#: src/editor/PropsPanel.cpp:109
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
+msgstr "在要隐藏的区域上拖动 (模糊或像素化)。"
+
+#: src/editor/PropsPanel.cpp:110
+msgid "Arraste a área em destaque; o resto da imagem escurece."
+msgstr "拖出要突出的区域；图像的其余部分会变暗。"
+
+#: src/editor/PropsPanel.cpp:111
+msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
+msgstr "单击对象以选择并拖动。使用 Smart Move 时，拖动图像的某个区域即可移动它，背景会自动填充。"
+
+#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+msgid "Arraste a área a manter; Enter ou duplo clique aplica."
+msgstr "拖出要保留的区域；按 Enter 或双击应用。"
+
+#: src/editor/PropsPanel.cpp:113
+msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
+msgstr "选择并拖动以移动 (Smart Move)；Del 删除；Ctrl+C 复制。"
+
+#: src/editor/PropsPanel.cpp:114
+msgid "Arraste sobre a faixa a remover; as partes são unidas."
+msgstr "在要移除的条带上拖动；剩余部分会拼接在一起。"
+
+#: src/editor/PropsPanel.cpp:115
+msgid "Clique na imagem para pegar a cor."
+msgstr "单击图像以拾取颜色。"
+
+#: src/editor/PropsPanel.cpp:250
+msgid "Pesquisar carimbos"
+msgstr "搜索图章"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "I, II, III…"
+msgstr "I, II, III…"
+
+#: src/editor/PropsPanel.cpp:255
+msgid "i, ii, iii…"
+msgstr "i, ii, iii…"
+
+#: src/editor/PropsPanel.cpp:257
+msgid "Laço (mão livre)"
+msgstr "套索 (徒手)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Transparência"
+msgstr "透明"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Cor do canvas (branco)"
+msgstr "画布颜色 (白色)"
+
+#: src/editor/PropsPanel.cpp:259
+msgid "Preenchimento inteligente"
+msgstr "智能填充"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Horizontal (remove linhas)"
+msgstr "水平 (移除行)"
+
+#: src/editor/PropsPanel.cpp:261
+msgid "Vertical (remove colunas)"
+msgstr "垂直 (移除列)"
+
+#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460
+msgid "Desfoque"
+msgstr "模糊"
+
+#: src/editor/PropsPanel.cpp:263
+msgid "Pixelado"
+msgstr "像素化"
+
+#: src/editor/PropsPanel.cpp:264
+msgid "Organizar carimbos…"
+msgstr "整理图章…"
+
+#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+msgid "Importar…"
+msgstr "导入…"
+
+#: src/editor/PropsPanel.cpp:269
+msgid "Trazer para a frente"
+msgstr "上移一层"
+
+#: src/editor/PropsPanel.cpp:270
+msgid "Enviar para trás"
+msgstr "下移一层"
+
+#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+msgid "Excluir objeto"
+msgstr "删除对象"
+
+#: src/editor/PropsPanel.cpp:272
+msgid "Agrupar"
+msgstr "组合"
+
+#: src/editor/PropsPanel.cpp:273
+msgid "Desagrupar"
+msgstr "取消组合"
+
+#: src/editor/PropsPanel.cpp:294
+msgid "Novo tema…"
+msgstr "新建主题…"
+
+#: src/editor/PropsPanel.cpp:351
+msgid "Aplicar recorte"
+msgstr "应用剪切"
+
+#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+msgid "Corte automático"
+msgstr "自动裁剪"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Cortar para a seleção"
+msgstr "裁剪到选区"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Copiar seleção"
+msgstr "复制选区"
+
+#: src/editor/PropsPanel.cpp:352
+msgid "Excluir seleção"
+msgstr "删除选区"
+
+#: src/editor/PropsPanel.cpp:378
+msgid "Tema:"
+msgstr "主题："
+
+#: src/editor/PropsPanel.cpp:446
+msgid "Ponta inicial"
+msgstr "起点样式"
+
+#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+msgid "Tracejado"
+msgstr "虚线"
+
+#: src/editor/PropsPanel.cpp:448
+msgid "Ponta final"
+msgstr "终点样式"
+
+#: src/editor/PropsPanel.cpp:456
+msgid "Avançado"
+msgstr "高级"
+
+#: src/editor/PropsPanel.cpp:462
+msgid "Alinhamento"
+msgstr "对齐"
+
+#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495
+msgid "Opacidade"
+msgstr "不透明度"
+
+#: src/editor/PropsPanel.cpp:467
+msgid "Margem interna"
+msgstr "内边距"
+
+#: src/editor/PropsPanel.cpp:468
+msgid "Sombreado (degradê)"
+msgstr "渐变 (阴影)"
+
+#: src/editor/PropsPanel.cpp:474
+#, c-format
+msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
+msgstr "已选择 %d 个对象。样式更改将应用于与最后单击的对象类型相同的对象。"
+
+#: src/editor/PropsPanel.cpp:475
+#, c-format
+msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
+msgstr "包含 %zu 个对象的组：拖动以移动，使用控制点调整大小。"
+
+#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+msgid "Largura"
+msgstr "宽度"
+
+#: src/editor/PropsPanel.cpp:483
+msgid "Tamanho inicial"
+msgstr "起点大小"
+
+#: src/editor/PropsPanel.cpp:484
+msgid "Tamanho final"
+msgstr "终点大小"
+
+#: src/editor/PropsPanel.cpp:485
+msgid "Curva de Bézier"
+msgstr "贝塞尔曲线"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534
+msgid "Preenchimento"
+msgstr "填充"
+
+#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+msgid "Contorno"
+msgstr "轮廓"
+
+#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+msgid "Fonte"
+msgstr "字体"
+
+#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+msgid "Tamanho da fonte"
+msgstr "字号"
+
+#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+msgid "Espessura"
+msgstr "粗细"
+
+#: src/editor/PropsPanel.cpp:513
+msgid "Estilo da seta"
+msgstr "箭头样式"
+
+#: src/editor/PropsPanel.cpp:515
+msgid "Ponta"
+msgstr "端点"
+
+#: src/editor/PropsPanel.cpp:517
+msgid "Cor da seta"
+msgstr "箭头颜色"
+
+#: src/editor/PropsPanel.cpp:520
+msgid "Tamanho da seta"
+msgstr "箭头大小"
+
+#: src/editor/PropsPanel.cpp:537
+msgid "Mesma cor em toda a imagem"
+msgstr "整张图像使用相同颜色"
+
+#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+msgid "Cor do texto"
+msgstr "文本颜色"
+
+#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
+msgid "Tipo"
+msgstr "类型"
+
+#: src/editor/PropsPanel.cpp:543
+msgid "Reiniciar a sequência"
+msgstr "重新开始编号"
+
+#: src/editor/PropsPanel.cpp:548
+msgid "Suavizar as bordas"
+msgstr "平滑边缘"
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Ampliação (%)"
+msgstr "放大倍数 (%)"
+
+#: src/editor/PropsPanel.cpp:554
+msgid "Lente separada da área ampliada"
+msgstr "镜头与放大区域分离"
+
+#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+msgid "Intensidade"
+msgstr "强度"
+
+#: src/editor/PropsPanel.cpp:565
+msgid "Smart Move"
+msgstr "Smart Move"
+
+#: src/editor/PropsPanel.cpp:567
+msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
+msgstr "拖出图像中的一个区域，再把它拖到别处；背景会自动填充。"
+
+#: src/editor/PropsPanel.cpp:568
+msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
+msgstr "单击对象以选择。Ctrl+单击或拖出矩形可选择多个。"
+
+#: src/editor/PropsPanel.cpp:575
+msgid "Modo"
+msgstr "模式"
+
+#: src/editor/PropsPanel.cpp:577
+msgid "Seleção global (mesma cor)"
+msgstr "全局选择 (相同颜色)"
+
+#: src/editor/PropsPanel.cpp:578
+msgid "Ao mover, preencher"
+msgstr "移动时填充"
+
+#: src/editor/PropsPanel.cpp:582
+msgid "Direção"
+msgstr "方向"
+
+#: src/editor/PropsPanel.cpp:583
+msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
+msgstr "在要移除的条带上拖动；图像的剩余部分会拼接在一起。"
+
+#: src/editor/PropsPanel.cpp:587
+msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
+msgstr "单击图像以拾取颜色；颜色将用于绘图工具。"
+
+#: src/editor/PropsPanel.cpp:681
+msgid "Sombra ▾"
+msgstr "阴影 ▾"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Carimbos"
+msgstr "图章"
+
+#: src/editor/PropsPanel.cpp:866
+msgid "Estilos rápidos"
+msgstr "快速样式"
+
+#: src/editor/PropsPanel.cpp:884
+msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
+msgstr "单击快速样式上的星标即可将其添加到收藏。"
+
+#: src/editor/PropsPanel.cpp:885
+msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
+msgstr "此类别中没有图章。使用“导入…”添加图像。"
+
+#: src/editor/PropsPanel.cpp:886
+msgid "Nenhum carimbo encontrado."
+msgstr "未找到图章。"
+
+#: src/editor/PropsPanel.cpp:952
+msgid "Propriedades da ferramenta"
+msgstr "工具属性"
+
+#: src/editor/PropsPanel.cpp:1012
+msgid "Aplicar este estilo"
+msgstr "应用此样式"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Remover dos favoritos"
+msgstr "从收藏中移除"
+
+#: src/editor/PropsPanel.cpp:1013
+msgid "Adicionar aos favoritos"
+msgstr "添加到收藏"
+
+#: src/editor/PropsPanel.cpp:1014
+msgid "Excluir este estilo rápido"
+msgstr "删除此快速样式"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar uma cópia do tema…"
+msgstr "编辑主题副本…"
+
+#: src/editor/PropsPanel.cpp:1027
+msgid "Editar o tema…"
+msgstr "编辑主题…"
+
+#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
+msgid "Nome"
+msgstr "名称"
+
+#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#, c-format
+msgid "Cor %d"
+msgstr "颜色 %d"
+
+#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
+msgstr "所有工具的快速样式都由这些颜色生成。"
+
+#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+msgid "Novo tema"
+msgstr "新建主题"
+
+#: src/editor/PropsPanel.cpp:1039
+msgid "Editar tema"
+msgstr "编辑主题"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
+msgstr "Snapnab 主题 (*.snaptheme)|*.snaptheme|"
+
+#: src/editor/PropsPanel.cpp:1051
+msgid "Exportar tema"
+msgstr "导出主题"
+
+#: src/editor/PropsPanel.cpp:1052
+msgid "Não foi possível exportar o tema."
+msgstr "无法导出主题。"
+
+#: src/editor/PropsPanel.cpp:1056
+#, c-format
+msgid "Excluir o tema \"%s\"?"
+msgstr "删除主题“%s”吗？"
+
+#: src/editor/PropsPanel.cpp:1079
+msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
+msgstr "取色器：单击图像以拾取填充颜色。"
+
+#: src/editor/PropsPanel.cpp:1099
+msgid "Mostrar sombra"
+msgstr "显示阴影"
+
+#: src/editor/PropsPanel.cpp:1100
+msgid "Cor da sombra…"
+msgstr "阴影颜色…"
+
+#: src/editor/PropsPanel.cpp:1103
+msgid "Distância"
+msgstr "距离"
+
+#: src/editor/PropsPanel.cpp:1201
+msgid "A sequência de passos recomeça em 1."
+msgstr "步骤编号将从 1 重新开始。"
+
+#: src/editor/PropsPanel.cpp:1363
+msgid "Meu tema"
+msgstr "我的主题"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
+msgstr "Snapnab 主题 (*.snaptheme)|*.snaptheme|所有文件|*.*|"
+
+#: src/editor/PropsPanel.cpp:1374
+msgid "Importar tema"
+msgstr "导入主题"
+
+#: src/editor/PropsPanel.cpp:1408
+#, c-format
+msgid "%d carimbo(s) importado(s) para Meus carimbos."
+msgstr "已将 %d 个图章导入“我的图章”。"
+
+#: src/editor/QuickStyles.cpp:200
+msgid "Básico"
+msgstr "基础"
+
+#: src/editor/QuickStyles.cpp:201
+msgid "Industrial"
+msgstr "工业"
+
+#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+msgid "Tema"
+msgstr "主题"
+
+#: src/editor/QuickStyles.cpp:323
+msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
+msgstr "该文件不是 Snapnab 主题 (.snaptheme)。"
+
+#: src/editor/Stamps.cpp:16
+msgid "Negócios"
+msgstr "商务"
+
+#: src/editor/Stamps.cpp:23
+msgid "Interface"
+msgstr "界面"
+
+#: src/editor/Stamps.cpp:29
+msgid "Atividades"
+msgstr "活动"
+
+#: src/editor/Stamps.cpp:33
+msgid "Comida e bebida"
+msgstr "食物和饮料"
+
+#: src/editor/Stamps.cpp:37
+msgid "Feriados"
+msgstr "节日"
+
+#: src/editor/Stamps.cpp:40
+msgid "Smileys e pessoas"
+msgstr "表情和人物"
+
+#: src/editor/Stamps.cpp:46
+msgid "Adesivos"
+msgstr "贴纸"
+
+#: src/editor/Stamps.cpp:49
+msgid "Símbolos"
+msgstr "符号"
+
+#: src/editor/Stamps.cpp:54
+msgid "Viagem e lugares"
+msgstr "旅行和地点"
+
+#: src/editor/Stamps.cpp:92
+msgid "Meus carimbos"
+msgstr "我的图章"
+
+#: src/editor/Stamps.cpp:100
+msgid "Meus carimbos › "
+msgstr "我的图章 › "
+
+#: src/editor/Stamps.cpp:125
+msgid "Importar carimbos"
+msgstr "导入图章"
+
+#: src/editor/Stamps.cpp:126
+msgid "Imagens"
+msgstr "图像"
+
+#: src/editor/Stamps.cpp:16
+msgid "clipe anexo"
+msgstr "回形针 附件"
+
+#: src/editor/Stamps.cpp:16
+msgid "lupa pesquisar"
+msgstr "放大镜 搜索"
+
+#: src/editor/Stamps.cpp:16
+msgid "engrenagem configurações"
+msgstr "齿轮 设置"
+
+#: src/editor/Stamps.cpp:16
+msgid "relógio hora"
+msgstr "时钟 时间"
+
+#: src/editor/Stamps.cpp:16
+msgid "usuário pessoa"
+msgstr "用户 人物"
+
+#: src/editor/Stamps.cpp:16
+msgid "equipe pessoas"
+msgstr "团队 人物"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado fechado segurança"
+msgstr "锁定 安全"
+
+#: src/editor/Stamps.cpp:16
+msgid "cadeado aberto"
+msgstr "解锁"
+
+#: src/editor/Stamps.cpp:16
+msgid "marcador"
+msgstr "书签"
+
+#: src/editor/Stamps.cpp:16
+msgid "sinal wi-fi"
+msgstr "wi-fi 信号"
+
+#: src/editor/Stamps.cpp:16
+msgid "notebook código"
+msgstr "笔记本电脑 代码"
+
+#: src/editor/Stamps.cpp:16
+msgid "baixar download"
+msgstr "下载"
+
+#: src/editor/Stamps.cpp:16
+msgid "enviar upload"
+msgstr "上传"
+
+#: src/editor/Stamps.cpp:16
+msgid "mesclar"
+msgstr "合并"
+
+#: src/editor/Stamps.cpp:16
+msgid "repetir"
+msgstr "重复"
+
+#: src/editor/Stamps.cpp:16
+msgid "gráfico barras"
+msgstr "条形图"
+
+#: src/editor/Stamps.cpp:16
+msgid "crescimento"
+msgstr "增长"
+
+#: src/editor/Stamps.cpp:16
+msgid "queda"
+msgstr "下降"
+
+#: src/editor/Stamps.cpp:16
+msgid "lista concluído"
+msgstr "清单 完成"
+
+#: src/editor/Stamps.cpp:16
+msgid "link compartilhar"
+msgstr "链接 分享"
+
+#: src/editor/Stamps.cpp:16
+msgid "reproduzir play"
+msgstr "播放"
+
+#: src/editor/Stamps.cpp:16
+msgid "parar"
+msgstr "停止"
+
+#: src/editor/Stamps.cpp:16
+msgid "pausar"
+msgstr "暂停"
+
+#: src/editor/Stamps.cpp:16
+msgid "avançar"
+msgstr "快进"
+
+#: src/editor/Stamps.cpp:16
+msgid "voltar"
+msgstr "后退"
+
+#: src/editor/Stamps.cpp:16
+msgid "dinheiro moedas"
+msgstr "钱 硬币"
+
+#: src/editor/Stamps.cpp:16
+msgid "cartão pagamento"
+msgstr "卡 支付"
+
+#: src/editor/Stamps.cpp:16
+msgid "globo internet"
+msgstr "地球 互联网"
+
+#: src/editor/Stamps.cpp:16
+msgid "prêmio medalha"
+msgstr "奖品 奖牌"
+
+#: src/editor/Stamps.cpp:16
+msgid "caneta"
+msgstr "钢笔"
+
+#: src/editor/Stamps.cpp:16
+msgid "lápis"
+msgstr "铅笔"
+
+#: src/editor/Stamps.cpp:16
+msgid "documento"
+msgstr "文档"
+
+#: src/editor/Stamps.cpp:16
+msgid "nota"
+msgstr "便笺"
+
+#: src/editor/Stamps.cpp:16
+msgid "telefone"
+msgstr "电话"
+
+#: src/editor/Stamps.cpp:16
+msgid "e-mail carta"
+msgstr "电子邮件 信件"
+
+#: src/editor/Stamps.cpp:16
+msgid "conversa comentário"
+msgstr "对话 评论"
+
+#: src/editor/Stamps.cpp:16
+msgid "monitor computador"
+msgstr "显示器 电脑"
+
+#: src/editor/Stamps.cpp:16
+msgid "celular"
+msgstr "手机"
+
+#: src/editor/Stamps.cpp:16
+msgid "mouse"
+msgstr "鼠标"
+
+#: src/editor/Stamps.cpp:16
+msgid "nuvem"
+msgstr "云"
+
+#: src/editor/Stamps.cpp:16
+msgid "pasta"
+msgstr "文件夹"
+
+#: src/editor/Stamps.cpp:16
+msgid "calendário"
+msgstr "日历"
+
+#: src/editor/Stamps.cpp:16
+msgid "maleta trabalho"
+msgstr "公文包 工作"
+
+#: src/editor/Stamps.cpp:16
+msgid "alfinete"
+msgstr "图钉"
+
+#: src/editor/Stamps.cpp:16
+msgid "lixeira"
+msgstr "垃圾桶"
+
+#: src/editor/Stamps.cpp:16
+msgid "sino notificação"
+msgstr "铃铛 通知"
+
+#: src/editor/Stamps.cpp:16
+msgid "ideia lâmpada"
+msgstr "想法 灯泡"
+
+#: src/editor/Stamps.cpp:16
+msgid "alvo meta"
+msgstr "靶心 目标"
+
+#: src/editor/Stamps.cpp:16
+msgid "foguete lançamento"
+msgstr "火箭 发布"
+
+#: src/editor/Stamps.cpp:16
+msgid "troféu"
+msgstr "奖杯"
+
+#: src/editor/Stamps.cpp:23
+msgid "concluído certo"
+msgstr "完成 正确"
+
+#: src/editor/Stamps.cpp:23
+msgid "errado fechar"
+msgstr "错误 关闭"
+
+#: src/editor/Stamps.cpp:23
+msgid "atenção aviso"
+msgstr "注意 警告"
+
+#: src/editor/Stamps.cpp:23
+msgid "informação"
+msgstr "信息"
+
+#: src/editor/Stamps.cpp:23
+msgid "pergunta dúvida"
+msgstr "问题 疑问"
+
+#: src/editor/Stamps.cpp:23
+msgid "exclamação importante"
+msgstr "感叹号 重要"
+
+#: src/editor/Stamps.cpp:23
+msgid "estrela favorito"
+msgstr "星星 收藏"
+
+#: src/editor/Stamps.cpp:23
+msgid "coração"
+msgstr "爱心"
+
+#: src/editor/Stamps.cpp:23
+msgid "positivo curtir"
+msgstr "点赞 喜欢"
+
+#: src/editor/Stamps.cpp:23
+msgid "negativo"
+msgstr "踩 不喜欢"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta direita"
+msgstr "向右箭头"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta esquerda"
+msgstr "向左箭头"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta cima"
+msgstr "向上箭头"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta baixo"
+msgstr "向下箭头"
+
+#: src/editor/Stamps.cpp:23
+msgid "seta diagonal"
+msgstr "斜向箭头"
+
+#: src/editor/Stamps.cpp:23
+msgid "atualizar"
+msgstr "刷新"
+
+#: src/editor/Stamps.cpp:23
+msgid "adicionar mais"
+msgstr "添加 加号"
+
+#: src/editor/Stamps.cpp:23
+msgid "remover menos"
+msgstr "移除 减号"
+
+#: src/editor/Stamps.cpp:23
+msgid "marca certo"
+msgstr "对勾"
+
+#: src/editor/Stamps.cpp:23
+msgid "multiplicar fechar"
+msgstr "乘号 关闭"
+
+#: src/editor/Stamps.cpp:23
+msgid "vermelho"
+msgstr "红色"
+
+#: src/editor/Stamps.cpp:23
+msgid "laranja"
+msgstr "橙色"
+
+#: src/editor/Stamps.cpp:23
+msgid "amarelo"
+msgstr "黄色"
+
+#: src/editor/Stamps.cpp:23
+msgid "verde"
+msgstr "绿色"
+
+#: src/editor/Stamps.cpp:23
+msgid "azul"
+msgstr "蓝色"
+
+#: src/editor/Stamps.cpp:23
+msgid "roxo"
+msgstr "紫色"
+
+#: src/editor/Stamps.cpp:23
+msgid "preto"
+msgstr "黑色"
+
+#: src/editor/Stamps.cpp:23
+msgid "branco"
+msgstr "白色"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado vermelho"
+msgstr "红色方块"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado verde"
+msgstr "绿色方块"
+
+#: src/editor/Stamps.cpp:23
+msgid "quadrado azul"
+msgstr "蓝色方块"
+
+#: src/editor/Stamps.cpp:23
+msgid "botão rádio"
+msgstr "单选按钮"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa"
+msgstr "方框"
+
+#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+msgid "caixa marcada"
+msgstr "已勾选方框"
+
+#: src/editor/Stamps.cpp:23
+msgid "som alto"
+msgstr "大声"
+
+#: src/editor/Stamps.cpp:23
+msgid "sem som mudo"
+msgstr "静音"
+
+#: src/editor/Stamps.cpp:23
+msgid "início casa"
+msgstr "主页 房子"
+
+#: src/editor/Stamps.cpp:23
+msgid "chave senha"
+msgstr "钥匙 密码"
+
+#: src/editor/Stamps.cpp:23
+msgid "carrinho compras"
+msgstr "购物车"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de entrada"
+msgstr "收件箱"
+
+#: src/editor/Stamps.cpp:23
+msgid "caixa de saída"
+msgstr "发件箱"
+
+#: src/editor/Stamps.cpp:23
+msgid "zoom pesquisa"
+msgstr "缩放 搜索"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol"
+msgstr "足球"
+
+#: src/editor/Stamps.cpp:29
+msgid "basquete"
+msgstr "篮球"
+
+#: src/editor/Stamps.cpp:29
+msgid "futebol americano"
+msgstr "美式足球"
+
+#: src/editor/Stamps.cpp:29
+msgid "beisebol"
+msgstr "棒球"
+
+#: src/editor/Stamps.cpp:29
+msgid "tênis"
+msgstr "网球"
+
+#: src/editor/Stamps.cpp:29
+msgid "vôlei"
+msgstr "排球"
+
+#: src/editor/Stamps.cpp:29
+msgid "pingue-pongue"
+msgstr "乒乓球"
+
+#: src/editor/Stamps.cpp:29
+msgid "badminton"
+msgstr "羽毛球"
+
+#: src/editor/Stamps.cpp:29
+msgid "boxe"
+msgstr "拳击"
+
+#: src/editor/Stamps.cpp:29
+msgid "boliche"
+msgstr "保龄球"
+
+#: src/editor/Stamps.cpp:29
+msgid "golfe"
+msgstr "高尔夫"
+
+#: src/editor/Stamps.cpp:29
+msgid "pesca"
+msgstr "钓鱼"
+
+#: src/editor/Stamps.cpp:29
+msgid "esqui"
+msgstr "滑雪"
+
+#: src/editor/Stamps.cpp:29
+msgid "snowboard"
+msgstr "单板滑雪"
+
+#: src/editor/Stamps.cpp:29
+msgid "surfe"
+msgstr "冲浪"
+
+#: src/editor/Stamps.cpp:29
+msgid "ciclismo bicicleta"
+msgstr "骑行 自行车"
+
+#: src/editor/Stamps.cpp:29
+msgid "natação"
+msgstr "游泳"
+
+#: src/editor/Stamps.cpp:29
+msgid "musculação"
+msgstr "举重"
+
+#: src/editor/Stamps.cpp:29
+msgid "videogame jogo"
+msgstr "电子游戏 游戏"
+
+#: src/editor/Stamps.cpp:29
+msgid "dado"
+msgstr "骰子"
+
+#: src/editor/Stamps.cpp:29
+msgid "quebra-cabeça"
+msgstr "拼图"
+
+#: src/editor/Stamps.cpp:29
+msgid "pintura arte"
+msgstr "绘画 艺术"
+
+#: src/editor/Stamps.cpp:29
+msgid "teatro"
+msgstr "戏剧"
+
+#: src/editor/Stamps.cpp:29
+msgid "microfone"
+msgstr "麦克风"
+
+#: src/editor/Stamps.cpp:29
+msgid "fone"
+msgstr "耳机"
+
+#: src/editor/Stamps.cpp:29
+msgid "guitarra"
+msgstr "吉他"
+
+#: src/editor/Stamps.cpp:29
+msgid "piano"
+msgstr "钢琴"
+
+#: src/editor/Stamps.cpp:29
+msgid "bateria"
+msgstr "架子鼓"
+
+#: src/editor/Stamps.cpp:29
+msgid "cinema filme"
+msgstr "电影院 电影"
+
+#: src/editor/Stamps.cpp:29
+msgid "primeiro lugar"
+msgstr "第一名"
+
+#: src/editor/Stamps.cpp:29
+msgid "ingresso"
+msgstr "门票"
+
+#: src/editor/Stamps.cpp:29
+msgid "foto câmera"
+msgstr "照片 相机"
+
+#: src/editor/Stamps.cpp:33
+msgid "maçã"
+msgstr "苹果"
+
+#: src/editor/Stamps.cpp:33
+msgid "banana"
+msgstr "香蕉"
+
+#: src/editor/Stamps.cpp:33
+msgid "uva"
+msgstr "葡萄"
+
+#: src/editor/Stamps.cpp:33
+msgid "morango"
+msgstr "草莓"
+
+#: src/editor/Stamps.cpp:33
+msgid "melancia"
+msgstr "西瓜"
+
+#: src/editor/Stamps.cpp:33
+msgid "cereja"
+msgstr "樱桃"
+
+#: src/editor/Stamps.cpp:33
+msgid "pêssego"
+msgstr "桃子"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacaxi"
+msgstr "菠萝"
+
+#: src/editor/Stamps.cpp:33
+msgid "abacate"
+msgstr "牛油果"
+
+#: src/editor/Stamps.cpp:33
+msgid "cenoura"
+msgstr "胡萝卜"
+
+#: src/editor/Stamps.cpp:33
+msgid "milho"
+msgstr "玉米"
+
+#: src/editor/Stamps.cpp:33
+msgid "pão"
+msgstr "面包"
+
+#: src/editor/Stamps.cpp:33
+msgid "queijo"
+msgstr "奶酪"
+
+#: src/editor/Stamps.cpp:33
+msgid "hambúrguer"
+msgstr "汉堡"
+
+#: src/editor/Stamps.cpp:33
+msgid "batata frita"
+msgstr "薯条"
+
+#: src/editor/Stamps.cpp:33
+msgid "pizza"
+msgstr "披萨"
+
+#: src/editor/Stamps.cpp:33
+msgid "cachorro-quente"
+msgstr "热狗"
+
+#: src/editor/Stamps.cpp:33
+msgid "taco"
+msgstr "墨西哥卷饼"
+
+#: src/editor/Stamps.cpp:33
+msgid "sushi"
+msgstr "寿司"
+
+#: src/editor/Stamps.cpp:33
+msgid "lámen sopa"
+msgstr "拉面 汤"
+
+#: src/editor/Stamps.cpp:33
+msgid "rosquinha"
+msgstr "甜甜圈"
+
+#: src/editor/Stamps.cpp:33
+msgid "biscoito"
+msgstr "饼干"
+
+#: src/editor/Stamps.cpp:33
+msgid "bolo aniversário"
+msgstr "生日蛋糕"
+
+#: src/editor/Stamps.cpp:33
+msgid "torta"
+msgstr "馅饼"
+
+#: src/editor/Stamps.cpp:33
+msgid "chocolate"
+msgstr "巧克力"
+
+#: src/editor/Stamps.cpp:33
+msgid "pipoca"
+msgstr "爆米花"
+
+#: src/editor/Stamps.cpp:33
+msgid "café"
+msgstr "咖啡"
+
+#: src/editor/Stamps.cpp:33
+msgid "chá"
+msgstr "茶"
+
+#: src/editor/Stamps.cpp:33
+msgid "refrigerante"
+msgstr "汽水"
+
+#: src/editor/Stamps.cpp:33
+msgid "cerveja"
+msgstr "啤酒"
+
+#: src/editor/Stamps.cpp:33
+msgid "vinho"
+msgstr "葡萄酒"
+
+#: src/editor/Stamps.cpp:33
+msgid "brinde"
+msgstr "干杯"
+
+#: src/editor/Stamps.cpp:37
+msgid "natal árvore"
+msgstr "圣诞树"
+
+#: src/editor/Stamps.cpp:37
+msgid "papai noel"
+msgstr "圣诞老人"
+
+#: src/editor/Stamps.cpp:37
+msgid "presente"
+msgstr "礼物"
+
+#: src/editor/Stamps.cpp:37
+msgid "abóbora halloween"
+msgstr "南瓜 万圣节"
+
+#: src/editor/Stamps.cpp:37
+msgid "fantasma"
+msgstr "幽灵"
+
+#: src/editor/Stamps.cpp:37
+msgid "peru"
+msgstr "火鸡"
+
+#: src/editor/Stamps.cpp:37
+msgid "coelho páscoa"
+msgstr "复活节兔子"
+
+#: src/editor/Stamps.cpp:37
+msgid "ovo"
+msgstr "蛋"
+
+#: src/editor/Stamps.cpp:37
+msgid "coração presente"
+msgstr "爱心礼物"
+
+#: src/editor/Stamps.cpp:37
+msgid "flores"
+msgstr "花"
+
+#: src/editor/Stamps.cpp:37
+msgid "fogos"
+msgstr "烟花"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrelinha"
+msgstr "仙女棒"
+
+#: src/editor/Stamps.cpp:37
+msgid "festa"
+msgstr "派对"
+
+#: src/editor/Stamps.cpp:37
+msgid "confete"
+msgstr "彩纸屑"
+
+#: src/editor/Stamps.cpp:37
+msgid "balão"
+msgstr "气球"
+
+#: src/editor/Stamps.cpp:37
+msgid "vela"
+msgstr "蜡烛"
+
+#: src/editor/Stamps.cpp:37
+msgid "estrela brilhante"
+msgstr "闪亮的星星"
+
+#: src/editor/Stamps.cpp:37
+msgid "neve floco"
+msgstr "雪花"
+
+#: src/editor/Stamps.cpp:37
+msgid "boneco de neve"
+msgstr "雪人"
+
+#: src/editor/Stamps.cpp:37
+msgid "laço"
+msgstr "蝴蝶结"
+
+#: src/editor/Stamps.cpp:37
+msgid "envelope"
+msgstr "信封"
+
+#: src/editor/Stamps.cpp:37
+msgid "trevo sorte"
+msgstr "四叶草 幸运"
+
+#: src/editor/Stamps.cpp:37
+msgid "piñata"
+msgstr "皮纳塔"
+
+#: src/editor/Stamps.cpp:37
+msgid "menorá"
+msgstr "烛台"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso feliz"
+msgstr "微笑 开心"
+
+#: src/editor/Stamps.cpp:40
+msgid "alegre"
+msgstr "高兴"
+
+#: src/editor/Stamps.cpp:40
+msgid "rindo"
+msgstr "大笑"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorrisão"
+msgstr "咧嘴笑"
+
+#: src/editor/Stamps.cpp:40
+msgid "gargalhada"
+msgstr "哈哈大笑"
+
+#: src/editor/Stamps.cpp:40
+msgid "aliviado"
+msgstr "松了口气"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando de rir"
+msgstr "笑哭"
+
+#: src/editor/Stamps.cpp:40
+msgid "sorriso leve"
+msgstr "微微一笑"
+
+#: src/editor/Stamps.cpp:40
+msgid "piscada"
+msgstr "眨眼"
+
+#: src/editor/Stamps.cpp:40
+msgid "contente"
+msgstr "满意"
+
+#: src/editor/Stamps.cpp:40
+msgid "apaixonado"
+msgstr "爱慕"
+
+#: src/editor/Stamps.cpp:40
+msgid "beijo"
+msgstr "亲吻"
+
+#: src/editor/Stamps.cpp:40
+msgid "legal óculos"
+msgstr "酷 墨镜"
+
+#: src/editor/Stamps.cpp:40
+msgid "pensando"
+msgstr "思考"
+
+#: src/editor/Stamps.cpp:40
+msgid "neutro"
+msgstr "无表情"
+
+#: src/editor/Stamps.cpp:40
+msgid "dormindo"
+msgstr "睡觉"
+
+#: src/editor/Stamps.cpp:40
+msgid "surpreso"
+msgstr "惊讶"
+
+#: src/editor/Stamps.cpp:40
+msgid "espantado"
+msgstr "震惊"
+
+#: src/editor/Stamps.cpp:40
+msgid "triste"
+msgstr "难过"
+
+#: src/editor/Stamps.cpp:40
+msgid "chorando"
+msgstr "哭泣"
+
+#: src/editor/Stamps.cpp:40
+msgid "bravo"
+msgstr "生气"
+
+#: src/editor/Stamps.cpp:40
+msgid "cabeça explodindo"
+msgstr "脑袋爆炸"
+
+#: src/editor/Stamps.cpp:40
+msgid "comemorando"
+msgstr "庆祝"
+
+#: src/editor/Stamps.cpp:40
+msgid "encantado"
+msgstr "欣喜"
+
+#: src/editor/Stamps.cpp:40
+msgid "anjo"
+msgstr "天使"
+
+#: src/editor/Stamps.cpp:40
+msgid "de cabeça para baixo"
+msgstr "倒脸"
+
+#: src/editor/Stamps.cpp:40
+msgid "abraço"
+msgstr "拥抱"
+
+#: src/editor/Stamps.cpp:40
+msgid "revirando olhos"
+msgstr "翻白眼"
+
+#: src/editor/Stamps.cpp:40
+msgid "careta"
+msgstr "鬼脸"
+
+#: src/editor/Stamps.cpp:40
+msgid "olá tchau"
+msgstr "你好 再见 挥手"
+
+#: src/editor/Stamps.cpp:40
+msgid "palmas"
+msgstr "鼓掌"
+
+#: src/editor/Stamps.cpp:40
+msgid "viva"
+msgstr "万岁"
+
+#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+msgid "ok"
+msgstr "ok"
+
+#: src/editor/Stamps.cpp:40
+msgid "paz"
+msgstr "和平"
+
+#: src/editor/Stamps.cpp:40
+msgid "dedos cruzados"
+msgstr "祈祷好运"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando direita"
+msgstr "指向右边"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando esquerda"
+msgstr "指向左边"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando cima"
+msgstr "指向上方"
+
+#: src/editor/Stamps.cpp:40
+msgid "apontando baixo"
+msgstr "指向下方"
+
+#: src/editor/Stamps.cpp:40
+msgid "força"
+msgstr "力量"
+
+#: src/editor/Stamps.cpp:40
+msgid "por favor obrigado"
+msgstr "请 谢谢"
+
+#: src/editor/Stamps.cpp:40
+msgid "acordo aperto de mão"
+msgstr "成交 握手"
+
+#: src/editor/Stamps.cpp:46
+msgid "cem pontos"
+msgstr "一百分"
+
+#: src/editor/Stamps.cpp:46
+msgid "fogo"
+msgstr "火"
+
+#: src/editor/Stamps.cpp:46
+msgid "brilho"
+msgstr "闪光"
+
+#: src/editor/Stamps.cpp:46
+msgid "explosão"
+msgstr "爆炸"
+
+#: src/editor/Stamps.cpp:46
+msgid "tontura"
+msgstr "头晕"
+
+#: src/editor/Stamps.cpp:46
+msgid "raiva"
+msgstr "愤怒"
+
+#: src/editor/Stamps.cpp:46
+msgid "sono"
+msgstr "困 睡觉"
+
+#: src/editor/Stamps.cpp:46
+msgid "gotas"
+msgstr "水滴"
+
+#: src/editor/Stamps.cpp:46
+msgid "novo"
+msgstr "新"
+
+#: src/editor/Stamps.cpp:46
+msgid "legal"
+msgstr "酷"
+
+#: src/editor/Stamps.cpp:46
+msgid "grátis"
+msgstr "免费"
+
+#: src/editor/Stamps.cpp:46
+msgid "up"
+msgstr "up"
+
+#: src/editor/Stamps.cpp:46
+msgid "topo"
+msgstr "顶部"
+
+#: src/editor/Stamps.cpp:46
+msgid "em breve"
+msgstr "即将推出"
+
+#: src/editor/Stamps.cpp:46
+msgid "arco-íris"
+msgstr "彩虹"
+
+#: src/editor/Stamps.cpp:46
+msgid "coroa"
+msgstr "皇冠"
+
+#: src/editor/Stamps.cpp:46
+msgid "diamante"
+msgstr "钻石"
+
+#: src/editor/Stamps.cpp:46
+msgid "bandeira"
+msgstr "旗帜"
+
+#: src/editor/Stamps.cpp:46
+msgid "chegada"
+msgstr "终点 方格旗"
+
+#: src/editor/Stamps.cpp:46
+msgid "megafone"
+msgstr "扩音器"
+
+#: src/editor/Stamps.cpp:46
+msgid "anúncio"
+msgstr "公告"
+
+#: src/editor/Stamps.cpp:46
+msgid "etiqueta"
+msgstr "标签"
+
+#: src/editor/Stamps.cpp:46
+msgid "medalha"
+msgstr "奖牌"
+
+#: src/editor/Stamps.cpp:46
+msgid "ímã"
+msgstr "磁铁"
+
+#: src/editor/Stamps.cpp:46
+msgid "bola de cristal"
+msgstr "水晶球"
+
+#: src/editor/Stamps.cpp:46
+msgid "varinha mágica"
+msgstr "魔杖"
+
+#: src/editor/Stamps.cpp:46
+msgid "bomba"
+msgstr "炸弹"
+
+#: src/editor/Stamps.cpp:46
+msgid "trevo"
+msgstr "三叶草"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla horizontal"
+msgstr "水平双向箭头"
+
+#: src/editor/Stamps.cpp:49
+msgid "seta dupla vertical"
+msgstr "垂直双向箭头"
+
+#: src/editor/Stamps.cpp:49
+msgid "girar"
+msgstr "旋转"
+
+#: src/editor/Stamps.cpp:49
+msgid "dividir"
+msgstr "除号"
+
+#: src/editor/Stamps.cpp:49
+msgid "infinito"
+msgstr "无穷大"
+
+#: src/editor/Stamps.cpp:49
+msgid "dupla exclamação"
+msgstr "双感叹号"
+
+#: src/editor/Stamps.cpp:49
+msgid "exclamação pergunta"
+msgstr "感叹号问号"
+
+#: src/editor/Stamps.cpp:49
+msgid "proibido"
+msgstr "禁止"
+
+#: src/editor/Stamps.cpp:49
+msgid "entrada proibida"
+msgstr "禁止通行"
+
+#: src/editor/Stamps.cpp:49
+msgid "círculo"
+msgstr "圆圈"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango laranja"
+msgstr "橙色菱形"
+
+#: src/editor/Stamps.cpp:49
+msgid "losango azul"
+msgstr "蓝色菱形"
+
+#: src/editor/Stamps.cpp:49
+msgid "reciclar"
+msgstr "回收"
+
+#: src/editor/Stamps.cpp:49
+msgid "raio energia"
+msgstr "闪电 能量"
+
+#: src/editor/Stamps.cpp:49
+msgid "radioativo"
+msgstr "放射性"
+
+#: src/editor/Stamps.cpp:49
+msgid "risco biológico"
+msgstr "生物危害"
+
+#: src/editor/Stamps.cpp:49
+msgid "copyright"
+msgstr "版权"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca registrada"
+msgstr "注册商标"
+
+#: src/editor/Stamps.cpp:49
+msgid "marca"
+msgstr "商标"
+
+#: src/editor/Stamps.cpp:49
+msgid "hashtag"
+msgstr "井号 话题"
+
+#: src/editor/Stamps.cpp:49
+msgid "um"
+msgstr "一"
+
+#: src/editor/Stamps.cpp:49
+msgid "dois"
+msgstr "二"
+
+#: src/editor/Stamps.cpp:49
+msgid "três"
+msgstr "三"
+
+#: src/editor/Stamps.cpp:49
+msgid "quatro"
+msgstr "四"
+
+#: src/editor/Stamps.cpp:49
+msgid "cinco"
+msgstr "五"
+
+#: src/editor/Stamps.cpp:49
+msgid "seis"
+msgstr "六"
+
+#: src/editor/Stamps.cpp:49
+msgid "sete"
+msgstr "七"
+
+#: src/editor/Stamps.cpp:49
+msgid "oito"
+msgstr "八"
+
+#: src/editor/Stamps.cpp:49
+msgid "nove"
+msgstr "九"
+
+#: src/editor/Stamps.cpp:49
+msgid "dez"
+msgstr "十"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra a"
+msgstr "字母 a"
+
+#: src/editor/Stamps.cpp:49
+msgid "letra b"
+msgstr "字母 b"
+
+#: src/editor/Stamps.cpp:49
+msgid "ab"
+msgstr "ab"
+
+#: src/editor/Stamps.cpp:49
+msgid "abc"
+msgstr "abc"
+
+#: src/editor/Stamps.cpp:49
+msgid "cifrão"
+msgstr "美元符号"
+
+#: src/editor/Stamps.cpp:49
+msgid "câmbio"
+msgstr "货币兑换"
+
+#: src/editor/Stamps.cpp:54
+msgid "carro"
+msgstr "汽车"
+
+#: src/editor/Stamps.cpp:54
+msgid "táxi"
+msgstr "出租车"
+
+#: src/editor/Stamps.cpp:54
+msgid "ônibus"
+msgstr "公交车"
+
+#: src/editor/Stamps.cpp:54
+msgid "ambulância"
+msgstr "救护车"
+
+#: src/editor/Stamps.cpp:54
+msgid "bombeiros"
+msgstr "消防车"
+
+#: src/editor/Stamps.cpp:54
+msgid "polícia"
+msgstr "警察"
+
+#: src/editor/Stamps.cpp:54
+msgid "bicicleta"
+msgstr "自行车"
+
+#: src/editor/Stamps.cpp:54
+msgid "moto"
+msgstr "摩托车"
+
+#: src/editor/Stamps.cpp:54
+msgid "trem"
+msgstr "火车"
+
+#: src/editor/Stamps.cpp:54
+msgid "avião"
+msgstr "飞机"
+
+#: src/editor/Stamps.cpp:54
+msgid "navio"
+msgstr "轮船"
+
+#: src/editor/Stamps.cpp:54
+msgid "veleiro"
+msgstr "帆船"
+
+#: src/editor/Stamps.cpp:54
+msgid "helicóptero"
+msgstr "直升机"
+
+#: src/editor/Stamps.cpp:54
+msgid "mapa"
+msgstr "地图"
+
+#: src/editor/Stamps.cpp:54
+msgid "bússola"
+msgstr "指南针"
+
+#: src/editor/Stamps.cpp:54
+msgid "montanha"
+msgstr "山"
+
+#: src/editor/Stamps.cpp:54
+msgid "praia"
+msgstr "海滩"
+
+#: src/editor/Stamps.cpp:54
+msgid "ilha"
+msgstr "岛屿"
+
+#: src/editor/Stamps.cpp:54
+msgid "acampamento"
+msgstr "露营"
+
+#: src/editor/Stamps.cpp:54
+msgid "cidade"
+msgstr "城市"
+
+#: src/editor/Stamps.cpp:54
+msgid "prédio escritório"
+msgstr "办公楼"
+
+#: src/editor/Stamps.cpp:54
+msgid "hospital"
+msgstr "医院"
+
+#: src/editor/Stamps.cpp:54
+msgid "banco"
+msgstr "银行"
+
+#: src/editor/Stamps.cpp:54
+msgid "hotel"
+msgstr "酒店"
+
+#: src/editor/Stamps.cpp:54
+msgid "escola"
+msgstr "学校"
+
+#: src/editor/Stamps.cpp:54
+msgid "igreja"
+msgstr "教堂"
+
+#: src/editor/Stamps.cpp:54
+msgid "estátua"
+msgstr "雕像"
+
+#: src/editor/Stamps.cpp:54
+msgid "torre"
+msgstr "塔"
+
+#: src/editor/Stamps.cpp:54
+msgid "terra mundo"
+msgstr "地球 世界"
+
+#: src/editor/Stamps.cpp:54
+msgid "posto combustível"
+msgstr "加油站"
+
+#: src/editor/Stamps.cpp:54
+msgid "semáforo"
+msgstr "红绿灯"
+
+#: src/editor/Stamps.cpp:54
+msgid "estacionamento"
+msgstr "停车场"
+
+#: src/editor/Stamps.cpp:54
+msgid "mala"
+msgstr "行李箱"
+
+#: src/editor/Stamps.cpp:54
+msgid "local pino"
+msgstr "位置 图钉"
+
+#: src/editor/Video.cpp:153 src/editor/Video.cpp:288
+msgid "Não foi possível abrir o vídeo."
+msgstr "无法打开视频。"
+
+#: src/editor/Video.cpp:159
+msgid "Formato de vídeo não suportado."
+msgstr "不支持的视频格式。"
+
+#: src/editor/Video.cpp:188
+msgid "Não foi possível criar o arquivo de saída."
+msgstr "无法创建输出文件。"
+
+#: src/editor/Video.cpp:198
+msgid "Codificador H.264 indisponível."
+msgstr "H.264 编码器不可用。"
+
+#: src/editor/Video.cpp:205
+msgid "Entrada de vídeo recusada."
+msgstr "视频输入被拒绝。"
+
+#: src/editor/Video.cpp:216
+msgid "Codificador AAC indisponível."
+msgstr "AAC 编码器不可用。"
+
+#: src/editor/Video.cpp:218
+msgid "Falha ao iniciar a gravação."
+msgstr "无法开始写入。"
+
+#: src/editor/Video.cpp:230
+#, c-format
+msgid "Falha ao ler o vídeo (0x%08X)."
+msgstr "读取视频失败 (0x%08X)。"
+
+#: src/editor/Video.cpp:263
+msgid "Falha ao codificar quadro."
+msgstr "编码帧失败。"
+
+#: src/editor/Video.cpp:270
+msgid "Falha ao codificar áudio."
+msgstr "编码音频失败。"
+
+#: src/editor/Video.cpp:273 src/editor/Video.cpp:313
+msgid "Cancelado."
+msgstr "已取消。"
+
+#: src/editor/Video.cpp:274
+msgid "Falha ao finalizar o MP4."
+msgstr "完成 MP4 失败。"
+
+#: src/editor/Video.cpp:294
+msgid "Não foi possível criar o GIF."
+msgstr "无法创建 GIF。"
+
+#: src/editor/Video.cpp:314
+msgid "Nenhum quadro no intervalo."
+msgstr "范围内没有帧。"
+
+#: src/editor/Video.cpp:464 src/editor/Video.cpp:559
+msgid "▶ Reproduzir"
+msgstr "▶ 播放"
+
+#: src/editor/Video.cpp:464
+msgid "◀ Quadro"
+msgstr "◀ 上一帧"
+
+#: src/editor/Video.cpp:464
+msgid "Quadro ▶"
+msgstr "下一帧 ▶"
+
+#: src/editor/Video.cpp:464
+msgid "[ Início"
+msgstr "[ 起点"
+
+#: src/editor/Video.cpp:464
+msgid "Fim ]"
+msgstr "终点 ]"
+
+#: src/editor/Video.cpp:465
+msgid "✂ Cortar seleção"
+msgstr "✂ 剪掉选区"
+
+#: src/editor/Video.cpp:465
+msgid "Desfazer corte"
+msgstr "撤销剪切"
+
+#: src/editor/Video.cpp:465
+msgid "Salvar quadro"
+msgstr "保存帧"
+
+#: src/editor/Video.cpp:465
+msgid "Criar GIF…"
+msgstr "创建 GIF…"
+
+#: src/editor/Video.cpp:466
+msgid "Salvar MP4…"
+msgstr "保存 MP4…"
+
+#: src/editor/Video.cpp:466
+msgid "Abrir no player"
+msgstr "在播放器中打开"
+
+#: src/editor/Video.cpp:549
+msgid "❚❚ Pausar"
+msgstr "❚❚ 暂停"
+
+#: src/editor/Video.cpp:580
+msgid "Não foi possível abrir o vídeo (somente MP4)."
+msgstr "无法打开视频 (仅支持 MP4)。"
+
+#: src/editor/Video.cpp:589
+msgid "trecho cortado"
+msgstr "已剪掉的片段"
+
+#: src/editor/Video.cpp:613
+#, c-format
+msgid "   •   %d×%d @ %.0f qps"
+msgstr "   •   %d×%d @ %.0f 帧/秒"
+
+#: src/editor/Video.cpp:614
+msgid "   •   duração após cortes: "
+msgstr "   •   剪切后时长： "
+
+#: src/editor/Video.cpp:615
+msgid "   •   seleção: "
+msgstr "   •   选区： "
+
+#: src/editor/Video.cpp:627
+msgid "Vídeo MP4 (*.mp4)|*.mp4|"
+msgstr "MP4 视频 (*.mp4)|*.mp4|"
+
+#: src/editor/Video.cpp:629
+msgid "Salvar vídeo"
+msgstr "保存视频"
+
+#: src/editor/Video.cpp:630
+msgid "Escolha um arquivo diferente do original."
+msgstr "请选择与原文件不同的文件。"
+
+#: src/editor/Video.cpp:633
+msgid "Salvando vídeo…"
+msgstr "正在保存视频…"
+
+#: src/editor/Video.cpp:634
+msgid "Não foi possível salvar o vídeo.\n"
+msgstr "无法保存视频。\n"
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: a seleção marcada."
+msgstr "范围：标记的选区。"
+
+#: src/editor/Video.cpp:641
+msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
+msgstr "范围：整个视频 (标记起点/终点以限制范围)。"
+
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+msgid "Cores"
+msgstr "颜色"
+
+#: src/editor/Video.cpp:644
+msgid "256 cores"
+msgstr "256 色"
+
+#: src/editor/Video.cpp:644
+msgid "16 cores (arquivo menor)"
+msgstr "16 色 (文件更小)"
+
+#: src/editor/Video.cpp:645
+msgid "Pontilhado (dithering)"
+msgstr "抖动 (dithering)"
+
+#: src/editor/Video.cpp:646
+msgid "Quadros delta (só o que mudou)"
+msgstr "增量帧 (仅变化部分)"
+
+#: src/editor/Video.cpp:648
+msgid "Criar GIF animado"
+msgstr "创建 GIF 动画"
+
+#: src/editor/Video.cpp:649
+msgid "GIF animado (*.gif)|*.gif|"
+msgstr "GIF 动画 (*.gif)|*.gif|"
+
+#: src/editor/Video.cpp:651
+msgid "Salvar GIF"
+msgstr "保存 GIF"
+
+#: src/editor/Video.cpp:657
+msgid "Criando GIF…"
+msgstr "正在创建 GIF…"
+
+#: src/editor/Video.cpp:660
+msgid "Não foi possível criar o GIF.\n"
+msgstr "无法创建 GIF。\n"
+
+#: src/editor/Video.cpp:733
+msgid "Marque o início e o fim do trecho a remover."
+msgstr "请标记要移除片段的起点和终点。"
+
+#: src/editor/main.cpp:96
+msgid " — Snapnab Editor"
+msgstr " — Snapnab Editor"
+
+#: src/editor/main.cpp:112
+msgid "Vídeo: "
+msgstr "视频： "
+
+#: src/editor/main.cpp:113
+#, c-format
+msgid "%d × %d px"
+msgstr "%d × %d 像素"
+
+#: src/editor/main.cpp:114
+msgid ""
+"\n"
+"Captura: "
+msgstr ""
+"\n"
+"截图： "
+
+#: src/editor/main.cpp:115
+msgid ""
+"\n"
+"Aplicativo: "
+msgstr ""
+"\n"
+"应用程序： "
+
+#: src/editor/main.cpp:116
+msgid ""
+"\n"
+"Janela: "
+msgstr ""
+"\n"
+"窗口： "
+
+#: src/editor/main.cpp:117
+#, c-format
+msgid ""
+"\n"
+"Objetos: %zu"
+msgstr ""
+"\n"
+"对象：%zu"
+
+#: src/editor/main.cpp:118
+msgid ""
+"\n"
+"Etiquetas: "
+msgstr ""
+"\n"
+"标签： "
+
+#: src/editor/main.cpp:255
+msgid "Arquivo não encontrado:\n"
+msgstr "找不到文件：\n"
+
+#: src/editor/main.cpp:258
+msgid "Não foi possível abrir:\n"
+msgstr "无法打开：\n"
+
+#: src/editor/main.cpp:262
+msgid "Arquivo importado"
+msgstr "导入的文件"
+
+#: src/editor/main.cpp:283
+#, c-format
+msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
+msgstr "%d × %d 像素  •  %zu 个对象  •  可撤销 %zu 步"
+
+#: src/editor/main.cpp:348
+msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
+msgstr "请先建立选区 (选择工具) 或剪切。"
+
+#: src/editor/main.cpp:351
+msgid "Ângulo (graus, horário)"
+msgstr "角度 (度，顺时针)"
+
+#: src/editor/main.cpp:351 src/editor/main.cpp:483
+msgid "Cor de fundo"
+msgstr "背景颜色"
+
+#: src/editor/main.cpp:352
+msgid "Fundo transparente"
+msgstr "透明背景"
+
+#: src/editor/main.cpp:353
+msgid "Os objetos serão mesclados à imagem."
+msgstr "对象将合并到图像中。"
+
+#: src/editor/main.cpp:361
+msgid "ou escala (%)"
+msgstr "或缩放 (%)"
+
+#: src/editor/main.cpp:361
+msgid "Manter proporção"
+msgstr "保持比例"
+
+#: src/editor/main.cpp:379
+msgid "Âncora"
+msgstr "锚点"
+
+#: src/editor/main.cpp:379
+msgid "Superior esquerda"
+msgstr "左上"
+
+#: src/editor/main.cpp:379
+msgid "Superior"
+msgstr "上"
+
+#: src/editor/main.cpp:379
+msgid "Superior direita"
+msgstr "右上"
+
+#: src/editor/main.cpp:379
+msgid "Centro"
+msgstr "居中"
+
+#: src/editor/main.cpp:380
+msgid "Inferior esquerda"
+msgstr "左下"
+
+#: src/editor/main.cpp:380
+msgid "Inferior"
+msgstr "下"
+
+#: src/editor/main.cpp:380
+msgid "Inferior direita"
+msgstr "右下"
+
+#: src/editor/main.cpp:381
+msgid "Cor do canvas"
+msgstr "画布颜色"
+
+#: src/editor/main.cpp:381 src/editor/main.cpp:483
+msgid "Transparente"
+msgstr "透明"
+
+#: src/editor/main.cpp:382
+msgid "Tamanho do canvas"
+msgstr "画布大小"
+
+#: src/editor/main.cpp:402
+msgid "Nada a cortar: as bordas não são uniformes."
+msgstr "没有可裁剪的内容：边缘颜色不一致。"
+
+#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como"
+msgstr "另存为"
+
+#: src/editor/main.cpp:446
+msgid "Qualidade JPEG (1–100)"
+msgstr "JPEG 质量 (1–100)"
+
+#: src/editor/main.cpp:457
+msgid "Não foi possível salvar:\n"
+msgstr "无法保存：\n"
+
+#: src/editor/main.cpp:458
+msgid "Salvo em "
+msgstr "已保存到 "
+
+#: src/editor/main.cpp:469
+msgid "Salvo na biblioteca: "
+msgstr "已保存到库： "
+
+#: src/editor/main.cpp:477
+msgid "Da área de transferência"
+msgstr "来自剪贴板"
+
+#: src/editor/main.cpp:478
+msgid "Imagem nova criada a partir da área de transferência."
+msgstr "已从剪贴板创建新图像。"
+
+#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+msgid "Nova imagem"
+msgstr "新建图像"
+
+#: src/editor/main.cpp:485
+msgid "Imagem nova"
+msgstr "新图像"
+
+#: src/editor/main.cpp:510
+msgid "Enviar para a Lixeira?\n"
+msgstr "移到回收站吗？\n"
+
+#: src/editor/main.cpp:511
+#, c-format
+msgid "Enviar %zu itens da biblioteca para a Lixeira?"
+msgstr "将 %zu 个库项目移到回收站吗？"
+
+#: src/editor/main.cpp:524
+msgid "Item enviado para a Lixeira."
+msgstr "项目已移到回收站。"
+
+#: src/editor/main.cpp:524
+#, c-format
+msgid "%zu itens enviados para a Lixeira."
+msgstr "已将 %zu 个项目移到回收站。"
+
+#: src/editor/main.cpp:534
+msgid "Exportar para a pasta"
+msgstr "导出到文件夹"
+
+#: src/editor/main.cpp:552
+msgid "Formato das imagens"
+msgstr "图像格式"
+
+#: src/editor/main.cpp:553
+msgid "Vídeos são copiados em MP4."
+msgstr "视频将以 MP4 格式复制。"
+
+#: src/editor/main.cpp:554
+#, c-format
+msgid "Exportar %zu item(ns)"
+msgstr "导出 %zu 个项目"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid "%d item(ns) exportado(s) para %s"
+msgstr "已将 %d 个项目导出到 %s"
+
+#: src/editor/main.cpp:576
+#, c-format
+msgid " — %d falha(s)"
+msgstr " — %d 个失败"
+
+#: src/editor/main.cpp:621
+msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
+msgstr "未配置 MAPI 电子邮件客户端。图像已保存到：\n"
+
+#: src/editor/main.cpp:627
+msgid "Captura: "
+msgstr "截图： "
+
+#: src/editor/main.cpp:631
+#, c-format
+msgid "Falha ao enviar e-mail (MAPI %u)."
+msgstr "发送电子邮件失败 (MAPI %u)。"
+
+#: src/editor/main.cpp:638
+msgid "Abrir em programa externo"
+msgstr "在外部程序中打开"
+
+#: src/editor/main.cpp:651
+msgid "OCR indisponível: "
+msgstr "OCR 不可用： "
+
+#: src/editor/main.cpp:651 src/editor/main.cpp:820
+msgid "Grab Text"
+msgstr "提取文本"
+
+#: src/editor/main.cpp:652
+msgid "(nenhum texto reconhecido)"
+msgstr "(未识别到文本)"
+
+#: src/editor/main.cpp:653
+msgid "Grab Text — texto reconhecido"
+msgstr "提取文本 — 识别的文本"
+
+#: src/editor/main.cpp:668
+msgid "Nada para colar."
+msgstr "没有可粘贴的内容。"
+
+#: src/editor/main.cpp:669
+msgid "Colado"
+msgstr "已粘贴"
+
+#: src/editor/main.cpp:705
+msgid "Nova &captura\tCtrl+Shift+N"
+msgstr "新建截图(&C)\tCtrl+Shift+N"
+
+#: src/editor/main.cpp:705
+msgid "Nova &gravação de vídeo"
+msgstr "新建视频录制(&R)"
+
+#: src/editor/main.cpp:706
+msgid "Novo da área de &transferência"
+msgstr "从剪贴板新建(&B)"
+
+#: src/editor/main.cpp:706
+msgid "Nova &imagem…"
+msgstr "新建图像(&I)…"
+
+#: src/editor/main.cpp:707
+msgid "&Abrir…\tCtrl+O"
+msgstr "打开(&O)…\tCtrl+O"
+
+#: src/editor/main.cpp:707
+msgid "&Salvar\tCtrl+S"
+msgstr "保存(&S)\tCtrl+S"
+
+#: src/editor/main.cpp:707
+msgid "Salvar &como…\tCtrl+Shift+S"
+msgstr "另存为(&A)…\tCtrl+Shift+S"
+
+#: src/editor/main.cpp:708
+msgid "&Duplicar"
+msgstr "复制图像(&D)"
+
+#: src/editor/main.cpp:708
+msgid "&Excluir (Lixeira)"
+msgstr "删除 (回收站)(&L)"
+
+#: src/editor/main.cpp:709
+msgid "&Imprimir…\tCtrl+P"
+msgstr "打印(&P)…\tCtrl+P"
+
+#: src/editor/main.cpp:709
+msgid "Enviar por &e-mail…"
+msgstr "通过电子邮件发送(&E)…"
+
+#: src/editor/main.cpp:709
+msgid "Abrir em &programa externo…"
+msgstr "在外部程序中打开(&G)…"
+
+#: src/editor/main.cpp:710
+msgid "&Fechar documento\tCtrl+W"
+msgstr "关闭文档(&W)\tCtrl+W"
+
+#: src/editor/main.cpp:710
+msgid "Sai&r"
+msgstr "退出(&X)"
+
+#: src/editor/main.cpp:711
+msgid "&Desfazer\tCtrl+Z"
+msgstr "撤销(&U)\tCtrl+Z"
+
+#: src/editor/main.cpp:711
+msgid "&Refazer\tCtrl+Y"
+msgstr "重做(&R)\tCtrl+Y"
+
+#: src/editor/main.cpp:711
+msgid "Desfazer &tudo"
+msgstr "全部撤销(&L)"
+
+#: src/editor/main.cpp:712
+msgid "Recor&tar\tCtrl+X"
+msgstr "剪切(&T)\tCtrl+X"
+
+#: src/editor/main.cpp:712
+msgid "&Copiar\tCtrl+C"
+msgstr "复制(&C)\tCtrl+C"
+
+#: src/editor/main.cpp:712
+msgid "Copiar t&udo\tCtrl+Shift+C"
+msgstr "全部复制(&O)\tCtrl+Shift+C"
+
+#: src/editor/main.cpp:713
+msgid "C&olar\tCtrl+V"
+msgstr "粘贴(&P)\tCtrl+V"
+
+#: src/editor/main.cpp:713
+msgid "E&xcluir\tDel"
+msgstr "删除(&D)\tDel"
+
+#: src/editor/main.cpp:713
+msgid "Selecionar tu&do\tCtrl+A"
+msgstr "全选(&A)\tCtrl+A"
+
+#: src/editor/main.cpp:714
+msgid "Cortar para a &seleção"
+msgstr "裁剪到选区(&S)"
+
+#: src/editor/main.cpp:715
+msgid "&Grab Text (OCR)\tCtrl+Shift+O"
+msgstr "提取文本 (OCR)(&G)\tCtrl+Shift+O"
+
+#: src/editor/main.cpp:717
+msgid "&Borda"
+msgstr "边框(&B)"
+
+#: src/editor/main.cpp:717
+msgid "Bor&das"
+msgstr "边缘(&E)"
+
+#: src/editor/main.cpp:717
+msgid "&Informações da captura"
+msgstr "截图信息(&I)"
+
+#: src/editor/main.cpp:718
+msgid "&Perspectiva"
+msgstr "透视(&P)"
+
+#: src/editor/main.cpp:718
+msgid "D&obra de página"
+msgstr "卷页(&U)"
+
+#: src/editor/main.cpp:718
+msgid "&Sombra"
+msgstr "阴影(&S)"
+
+#: src/editor/main.cpp:719
+msgid "&Filtros"
+msgstr "滤镜(&F)"
+
+#: src/editor/main.cpp:719
+msgid "&Ajuste de cores"
+msgstr "颜色调整(&A)"
+
+#: src/editor/main.cpp:719
+msgid "Substituição de co&r"
+msgstr "颜色替换(&R)"
+
+#: src/editor/main.cpp:720
+msgid "Spotlight e &lupa"
+msgstr "聚光灯和放大镜(&M)"
+
+#: src/editor/main.cpp:720
+msgid "&Marca d'água"
+msgstr "水印(&W)"
+
+#: src/editor/main.cpp:726
+msgid "À &esquerda"
+msgstr "左对齐(&L)"
+
+#: src/editor/main.cpp:726
+msgid "Ao &centro"
+msgstr "居中(&C)"
+
+#: src/editor/main.cpp:726
+msgid "À &direita"
+msgstr "右对齐(&R)"
+
+#: src/editor/main.cpp:727
+msgid "Em &cima"
+msgstr "顶端对齐(&T)"
+
+#: src/editor/main.cpp:727
+msgid "No &meio"
+msgstr "垂直居中(&M)"
+
+#: src/editor/main.cpp:727
+msgid "Em&baixo"
+msgstr "底端对齐(&B)"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para a &frente\tCtrl+Shift+F"
+msgstr "上移一层(&F)\tCtrl+Shift+F"
+
+#: src/editor/main.cpp:728
+msgid "Trazer para o &primeiro plano"
+msgstr "置于顶层(&O)"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para &trás\tCtrl+Shift+B"
+msgstr "下移一层(&B)\tCtrl+Shift+B"
+
+#: src/editor/main.cpp:729
+msgid "Enviar para o plano de &fundo"
+msgstr "置于底层(&K)"
+
+#: src/editor/main.cpp:731
+msgid "&Alinhar"
+msgstr "对齐(&A)"
+
+#: src/editor/main.cpp:733
+msgid "Espelhar na &vertical"
+msgstr "垂直翻转(&V)"
+
+#: src/editor/main.cpp:734
+msgid "Espelhar na &horizontal"
+msgstr "水平翻转(&H)"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &horário\tCtrl+R"
+msgstr "顺时针(&C)\tCtrl+R"
+
+#: src/editor/main.cpp:735
+msgid "Sentido &anti-horário"
+msgstr "逆时针(&W)"
+
+#: src/editor/main.cpp:735
+msgid "&180 graus"
+msgstr "180 度(&1)"
+
+#: src/editor/main.cpp:736
+msgid "Ângulo &personalizado…"
+msgstr "自定义角度(&A)…"
+
+#: src/editor/main.cpp:738
+msgid "Ferramen&tas"
+msgstr "工具(&T)"
+
+#: src/editor/main.cpp:739
+msgid "&Efeitos"
+msgstr "效果(&E)"
+
+#: src/editor/main.cpp:741
+msgid "&Organizar"
+msgstr "排列(&R)"
+
+#: src/editor/main.cpp:742
+msgid "A&grupar\tCtrl+Shift+G"
+msgstr "组合(&G)\tCtrl+Shift+G"
+
+#: src/editor/main.cpp:743
+msgid "Desagr&upar\tCtrl+Shift+U"
+msgstr "取消组合(&U)\tCtrl+Shift+U"
+
+#: src/editor/main.cpp:745
+msgid "&Mesclar\tCtrl+T"
+msgstr "合并(&M)\tCtrl+T"
+
+#: src/editor/main.cpp:746
+msgid "Mesclar t&udo\tCtrl+Shift+T"
+msgstr "全部合并(&L)\tCtrl+Shift+T"
+
+#: src/editor/main.cpp:748
+msgid "A&parar"
+msgstr "修剪(&P)"
+
+#: src/editor/main.cpp:749
+msgid "&Redimensionar imagem…"
+msgstr "调整图像大小(&R)…"
+
+#: src/editor/main.cpp:750
+msgid "Redimensionar &canvas…"
+msgstr "调整画布大小(&C)…"
+
+#: src/editor/main.cpp:751
+msgid "Aplicar mode&lo…\tCtrl+Alt+C"
+msgstr "应用模板(&L)…\tCtrl+Alt+C"
+
+#: src/editor/main.cpp:753
+msgid "&Girar"
+msgstr "旋转(&O)"
+
+#: src/editor/main.cpp:754
+msgid "Encai&xe no canvas\tCtrl+;"
+msgstr "吸附到画布(&X)\tCtrl+;"
+
+#: src/editor/main.cpp:755
+msgid "Cor do canva&s…"
+msgstr "画布颜色(&S)…"
+
+#: src/editor/main.cpp:757
+msgid "Etiquetar &imagem…"
+msgstr "标记图像(&I)…"
+
+#: src/editor/main.cpp:758
+msgid "&Ampliar\tCtrl++"
+msgstr "放大(&I)\tCtrl++"
+
+#: src/editor/main.cpp:758
+msgid "&Reduzir\tCtrl+-"
+msgstr "缩小(&O)\tCtrl+-"
+
+#: src/editor/main.cpp:758
+msgid "&Tamanho real\tCtrl+1"
+msgstr "实际大小(&A)\tCtrl+1"
+
+#: src/editor/main.cpp:759
+msgid "A&justar à janela\tCtrl+0"
+msgstr "适合窗口(&F)\tCtrl+0"
+
+#: src/editor/main.cpp:759
+msgid "&Cor de fundo da área…"
+msgstr "区域背景颜色(&B)…"
+
+#: src/editor/main.cpp:760
+msgid "Painel de &efeitos"
+msgstr "效果面板(&E)"
+
+#: src/editor/main.cpp:760
+msgid "&Biblioteca"
+msgstr "库(&L)"
+
+#: src/editor/main.cpp:761
+msgid "Capturas &recentes (bandeja)"
+msgstr "最近的截图 (托盘)(&R)"
+
+#: src/editor/main.cpp:762
+msgid "&Personalizar a barra de ferramentas…"
+msgstr "自定义工具栏(&C)…"
+
+#: src/editor/main.cpp:763
+msgid "&Atalhos de teclado"
+msgstr "键盘快捷键(&K)"
+
+#: src/editor/main.cpp:763
+msgid "&Sobre o Snapnab Editor"
+msgstr "关于 Snapnab Editor(&A)"
+
+#: src/editor/main.cpp:764
+msgid "&Arquivo"
+msgstr "文件(&F)"
+
+#: src/editor/main.cpp:765
+msgid "&Editar"
+msgstr "编辑(&E)"
+
+#: src/editor/main.cpp:766
+msgid "&Imagem"
+msgstr "图像(&I)"
+
+#: src/editor/main.cpp:767
+msgid "E&xibir"
+msgstr "查看(&V)"
+
+#: src/editor/main.cpp:768
+msgid "A&juda"
+msgstr "帮助(&H)"
+
+#: src/editor/main.cpp:796
+msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
+msgstr "收藏：所有工具中你收藏的样式"
+
+#: src/editor/main.cpp:797
+msgid "Seta (A)"
+msgstr "箭头 (A)"
+
+#: src/editor/main.cpp:797
+msgid "Texto (T)"
+msgstr "文本 (T)"
+
+#: src/editor/main.cpp:797
+msgid "Balão (C)"
+msgstr "标注 (C)"
+
+#: src/editor/main.cpp:798
+msgid "Forma: retângulo, elipse… (R)"
+msgstr "形状：矩形、椭圆… (R)"
+
+#: src/editor/main.cpp:798
+msgid "Carimbo (K)"
+msgstr "图章 (K)"
+
+#: src/editor/main.cpp:799
+msgid "Preencher (F)"
+msgstr "填充 (F)"
+
+#: src/editor/main.cpp:799
+msgid "Seleção e Smart Move (S)"
+msgstr "选择和 Smart Move (S)"
+
+#: src/editor/main.cpp:800
+msgid "Varinha mágica: seleciona pela cor"
+msgstr "魔棒：按颜色选择"
+
+#: src/editor/main.cpp:800
+msgid "Cortar (X)"
+msgstr "裁剪 (X)"
+
+#: src/editor/main.cpp:801
+msgid "Recortar faixa (U)"
+msgstr "剪切条带 (U)"
+
+#: src/editor/main.cpp:801
+msgid "Caneta (P)"
+msgstr "画笔 (P)"
+
+#: src/editor/main.cpp:801
+msgid "Linha (L)"
+msgstr "直线 (L)"
+
+#: src/editor/main.cpp:802
+msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
+msgstr "荧光笔：用所选颜色和不透明度拖出矩形 (H)"
+
+#: src/editor/main.cpp:803
+msgid "Passos numerados (N)"
+msgstr "编号步骤 (N)"
+
+#: src/editor/main.cpp:803
+msgid "Borracha (E)"
+msgstr "橡皮擦 (E)"
+
+#: src/editor/main.cpp:804
+msgid "Ocultar: desfoque/pixelado (B)"
+msgstr "模糊：模糊/像素化 (B)"
+
+#: src/editor/main.cpp:804
+msgid "Mover e Smart Move (V)"
+msgstr "移动和 Smart Move (V)"
+
+#: src/editor/main.cpp:805
+msgid "Lupa (Z)"
+msgstr "放大镜 (Z)"
+
+#: src/editor/main.cpp:805
+msgid "Destaque/spotlight (G)"
+msgstr "聚光灯 (G)"
+
+#: src/editor/main.cpp:806
+msgid "Conta-gotas (I)"
+msgstr "取色器 (I)"
+
+#: src/editor/main.cpp:812
+msgid "Salvar como arquivo (PNG, JPG, PDF…)"
+msgstr "另存为文件 (PNG、JPG、PDF…)"
+
+#: src/editor/main.cpp:812
+msgid "E-mail"
+msgstr "电子邮件"
+
+#: src/editor/main.cpp:812
+msgid "Enviar por e-mail"
+msgstr "通过电子邮件发送"
+
+#: src/editor/main.cpp:814
+msgid "Copiar a imagem inteira"
+msgstr "复制整张图像"
+
+#: src/editor/main.cpp:814
+msgid "Impressora"
+msgstr "打印机"
+
+#: src/editor/main.cpp:814
+msgid "Imprimir a imagem"
+msgstr "打印图像"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer"
+msgstr "撤销"
+
+#: src/editor/main.cpp:816
+msgid "Desfazer (Ctrl+Z)"
+msgstr "撤销 (Ctrl+Z)"
+
+#: src/editor/main.cpp:816
+msgid "Refazer"
+msgstr "重做"
+
+#: src/editor/main.cpp:816
+msgid "Refazer (Ctrl+Y)"
+msgstr "重做 (Ctrl+Y)"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem em branco"
+msgstr "新建空白图像"
+
+#: src/editor/main.cpp:817
+msgid "Da área de transf."
+msgstr "来自剪贴板"
+
+#: src/editor/main.cpp:817
+msgid "Nova imagem da área de transferência"
+msgstr "从剪贴板新建图像"
+
+#: src/editor/main.cpp:818
+msgid "Abrir arquivo (Ctrl+O)"
+msgstr "打开文件 (Ctrl+O)"
+
+#: src/editor/main.cpp:818
+msgid "Salvar"
+msgstr "保存"
+
+#: src/editor/main.cpp:818
+msgid "Salvar na biblioteca (Ctrl+S)"
+msgstr "保存到库 (Ctrl+S)"
+
+#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+msgid "Salvar como arquivo (Ctrl+Shift+S)"
+msgstr "另存为文件 (Ctrl+Shift+S)"
+
+#: src/editor/main.cpp:819
+msgid "Duplicar a imagem"
+msgstr "复制图像"
+
+#: src/editor/main.cpp:820
+msgid "Excluir o objeto selecionado (Del)"
+msgstr "删除选中的对象 (Del)"
+
+#: src/editor/main.cpp:820
+msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
+msgstr "识别图像中的文本 (Ctrl+Shift+T)"
+
+#: src/editor/main.cpp:821
+msgid "Excluir imagem"
+msgstr "删除图像"
+
+#: src/editor/main.cpp:821
+msgid "Enviar a imagem para a Lixeira"
+msgstr "将图像移到回收站"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar tudo"
+msgstr "全部合并"
+
+#: src/editor/main.cpp:822
+msgid "Mesclar todos os objetos na imagem"
+msgstr "将所有对象合并到图像中"
+
+#: src/editor/main.cpp:822
+msgid "Girar 90° no sentido horário (Ctrl+R)"
+msgstr "顺时针旋转 90° (Ctrl+R)"
+
+#: src/editor/main.cpp:823
+msgid "Cortar as bordas de cor uniforme"
+msgstr "裁剪颜色一致的边缘"
+
+#: src/editor/main.cpp:854
+msgid "Efeito: "
+msgstr "效果： "
+
+#: src/editor/main.cpp:854
+msgid " — abre os ajustes no painel de efeitos"
+msgstr " — 在效果面板中打开设置"
+
+#: src/editor/main.cpp:957
+msgid "Ferramenta: "
+msgstr "工具： "
+
+#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+msgid "Ampliar parte da imagem"
+msgstr "放大图像的局部"
+
+#: src/editor/main.cpp:1021
+msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
+msgstr "放大图像的局部以突出重要细节。拖动以创建放大镜；镜头分离时，黄色控制点用于选择放大区域。"
+
+#: src/editor/main.cpp:1036
+msgid "Entendi!"
+msgstr "知道了！"
+
+#: src/editor/main.cpp:1083
+msgid "Ferramentas de desenho"
+msgstr "绘图工具"
+
+#: src/editor/main.cpp:1084
+msgid "Itens de menu"
+msgstr "菜单项"
+
+#: src/editor/main.cpp:1085
+msgid "Destinos de compartilhamento"
+msgstr "分享目标"
+
+#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+msgid "Efeitos"
+msgstr "效果"
+
+#: src/editor/main.cpp:1090
+msgid "Diversos"
+msgstr "其他"
+
+#: src/editor/main.cpp:1106
+msgid "Personalização cancelada."
+msgstr "已取消自定义。"
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas personalizada."
+msgstr "自定义工具栏。"
+
+#: src/editor/main.cpp:1113
+msgid "Barra de ferramentas automática."
+msgstr "自动工具栏。"
+
+#: src/editor/main.cpp:1134
+msgid "Personalizar a barra…"
+msgstr "自定义工具栏…"
+
+#: src/editor/main.cpp:1136
+msgid "Voltar ao padrão (automática)"
+msgstr "恢复默认 (自动)"
+
+#: src/editor/main.cpp:1143
+msgid "Atalhos do Snapnab Editor"
+msgstr "Snapnab Editor 快捷键"
+
+#: src/editor/main.cpp:1144
+msgid ""
+"Ferramentas (com a área de pintura em foco):\n"
+"  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
+"  T Texto   C Balão   N Passo   K Carimbo   B Ocultar   G Destaque   Z Lupa\n"
+"  F Preencher   E Borracha   X Cortar   S Seleção   U Recortar faixa   I Conta-gotas\n"
+"\n"
+"Edição:  Ctrl+Z/Ctrl+Y desfazer/refazer • Ctrl+C/X/V • Ctrl+Shift+C copiar tudo • Del excluir\n"
+"         Setas movem o objeto (Shift = 10 px) • Shift restringe proporção/ângulo\n"
+"         Duplo clique edita texto • Esc cancela • Enter aplica o recorte\n"
+"Exibir:  Ctrl+roda = zoom • Ctrl+0 ajustar • Ctrl+1 tamanho real • botão do meio arrasta\n"
+"Arquivo: Ctrl+S salvar na biblioteca • Ctrl+Shift+S salvar como (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"Texto:   Ctrl+Shift+O Grab Text (OCR)\n"
+"Imagem:  Ctrl+Shift+F/B um passo à frente/atrás • Ctrl+T mesclar o objeto • Ctrl+Shift+T mesclar tudo • Ctrl+; encaixe\n"
+"Vídeo:   Espaço reproduz/pausa • ←/→ quadro • I/O marcam início/fim\n"
+msgstr ""
+"工具 (画布获得焦点时)：\n"
+"  V 移动   A 箭头   L 直线   R 形状   P 画笔   H 荧光笔\n"
+"  T 文本   C 标注   N 步骤   K 图章   B 模糊   G 聚光灯   Z 放大镜\n"
+"  F 填充   E 橡皮擦   X 裁剪   S 选择   U 剪切条带   I 取色器\n"
+"\n"
+"编辑：Ctrl+Z/Ctrl+Y 撤销/重做 • Ctrl+C/X/V • Ctrl+Shift+C 全部复制 • Del 删除\n"
+"      方向键移动对象 (Shift = 10 像素) • Shift 约束比例/角度\n"
+"      双击编辑文本 • Esc 取消 • Enter 应用裁剪\n"
+"查看：Ctrl+滚轮 = 缩放 • Ctrl+0 适合 • Ctrl+1 实际大小 • 中键拖动画面\n"
+"文件：Ctrl+S 保存到库 • Ctrl+Shift+S 另存为 (PNG/JPG/BMP/GIF/TIFF/PDF/SNAP)\n"
+"文本：Ctrl+Shift+O 提取文本 (OCR)\n"
+"图像：Ctrl+Shift+F/B 上移/下移一层 • Ctrl+T 合并对象 • Ctrl+Shift+T 全部合并 • Ctrl+; 吸附\n"
+"视频：空格 播放/暂停 • ←/→ 帧 • I/O 标记起点/终点\n"
+
+#: src/editor/main.cpp:1169
+msgid "Imagem inteira copiada para a área de transferência."
+msgstr "整张图像已复制到剪贴板。"
+
+#: src/editor/main.cpp:1174
+msgid "Arquivo…"
+msgstr "文件…"
+
+#: src/editor/main.cpp:1176
+msgid "E-mail…"
+msgstr "电子邮件…"
+
+#: src/editor/main.cpp:1177
+msgid "Impressora…"
+msgstr "打印机…"
+
+#: src/editor/main.cpp:1178
+msgid "Programa externo…"
+msgstr "外部程序…"
+
+#: src/editor/main.cpp:1201
+msgid "Copiado."
+msgstr "已复制。"
+
+#: src/editor/main.cpp:1226
+msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
+msgstr "选择两个或更多对象 (Ctrl+单击或用移动工具拖出矩形) 以进行组合。"
+
+#: src/editor/main.cpp:1228
+msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
+msgstr "对象已组合。图像 › 取消组合 (Ctrl+Shift+U) 可将其分开。"
+
+#: src/editor/main.cpp:1233
+msgid "Grupo desfeito."
+msgstr "已取消组合。"
+
+#: src/editor/main.cpp:1236
+msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
+msgstr "模板 (组合图像) 在 Snapnab 中尚不可用。"
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
+msgstr "已开启吸附到画布 (拖动时按住 Alt 可临时关闭)。"
+
+#: src/editor/main.cpp:1241
+msgid "Encaixe no canvas desligado."
+msgstr "已关闭吸附到画布。"
+
+#: src/editor/main.cpp:1245
+msgid "Etiquetas"
+msgstr "标签"
+
+#: src/editor/main.cpp:1246
+msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
+msgstr "用逗号分隔标签。标签会保存在截图中。"
+
+#: src/editor/main.cpp:1247
+msgid "Etiquetar imagem"
+msgstr "标记图像"
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas removidas."
+msgstr "已移除标签。"
+
+#: src/editor/main.cpp:1250
+msgid "Etiquetas: "
+msgstr "标签： "
+
+#: src/editor/main.cpp:1267
+msgid ""
+"Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
+"OCR, exportação PDF e edição de vídeo (cortes e GIF)."
+msgstr ""
+"使用矢量对象、效果、Smart Move、\n"
+"OCR、PDF 导出和视频编辑 (剪切和 GIF) 编辑截图。"
+
+#: src/editor/main.cpp:1270
+msgid "Sobre"
+msgstr "关于"
+
+#: src/editor/main.cpp:1311
+msgid ""
+"SnapnabEditor.exe [opções] [arquivo…]\n"
+"\n"
+"/Open \"arquivo\"     abre um arquivo (.snap, imagem, .mp4)\n"
+"/NewFromClipboard   cria imagem a partir da área de transferência\n"
+"/restartwait        espera a instância anterior fechar"
+msgstr ""
+"SnapnabEditor.exe [选项] [文件…]\n"
+"\n"
+"/Open \"文件\"       打开文件 (.snap、图像、.mp4)\n"
+"/NewFromClipboard   从剪贴板创建图像\n"
+"/restartwait        等待前一个实例关闭"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "Zoom %d%%  ▾"
+msgstr "缩放 %d%%  ▾"
+
+#: src/editor/main.cpp:1371
+#, c-format
+msgid "%d × %d px  ▾"
+msgstr "%d × %d 像素  ▾"
+
+#: src/editor/main.cpp:1409
+msgid "Propriedades"
+msgstr "属性"
+
+#: src/editor/main.cpp:1440
+msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
+msgstr "图像四周的实线轮廓，宽度和颜色由你选择。"
+
+#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451
+msgid "Bordas e sombras"
+msgstr "边框和阴影"
+
+#: src/editor/main.cpp:1443
+msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
+msgstr "图像后方的柔和阴影，让截图从背景中凸显出来。"
+
+#: src/editor/main.cpp:1444
+msgid "Deslocamento"
+msgstr "偏移"
+
+#: src/editor/main.cpp:1447
+msgid "Perspectiva"
+msgstr "透视"
+
+#: src/editor/main.cpp:1447
+msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
+msgstr "使图像倾斜，就像侧放、立起或平放一样。"
+
+#: src/editor/main.cpp:1448
+msgid "Horizontal"
+msgstr "水平"
+
+#: src/editor/main.cpp:1449
+msgid "Vertical"
+msgstr "垂直"
+
+#: src/editor/main.cpp:1450
+msgid "Inclinação"
+msgstr "倾斜"
+
+#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+msgid "Dobra de página"
+msgstr "卷页"
+
+#: src/editor/main.cpp:1451
+msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
+msgstr "将图像的一角卷起，就像纸张的一角。"
+
+#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+msgid "Tamanho"
+msgstr "大小"
+
+#: src/editor/main.cpp:1452
+msgid "Pequena"
+msgstr "小"
+
+#: src/editor/main.cpp:1452
+msgid "Grande"
+msgstr "大"
+
+#: src/editor/main.cpp:1453
+msgid "Canto"
+msgstr "角"
+
+#: src/editor/main.cpp:1453
+msgid "Superior esquerdo"
+msgstr "左上"
+
+#: src/editor/main.cpp:1453
+msgid "Superior direito"
+msgstr "右上"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior direito"
+msgstr "右下"
+
+#: src/editor/main.cpp:1453
+msgid "Inferior esquerdo"
+msgstr "左下"
+
+#: src/editor/main.cpp:1454
+msgid "Bordas"
+msgstr "边缘"
+
+#: src/editor/main.cpp:1454
+msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
+msgstr "撕裂、波浪、锯齿、鲨鱼齿、淡出或斜角。"
+
+#: src/editor/main.cpp:1459
+msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
+msgstr "灰度、棕褐色、反转、黑白、浮雕、马赛克、锐化、模糊。"
+
+#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+msgid "Relevo"
+msgstr "浮雕"
+
+#: src/editor/main.cpp:1460
+msgid "Mosaico"
+msgstr "马赛克"
+
+#: src/editor/main.cpp:1460
+msgid "Nitidez"
+msgstr "锐化"
+
+#: src/editor/main.cpp:1463
+msgid "Ajuste de cores"
+msgstr "颜色调整"
+
+#: src/editor/main.cpp:1463
+msgid "Brilho, contraste, gama, matiz e saturação."
+msgstr "亮度、对比度、伽马、色相和饱和度。"
+
+#: src/editor/main.cpp:1466
+msgid "Gama"
+msgstr "伽马"
+
+#: src/editor/main.cpp:1467
+msgid "Matiz"
+msgstr "色相"
+
+#: src/editor/main.cpp:1469
+msgid "Troca uma cor por outra (ou por transparente)."
+msgstr "将一种颜色替换为另一种 (或透明)。"
+
+#: src/editor/main.cpp:1470
+msgid "Cor atual"
+msgstr "当前颜色"
+
+#: src/editor/main.cpp:1470
+msgid "Tornar transparente"
+msgstr "设为透明"
+
+#: src/editor/main.cpp:1472
+msgid "Spotlight e lupa"
+msgstr "聚光灯和放大镜"
+
+#: src/editor/main.cpp:1472
+msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
+msgstr "突出显示选区 (或图像中央)，并调暗其余部分。"
+
+#: src/editor/main.cpp:1473
+msgid "Escurecer"
+msgstr "变暗"
+
+#: src/editor/main.cpp:1475
+msgid "Ampliar"
+msgstr "放大"
+
+#: src/editor/main.cpp:1476
+msgid "Sombra na área em foco"
+msgstr "焦点区域的阴影"
+
+#: src/editor/main.cpp:1477
+msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
+msgstr "图像上的半透明文字，单个或平铺。"
+
+#: src/editor/main.cpp:1478
+msgid "Confidencial"
+msgstr "机密"
+
+#: src/editor/main.cpp:1479
+msgid "Repetir em mosaico"
+msgstr "平铺"
+
+#: src/editor/main.cpp:1480
+msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
+msgstr "顶部或底部的文字横幅；支持 {date} 和 {time}。"
+
+#: src/editor/main.cpp:1483
+msgid "Cor da faixa"
+msgstr "横幅颜色"
+
+#: src/editor/main.cpp:1572
+msgid "Borda e sombra"
+msgstr "边框和阴影"
+
+#: src/editor/main.cpp:1573
+msgid "Papel rasgado"
+msgstr "撕纸"
+
+#: src/editor/main.cpp:1576
+msgid "Serrilhado"
+msgstr "锯齿"
+
+#: src/editor/main.cpp:1578
+msgid "Chanfrado"
+msgstr "斜角"
+
+#: src/editor/main.cpp:1589
+msgid "Efeito"
+msgstr "效果"
+
+#: src/editor/main.cpp:1636
+msgid "Efeito aplicado: "
+msgstr "已应用效果： "
+
+#: src/editor/main.cpp:1636
+msgid " (Ctrl+Z desfaz)"
+msgstr " (Ctrl+Z 撤销)"
+
+#: src/editor/main.cpp:1644
+msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
+msgstr "聚光灯：没有选区时，焦点为图像中央。请使用选择工具选择区域。"
+
+#: src/editor/main.cpp:1665
+#, c-format
+msgid "Meu efeito %zu"
+msgstr "我的效果 %zu"
+
+#: src/editor/main.cpp:1666
+msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
+msgstr "设置来自面板中的效果 (打开每个效果即可更改)："
+
+#: src/editor/main.cpp:1670
+msgid "Adicionar aos efeitos rápidos"
+msgstr "添加到快速效果"
+
+#: src/editor/main.cpp:1682
+msgid "Efeito rápido adicionado: "
+msgstr "已添加快速效果： "
+
+#: src/editor/main.cpp:1712
+msgid "Nova captura de imagem (pede ao Snapnab)"
+msgstr "新建图像截图 (请求 Snapnab)"
+
+#: src/editor/main.cpp:1713
+msgid "Nova gravação de vídeo"
+msgstr "新建视频录制"
+
+#: src/editor/main.cpp:1714
+msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
+msgstr "复制整张图像 (Ctrl+Shift+C)"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar"
+msgstr "分享"
+
+#: src/editor/main.cpp:1716
+msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
+msgstr "分享：文件、剪贴板、电子邮件、打印机、程序"
+
+#: src/editor/main.cpp:1734
+#, c-format
+msgid "Excluir o efeito rápido \"%s\"?"
+msgstr "删除快速效果“%s”吗？"
+
+#: src/editor/main.cpp:1758
+msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
+msgstr "自定义工具栏。更多 › 恢复默认 可撤销。"
+
+#: src/editor/main.cpp:1776
+#, c-format
+msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
+msgstr "已选择 %d 个对象  •  Ctrl+Shift+G 组合  •  排列 › 对齐 可相互对齐"
+
+#: src/editor/main.cpp:1783
+msgid "Cor capturada: "
+msgstr "已拾取颜色： "
+
+#: src/editor/main.cpp:1783
+msgid " (aplicada às ferramentas de desenho)"
+msgstr " (已应用到绘图工具)"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro do vídeo"
+msgstr "视频帧"
+
+#: src/editor/main.cpp:1803
+msgid "Quadro de vídeo"
+msgstr "视频帧"
+
+#: src/editor/main.cpp:1804
+msgid "Vídeo salvo: "
+msgstr "视频已保存： "
+
+#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+msgid "Editar"
+msgstr "编辑"
+
+#: src/editor/main.cpp:1865
+msgid "Ajustar à janela\tCtrl+0"
+msgstr "适合窗口\tCtrl+0"

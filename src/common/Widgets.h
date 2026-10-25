@@ -1,4 +1,4 @@
-// Controles com visual moderno (Windows 11 / material) para a janela de captura: chave liga/desliga,
+// Controles com visual moderno (Windows 11 / material) da janela de captura e do Editor: chave liga/desliga,
 // botão (normal, plano ou só ícone) e caixa de combinação com lista suspensa própria.
 // Falam as mensagens dos controles padrão — BM_GETCHECK/BM_SETCHECK, CB_ADDSTRING/CB_SETCURSEL/CB_GETCURSEL/
 // CB_SETITEMDATA…, e avisam o pai com WM_COMMAND (BN_CLICKED, CBN_DROPDOWN, CBN_SELCHANGE, CBN_CLOSEUP).
@@ -27,8 +27,18 @@ enum : UINT {
     MUI_SETSTYLE,                 // wParam = combinação de Style
     MUI_SETITEMFLAGS,             // combo: wParam = índice, lParam = ItemFlags
     MUI_SETDISPLAYTEXT,           // combo: lParam = texto mostrado no lugar do item selecionado (nullptr = volta ao item)
+                                  // botão ButtonLink: lParam = valor mostrado à direita (ex.: "Desligado")
+    MUI_SETGEAR,                  // combo ComboGear: wParam = engrenagem habilitada
 };
-enum Style { ButtonFlat = 1, ButtonIconOnly = 2, ComboMenu = 4 /* lista de ações: as setas não trocam a seleção */ };
+enum Style {
+    ButtonFlat = 1, ButtonIconOnly = 2,
+    ComboMenu = 4,                // lista de ações: as setas não trocam a seleção
+    ComboGear = 8,                // engrenagem de ajustes dentro da caixa, à direita da seta (avisa com MUI_GEARCLICK)
+    ButtonLink = 16,              // linha "Rótulo        Valor ›" que abre um menu (avisa com BN_CLICKED)
+    ButtonMenu = 32,              // seta pequena depois do texto (botão que abre menu)
+    ButtonAccent = 64,            // texto na cor de destaque
+};
 enum ItemFlags { ItemSeparator = 1, ItemChecked = 2 };
+constexpr WORD MUI_GEARCLICK = 0x0400;   // código de notificação (HIWORD do WM_COMMAND) do clique na engrenagem
 
 } // namespace snap::mui

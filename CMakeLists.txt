@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(Snapnab
-    VERSION 0.1.0
+    VERSION 0.2.0
     DESCRIPTION "Captura de tela, gravação de vídeo e editor de imagens"
     LANGUAGES CXX RC)
 
@@ -41,6 +41,14 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(src)
 
+# catálogos de tradução (lang\<código>.po) ao lado dos executáveis, na árvore de build e no pacote
+file(GLOB SNAPNAB_PO CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/lang/*.po)
+add_custom_target(SnapnabLang ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/lang
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SNAPNAB_PO} ${CMAKE_BINARY_DIR}/bin/lang
+    DEPENDS ${SNAPNAB_PO}
+    VERBATIM)
+
 option(SNAPNAB_BUILD_TESTS "Compila os testes de integração" ON)
 if(SNAPNAB_BUILD_TESTS)
     enable_testing()
@@ -53,6 +61,7 @@ install(TARGETS Snapnab SnapnabEditor SnapEx64
     RUNTIME DESTINATION . COMPONENT Runtime)
 install(FILES packaging/LEIA-ME.txt CHANGELOG.md LICENSE
     DESTINATION . COMPONENT Runtime)
+install(FILES ${SNAPNAB_PO} DESTINATION lang COMPONENT Runtime)
 install(FILES $<TARGET_PDB_FILE:Snapnab> $<TARGET_PDB_FILE:SnapnabEditor> $<TARGET_PDB_FILE:SnapEx64>
     DESTINATION . COMPONENT Symbols)
 

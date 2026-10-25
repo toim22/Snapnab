@@ -28,6 +28,7 @@ struct Ctl {
     int sel = -1, droppedW = 0;
     bool hasDisplay = false;
     std::wstring display;
+    bool gearEnabled = true, gearHover = false;
 };
 
 struct List {                       // estado da lista suspensa aberta
@@ -136,7 +137,52 @@ void PaintToggle(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
     DrawText_(dc, TextOf(c->h), tr, en ? kText : kTextOff, c->font, DT_LEFT);
 }
 
+void DrawChevron(Gdiplus::Graphics& g, float cx, float cy, float w, COLORREF c, int dpi, bool up = false) {
+    Gdiplus::Pen pen(GC(c), std::max(1.2f, dpi / 70.0f));
+    pen.SetStartCap(Gdiplus::LineCapRound); pen.SetEndCap(Gdiplus::LineCapRound); pen.SetLineJoin(Gdiplus::LineJoinRound);
+    float hh = w / 4 * (up ? -1 : 1);
+    Gdiplus::PointF p[3] = { { cx - w / 2, cy - hh }, { cx, cy + hh }, { cx + w / 2, cy - hh } };
+    g.DrawLines(&pen, p, 3);
+}
+
+void DrawChevronRight(Gdiplus::Graphics& g, float cx, float cy, float h, COLORREF c, int dpi) {
+    Gdiplus::Pen pen(GC(c), std::max(1.6f, dpi / 55.0f));
+    pen.SetStartCap(Gdiplus::LineCapRound); pen.SetEndCap(Gdiplus::LineCapRound); pen.SetLineJoin(Gdiplus::LineJoinRound);
+    float hw = h / 4;
+    Gdiplus::PointF p[3] = { { cx - hw, cy - h / 2 }, { cx + hw, cy }, { cx - hw, cy + h / 2 } };
+    g.DrawLines(&pen, p, 3);
+}
+
+// "Rótulo            Valor ›": o rótulo alinha com o das chaves, o valor fica na cor de destaque
+void PaintLink(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
+    bool en = IsWindowEnabled(c->h) != FALSE;
+    std::wstring value = c->display;
+    int cw = Sc(14, dpi);                                 // área da seta
+    int vw = TextWidth(dc, value, c->font);
+    RECT vr{ rc.right - cw - Sc(4, dpi) - vw, 0, rc.right - cw - Sc(4, dpi), rc.bottom };
+    COLORREF vc = en ? (c->hover || c->pressed ? Mix(pal.accentText, 0, 0.25) : pal.accentText) : kTextOff;
+    {
+        Gdiplus::Graphics g(dc);
+        g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+        g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+        if (en && (c->hover || c->pressed)) {
+            Gdiplus::RectF hr((float)vr.left - Sc(6, dpi), (float)Sc(2, dpi), (float)(rc.right - vr.left + Sc(6, dpi)) - 0.5f,
+                              (float)(rc.bottom - Sc(4, dpi)));
+            FillRound(g, hr, (float)Sc(4, dpi), Mix(bg, pal.accent, c->pressed ? 0.18 : 0.09));
+        }
+        DrawChevronRight(g, (float)(rc.right - cw / 2 - Sc(2, dpi)), rc.bottom / 2.0f, (float)Sc(9, dpi), vc, dpi);
+        if (ShowFocus(c->h)) {
+            Gdiplus::RectF f = RF(rc); f.Inflate(-1.0f, -1.0f);
+            StrokeRound(g, f, (float)Sc(4, dpi), pal.accentText, std::max(1.0f, dpi / 72.0f));
+        }
+    }
+    RECT lr{ 0, 0, vr.left - Sc(8, dpi), rc.bottom };
+    DrawText_(dc, TextOf(c->h), lr, en ? kText : kTextOff, c->font, DT_LEFT);
+    DrawText_(dc, value, vr, vc, c->font, DT_RIGHT);
+}
+
 void PaintButton(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
+    if (c->style & ButtonLink) { PaintLink(c, dc, rc, bg, dpi); return; }
     bool en = IsWindowEnabled(c->h) != FALSE;
     bool flat = (c->style & (ButtonFlat | ButtonIconOnly)) != 0;
     bool iconOnly = (c->style & ButtonIconOnly) != 0;
@@ -165,26 +211,33 @@ void PaintButton(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
     }
     int is = Sc(16, dpi), gap = Sc(6, dpi);
     int tw = iconOnly || text.empty() ? 0 : TextWidth(dc, text, c->font);
-    int total = (c->icon ? is : 0) + (c->icon && tw ? gap : 0) + tw;
+    int mw = (c->style & ButtonMenu) ? Sc(10, dpi) : 0;  // seta do menu
+    int total = (c->icon ? is : 0) + (c->icon && tw ? gap : 0) + tw + (mw ? Sc(3, dpi) + mw : 0);
     int x = (rc.right - total) / 2;
-    COLORREF fg = en ? kText : kTextOff;
+    COLORREF fg = en ? ((c->style & ButtonAccent) ? pal.accentText : kText) : kTextOff;
     if (c->icon) {
         RECT ir{ x, (rc.bottom - is) / 2, x + is, (rc.bottom - is) / 2 + is };
         icons::DrawOnDC(dc, (icons::Id)(c->icon - 1), ir, en ? (flat ? pal.accentText : kText) : kTextOff);
         x += is + gap;
     }
     if (tw) {
-        RECT tr{ x, 0, std::min<LONG>(rc.right - Sc(4, dpi), x + tw + 1), rc.bottom };
+        RECT tr{ x, 0, std::min<LONG>(rc.right - Sc(4, dpi) - (mw ? mw + Sc(3, dpi) : 0), x + tw + 1), rc.bottom };
         DrawText_(dc, text, tr, fg, c->font, DT_LEFT);
+        x += tw;
+    }
+    if (mw) {
+        Gdiplus::Graphics g(dc);
+        g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+        DrawChevron(g, x + Sc(3, dpi) + mw / 2.0f, rc.bottom / 2.0f + Sc(2, dpi), (float)Sc(7, dpi), fg, dpi);
     }
 }
 
-void DrawChevron(Gdiplus::Graphics& g, float cx, float cy, float w, COLORREF c, int dpi, bool up = false) {
-    Gdiplus::Pen pen(GC(c), std::max(1.2f, dpi / 70.0f));
-    pen.SetStartCap(Gdiplus::LineCapRound); pen.SetEndCap(Gdiplus::LineCapRound); pen.SetLineJoin(Gdiplus::LineJoinRound);
-    float hh = w / 4 * (up ? -1 : 1);
-    Gdiplus::PointF p[3] = { { cx - w / 2, cy - hh }, { cx, cy + hh }, { cx + w / 2, cy - hh } };
-    g.DrawLines(&pen, p, 3);
+int GearWidth(const Ctl* c, int dpi) { return (c->style & ComboGear) ? Sc(30, dpi) : 0; }
+
+bool InGear(Ctl* c, int x) {
+    RECT rc; GetClientRect(c->h, &rc);
+    int gw = GearWidth(c, DpiForWindow(c->h));
+    return gw && x >= rc.right - gw;
 }
 
 void PaintCombo(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
@@ -207,10 +260,21 @@ void PaintCombo(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
             g.FillRectangle(&b, r.X, r.Y + r.Height - t, r.Width, t + 1);
             g.ResetClip();
         }
-        DrawChevron(g, (float)rc.right - Sc(15, dpi), (rc.bottom) / 2.0f, (float)Sc(9, dpi), en ? RGB(80, 80, 88) : kTextOff, dpi);
+        int gw = GearWidth(c, dpi);
+        if (gw && en && c->gearEnabled && c->gearHover) {
+            Gdiplus::RectF gr((float)(rc.right - gw + Sc(2, dpi)), (float)Sc(3, dpi), (float)(gw - Sc(5, dpi)), (float)(rc.bottom - Sc(6, dpi)));
+            FillRound(g, gr, (float)Sc(4, dpi), Mix(RGB(255, 255, 255), pal.accent, 0.12));
+        }
+        DrawChevron(g, (float)rc.right - gw - Sc(15, dpi), (rc.bottom) / 2.0f, (float)Sc(9, dpi), en ? RGB(80, 80, 88) : kTextOff, dpi);
+    }
+    if (int gw = GearWidth(c, dpi)) {
+        int is = Sc(16, dpi);
+        RECT ir{ rc.right - gw + (gw - is) / 2, (rc.bottom - is) / 2, 0, 0 };
+        ir.right = ir.left + is; ir.bottom = ir.top + is;
+        icons::DrawOnDC(dc, icons::Gear, ir, en && c->gearEnabled ? RGB(70, 70, 78) : Mix(kTextOff, RGB(255, 255, 255), 0.35));
     }
     std::wstring t = c->hasDisplay ? c->display : (c->sel >= 0 && c->sel < (int)c->items.size() ? c->items[c->sel].text : L"");
-    RECT tr{ Sc(10, dpi), 0, rc.right - Sc(28, dpi), rc.bottom };
+    RECT tr{ Sc(10, dpi), 0, rc.right - Sc(28, dpi) - GearWidth(c, dpi), rc.bottom };
     DrawText_(dc, t, tr, en ? kText : kTextOff, c->font, DT_LEFT);
 }
 
@@ -488,14 +552,22 @@ LRESULT Handle(Ctl* c, UINT m, WPARAM w, LPARAM lp) {
             c->tracking = true;
         }
         if (!c->hover) { c->hover = true; InvalidateRect(h, nullptr, FALSE); }
+        if (c->kind == Ctl::Combo) {
+            bool g = InGear(c, GET_X_LPARAM(lp));
+            if (g != c->gearHover) { c->gearHover = g; InvalidateRect(h, nullptr, FALSE); }
+        }
         return 0;
     case WM_MOUSELEAVE:
-        c->tracking = false; c->hover = false;
+        c->tracking = false; c->hover = false; c->gearHover = false;
         InvalidateRect(h, nullptr, FALSE);
         return 0;
     case WM_LBUTTONDOWN: case WM_LBUTTONDBLCLK:
         if (GetFocus() != h) SetFocus(h);
-        if (c->kind == Ctl::Combo) { DropDown(c); return 0; }
+        if (c->kind == Ctl::Combo) {
+            if (InGear(c, GET_X_LPARAM(lp))) { if (c->gearEnabled) Notify(c, MUI_GEARCLICK); }
+            else DropDown(c);
+            return 0;
+        }
         c->pressed = true;
         SetCapture(h);
         InvalidateRect(h, nullptr, FALSE);
@@ -597,6 +669,7 @@ LRESULT Handle(Ctl* c, UINT m, WPARAM w, LPARAM lp) {
         c->display = lp ? (const wchar_t*)lp : L"";
         InvalidateRect(h, nullptr, FALSE);
         return 0;
+    case MUI_SETGEAR: c->gearEnabled = w != 0; InvalidateRect(h, nullptr, FALSE); return 0;
     }
     return DefWindowProcW(h, m, w, lp);
 }

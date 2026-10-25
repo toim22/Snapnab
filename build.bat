@@ -8,8 +8,10 @@ rem    build.bat debug       Debug (out\build\debug\bin)
 rem    build.bat clean       apaga out\ e dist\
 rem
 rem  Resultado do Release:
-rem    dist\Snapnab\                      pasta do programa (Snapnab.exe, SnapnabEditor.exe, SnapEx64.dll)
+rem    dist\Snapnab\                      pasta do programa (Snapnab.exe, SnapnabEditor.exe, SnapEx64.dll, lang\)
 rem    dist\Snapnab-<versão>-win-x64.zip  pacote portátil para distribuir
+rem    dist\Snapnab-<versão>-setup.exe    instalador (só se o Inno Setup 6 estiver instalado:
+rem                                       winget install JRSoftware.InnoSetup)
 rem    dist\symbols\                      PDBs (depuração de falhas; não distribuir)
 rem ===========================================================================
 setlocal
@@ -57,10 +59,23 @@ cmake --install out\build\release --prefix dist\symbols --component Symbols || g
 cpack --preset release || goto :fail
 if exist dist\_CPack_Packages rmdir /s /q dist\_CPack_Packages
 
+rem ---- instalador (Inno Setup 6) com a versão do CMakeLists.txt
+if exist dist\Snapnab-*-setup.exe del /q dist\Snapnab-*-setup.exe
+set "ISCC="
+for %%p in ("%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" "%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" "%ProgramFiles%\Inno Setup 6\ISCC.exe") do if not defined ISCC if exist "%%~p" set "ISCC=%%~p"
+if not defined ISCC for /f "delims=" %%p in ('where iscc 2^>nul') do if not defined ISCC set "ISCC=%%p"
+if not defined ISCC goto :noinno
+set "VER="
+for /f "tokens=2 delims==" %%v in ('findstr /b /c:"CMAKE_PROJECT_VERSION:" out\build\release\CMakeCache.txt') do set "VER=%%v"
+"%ISCC%" /Q /DAppVersion=%VER% packaging\installer\Snapnab.iss || goto :fail
+:noinno
+
 echo.
 echo Build OK
-echo   Programa: dist\Snapnab\Snapnab.exe
-for %%z in (dist\Snapnab-*-win-x64.zip) do echo   Pacote:   %%z
+echo   Programa:   dist\Snapnab\Snapnab.exe
+for %%z in (dist\Snapnab-*-win-x64.zip) do echo   Pacote:     %%z
+for %%s in (dist\Snapnab-*-setup.exe) do echo   Instalador: %%s
+if not defined ISCC echo   Instalador: Inno Setup 6 nao encontrado - instale com: winget install JRSoftware.InnoSetup
 exit /b 0
 
 :novs

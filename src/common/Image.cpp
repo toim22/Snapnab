@@ -282,15 +282,15 @@ bool DecodeFromMemory(const BYTE* data, size_t len, Image& out) {
 }
 
 std::wstring ImageOpenFilter() {
-    std::wstring f = L"Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|"
-                     L"Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|";
+    std::wstring f = Tr(L"Imagens e documentos (*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4)|*.snap;*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff;*.ico;*.mp4|"
+                     L"Documento Snapnab (*.snap)|*.snap|Vídeo MP4 (*.mp4)|*.mp4|Todos os arquivos (*.*)|*.*|");
     std::replace(f.begin(), f.end(), L'|', L'\0');
     return f;
 }
 
 std::wstring ImageSaveFilter() {
-    std::wstring f = L"PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|"
-                     L"PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|";
+    std::wstring f = Tr(L"PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|"
+                     L"PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|");
     std::replace(f.begin(), f.end(), L'|', L'\0');
     return f;
 }

@@ -249,14 +249,14 @@ bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
 
     // tamanho de saída: par, ≤ 1080 linhas (opcional) e dentro do limite do codificador H.264 (4096×2304)
     int w = s.rect.right - s.rect.left, h = s.rect.bottom - s.rect.top;
-    if (w < 16 || h < 16) { lastError = L"Área de gravação muito pequena."; return false; }
+    if (w < 16 || h < 16) { lastError = Tr(L"Área de gravação muito pequena."); return false; }
     double sc = 1.0;
     if (s.downscale1080 && h > 1080) sc = 1080.0 / h;
     sc = std::min({ sc, 4096.0 / w, 2304.0 / h });
     outW_ = std::max(32, ((int)(w * sc)) & ~1);
     outH_ = std::max(32, ((int)(h * sc)) & ~1);
 
-    if (FAILED(MFStartup(MF_VERSION, MFSTARTUP_FULL))) { lastError = L"Media Foundation indisponível."; return false; }
+    if (FAILED(MFStartup(MF_VERSION, MFSTARTUP_FULL))) { lastError = Tr(L"Media Foundation indisponível."); return false; }
 
     // fontes de áudio
     if (s.microphone) { mic_ = std::make_shared<AudioSource>(); hasMic_ = mic_->Start(false, &micLevel_); if (!hasMic_) mic_.reset(); }
@@ -271,7 +271,7 @@ bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
         hr = CreateWriter(settings_, outW_, outH_, false, audioEnabled_, wr, videoStream_, audioStream_);
     }
     if (FAILED(hr)) {
-        lastError = Format(L"Não foi possível iniciar o codificador MP4 (0x%08X).", hr);
+        lastError = Format(Tr(L"Não foi possível iniciar o codificador MP4 (0x%08X)."), hr);
         Log(L"Gravador: %s", lastError.c_str());
         if (mic_) mic_->Stop(); if (sys_) sys_->Stop();
         mic_.reset(); sys_.reset();
@@ -383,7 +383,7 @@ void Recorder::VideoThread() {
         }
         LONGLONG ts = std::max(t, lastTs + 1);
         if (!WriteSample(videoStream_, bits, bytes, ts, frameDur)) {
-            lastError = L"Falha ao gravar quadro de vídeo.";
+            lastError = Tr(L"Falha ao gravar quadro de vídeo.");
             PostMessageW(notify_, notifyMsg_, NoteError, 0);
             break;
         }
@@ -420,6 +420,9 @@ void Recorder::AudioMixThread() {
     LONGLONG written = 0;            // quadros já gravados
     std::vector<float> a, b;
     std::vector<int16_t> out;
+    // ganho automático do microfone: microfones de notebook chegam 20–30 dB abaixo do ideal. O envelope de pico
+    // mira -6 dBFS com ganho de 1× a 8×; desce na hora (sem estourar) e sobe devagar (sem "bombear" o ruído).
+    float micEnv = 0, micGain = 1;
     while (running_) {
         Sleep(20);
         if (state_ == Paused) { if (mic_) mic_->Clear(); if (sys_) sys_->Clear(); continue; }
@@ -432,8 +435,17 @@ void Recorder::AudioMixThread() {
         if (sys_) sys_->Pop(b.data(), (size_t)n);
         out.resize((size_t)n * 2);
         bool mm = micMuted_, sm = sysMuted_;
+        if (mic_) {
+            float blockPeak = 0;
+            for (float s : a) blockPeak = std::max(blockPeak, std::fabs(s));
+            micEnv = std::max(blockPeak, micEnv * 0.97f);
+            float want = std::clamp(0.5f / std::max(micEnv, 1e-4f), 1.0f, 8.0f);
+            micGain = want < micGain ? want : micGain + (want - micGain) * 0.02f;
+            for (float& s : a) s *= micGain;
+        }
         for (size_t i = 0; i < out.size(); i++) {
             float v = (mm ? 0.0f : a[i]) + (sm ? 0.0f : b[i]);
+            v = v / (1.0f + std::fabs(v) * 0.15f) * 1.15f;      // limitador suave: mic + sistema juntos não estouram
             out[i] = (int16_t)std::lround(std::clamp(v, -1.0f, 1.0f) * 32767.0f);
         }
         LONGLONG t0 = written * kHns / kRate, t1 = (written + n) * kHns / kRate;
@@ -463,7 +475,7 @@ bool Recorder::Stop() {
     if (writer_) {
         HRESULT hr = ((IMFSinkWriter*)writer_)->Finalize();
         ok = SUCCEEDED(hr);
-        if (!ok) { Log(L"Gravador: Finalize 0x%08X", hr); lastError = Format(L"Falha ao finalizar o MP4 (0x%08X).", hr); }
+        if (!ok) { Log(L"Gravador: Finalize 0x%08X", hr); lastError = Format(Tr(L"Falha ao finalizar o MP4 (0x%08X)."), hr); }
         ((IMFSinkWriter*)writer_)->Release();
         writer_ = nullptr;
     }

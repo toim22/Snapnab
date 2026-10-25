@@ -19,6 +19,7 @@ enum Code : uint32_t {
     NewImageFromClipboard = 0x1E,   // "Snip detected. New Image From Clipboard commencing."
     OpenFile              = 0x30,   // string: caminho do arquivo a abrir (Snapnab)
     LibraryChanged        = 0x31,   // biblioteca mudou → atualizar a bandeja
+    RestartEditor         = 0x32,   // idioma trocado nas Opções: reabrir o Editor
     // editor → capturador (CSnagItUIFrame::OnIPCNotify)
     LibraryDocOpened      = 0x02,   // blob: GUID
     LibraryDocReleased    = 0x03,   // blob: GUID

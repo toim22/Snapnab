@@ -281,7 +281,21 @@ Image EdgeEffect(const Image& s, Edge style, int size, int sides, bool shadow) {
         double walk = size * 0.5;
         for (int i = 0; i < len; i++) setDepth(i, EdgeDepth(style, i, size, rng, walk));
     };
-    if (style == Edge::Fade) {
+    if (style == Edge::Beveled) {
+        // chanfro 3D: faixa clara em cima/à esquerda e escura embaixo/à direita, esmaecendo para dentro
+        for (int y = 0; y < d.h; y++)
+            for (int x = 0; x < d.w; x++) {
+                double li = 0, dk = 0;
+                if ((sides & Top) && y < size) li = std::max(li, 1.0 - y / (double)size);
+                if ((sides & Left) && x < size) li = std::max(li, 1.0 - x / (double)size);
+                if ((sides & Bottom) && d.h - 1 - y < size) dk = std::max(dk, 1.0 - (d.h - 1 - y) / (double)size);
+                if ((sides & Right) && d.w - 1 - x < size) dk = std::max(dk, 1.0 - (d.w - 1 - x) / (double)size);
+                if (li <= 0 && dk <= 0) continue;
+                uint32_t& p = d.at(x, y);
+                auto ch = [&](int c) { return std::clamp((int)std::lround(c + (255 - c) * 0.55 * li - c * 0.5 * dk), 0, 255); };
+                p = ARGB(CA(p), ch(CR(p)), ch(CG(p)), ch(CB(p)));
+            }
+    } else if (style == Edge::Fade) {
         for (int y = 0; y < d.h; y++)
             for (int x = 0; x < d.w; x++) {
                 double f = 1.0;
@@ -302,6 +316,124 @@ Image EdgeEffect(const Image& s, Edge style, int size, int sides, bool shadow) {
         if (sides & Right) apply(d.h, [&](int i, double dep) { clearV(i, d.w - (int)dep, d.w); });
     }
     return shadow ? Shadow(d, 5, 5, 45) : d;
+}
+
+// amostra bilinear (fora da imagem = transparente)
+static uint32_t Sample(const Image& s, double x, double y) {
+    if (x < -0.5 || y < -0.5 || x > s.w - 0.5 || y > s.h - 0.5) return 0;
+    int x0 = (int)std::floor(x), y0 = (int)std::floor(y);
+    double fx = x - x0, fy = y - y0;
+    auto at = [&](int xx, int yy) { return s.at(std::clamp(xx, 0, s.w - 1), std::clamp(yy, 0, s.h - 1)); };
+    uint32_t p00 = at(x0, y0), p10 = at(x0 + 1, y0), p01 = at(x0, y0 + 1), p11 = at(x0 + 1, y0 + 1);
+    auto mix = [&](int sh) {
+        double a = ((p00 >> sh) & 255) * (1 - fx) + ((p10 >> sh) & 255) * fx;
+        double b = ((p01 >> sh) & 255) * (1 - fx) + ((p11 >> sh) & 255) * fx;
+        return (uint32_t)std::clamp((int)std::lround(a * (1 - fy) + b * fy), 0, 255) << sh;
+    };
+    return mix(24) | mix(16) | mix(8) | mix(0);
+}
+
+Image Perspective(const Image& s, int horizontal, int vertical, int shear) {
+    // inclinação horizontal: um lado fica mais baixo que o outro (trapézio); vertical: idem em cima/embaixo;
+    // cisalhamento: desloca as linhas proporcionalmente à altura
+    Image d(s.w, s.h, 0);
+    double hz = std::clamp(horizontal, -100, 100) / 100.0 * 0.6, vt = std::clamp(vertical, -100, 100) / 100.0 * 0.6;
+    double sh = std::clamp(shear, -100, 100) / 100.0 * 0.5;
+    double cx = s.w / 2.0, cy = s.h / 2.0;
+    for (int y = 0; y < d.h; y++)
+        for (int x = 0; x < d.w; x++) {
+            double u = s.w > 1 ? x / (double)(s.w - 1) : 0, v = s.h > 1 ? y / (double)(s.h - 1) : 0;
+            double sy = 1 - std::fabs(hz) * (hz > 0 ? u : 1 - u);       // escala vertical de cada coluna
+            double sx = 1 - std::fabs(vt) * (vt > 0 ? v : 1 - v);       // escala horizontal de cada linha
+            double xs = (x - cx) / sx + cx - sh * (y - cy);
+            double ys = (y - cy) / sy + cy;
+            d.at(x, y) = Sample(s, xs, ys);
+        }
+    return d;
+}
+
+Image PageCurl(const Image& sIn, int size, int corner) {
+    // trabalha sempre no canto inferior direito; os outros cantos espelham antes e depois
+    bool fh = corner == 0 || corner == 3, fv = corner == 0 || corner == 1;
+    Image s = sIn;
+    if (fh) s = FlipH(s);
+    if (fv) s = FlipV(s);
+    size = std::clamp(size, 8, std::max(8, std::min(s.w, s.h) - 4));
+    int W = s.w, H = s.h;
+    // o canto além da linha da dobra (x + y > W + H - size) some
+    for (int y = std::max(0, H - size); y < H; y++)
+        for (int x = std::max(0, W - size); x < W; x++)
+            if (x + y > W + H - size) s.at(x, y) = 0;
+    {
+        auto bmp = s.WrapGdip();
+        Graphics g(bmp.get());
+        g.SetSmoothingMode(SmoothingModeAntiAlias);
+        // a aba dobrada é o reflexo do canto removido sobre a linha da dobra
+        PointF a((REAL)(W - size), (REAL)H), b((REAL)W, (REAL)(H - size)), tip((REAL)(W - size), (REAL)(H - size));
+        PointF shadowTri[3] = { a, b, PointF(tip.X - size * 0.08f, tip.Y - size * 0.08f) };
+        SolidBrush shb(Color(70, 0, 0, 0));
+        g.FillPolygon(&shb, shadowTri, 3);
+        PointF flap[3] = { a, b, tip };
+        PointF mid((a.X + b.X) / 2, (a.Y + b.Y) / 2);
+        LinearGradientBrush lg(mid, tip, Color(255, 196, 198, 202), Color(255, 250, 250, 251));
+        g.FillPolygon(&lg, flap, 3);
+        Pen edge(Color(120, 120, 122, 128), 1.0f);
+        g.DrawPolygon(&edge, flap, 3);
+    }
+    if (fv) s = FlipV(s);
+    if (fh) s = FlipH(s);
+    return s;
+}
+
+Image Spotlight(const Image& s, RECT f, int dimPercent, int blur, int zoomPercent, bool shadow) {
+    f = ClipTo(s, f);
+    if (f.right <= f.left || f.bottom <= f.top) return s;
+    Image d = s;
+    if (blur > 0) BoxBlur(d, { 0, 0, d.w, d.h }, blur);
+    int dim = std::clamp(dimPercent, 0, 95);
+    for (auto& p : d.px) p = ARGB(CA(p), CR(p) * (100 - dim) / 100, CG(p) * (100 - dim) / 100, CB(p) * (100 - dim) / 100);
+    Image inner = s.Crop(f);
+    int x = f.left, y = f.top;
+    if (zoomPercent > 100) {
+        int nw = inner.w * zoomPercent / 100, nh = inner.h * zoomPercent / 100;
+        inner = ScaleImage(inner, nw, nh);
+        x = (f.left + f.right) / 2 - nw / 2; y = (f.top + f.bottom) / 2 - nh / 2;
+    }
+    if (shadow) {
+        Image sh(inner.w + 24, inner.h + 24, 0);
+        for (int yy = 0; yy < inner.h; yy++) for (int xx = 0; xx < inner.w; xx++) sh.at(xx + 12, yy + 12) = ARGB(110, 0, 0, 0);
+        BoxBlur(sh, { 0, 0, sh.w, sh.h }, 6);
+        d.Blit(sh, x - 12 + 4, y - 12 + 5, true);
+    }
+    d.Blit(inner, x, y, true);
+    return d;
+}
+
+void Emboss(Image& img, int depth) {
+    Image s = img;
+    double k = std::clamp(depth, 1, 10) / 2.0;
+    auto lum = [&](int x, int y) { uint32_t p = s.at(std::clamp(x, 0, s.w - 1), std::clamp(y, 0, s.h - 1)); return 0.299 * CR(p) + 0.587 * CG(p) + 0.114 * CB(p); };
+    for (int y = 0; y < img.h; y++)
+        for (int x = 0; x < img.w; x++) {
+            int v = std::clamp((int)std::lround(128 + (lum(x + 1, y + 1) - lum(x - 1, y - 1)) * k), 0, 255);
+            img.at(x, y) = ARGB(CA(s.at(x, y)), v, v, v);
+        }
+}
+
+void Sharpen(Image& img, int amount) {
+    Image s = img;
+    double k = std::clamp(amount, 0, 100) / 100.0;
+    auto at = [&](int x, int y) { return s.at(std::clamp(x, 0, s.w - 1), std::clamp(y, 0, s.h - 1)); };
+    for (int y = 0; y < img.h; y++)
+        for (int x = 0; x < img.w; x++) {
+            uint32_t c = at(x, y), l = at(x - 1, y), r = at(x + 1, y), u = at(x, y - 1), dn = at(x, y + 1);
+            auto ch = [&](int sh) {
+                int cc = (c >> sh) & 255;
+                int nb = ((l >> sh) & 255) + ((r >> sh) & 255) + ((u >> sh) & 255) + ((dn >> sh) & 255);
+                return std::clamp((int)std::lround(cc * (1 + 4 * k) - nb * k), 0, 255);
+            };
+            img.at(x, y) = ARGB(CA(c), ch(16), ch(8), ch(0));
+        }
 }
 
 void Watermark(Image& img, const std::wstring& text, int opacity, bool tiled, bool emboss) {

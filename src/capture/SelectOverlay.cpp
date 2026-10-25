@@ -241,15 +241,15 @@ void Paint(Overlay* o, HDC hdc) {
     {
         std::wstring hint;
         switch (o->mode) {
-        case SelectMode::Region: hint = L"Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"; break;
-        case SelectMode::Window: hint = L"Clique na janela a capturar • Esc = cancelar"; break;
-        case SelectMode::Object: hint = L"Clique no controle/objeto a capturar • Esc = cancelar"; break;
-        case SelectMode::Fixed: hint = Format(L"Região fixa %d × %d — clique para capturar • Esc = cancelar", o->fixed.cx, o->fixed.cy); break;
-        case SelectMode::Freehand: hint = L"Desenhe o contorno com o botão pressionado • Esc = cancelar"; break;
-        case SelectMode::MultiArea: hint = L"Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"; break;
-        case SelectMode::PickWindow: hint = L"Clique na janela/área rolável • Esc = cancelar"; break;
+        case SelectMode::Region: hint = Tr(L"Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"); break;
+        case SelectMode::Window: hint = Tr(L"Clique na janela a capturar • Esc = cancelar"); break;
+        case SelectMode::Object: hint = Tr(L"Clique no controle/objeto a capturar • Esc = cancelar"); break;
+        case SelectMode::Fixed: hint = Format(Tr(L"Região fixa %d × %d — clique para capturar • Esc = cancelar"), o->fixed.cx, o->fixed.cy); break;
+        case SelectMode::Freehand: hint = Tr(L"Desenhe o contorno com o botão pressionado • Esc = cancelar"); break;
+        case SelectMode::MultiArea: hint = Tr(L"Arraste várias áreas • Backspace desfaz • Enter ou botão direito conclui • Esc = cancelar"); break;
+        case SelectMode::PickWindow: hint = Tr(L"Clique na janela/área rolável • Esc = cancelar"); break;
         }
-        if (o->video) hint = L"Gravação: " + hint;
+        if (o->video) hint = Tr(L"Gravação: ") + hint;
         POINT sp{ o->cur.x + o->vs.left, o->cur.y + o->vs.top };
         RECT mon = MonitorRectFromPoint(sp);
         OffsetRect(&mon, -o->vs.left, -o->vs.top);
@@ -377,7 +377,7 @@ void RunSelectOverlay(const Image& frozen, RECT vs, SelectMode mode, SIZE fixedS
     o->dimDC = CreateCompatibleDC(sdc); SelectObject(o->dimDC, o->dim);
     ReleaseDC(nullptr, sdc);
     EnumWindows(EnumProc, (LPARAM)o);
-    o->hwnd = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, L"SnapnabSelectWindowClass", L"Snapnab — seleção",
+    o->hwnd = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, L"SnapnabSelectWindowClass", Tr(L"Snapnab — seleção"),
                               WS_POPUP, vs.left, vs.top, vs.right - vs.left, vs.bottom - vs.top, nullptr, nullptr,
                               GetModuleHandleW(nullptr), o);
     POINT cp; GetCursorPos(&cp);

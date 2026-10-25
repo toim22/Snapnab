@@ -8,7 +8,10 @@ enum Id {
     Capture, Image, Video, Record, Pause, Stop, Restart, Cancel, Mic, MicOff, Speaker, SpeakerOff, Camera,
     Select, Arrow, Line, Rect, Ellipse, Pen, Highlighter, Text, Callout, Step, Stamp, Blur, Spotlight,
     Magnify, Fill, Eraser, Crop, Selection, Wand, Cutout, Eyedropper, Undo, Redo, Editor, Folder, Gear,
-    Copy, Save, Share, Ocr, Library
+    Copy, Save, Share, Ocr, Library, CameraFill, VideoFill, Webcam, WebcamOff,
+    Mail, Print, NewDoc, Trash, Layers, Rotate, Effects,
+    Star, Clipboard, Program, Duplicate, SaveAs, NewClipboard, AutoTrim, DeleteObject,
+    FxBorder, FxEdges, FxCaption, FxPerspective, FxPageCurl, FxShadow, FxFilters, FxColorAdjust, FxColorReplace, FxSpotlight, FxWatermark
 };
 
 void Draw(Gdiplus::Graphics& g, Id id, Gdiplus::RectF r, Gdiplus::Color c);
