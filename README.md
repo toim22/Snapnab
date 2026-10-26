@@ -121,6 +121,30 @@ docs/                   architecture, build and images
 The architecture and its mapping to the reference documents are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 The version history is in [CHANGELOG.md](CHANGELOG.md).
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by
+[SignPath Foundation](https://signpath.org/).
+
+Only the official releases published on this repository's *Releases* page are signed. Every signed file is built by the
+[Build workflow](.github/workflows/build.yml) on GitHub Actions directly from the public source code of this repository;
+nothing built on a personal computer is signed. Each signing request is approved manually before it is processed.
+
+| Role | Members |
+|---|---|
+| Committers and reviewers | [toim22](https://github.com/toim22) |
+| Approvers | [toim22](https://github.com/toim22) |
+
+The signed files are `Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll` and the installer `Snapnab-<version>-setup.exe`.
+The SHA-256 hashes of the release packages are published with each release.
+
+### Privacy policy
+
+This program will not transfer any information to other networked systems unless specifically requested by the user or
+the person installing or operating it. Snapnab has no telemetry, update check or online account; the only network
+activity happens when you open a link yourself (it opens in your default browser) or choose to send a capture by email
+(it is handed to your email program). See [Your data](#your-data) for what is stored on your computer.
+
 ## License
 
 Copyright © 2026 Antonio Rezende.
