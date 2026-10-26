@@ -1,0 +1,66 @@
+# Builds Snapnab on GitHub Actions with the same build.bat used locally.
+# The artifacts produced here are the ones that will be sent to SignPath
+# for code signing (signing must start from a CI build of the public source).
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup 6
+        shell: pwsh
+        run: |
+          $iscc = @("${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe", "$env:ProgramFiles\Inno Setup 6\ISCC.exe") |
+            Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $iscc) { choco install innosetup -y --no-progress }
+
+      - name: Build and package
+        shell: cmd
+        run: build.bat
+
+      - name: Check outputs
+        shell: pwsh
+        run: |
+          foreach ($pattern in 'dist\Snapnab\Snapnab.exe', 'dist\Snapnab\SnapnabEditor.exe', 'dist\Snapnab\SnapEx64.dll',
+                               'dist\Snapnab-*-win-x64.zip', 'dist\Snapnab-*-setup.exe') {
+            if (-not (Test-Path $pattern)) { throw "missing: $pattern" }
+          }
+          Get-ChildItem dist\Snapnab-* | ForEach-Object {
+            "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash, $_.Name
+          } | Tee-Object dist\SHA256SUMS.txt
+
+      - name: Upload program folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snapnab-program
+          path: dist/Snapnab/
+          if-no-files-found: error
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snapnab-packages
+          path: |
+            dist/Snapnab-*-win-x64.zip
+            dist/Snapnab-*-setup.exe
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
+
+      - name: Upload symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snapnab-symbols
+          path: dist/symbols/
+          if-no-files-found: warn
