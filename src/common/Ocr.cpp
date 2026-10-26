@@ -1,6 +1,6 @@
-// Grab Text (OCR) — o original usa ABBYY FineReader Engine (FREngine.dll, ds_arch §13); aqui o motor é o
-// OCR nativo do Windows (Windows.Media.Ocr), chamado numa thread MTA própria. Usado pelo Editor e pelo
-// preset "Capturar texto" da janela de captura.
+// Grab Text (OCR) — the original uses ABBYY FineReader Engine (FREngine.dll, ds_arch §13); here the engine is the
+// native Windows OCR (Windows.Media.Ocr), called on a dedicated MTA thread. Used by the Editor and by the
+// capture window's "Capture text" preset.
 #include "Ocr.h"
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
@@ -12,7 +12,7 @@ namespace snap {
 
 bool RunOcr(const Image& imgIn, std::wstring& text, std::wstring& err) {
     if (imgIn.empty()) { err = Tr(L"Imagem vazia."); return false; }
-    // fundo opaco e escala: texto pequeno é ampliado, imagens enormes são reduzidas
+    // opaque background and scaling: small text is enlarged, huge images are reduced
     Image img(imgIn.w, imgIn.h, 0xFFFFFFFF);
     img.Blit(imgIn, 0, 0, true);
     if (img.h < 500 && img.w < 3000) img = ScaleImage(img, img.w * 2, img.h * 2);

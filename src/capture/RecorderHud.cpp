@@ -8,7 +8,7 @@
 
 namespace snap {
 
-enum { BtnRecord = 1, BtnStop, BtnRestart, BtnCancel, BtnMic, BtnSys, BtnCam, BtnSnap };
+enum { BtnRecord = 1, BtnStop, BtnRestart, BtnCancel, BtnMic, BtnSys, BtnCam, BtnSnap, BtnVolume };
 
 static RecorderHud* g_hud = nullptr;
 
@@ -19,7 +19,7 @@ void RecorderHud::Layout() {
     int x = pad, y = pad;
     auto add = [&](int id) { buttons_.push_back({ id, { x, y, x + b, y + b } }); x += b + gap; };
     add(BtnRecord); add(BtnStop); add(BtnRestart); add(BtnCancel);
-    x += sep; add(BtnMic); add(BtnSys);
+    x += sep; add(BtnMic); add(BtnSys); add(BtnVolume);
     if (camAvailable) add(BtnCam);
     x += sep; add(BtnSnap);
 }
@@ -39,9 +39,11 @@ void RecorderHud::Show(RECT area, Recorder* rec, HudCallbacks cb, bool micOpt, b
         RegisterClassW(&bc);
         WNDCLASSW cc{}; cc.lpfnWndProc = CountProc; cc.hInstance = hi; cc.lpszClassName = L"SnapnabCountdown";
         RegisterClassW(&cc);
+        WNDCLASSW vc{}; vc.lpfnWndProc = VolumeProc; vc.hInstance = hi; vc.hCursor = LoadCursor(nullptr, IDC_ARROW); vc.lpszClassName = L"SnapnabHudVolume";
+        RegisterClassW(&vc);
         reg = true;
     }
-    // moldura vermelha em volta da área (fora dela, não aparece na gravação)
+    // red frame around the area (outside it, not shown in the recording)
     int t = 3;
     RECT o{ area.left - t, area.top - t, area.right + t, area.bottom + t };
     border_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE,
@@ -56,7 +58,7 @@ void RecorderHud::Show(RECT area, Recorder* rec, HudCallbacks cb, bool micOpt, b
     SetWindowDisplayAffinity(border_, WDA_EXCLUDEFROMCAPTURE);
     ShowWindow(border_, SW_SHOWNOACTIVATE);
 
-    // HUD abaixo da área; se não couber, acima; senão dentro, no canto inferior
+    // HUD below the area; if it does not fit, above; otherwise inside, in the bottom corner
     hwnd_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, L"SnapnabRecorderHud", Tr(L"Snapnab — gravação"),
                             WS_POPUP, 0, 0, 10, 10, nullptr, nullptr, hi, nullptr);
     Layout();
@@ -71,12 +73,13 @@ void RecorderHud::Show(RECT area, Recorder* rec, HudCallbacks cb, bool micOpt, b
     SetWindowPos(hwnd_, HWND_TOPMOST, x, y, W, H, SWP_NOACTIVATE);
     HRGN rr = CreateRoundRectRgn(0, 0, W + 1, H + 1, ui::Scale(14, dpi), ui::Scale(14, dpi));
     SetWindowRgn(hwnd_, rr, FALSE);
-    SetWindowDisplayAffinity(hwnd_, WDA_EXCLUDEFROMCAPTURE);     // o HUD não sai no vídeo
+    SetWindowDisplayAffinity(hwnd_, WDA_EXCLUDEFROMCAPTURE);     // the HUD does not appear in the video
     ShowWindow(hwnd_, SW_SHOWNOACTIVATE);
     SetTimer(hwnd_, 1, 150, nullptr);
 }
 
 void RecorderHud::Hide() {
+    if (vol_) { DestroyWindow(vol_); vol_ = nullptr; }
     if (hwnd_) { KillTimer(hwnd_, 1); DestroyWindow(hwnd_); hwnd_ = nullptr; }
     if (border_) { DestroyWindow(border_); border_ = nullptr; }
     if (count_) { DestroyWindow(count_); count_ = nullptr; }
@@ -123,6 +126,7 @@ void RecorderHud::Paint(HDC hdc) {
                 break;
             case BtnCam: id = camOn ? icons::Webcam : icons::WebcamOff; break;
             case BtnSnap: id = icons::Camera; enabled = st != Recorder::Idle; break;
+            case BtnVolume: id = icons::Sliders; if (vol_) col = Gdiplus::Color(255, 120, 190, 255); break;
             }
             if (hover_ == b.id && enabled) {
                 Gdiplus::SolidBrush hb(Gdiplus::Color(255, 60, 60, 66));
@@ -133,7 +137,7 @@ void RecorderHud::Paint(HDC hdc) {
             icons::Draw(g, id, Gdiplus::RectF((float)b.r.left + in, (float)b.r.top + in, (float)(b.r.right - b.r.left - 2 * in),
                                               (float)(b.r.bottom - b.r.top - 2 * in)), col);
         }
-        // medidores de nível (mic e sistema)
+        // level meters (mic and system)
         int x0 = buttons_.back().r.right + ui::Scale(14, dpi);
         auto meter = [&](int y, float lv, bool on) {
             Gdiplus::SolidBrush back(Gdiplus::Color(255, 60, 60, 60));
@@ -142,10 +146,12 @@ void RecorderHud::Paint(HDC hdc) {
             Gdiplus::SolidBrush fg(lv > 0.9f ? Gdiplus::Color(255, 240, 70, 70) : Gdiplus::Color(255, 80, 200, 110));
             if (on) g.FillRectangle(&fg, x0, y, (INT)(w * std::min(1.0f, lv)), h);
         };
-        meter(ui::Scale(17, dpi), rec_ ? rec_->micLevel() : 0, rec_ && !rec_->micMuted());
-        meter(ui::Scale(29, dpi), rec_ ? rec_->sysLevel() : 0, rec_ && !rec_->sysMuted());
+        // before the recording the meters come from the monitor (they follow the mic/system buttons)
+        bool idle = st == Recorder::Idle;
+        meter(ui::Scale(17, dpi), rec_ ? rec_->micLevel() : 0, rec_ && (idle ? micOn : !rec_->micMuted()));
+        meter(ui::Scale(29, dpi), rec_ ? rec_->sysLevel() : 0, rec_ && (idle ? sysOn : !rec_->sysMuted()));
     }
-    // tempo
+    // time
     double e = rec_ ? rec_->Elapsed() : 0;
     int s = (int)e;
     std::wstring t = Format(L"%02d:%02d:%02d", s / 3600, (s / 60) % 60, s % 60);
@@ -171,10 +177,13 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     switch (m) {
     case WM_PAINT: { PAINTSTRUCT ps; HDC dc = BeginPaint(h, &ps); self->Paint(dc); EndPaint(h, &ps); return 0; }
     case WM_ERASEBKGND: return 1;
-    case WM_TIMER: InvalidateRect(h, nullptr, FALSE); return 0;
+    case WM_TIMER: InvalidateRect(h, nullptr, FALSE); if (self->vol_) InvalidateRect(self->vol_, nullptr, FALSE); return 0;
+    case WM_MOVE:                               // the volume panel follows the HUD
+        if (self->vol_) self->PlaceVolume();
+        break;
     case WM_NCHITTEST: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) }; ScreenToClient(h, &p);
-        return self->HitButton(p) > 0 ? HTCLIENT : HTCAPTION;     // arrasta pelo fundo
+        return self->HitButton(p) > 0 ? HTCLIENT : HTCAPTION;     // drag by the background
     }
     case WM_MOUSEMOVE: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
@@ -189,7 +198,7 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
         Recorder::State st = self->rec_ ? self->rec_->state() : Recorder::Idle;
         switch (self->HitButton(p)) {
         case BtnRecord:
-            if (self->count_) self->SkipCountdown();          // durante a contagem, gravar = começar já
+            if (self->count_) self->SkipCountdown();          // during the countdown, record = start right away
             else if (self->cb_.onRecord) self->cb_.onRecord();
             break;
         case BtnStop: if (st != Recorder::Idle && self->cb_.onStop) self->cb_.onStop(); break;
@@ -208,6 +217,7 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
             if (self->cb_.onWebcam) self->cb_.onWebcam(self->camOn);
             break;
         case BtnSnap: if (st != Recorder::Idle && self->cb_.onSnapshot) self->cb_.onSnapshot(); break;
+        case BtnVolume: self->ToggleVolume(); break;
         }
         InvalidateRect(h, nullptr, FALSE);
         return 0;
@@ -217,8 +227,8 @@ LRESULT CALLBACK RecorderHud::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     return DefWindowProcW(h, m, w, l);
 }
 
-// contagem regressiva: círculo escuro translúcido com o número e, embaixo, a pílula "Pular" (janela em camadas,
-// bordas suavizadas). Só a pílula recebe clique; o resto da janela tem alfa e não atrapalha.
+// countdown: dark translucent circle with the number and, below it, the "Skip" pill (layered window,
+// antialiased edges). Only the pill takes clicks; the rest of the window has alpha and does not get in the way.
 static int CountSize(int dpi) { return ui::Scale(150, dpi); }
 
 RECT RecorderHud::SkipRect() const {
@@ -257,7 +267,7 @@ void RecorderHud::RenderCount() {
         Gdiplus::SolidBrush white(Gdiplus::Color(255, 255, 255, 255));
         std::wstring n = std::to_wstring(countLeft_);
         g.DrawString(n.c_str(), -1, &big, Gdiplus::RectF(0, 0, (float)s, (float)s + ui::Scale(4, dpi)), &sf, &white);
-        // pílula "Pular"
+        // "Skip" pill
         RECT k = SkipRect();
         Gdiplus::RectF kr((float)k.left, (float)k.top, (float)(k.right - k.left), (float)(k.bottom - k.top));
         Gdiplus::GraphicsPath pill;
@@ -268,7 +278,7 @@ void RecorderHud::RenderCount() {
         Gdiplus::Pen pr(Gdiplus::Color(skipHot_ ? 150 : 90, 255, 255, 255), 1.0f);
         g.DrawPath(&pr, &pill);
         Gdiplus::Font label(&ff, (float)ui::Scale(13, dpi), Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
-        // texto + ícone de avançar (»)
+        // text + forward icon (»)
         Gdiplus::RectF tr = kr; tr.Width -= ui::Scale(14, dpi);
         g.DrawString(Tr(L"Pular"), -1, &label, tr, &sf, &white);
         Gdiplus::Pen chev(Gdiplus::Color(255, 255, 255, 255), std::max(1.6f, dpi / 55.0f));
@@ -347,6 +357,140 @@ void RecorderHud::Countdown(int seconds, std::function<void()> then) {
     RenderCount();
     ShowWindow(count_, SW_SHOWNOACTIVATE);
     SetTimer(count_, 1, 1000, nullptr);
+}
+
+// ---------------------------------------------------------------- volume panel (microphone and system audio)
+// Below (or above) the HUD: a slider per source (0–200%) and the automatic microphone gain. It works before the
+// recording (the meters come from the monitor) and during it; the values go back to the preset.
+RECT RecorderHud::VolumeTrack(int which) const {
+    int dpi = DpiForWindow(vol_);
+    RECT cr; GetClientRect(vol_, &cr);
+    int y = ui::Scale(which == 0 ? 22 : 54, dpi);
+    return { ui::Scale(118, dpi), y - ui::Scale(6, dpi), cr.right - ui::Scale(58, dpi), y + ui::Scale(6, dpi) };
+}
+
+RECT RecorderHud::VolumeCheck() const {
+    int dpi = DpiForWindow(vol_);
+    return { ui::Scale(12, dpi), ui::Scale(76, dpi), ui::Scale(300, dpi), ui::Scale(98, dpi) };
+}
+
+void RecorderHud::SetVolumeFromX(int which, int x) {
+    RECT t = VolumeTrack(which);
+    int v = (int)std::lround(std::clamp((double)(x - t.left) / std::max(1L, t.right - t.left), 0.0, 1.0) * 200);
+    if (std::abs(v - 100) <= 4) v = 100;            // sticks to 100%
+    if (which == 0) { micVolume = v; if (rec_) rec_->SetMicVolume(v); }
+    else { sysVolume = v; if (rec_) rec_->SetSysVolume(v); }
+    if (cb_.onVolume) cb_.onVolume(micVolume, sysVolume, autoGain);
+    InvalidateRect(vol_, nullptr, FALSE);
+}
+
+void RecorderHud::ToggleVolume() {
+    if (vol_) { DestroyWindow(vol_); vol_ = nullptr; InvalidateRect(hwnd_, nullptr, FALSE); return; }
+    int dpi = DpiForWindow(hwnd_);
+    RECT hr; GetWindowRect(hwnd_, &hr);
+    int W = std::max((int)(hr.right - hr.left), ui::Scale(330, dpi)), H = ui::Scale(108, dpi);
+    vol_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, L"SnapnabHudVolume", Tr(L"Volume"), WS_POPUP,
+                           hr.left, hr.bottom, W, H, nullptr, nullptr, GetModuleHandleW(nullptr), nullptr);
+    SetWindowRgn(vol_, CreateRoundRectRgn(0, 0, W + 1, H + 1, ui::Scale(14, dpi), ui::Scale(14, dpi)), FALSE);
+    SetWindowDisplayAffinity(vol_, WDA_EXCLUDEFROMCAPTURE);       // not in the video
+    PlaceVolume();
+    ShowWindow(vol_, SW_SHOWNOACTIVATE);
+    InvalidateRect(hwnd_, nullptr, FALSE);
+}
+
+void RecorderHud::PlaceVolume() {
+    int dpi = DpiForWindow(hwnd_);
+    RECT hr; GetWindowRect(hwnd_, &hr);
+    RECT vr; GetWindowRect(vol_, &vr);
+    int H = vr.bottom - vr.top;
+    RECT mon = MonitorRectFromPoint({ hr.left, hr.top }, true);
+    int y = hr.bottom + ui::Scale(6, dpi);
+    if (y + H > mon.bottom) y = hr.top - H - ui::Scale(6, dpi);
+    SetWindowPos(vol_, HWND_TOPMOST, hr.left, y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+}
+
+void RecorderHud::PaintVolume(HDC hdc) {
+    RECT cr; GetClientRect(vol_, &cr);
+    HDC mem = CreateCompatibleDC(hdc);
+    HBITMAP bb = CreateCompatibleBitmap(hdc, cr.right, cr.bottom);
+    HGDIOBJ ob = SelectObject(mem, bb);
+    HBRUSH bg = CreateSolidBrush(RGB(30, 30, 32)); FillRect(mem, &cr, bg); DeleteObject(bg);
+    int dpi = DpiForWindow(vol_);
+    SetBkMode(mem, TRANSPARENT);
+    HGDIOBJ of = SelectObject(mem, ui::UiFont(dpi, 9));
+    {
+        Gdiplus::Graphics g(mem);
+        g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+        for (int which = 0; which < 2; which++) {
+            RECT t = VolumeTrack(which);
+            int cy = (t.top + t.bottom) / 2;
+            RECT lr{ ui::Scale(12, dpi), cy - ui::Scale(12, dpi), t.left - ui::Scale(8, dpi), cy + ui::Scale(12, dpi) };
+            SetTextColor(mem, RGB(230, 230, 232));
+            DrawTextW(mem, which == 0 ? Tr(L"Microfone") : Tr(L"Áudio do sistema"), -1, &lr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+            // level after the volume, under the track
+            float lv = rec_ ? (which == 0 ? rec_->micLevel() : rec_->sysLevel()) : 0;
+            Gdiplus::SolidBrush back(Gdiplus::Color(255, 64, 64, 68));
+            g.FillRectangle(&back, (INT)t.left, cy - ui::Scale(3, dpi), (INT)(t.right - t.left), ui::Scale(6, dpi));
+            Gdiplus::SolidBrush lvB(lv > 0.9f ? Gdiplus::Color(255, 240, 70, 70) : Gdiplus::Color(255, 80, 200, 110));
+            g.FillRectangle(&lvB, (INT)t.left, cy - ui::Scale(3, dpi), (INT)((t.right - t.left) * std::min(1.0f, lv)), ui::Scale(6, dpi));
+            int v = which == 0 ? micVolume : sysVolume;
+            float kx = t.left + (t.right - t.left) * v / 200.0f;
+            Gdiplus::Pen mark(Gdiplus::Color(120, 255, 255, 255), 1.0f);         // 100% mark
+            float mx = t.left + (t.right - t.left) / 2.0f;
+            g.DrawLine(&mark, mx, (float)t.top - 2, mx, (float)t.bottom + 2);
+            Gdiplus::SolidBrush knob(Gdiplus::Color(255, 240, 240, 242));
+            float kr = (float)ui::Scale(7, dpi);
+            g.FillEllipse(&knob, kx - kr, cy - kr, kr * 2, kr * 2);
+            RECT vr{ t.right + ui::Scale(8, dpi), cy - ui::Scale(12, dpi), cr.right - ui::Scale(8, dpi), cy + ui::Scale(12, dpi) };
+            std::wstring vt = std::to_wstring(v) + L"%";
+            DrawTextW(mem, vt.c_str(), -1, &vr, DT_RIGHT | DT_VCENTER | DT_SINGLELINE);
+        }
+        RECT c = VolumeCheck();
+        int bs = ui::Scale(14, dpi), by = (c.top + c.bottom) / 2 - bs / 2;
+        Gdiplus::SolidBrush box(autoGain ? Gdiplus::Color(255, 70, 150, 240) : Gdiplus::Color(255, 70, 70, 74));
+        g.FillRectangle(&box, (INT)c.left, by, bs, bs);
+        if (autoGain) {
+            Gdiplus::Pen ck(Gdiplus::Color(255, 255, 255, 255), 2.0f);
+            Gdiplus::PointF pts[3] = { { c.left + bs * 0.2f, by + bs * 0.52f }, { c.left + bs * 0.42f, by + bs * 0.74f }, { c.left + bs * 0.8f, by + bs * 0.28f } };
+            g.DrawLines(&ck, pts, 3);
+        }
+        RECT tr{ c.left + bs + ui::Scale(8, dpi), c.top, c.right, c.bottom };
+        SetTextColor(mem, RGB(210, 210, 214));
+        DrawTextW(mem, Tr(L"Ganho automático do microfone"), -1, &tr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+    }
+    SelectObject(mem, of);
+    BitBlt(hdc, 0, 0, cr.right, cr.bottom, mem, 0, 0, SRCCOPY);
+    SelectObject(mem, ob); DeleteObject(bb); DeleteDC(mem);
+}
+
+LRESULT CALLBACK RecorderHud::VolumeProc(HWND h, UINT m, WPARAM w, LPARAM l) {
+    RecorderHud* self = g_hud;
+    if (!self || self->vol_ != h) return DefWindowProcW(h, m, w, l);
+    switch (m) {
+    case WM_ERASEBKGND: return 1;
+    case WM_PAINT: { PAINTSTRUCT ps; HDC dc = BeginPaint(h, &ps); self->PaintVolume(dc); EndPaint(h, &ps); return 0; }
+    case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
+    case WM_LBUTTONDOWN: {
+        POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
+        for (int which = 0; which < 2; which++) {
+            RECT t = self->VolumeTrack(which);
+            InflateRect(&t, ui::Scale(10, DpiForWindow(h)), ui::Scale(8, DpiForWindow(h)));
+            if (PtInRect(&t, p)) { self->volDrag_ = which; SetCapture(h); self->SetVolumeFromX(which, p.x); return 0; }
+        }
+        RECT c = self->VolumeCheck();
+        if (PtInRect(&c, p)) {
+            self->autoGain = !self->autoGain;
+            if (self->rec_) self->rec_->SetAutoGain(self->autoGain);
+            if (self->cb_.onVolume) self->cb_.onVolume(self->micVolume, self->sysVolume, self->autoGain);
+            InvalidateRect(h, nullptr, FALSE);
+        }
+        return 0;
+    }
+    case WM_MOUSEMOVE: if (self->volDrag_ >= 0) self->SetVolumeFromX(self->volDrag_, GET_X_LPARAM(l)); return 0;
+    case WM_LBUTTONUP: if (self->volDrag_ >= 0) { self->volDrag_ = -1; ReleaseCapture(); } return 0;
+    case WM_CAPTURECHANGED: self->volDrag_ = -1; return 0;
+    }
+    return DefWindowProcW(h, m, w, l);
 }
 
 } // namespace snap

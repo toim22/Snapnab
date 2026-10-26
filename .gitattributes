@@ -1,4 +1,4 @@
-# Normaliza fim de linha no repositório; scripts do Windows sempre com CRLF
+# Normalize line endings in the repository; Windows scripts always use CRLF
 * text=auto
 *.bat  text eol=crlf
 *.cmd  text eol=crlf
@@ -6,7 +6,7 @@
 *.rc   text eol=crlf
 *.sln  text eol=crlf
 
-# Binários
+# Binaries
 *.ico  binary
 *.png  binary
 *.jpg  binary

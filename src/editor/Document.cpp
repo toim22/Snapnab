@@ -1,10 +1,17 @@
 #include "Document.h"
+#include "Library.h"
 #include <cmath>
 
 namespace snap::ed {
 
 using Gdiplus::PointF;
 using Gdiplus::RectF;
+
+bool Gradient::operator==(const Gradient& o) const {
+    if (type != o.type || angle != o.angle || stops.size() != o.stops.size()) return false;
+    for (size_t i = 0; i < stops.size(); i++) if (stops[i].pos != o.stops[i].pos || stops[i].color != o.stops[i].color) return false;
+    return true;
+}
 
 RectF DrawObj::Rect() const {
     float x0 = std::min(p1.X, p2.X), y0 = std::min(p1.Y, p2.Y);
@@ -20,7 +27,7 @@ int DrawObj::Kind() const {
     }
 }
 
-// formatos de balão com ponta: fala (cunha), pensamento (bolhas), caixa com seta (linha) e setas (a ponta dá a direção)
+// callout shapes with a tip: speech (wedge), thought (bubbles), box with arrow (line) and arrows (the tip gives the direction)
 bool DrawObj::CalloutHasTail() const {
     switch (style.calloutShape) {
     case 16: case 17: case 18: case 19: case 20: case 21: return false;
@@ -67,7 +74,7 @@ RectF DrawObj::Bounds() const {
         return u;
     }
     RectF r;
-    if (IsPath() && !pts.empty()) {
+    if ((IsPath() || IsPointShape()) && !pts.empty()) {
         float x0 = pts[0].X, y0 = pts[0].Y, x1 = x0, y1 = y0;
         for (auto& p : pts) { x0 = std::min(x0, p.X); y0 = std::min(y0, p.Y); x1 = std::max(x1, p.X); y1 = std::max(y1, p.Y); }
         r = RectF(x0, y0, x1 - x0, y1 - y0);
@@ -77,8 +84,8 @@ RectF DrawObj::Bounds() const {
     case ObjType::Step: {
         float d = style.fontSize * 1.5f;
         r = RectF(p1.X - d / 2, p1.Y - d / 2, d, d);
-        if (style.stepShape == 1) r.Width += d * 0.45f;           // gota: ponta para a direita
-        pad = 0;
+        if (style.stepShape == 1) r.Width += d * 0.45f;           // teardrop: tip to the right
+        pad = style.stepOutlineWidth > 0 ? style.stepOutlineWidth / 2 + 1 : 0;
         break;
     }
     case ObjType::Callout:
@@ -88,19 +95,31 @@ RectF DrawObj::Bounds() const {
     case ObjType::Arrow: case ObjType::Line:
         if (style.bezier) Grow(r, ctrl);
         pad = style.width / 2 + CapLength(style.width, std::max(style.startSize, style.endSize));
+        if (HasLabel() && !text.empty()) {          // the label beyond the tail (with its outline)
+            RectF lb = ArrowLabelRect(*this);
+            lb.Inflate(style.width + 2 - pad, style.width + 2 - pad);
+            RectF::Union(r, r, lb);
+        }
         break;
     case ObjType::Magnify:
         if (style.magnifyLink) {
             float k = std::max(1.1f, style.magnifyScale / 100.0f), sw = r.Width / k / 2, sh = r.Height / k / 2;
             Grow(r, PointF(tail.X - sw, tail.Y - sh)); Grow(r, PointF(tail.X + sw, tail.Y + sh));
         }
+        if (style.loupe) {                                          // thick rim and handle
+            RectF ex = MagnifierExtra(*this);
+            RectF::Union(r, r, ex);
+            float rim = std::max(4.0f, std::min(Rect().Width, Rect().Height) * 0.055f + style.width * 0.5f);
+            pad = std::max(pad, rim);
+        }
         break;
     case ObjType::Text: pad = style.width; break;
-    case ObjType::Highlighter: if (pts.empty()) pad = 0; break;
-    case ObjType::Stamp: case ObjType::Picture: pad = 0; break;
+    case ObjType::Highlighter: if (pts.empty() || IsPointShape()) pad = 0; break;
+    case ObjType::Stamp: case ObjType::Picture: case ObjType::Link: pad = 0; break;
     default: break;
     }
-    if (style.shadow && type != ObjType::Highlighter && type != ObjType::Blur && type != ObjType::Pixelate && type != ObjType::Spotlight)
+    if (style.shadow && type != ObjType::Highlighter && type != ObjType::Blur && type != ObjType::Pixelate && type != ObjType::Spotlight &&
+        type != ObjType::Link)
         pad += style.shadowBlur * 2 + style.shadowDist + 2;
     r.Inflate(pad, pad);
     return r;
@@ -114,7 +133,7 @@ static float DistSeg(PointF p, PointF a, PointF b) {
     return std::sqrt(qx * qx + qy * qy);
 }
 
-static float DistQuad(PointF p, PointF a, PointF c, PointF b) {     // curva quadrática a-c-b, amostrada
+static float DistQuad(PointF p, PointF a, PointF c, PointF b) {     // quadratic curve a-c-b, sampled
     float best = 1e9f;
     PointF prev = a;
     for (int i = 1; i <= 24; i++) {
@@ -133,9 +152,15 @@ bool DrawObj::HitTest(PointF p, float tol) const {
         for (auto& c : children) if (c.HitTest(p, tol)) return true;
         return false;
     case ObjType::Arrow: case ObjType::Line:
+        if (HasLabel() && !text.empty()) { RectF lb = ArrowLabelRect(*this); lb.Inflate(tol, tol); if (lb.Contains(p)) return true; }
         return (style.bezier ? DistQuad(p, p1, ctrl, p2) : DistSeg(p, p1, p2)) <= t + 2;
     case ObjType::Pen: case ObjType::Highlighter:
-        if (type == ObjType::Highlighter && pts.empty()) { RectF r = Rect(); r.Inflate(tol, tol); return r.Contains(p); }
+        if (type == ObjType::Highlighter && (pts.empty() || IsPointShape())) {
+            if (style.areaShape == ShapeRect && !IsPointShape()) { RectF r = Rect(); r.Inflate(tol, tol); return r.Contains(p); }
+            Gdiplus::GraphicsPath gp; AreaPath(gp, *this);
+            Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0, 0), std::max(2.0f, tol * 2));
+            return gp.IsVisible(p) || gp.IsOutlineVisible(p, &pen);
+        }
         for (size_t i = 1; i < pts.size(); i++) if (DistSeg(p, pts[i - 1], pts[i]) <= t) return true;
         return pts.size() == 1 && DistSeg(p, pts[0], pts[0]) <= t;
     case ObjType::Rect: case ObjType::RoundRect: case ObjType::Ellipse: case ObjType::Shape: {
@@ -156,6 +181,12 @@ bool DrawObj::HitTest(PointF p, float tol) const {
         RectF r = Rect(); r.Inflate(tol, tol);
         if (r.Contains(p)) return true;
         return style.magnifyLink && DistSeg(p, tail, tail) <= std::max(12.0f, r.Width / std::max(1.1f, style.magnifyScale / 100.0f) / 2);
+    }
+    case ObjType::Blur: case ObjType::Pixelate: case ObjType::Spotlight: {
+        if (style.areaShape == ShapeRect && !IsPointShape()) { RectF r = Rect(); r.Inflate(tol, tol); return r.Contains(p); }
+        Gdiplus::GraphicsPath gp; AreaPath(gp, *this);
+        Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0, 0), std::max(2.0f, tol * 2));
+        return gp.IsVisible(p) || gp.IsOutlineVisible(p, &pen);
     }
     default: { RectF b = Bounds(); b.Inflate(tol, tol); return b.Contains(p); }
     }
@@ -193,7 +224,7 @@ void DrawObj::UpdateGroupRect() {
     p1 = PointF(u.X, u.Y); p2 = PointF(u.GetRight(), u.GetBottom());
 }
 
-// ---------------------------------------------------------------- histórico
+// ---------------------------------------------------------------- history
 void Document::Checkpoint() {
     undo_.push_back(st);
     if (undo_.size() > 80) undo_.erase(undo_.begin());
@@ -247,18 +278,23 @@ Image Document::Render(const DrawObj* hideText) const {
     g.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
     g.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
     g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-    for (auto& o : st.objs) RenderObject(g, out, *o, o.get() == hideText);
+    for (auto& o : st.objs) if (!o->hidden && o->type != ObjType::Link) RenderObject(g, out, *o, o.get() == hideText);
     g.Flush(Gdiplus::FlushIntentionSync);
     return out;
 }
 
-// ---------------------------------------------------------------- arquivo
+// ---------------------------------------------------------------- file
 bool Document::Save() {
     if (isVideo || path.empty() || !st.base) return false;
     SnapFrame f;
     f.base = *st.base;
     f.doc.setW("CaptureMode", captureMode).setW("WindowTitle", windowTitle).setW("Application", application);
     f.doc.setW("Created", created).seti("NextStep", st.nextStep).setW("Tags", tags);
+    if (!guidesX.empty() || !guidesY.empty()) {          // ruler guides
+        XmlNode& gn = f.doc.add("Guides");
+        for (float x : guidesX) gn.add("Guide").set("Axis", "X").setd("Pos", x);
+        for (float y : guidesY) gn.add("Guide").set("Axis", "Y").setd("Pos", y);
+    }
     XmlNode& objs = f.doc.add("Objects");
     int counter = 1;
     for (auto& o : st.objs) objs.children.push_back(ObjToXml(*o, f, counter));
@@ -277,7 +313,12 @@ bool Document::SaveAs(const std::wstring& file, int q) {
         return false;
     }
     Image img = Render();
-    if (ext == L".pdf") { std::wstring err; return SavePdf(file, img, err); }
+    if (ext == L".pdf") {                                   // the captured links stay clickable in the PDF
+        std::vector<PdfLink> links;
+        for (auto& o : st.objs) if (o->type == ObjType::Link && !o->hidden) links.push_back({ o->Rect(), o->text });
+        std::wstring err;
+        return SavePdf(file, img, err, links);
+    }
     return SaveImageFile(file, img, q);
 }
 
@@ -309,7 +350,11 @@ std::unique_ptr<Document> Document::Load(const std::wstring& file) {
         d->st.nextStep = f.doc.geti("NextStep", 1);
         d->tags = f.doc.getW("Tags");
         d->title = d->windowTitle.empty() ? (d->captureMode.empty() ? FileNameOf(file) : d->captureMode) : d->windowTitle;
+        std::wstring name = CaptureName(file);          // name given in the library
+        if (!name.empty()) d->title = name;
         d->SetBase(std::move(f.base));
+        if (const XmlNode* gn = f.doc.child("Guides"))
+            for (auto& c : gn->children) (c.get("Axis") == "Y" ? d->guidesY : d->guidesX).push_back((float)c.getd("Pos"));
         if (const XmlNode* objs = f.doc.child("Objects"))
             for (auto& n : objs->children) if (auto o = ObjFromXml(n, f)) d->st.objs.push_back(o);
         return d;

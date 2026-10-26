@@ -1,5 +1,6 @@
 #include "Popups.h"
 #include "Panels.h"
+#include "Document.h"
 #include "Ui.h"
 #include <dwmapi.h>
 
@@ -54,7 +55,7 @@ LRESULT CALLBACK PopupProc(HWND h, UINT m, WPARAM w, LPARAM l) {
     case WM_LBUTTONDOWN: case WM_RBUTTONDOWN: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         RECT cr; GetClientRect(h, &cr);
-        if (!PtInRect(&cr, p)) { s->done = true; return 0; }       // clique fora fecha
+        if (!PtInRect(&cr, p)) { s->done = true; return 0; }       // a click outside closes it
         return 0;
     }
     case WM_LBUTTONUP: {
@@ -85,7 +86,7 @@ int RunPopup(HWND owner, POINT anchor, SIZE size, PopupState& st, DWORD corner =
     HWND root = GetAncestor(owner, GA_ROOT);
     HWND h = CreateWindowExW(WS_EX_TOOLWINDOW, L"SnapnabPopupGrid", nullptr, WS_POPUP, x, y, size.cx, size.cy, root, nullptr, hi, nullptr);
     DwmSetWindowAttribute(h, 33, &corner, sizeof corner);
-    if (!frame) SetWindowLongPtrW(h, GWLP_USERDATA, 1);      // sem o fio da borda (a DWM desenha a borda arredondada)
+    if (!frame) SetWindowLongPtrW(h, GWLP_USERDATA, 1);      // without the border line (DWM draws the rounded border)
     ShowWindow(h, SW_SHOWNOACTIVATE);
     SetCapture(h);
     MSG msg;
@@ -135,7 +136,7 @@ int ListPopup(HWND owner, POINT anchor, const std::vector<PopupItem>& items, int
     auto S = [dpi](int v) { return ui::Scale(v, dpi); };
     const auto& th = EdTheme();
     int pad = S(6), rowIcon = S(40), rowText = S(34), sepH = S(11), iconSz = S(22);
-    // largura pelo maior nome + atalho
+    // width from the longest name + shortcut
     HDC dc = GetDC(nullptr);
     HGDIOBJ of = SelectObject(dc, ui::UiFont(dpi, 10));
     int textW = 0, keyW = 0;
@@ -171,7 +172,7 @@ int ListPopup(HWND owner, POINT anchor, const std::vector<PopupItem>& items, int
             COLORREF bg = it.checked ? ui::Mix(RGB(255, 255, 255), th.control, hot ? 0.22 : 0.15) : ui::Mix(RGB(255, 255, 255), th.control, 0.08);
             Gdiplus::SolidBrush b(Gdiplus::Color(255, GetRValue(bg), GetGValue(bg), GetBValue(bg)));
             g.FillPath(&b, &p);
-            if (it.checked) {                    // barrinha de destaque à esquerda (item atual)
+            if (it.checked) {                    // small highlight bar on the left (current item)
                 Gdiplus::SolidBrush ab(Gdiplus::Color(255, GetRValue(th.control), GetGValue(th.control), GetBValue(th.control)));
                 g.FillRectangle(&ab, (float)r.left, (float)(r.top + r.bottom) / 2 - S(8), (float)S(3), (float)S(16));
             }
@@ -210,7 +211,46 @@ int ListPopup(HWND owner, POINT anchor, const std::vector<PopupItem>& items, int
     return RunPopup(owner, anchor, { W, y }, st, 2 /*DWMWCP_ROUND*/, false);
 }
 
-bool ColorPopup(HWND owner, POINT anchor, uint32_t& color, bool allowNone, const std::array<uint32_t, 4>& theme) {
+// gradient presets built from the theme colors
+static std::vector<Gradient> GradientPresets(const std::array<uint32_t, 4>& t) {
+    auto lin = [](float a, std::vector<GradStop> st) { Gradient g; g.type = 1; g.angle = a; g.stops = std::move(st); return g; };
+    auto rad = [](std::vector<GradStop> st) { Gradient g; g.type = 2; g.stops = std::move(st); return g; };
+    return { lin(90, { { 0, 0xFFFFFFFF }, { 1, t[0] } }), lin(0, { { 0, t[1] }, { 1, t[2] } }), lin(45, { { 0, t[2] }, { 1, t[3] } }),
+             lin(0, { { 0, t[0] }, { 0.5f, t[1] }, { 1, t[3] } }), rad({ { 0, 0xFFFFFFFF }, { 1, t[0] } }), lin(90, { { 0, 0xFF505050 }, { 1, 0xFF000000 } }),
+             lin(90, { { 0, 0xFFF4F5F7 }, { 1, 0xFFB0B4BC } }), rad({ { 0, t[3] }, { 1, 0xFF101010 } }) };
+}
+
+bool EditGradient(HWND owner, Gradient& gr, uint32_t base) {
+    Gradient g = gr;
+    if (!g.Active()) { g.type = 1; g.angle = 90; g.stops = { { 0, 0xFFFFFFFF }, { 1, base | 0xFF000000 } }; }
+    GradStop mid1{ 0.33f, 0 }, mid2{ 0.66f, 0 };
+    bool has1 = g.stops.size() >= 3, has2 = g.stops.size() >= 4;
+    if (has1) mid1 = g.stops[1];
+    if (has2) mid2 = g.stops[2];
+    std::vector<ui::Field> f = {
+        ui::Field::MakeCombo(Tr(L"Tipo"), { Tr(L"Linear"), Tr(L"Radial (do centro)") }, g.type == 2 ? 1 : 0),
+        ui::Field::MakeInt(Tr(L"Ângulo (graus)"), (int)g.angle, 0, 359),
+        ui::Field::MakeColor(Tr(L"Cor inicial"), ToColorref(g.stops.front().color)),
+        ui::Field::MakeColor(Tr(L"Cor final"), ToColorref(g.stops.back().color)),
+        ui::Field::MakeCheck(Tr(L"Cor intermediária"), has1),
+        ui::Field::MakeColor(Tr(L"Cor"), ToColorref(has1 ? mid1.color : 0xFFFFFFFF)),
+        ui::Field::MakeInt(Tr(L"Posição (%)"), (int)std::lround(mid1.pos * 100), 1, 99),
+        ui::Field::MakeCheck(Tr(L"Segunda cor intermediária"), has2),
+        ui::Field::MakeColor(Tr(L"Cor"), ToColorref(has2 ? mid2.color : 0xFF808080)),
+        ui::Field::MakeInt(Tr(L"Posição (%)"), (int)std::lround(mid2.pos * 100), 1, 99),
+        ui::Field::MakeLabel(Tr(L"O ângulo vale para o gradiente linear: 0° da esquerda para a direita, 90° de cima para baixo.")) };
+    if (!ui::RunForm(GetAncestor(owner, GA_ROOT), Tr(L"Gradiente"), f)) return false;
+    g.type = f[0].value == 1 ? 2 : 1;
+    g.angle = (float)f[1].value;
+    g.stops = { { 0, FromColorref(f[2].color) }, { 1, FromColorref(f[3].color) } };
+    if (f[4].value) g.stops.push_back({ f[6].value / 100.0f, FromColorref(f[5].color) });
+    if (f[7].value) g.stops.push_back({ f[9].value / 100.0f, FromColorref(f[8].color) });
+    std::sort(g.stops.begin(), g.stops.end(), [](const GradStop& a, const GradStop& b) { return a.pos < b.pos; });
+    gr = g;
+    return true;
+}
+
+bool ColorPopup(HWND owner, POINT anchor, uint32_t& color, bool allowNone, const std::array<uint32_t, 4>& theme, Gradient* grad) {
     static std::vector<uint32_t> recent;
     int dpi = DpiForWindow(owner);
     int cs = ui::Scale(22, dpi), pad = ui::Scale(10, dpi), head = ui::Scale(20, dpi);
@@ -222,7 +262,7 @@ bool ColorPopup(HWND owner, POINT anchor, uint32_t& color, bool allowNone, const
         0xFFB71C1C, 0xFFE65100, 0xFFF57F17, 0xFF1B5E20, 0xFF01579B, 0xFF1A237E, 0xFF4A148C, 0xFF880E4F,
     };
     PopupState st;
-    std::vector<uint32_t> colors;           // id → cor (ids 0..), -2 sem cor, -3 mais cores
+    std::vector<uint32_t> colors;           // id → color (ids 0..), -2 no color, -3 more colors
     int y = pad + head;
     auto rowOf = [&](const std::vector<uint32_t>& list) {
         for (size_t i = 0; i < list.size(); i++) {
@@ -241,11 +281,26 @@ bool ColorPopup(HWND owner, POINT anchor, uint32_t& color, bool allowNone, const
         y = yRecent + head;
         rowOf(recent);
     }
+    int yGrad = -1;
+    std::vector<Gradient> presets;
+    if (grad) {                                   // gradient previews (ids -10…)
+        presets = GradientPresets(theme);
+        yGrad = y + ui::Scale(8, dpi);
+        y = yGrad + head;
+        for (size_t i = 0; i < presets.size(); i++) st.cells.push_back({ { pad + (int)i * cs, y, pad + ((int)i + 1) * cs, y + cs }, -10 - (int)i });
+        y += cs;
+    }
     y += ui::Scale(10, dpi);
     int bw = (8 * cs - ui::Scale(8, dpi)) / 2, bh = ui::Scale(28, dpi);
     if (allowNone) st.cells.push_back({ { pad, y, pad + bw, y + bh }, -2 });
     st.cells.push_back({ { pad + 8 * cs - bw, y, pad + 8 * cs, y + bh }, -3 });
-    y += bh + pad;
+    y += bh;
+    if (grad) {
+        y += ui::Scale(6, dpi);
+        st.cells.push_back({ { pad, y, pad + 8 * cs, y + bh }, -4 });
+        y += bh;
+    }
+    y += pad;
     st.drawBack = [&](Gdiplus::Graphics&, HDC dc, RECT cr) {
         HGDIOBJ of = SelectObject(dc, ui::UiFont(dpi, 8, true));
         SetBkMode(dc, TRANSPARENT); SetTextColor(dc, RGB(90, 90, 98));
@@ -254,18 +309,44 @@ bool ColorPopup(HWND owner, POINT anchor, uint32_t& color, bool allowNone, const
         RECT t2{ pad, yStd, cr.right - pad, yStd + head - ui::Scale(4, dpi) };
         DrawTextW(dc, Tr(L"Cores padrão"), -1, &t2, DT_LEFT | DT_BOTTOM | DT_SINGLELINE);
         if (yRecent >= 0) { RECT t3{ pad, yRecent, cr.right - pad, yRecent + head - ui::Scale(4, dpi) }; DrawTextW(dc, Tr(L"Recentes"), -1, &t3, DT_LEFT | DT_BOTTOM | DT_SINGLELINE); }
+        if (yGrad >= 0) { RECT t4{ pad, yGrad, cr.right - pad, yGrad + head - ui::Scale(4, dpi) }; DrawTextW(dc, Tr(L"Gradientes"), -1, &t4, DT_LEFT | DT_BOTTOM | DT_SINGLELINE); }
         SelectObject(dc, of);
     };
     st.drawCell = [&](Gdiplus::Graphics& g, HDC dc, const Cell& c, bool hot) {
-        if (c.id >= 0) { uint32_t col = colors[c.id]; Swatch(g, c.r, col, hot, (col & 0xFFFFFF) == (color & 0xFFFFFF) && (color >> 24)); return; }
+        if (c.id >= 0) { uint32_t col = colors[c.id]; Swatch(g, c.r, col, hot, (col & 0xFFFFFF) == (color & 0xFFFFFF) && (color >> 24) && !(grad && grad->Active())); return; }
+        if (c.id <= -10) {                        // gradient preview
+            const Gradient& gp = presets[-10 - c.id];
+            Gdiplus::RectF rf((float)c.r.left + 2, (float)c.r.top + 2, (float)(c.r.right - c.r.left) - 4, (float)(c.r.bottom - c.r.top) - 4);
+            auto br = FillBrush(0xFF000000, gp, rf);
+            g.FillRectangle(br.get(), rf);
+            Gdiplus::Pen p(Gdiplus::Color(60, 0, 0, 0), 1);
+            g.DrawRectangle(&p, rf);
+            bool sel = grad && *grad == gp;
+            if (hot || sel) {
+                Gdiplus::Pen hp(sel ? Gdiplus::Color(255, 0, 100, 200) : Gdiplus::Color(255, 40, 40, 44), 2);
+                g.DrawRectangle(&hp, Gdiplus::RectF(rf.X - 1, rf.Y - 1, rf.Width + 2, rf.Height + 2));
+            }
+            return;
+        }
         Gdiplus::SolidBrush b(hot ? Gdiplus::Color(255, 232, 234, 238) : Gdiplus::Color(255, 244, 245, 247));
         g.FillRectangle(&b, Gdiplus::Rect(c.r.left, c.r.top, c.r.right - c.r.left, c.r.bottom - c.r.top));
         Gdiplus::Pen p(Gdiplus::Color(255, 210, 212, 218), 1);
         g.DrawRectangle(&p, Gdiplus::Rect(c.r.left, c.r.top, c.r.right - c.r.left - 1, c.r.bottom - c.r.top - 1));
-        ui::DrawTextCentered(dc, c.id == -2 ? Tr(L"Sem cor") : Tr(L"Mais cores…"), c.r, RGB(40, 40, 44), ui::UiFont(dpi, 8));
+        ui::DrawTextCentered(dc, c.id == -2 ? Tr(L"Sem cor") : c.id == -4 ? Tr(L"Editar gradiente…") : Tr(L"Mais cores…"), c.r, RGB(40, 40, 44), ui::UiFont(dpi, 8));
     };
     int id = RunPopup(owner, anchor, { 8 * cs + 2 * pad, y }, st);
     if (id == -1) return false;
+    if (grad && id <= -10) {                      // gradient preset: the solid color becomes its first stop
+        *grad = presets[-10 - id];
+        color = grad->stops.front().color;
+        return true;
+    }
+    if (grad && id == -4) {
+        if (!EditGradient(owner, *grad, color)) return false;
+        color = grad->stops.front().color;
+        return true;
+    }
+    if (grad) grad->type = 0;                     // a solid color (or none) turns the gradient off
     uint32_t chosen;
     if (id == -2) chosen = color & 0x00FFFFFF;
     else if (id == -3) {

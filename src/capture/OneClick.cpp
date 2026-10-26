@@ -67,7 +67,7 @@ void OneClick::Create() {
     g_self = this;
     hwnd_ = CreateWindowExW(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST | WS_EX_NOACTIVATE, kClass, L"Snapnab One Click",
                             WS_POPUP, 0, 0, 10, 10, nullptr, nullptr, hi, nullptr);
-    SetWindowDisplayAffinity(hwnd_, WDA_EXCLUDEFROMCAPTURE);         // nunca aparece nas capturas
+    SetWindowDisplayAffinity(hwnd_, WDA_EXCLUDEFROMCAPTURE);         // never shows up in captures
     tipWnd_ = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, nullptr, WS_POPUP | TTS_NOPREFIX | TTS_ALWAYSTIP,
                               0, 0, 0, 0, hwnd_, nullptr, hi, nullptr);
     TOOLINFOW ti{ sizeof ti };
@@ -104,13 +104,13 @@ void OneClick::Render() {
     if (!hwnd_) return;
     int dpi = Dpi();
     SIZE ps = PanelSize(dpi);
-    int sh = Sc(10, dpi);                 // margem da sombra
-    int strip = Sc(5, dpi);               // o que fica visível recolhido
-    int band = Sc(4, dpi);                // faixa na cor de destaque do lado da borda
+    int sh = Sc(10, dpi);                 // shadow margin
+    int strip = Sc(5, dpi);               // what stays visible when collapsed
+    int band = Sc(4, dpi);                // accent-colored strip on the edge side
     RECT mon = MonitorRect();
     int depth = (edge_ == 0 || edge_ == 2) ? ps.cy : ps.cx;
-    int vis = strip + (int)std::lround((depth - strip) * open_);   // profundidade visível do painel
-    // janela = parte visível do painel + sombra para dentro da tela
+    int vis = strip + (int)std::lround((depth - strip) * open_);   // visible depth of the panel
+    // window = visible part of the panel + shadow toward the inside of the screen
     if (dragging_) {
         win_ = { dragWin_.x, dragWin_.y, dragWin_.x + ps.cx + 2 * sh, dragWin_.y + ps.cy + 2 * sh };
         panelAt_ = { sh, sh };
@@ -151,7 +151,7 @@ void OneClick::Render() {
         g.Clear(Gdiplus::Color(0, 0, 0, 0));
         float rad = (float)Sc(12, dpi);
         Gdiplus::RectF pr((float)panelAt_.x, (float)panelAt_.y, (float)ps.cx, (float)ps.cy);
-        // sombra suave (camadas de opacidade decrescente)
+        // soft shadow (layers of decreasing opacity)
         for (int i = sh; i >= 1; i -= 1) {
             Gdiplus::RectF s = pr; s.Inflate((float)i, (float)i); s.Offset(0, i * 0.35f);
             Gdiplus::GraphicsPath sp; RoundPath(sp, s, rad + i);
@@ -162,7 +162,7 @@ void OneClick::Render() {
         Gdiplus::GraphicsPath panel; RoundPath(panel, pr, rad);
         Gdiplus::SolidBrush bg(GC(th_.bg));
         g.FillPath(&bg, &panel);
-        // faixa de destaque do lado da borda (é o que sobra visível quando recolhido)
+        // accent strip on the edge side (it is what remains visible when collapsed)
         g.SetClip(&panel);
         Gdiplus::SolidBrush ab(GC(th_.accent));
         Gdiplus::RectF br = pr;
@@ -173,13 +173,13 @@ void OneClick::Render() {
             case 1: br.Width = (float)band; break;
             case 3: br.X = pr.GetRight() - band; br.Width = (float)band; break;
             }
-            // a faixa fica no lado de dentro (oposto à borda), visível com o painel recolhido
+            // the strip is on the inner side (opposite the edge), visible while the panel is collapsed
             g.FillRectangle(&ab, br);
         }
         g.ResetClip();
         Gdiplus::Pen outline(GC(th_.line), 1.0f);
         g.DrawPath(&outline, &panel);
-        // conteúdo: círculo de captura e engrenagem
+        // content: capture circle and gear
         bool horiz = ps.cx > ps.cy;
         float d = (float)Sc(46, dpi), gs = (float)Sc(28, dpi);
         Gdiplus::PointF cc, gc;
@@ -274,7 +274,7 @@ void OneClick::Tick() {
 }
 
 void OneClick::Snap(POINT c) {
-    // borda mais próxima do monitor onde o mouse soltou o painel
+    // edge closest to the monitor where the mouse dropped the panel
     monPt_ = c;
     RECT mon = MonitorRect();
     int cx = (win_.left + win_.right) / 2, cy = (win_.top + win_.bottom) / 2;
@@ -316,7 +316,7 @@ LRESULT CALLBACK OneClick::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
         POINT p; GetCursorPos(&p);
         int th = Sc(5, s->Dpi());
         if (!s->dragging_ && (std::abs(p.x - s->dragStart_.x) > th || std::abs(p.y - s->dragStart_.y) > th)) {
-            // começa a arrastar: o painel fica solto, inteiro, sob o mouse
+            // dragging starts: the panel comes loose, whole, under the mouse
             s->dragging_ = true;
             int dpi = s->Dpi(), sh = Sc(10, dpi);
             SIZE ps = s->PanelSize(dpi);

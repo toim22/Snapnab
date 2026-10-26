@@ -1,5 +1,5 @@
-﻿; *** Inno Setup — mensagens em 简体中文 (Snapnab) ***
-; Tradução feita para o instalador do Snapnab a partir do Default.isl do Inno Setup 6.
+﻿; *** Inno Setup — messages in 简体中文 (Snapnab) ***
+; Translation made for the Snapnab installer from Inno Setup 6's Default.isl.
 
 [LangOptions]
 LanguageName=简体中文

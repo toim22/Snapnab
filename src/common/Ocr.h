@@ -1,4 +1,4 @@
-// Reconhecimento de texto (Grab Text) com o OCR nativo do Windows
+// Text recognition (Grab Text) with the native Windows OCR
 #pragma once
 #include "Image.h"
 

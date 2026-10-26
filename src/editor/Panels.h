@@ -1,19 +1,21 @@
-// Painéis do Editor: barra de ferramentas, propriedades (ToolProperties), efeitos e bandeja/biblioteca (Tray, CLibraryView).
-// Todos seguem as cores da janela de captura (common/Theme): fundos puxados para a cor de destaque do Windows.
+// Editor panels: toolbar, properties (ToolProperties), effects and tray/library (Tray, CLibraryView).
+// They all follow the capture window colors (common/Theme): backgrounds tinted toward the Windows accent color.
 #pragma once
 #include "Canvas.h"
 #include "Icons.h"
 #include "Library.h"
 #include "Theme.h"
+#include "Stamps.h"
+#include <set>
 
 namespace snap::ed {
 
 const ui::ThemeColors& EdTheme();
 void SetEdTheme(const ui::ThemeColors& t);
 
-// barra de rolagem desenhada pelo próprio painel: arrastar o polegar rola, clicar no trilho avança uma página
+// scroll bar drawn by the panel itself: dragging the thumb scrolls, clicking the track moves one page
 struct LiteScroll {
-    RECT track{};                 // em coordenadas da janela
+    RECT track{};                 // in window coordinates
     int content = 0, view = 0, pos = 0;
     bool dragging = false, hot = false;
     int grabY = 0, grabPos = 0;
@@ -21,20 +23,20 @@ struct LiteScroll {
     int MaxPos() const { return std::max(0, content - view); }
     RECT Thumb() const;
     bool Hit(POINT p) const;
-    bool Down(POINT p);           // true se o clique foi na barra (pode mudar pos)
-    bool Move(POINT p);           // durante o arraste; true se pos mudou
+    bool Down(POINT p);           // true if the click was on the bar (pos may change)
+    bool Move(POINT p);           // while dragging; true if pos changed
     void Up() { dragging = false; }
     void Paint(Gdiplus::Graphics& g) const;
 };
 
-// ---- barra de ferramentas (TopPanel.ToolBar, ed_comp_3 §3.2) ----
-// Itens dos tipos ToolBarItemType: ferramenta, efeito, saída, comando e espaçador; no fim, o "Mais/Editar" (EditMore)
-// com as ferramentas que não estão na barra e a personalização. Ações fixas nas pontas: Capturar/Gravar e
-// Copiar tudo/Salvar como/Compartilhar. Arrastar um item o leva para outro lugar; durante a personalização,
-// arrastar para fora da barra o remove (como as barras BCG).
+// ---- toolbar (TopPanel.ToolBar, ed_comp_3 §3.2) ----
+// Items of the ToolBarItemType kinds: tool, effect, output, command and spacer; at the end, "More/Edit" (EditMore)
+// with the tools that are not on the bar and the customization. Fixed actions at the ends: Capture/Record and
+// Copy all/Save as/Share. Dragging an item moves it elsewhere; while customizing,
+// dragging it off the bar removes it (like the BCG toolbars).
 struct ToolbarEntry {
     enum Type { Tool, Effect, Output, Command, Spacer } type = Tool;
-    int id = 0;                                   // ferramenta (Tool) ou comando do menu
+    int id = 0;                                   // tool (Tool) or menu command
     bool operator==(const ToolbarEntry& o) const { return type == o.type && id == o.id; }
 };
 struct ToolbarEntryInfo { icons::Id icon = icons::Gear; std::wstring label, hint; };
@@ -43,25 +45,25 @@ class Toolbar {
 public:
     struct Item { int id; icons::Id icon; std::wstring label; std::wstring hint; bool right; bool primary; };
     HWND hwnd = nullptr;
-    std::vector<Item> items;                      // ações fixas
-    std::vector<ToolbarEntry> center;             // itens personalizáveis, em ordem
+    std::vector<Item> items;                      // fixed actions
+    std::vector<ToolbarEntry> center;             // customizable items, in order
     Tool active = Tool::Arrow;
-    bool customizing = false;                     // janela Personalizar aberta: clique não executa, arrastar para fora remove
+    bool customizing = false;                     // Customize window open: a click does not run the item, dragging it off removes it
     std::function<ToolbarEntryInfo(const ToolbarEntry&)> describe;
     std::function<void(int id)> onClick;
     std::function<void(const ToolbarEntry&)> onEntry;
-    std::function<void(POINT screen)> onMore;     // botão "Mais": ponto para abrir o menu
+    std::function<void(POINT screen)> onMore;     // "More" button: point where the menu opens
     std::function<void(std::vector<ToolbarEntry>)> onReorder;
     std::function<void(const std::wstring&)> onHint;
     void Create(HWND parent);
     void SetActive(Tool t) { active = t; InvalidateRect(hwnd, nullptr, FALSE); }
     void SetCenter(std::vector<ToolbarEntry> v) { center = std::move(v); Layout(); InvalidateRect(hwnd, nullptr, FALSE); }
     int Height() const;
-    int DropIndex(POINT screen) const;            // posição de inserção sob o ponto (-1 = fora da barra)
+    int DropIndex(POINT screen) const;            // insertion position under the point (-1 = off the bar)
     void ShowDropCaret(int index) { if (index != caret_) { caret_ = index; InvalidateRect(hwnd, nullptr, FALSE); } }
-    void InsertAt(int index, const ToolbarEntry& e);   // item já na barra (que não seja espaçador) muda de lugar
+    void InsertAt(int index, const ToolbarEntry& e);   // an item already on the bar (other than a spacer) changes place
 private:
-    struct Slot { RECT r; int kind; int index; };  // kind: 0 ação, 1 item personalizável, 2 "Mais"
+    struct Slot { RECT r; int kind; int index; };  // kind: 0 action, 1 customizable item, 2 "More"
     static LRESULT CALLBACK Proc(HWND, UINT, WPARAM, LPARAM);
     void Paint(HDC dc);
     void Layout();
@@ -73,29 +75,30 @@ private:
     bool dragging_ = false, dragOut_ = false;
 };
 
-// janela "Personalizar a barra de ferramentas" (CBCGPToolbarCustomize): grade com as ferramentas, comandos, destinos
-// e efeitos, para arrastar até a barra. Concluído mantém; Cancelar devolve false (quem chamou restaura a barra).
-// toolCount: quantas ferramentas a barra automática mostra (onToolCount avisa a troca, que volta a barra para automática)
+// "Customize toolbar" window (CBCGPToolbarCustomize): grid with the tools, commands, outputs
+// and effects, to drag onto the bar. Done keeps the changes; Cancel returns false (the caller restores the bar).
+// toolCount: how many tools the automatic bar shows (onToolCount reports the change, which turns the bar back to automatic)
 bool CustomizeToolbarDialog(HWND owner, Toolbar& bar, const std::vector<std::pair<std::wstring, std::vector<ToolbarEntry>>>& catalog,
                             std::function<ToolbarEntryInfo(const ToolbarEntry&)> describe, std::function<std::vector<ToolbarEntry>()> defaults,
                             int toolCount, std::function<void(int)> onToolCount);
 
-// ---- propriedades (CDotNetPaintProperties / ToolProperties.*, ed_comp_3 §2.3, ed_comp_4 §2) ----
-// Em cima, os estilos rápidos da ferramenta (tema, galeria, favoritos com a estrela, "+" adiciona o estilo atual);
-// na ferramenta Carimbo, a galeria de carimbos com busca e categorias. Embaixo, as propriedades da ferramenta:
-// cores, sombra (direção na grade 3×3), forma, pontas e tracejado, larguras com controle deslizante, texto avançado.
+// ---- properties (CDotNetPaintProperties / ToolProperties.*, ed_comp_3 §2.3, ed_comp_4 §2) ----
+// At the top, the tool's quick styles (theme, gallery, favorites with the star, "+" adds the current style);
+// for the Stamp tool, the stamp gallery with search and categories. Below, the tool properties:
+// colors, shadow (direction on the 3×3 grid), shape, ends and dash pattern, widths with a slider, advanced text.
 class PropsPanel {
 public:
     HWND hwnd = nullptr;
     Canvas* canvas = nullptr;
-    Tool barTool = Tool::Arrow;                   // ferramenta escolhida na barra (inclui Favoritos e Varinha)
-    std::function<void(int)> onCommand;           // botões de ação (324..329)
-    std::function<void(Tool)> onPickTool;         // favorito escolhido: troca a ferramenta do canvas
-    std::function<void()> onStylesChanged;        // estilo de alguma ferramenta mudou (lembrado entre sessões)
+    Tool barTool = Tool::Arrow;                   // tool chosen on the bar (includes Favorites and Wand)
+    std::function<void(int)> onCommand;           // action buttons (324..329)
+    std::function<void(Tool)> onPickTool;         // favorite chosen: changes the canvas tool
+    std::function<void()> onStylesChanged;        // some tool's style changed (remembered between sessions)
     std::function<void(const std::wstring&)> onHint;
     void Create(HWND parent, Canvas* c);
     void SetBarTool(Tool t);
-    void Load();                                  // canvas → controles
+    void Load();                                  // canvas → controls
+    void AreaChanged();                           // raster selection / crop area changed: X/Y/W/H fields
     void SetDocInfo(const std::wstring& info) { docInfo_ = info; InvalidateRect(hwnd, nullptr, FALSE); }
     void ThemeChanged();
 private:
@@ -106,8 +109,8 @@ private:
     void Layout();
     void Paint(HDC dc);
     void PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c);
-    Tool PropTool() const;                        // ferramenta cujas propriedades aparecem
-    Tool StyleTool() const;                       // ferramenta dos estilos rápidos (Favorites = favoritos)
+    Tool PropTool() const;                        // tool whose properties are shown
+    Tool StyleTool() const;                       // tool of the quick styles (Favorites = favorites)
     bool ObjSelected() const;
     Style Cur() const;
     void SetStyle(const Style& s, bool newStep = true);
@@ -121,11 +124,12 @@ private:
     void FillStampCats();
     const Image& Thumb(Tool t, const Style& s, int px);
     const Image& StampThumb(const std::wstring& id, int px);
+    void UpdateGeometryFields();
     HWND Child(int id) { return children_[id]; }
     HWND EditFor(int ctlId);
     std::vector<Ctl> ctls_;
     std::vector<Tile> tiles_;
-    std::vector<Style> tileStyles_;               // estilos da galeria atual (ou dos favoritos)
+    std::vector<Style> tileStyles_;               // styles of the current gallery (or of the favorites)
     std::vector<std::wstring> stampIds_;
     std::map<int, HWND> children_, edits_;
     std::map<std::wstring, Image> thumbs_;
@@ -135,21 +139,62 @@ private:
     bool hoverStar_ = false, hoverAdd_ = false, advanced_ = true, loading_ = false, dragFirst_ = false;
     int lastEdit_ = -1;
     int stampCat_ = 1;
-    LiteScroll gridSb_, panelSb_;                 // rolagem da galeria e do painel inteiro
+    bool geomShown_ = false, geomFirst_ = true, aspectLock_ = false;   // X/Y/W/H fields; aspect lock
+    int stampPress_ = -1, stampDropAt_ = -1;      // stamp tile pressed / drop position while dragging to reorder
+    POINT stampPressPt_{};
+    bool stampDragging_ = false;
+    std::vector<StampCategory> stampCats_;        // categories shown (refreshed when the order or the pins change)
+    float geomAspect_ = 1;
+    LiteScroll gridSb_, panelSb_;                 // scrolling of the gallery and of the whole panel
     std::wstring docInfo_, stampSearch_;
     HBRUSH bg_ = nullptr;
 };
 
-// ---- efeitos (SidePanel.Effects / EffectsPanelControls, ed_comp_5 §4) ----
-// No topo, a galeria de efeitos rápidos (QuickEffectGalleryItemVm); embaixo, cada efeito com prévia na imagem atual.
-// Clicar num efeito abre os ajustes dentro do painel: cada mudança mostra a prévia ao vivo na imagem
-// (PreviewEffect) e "Aplicar" grava o efeito (ApplyEffect); "Cancelar" volta ao documento.
+// ---- layers (F03, Photoshop-like): every object top to bottom in z-order ----
+// Eye (hide/show: hidden objects are not rendered nor exported), lock, thumbnail and name of each object; groups
+// expand to show their children; click/Ctrl/Shift select (the same selection as the canvas), dragging reorders,
+// double click or F2 renames. The image itself is the "Background" row at the bottom.
+class LayersPanel {
+public:
+    HWND hwnd = nullptr;
+    Canvas* canvas = nullptr;
+    std::function<void(const std::wstring&)> onHint;
+    std::function<void(POINT screen)> onContextMenu;  // right click on a row (after selecting it)
+    void Create(HWND parent, Canvas* c);
+    void Refresh();                               // document or selection changed
+    static std::wstring DisplayName(const DrawObj& o);   // given name or an automatic one (type, text…)
+private:
+    struct Row { int obj = -1; int child = -1; int depth = 0; RECT r{}; bool background = false; };
+    static LRESULT CALLBACK Proc(HWND, UINT, WPARAM, LPARAM);
+    LRESULT Handle(UINT m, WPARAM w, LPARAM l);
+    void Layout();
+    void Paint(HDC dc);
+    int HitRow(POINT p) const;
+    int DropBefore(POINT p) const;                // z-order index where dragged rows go (objs.size() = on top)
+    void BeginRename(int row);
+    void EndRename(bool commit);
+    const Image& Thumb(const ObjPtr& o, int px);
+    std::vector<Row> rows_;
+    std::set<const DrawObj*> expanded_;
+    std::map<const DrawObj*, std::pair<std::weak_ptr<DrawObj>, Image>> thumbs_;
+    int scroll_ = 0, content_ = 0, hover_ = -1, press_ = -1, anchor_ = -1, dropAt_ = -1;
+    POINT pressPt_{};
+    bool dragging_ = false;
+    HWND edit_ = nullptr;
+    int editObj_ = -1;
+    LiteScroll sb_;
+};
+
+// ---- effects (SidePanel.Effects / EffectsPanelControls, ed_comp_5 §4) ----
+// At the top, the quick effects gallery (QuickEffectGalleryItemVm); below, each effect with a preview on the current image.
+// Clicking an effect opens its settings inside the panel: each change shows the live preview on the image
+// (PreviewEffect) and "Apply" writes the effect (ApplyEffect); "Cancel" goes back to the document.
 struct FxParam {
     enum Kind { Choice, Toggle, Color, Text } kind = Choice;
     std::wstring label;
-    std::vector<std::wstring> options;            // Choice: textos
-    std::vector<int> values;                      // Choice: valor de cada opção
-    int value = 0;                                // Choice: valor escolhido; Toggle: 0/1
+    std::vector<std::wstring> options;            // Choice: labels
+    std::vector<int> values;                      // Choice: value of each option
+    int value = 0;                                // Choice: chosen value; Toggle: 0/1
     COLORREF color = 0;
     std::wstring text;
     static FxParam MakeChoice(std::wstring l, std::vector<std::wstring> o, std::vector<int> v, int val) {
@@ -165,37 +210,37 @@ public:
     struct Effect { int cmd; std::wstring name, desc, group; std::vector<FxParam> params; };
     HWND hwnd = nullptr;
     std::vector<Effect> effects;
-    std::vector<std::wstring> quick;              // nomes dos efeitos rápidos
-    // prévia em miniatura: cmd >= 0 é um efeito (com os ajustes atuais), cmd < 0 é o efeito rápido -cmd-1
+    std::vector<std::wstring> quick;              // names of the quick effects
+    // thumbnail preview: cmd >= 0 is an effect (with the current settings), cmd < 0 is quick effect -cmd-1
     std::function<Image(int cmd, const std::vector<FxParam>& params, const Image& src)> makePreview;
-    std::function<void(int cmd, const std::vector<FxParam>& params)> onPreview;   // prévia ao vivo na imagem
+    std::function<void(int cmd, const std::vector<FxParam>& params)> onPreview;   // live preview on the image
     std::function<void(int cmd, const std::vector<FxParam>& params)> onApply;
     std::function<void()> onCancel;
     std::function<void(int index)> onQuick;
     std::function<void()> onAddQuick;
     std::function<void(int index)> onDeleteQuick;
     void Create(HWND parent);
-    void SetSource(const Image& img);             // imagem atual (vazia = exemplo) → refaz as prévias
+    void SetSource(const Image& img);             // current image (empty = sample) → rebuilds the previews
     void SetQuick(std::vector<std::wstring> names);
-    void Expand(int cmd);                         // abre os ajustes de um efeito (também pelo botão na barra)
-    void Collapse();                              // fecha sem aplicar (avisa onCancel)
+    void Expand(int cmd);                         // opens the settings of an effect (also from the toolbar button)
+    void Collapse();                              // closes without applying (notifies onCancel)
     bool IsOpen() const { return open_ >= 0; }
     const Effect* Find(int cmd) const;
 private:
     static LRESULT CALLBACK Proc(HWND, UINT, WPARAM, LPARAM);
     LRESULT Handle(UINT m, WPARAM w, LPARAM l);
     void Paint(HDC dc);
-    void Relayout();                              // calcula as áreas e posiciona os controles do efeito aberto
+    void Relayout();                              // computes the areas and positions the controls of the open effect
     void BuildPreviews();
     void CreateControls();
     void DestroyControls();
     void ParamChanged(int i);
     int HitRow(POINT p) const;
-    int HitTile(POINT p) const;                   // índice do efeito rápido; quick.size() = "Adicionar"
+    int HitTile(POINT p) const;                   // quick effect index; quick.size() = "Add"
     int SettingsHeight() const;
     Image src_;
     std::vector<Image> previews_, quickPreviews_;
-    std::vector<RECT> rows_, tiles_;              // em coordenadas de conteúdo (sem rolagem)
+    std::vector<RECT> rows_, tiles_;              // in content coordinates (without scrolling)
     std::vector<std::pair<int, std::wstring>> heads_;
     RECT settings_{};
     int contentH_ = 0, scroll_ = 0, hover_ = -1, hoverTile_ = -1, open_ = -1;
@@ -204,11 +249,11 @@ private:
     HBRUSH bg_ = nullptr;
 };
 
-// ---- bandeja de capturas recentes (Tray) e vista da biblioteca (CLibraryView) ----
-// Bandeja: as capturas recentes (RecentTrayDocs, padrão 10), guardadas em Tray.bin; novas capturas e documentos
-// abertos entram na frente. Biblioteca: todas as capturas em grade. Nas duas: Ctrl/Shift+clique marca várias,
-// Ctrl+A marca todas, Del ou o X da miniatura exclui, vários marcados oferecem exportar/excluir, e dá para
-// arrastar itens para outros programas (TrayDragDrop) e soltar arquivos do Explorer.
+// ---- recent captures tray (Tray) and library view (CLibraryView) ----
+// Tray: the recent captures (RecentTrayDocs, default 10), stored in Tray.bin; new captures and opened
+// documents go to the front. Library: all captures in a grid. In both: Ctrl/Shift+click selects several,
+// Ctrl+A selects all, Del or the thumbnail's X deletes, several selected offer export/delete, and items can be
+// dragged to other programs (TrayDragDrop) and files can be dropped from Explorer.
 class LibraryTray {
 public:
     enum Mode { Tray, Library };
@@ -217,27 +262,30 @@ public:
     std::function<void(const std::wstring&)> onOpen;
     std::function<void(const std::vector<std::wstring>&)> onDelete;
     std::function<void(const std::vector<std::wstring>&)> onExport;
-    std::function<void(const std::vector<std::wstring>&)> onDropFiles;        // arquivos soltos do Explorer
-    std::function<std::vector<std::wstring>(const std::vector<std::wstring>&)> filesForDrag;   // itens → arquivos para arrastar
-    std::function<void()> onShowLibrary;          // botão "Biblioteca" da bandeja / "Voltar" da biblioteca
+    std::function<void(const std::vector<std::wstring>&)> onDropFiles;        // files dropped from Explorer
+    std::function<std::vector<std::wstring>(const std::vector<std::wstring>&)> filesForDrag;   // items → files to drag
+    std::function<void()> onShowLibrary;          // tray "Library" button / library "Back" button
+    std::function<void(const std::wstring& path, const std::wstring& name)> onRenamed;   // capture renamed (F2 / context menu)
     std::wstring current;
     void Create(HWND parent, Mode m);
     void Reload();
-    void SetCurrent(const std::wstring& p);       // documento ativo (na bandeja, também entra nas recentes)
+    void SetCurrent(const std::wstring& p);       // active document (in the tray, it also goes into the recents)
     void InvalidateThumb(const std::wstring& p);
     void SelectAll();
     void RemoveFromTray(const std::vector<std::wstring>& paths);
+    void Rename(const std::wstring& path);        // asks for the capture's name
+    static std::wstring ItemLabel(const LibraryItem& it);   // name, or the date and time
     int Height() const;
-    static bool DraggingOut() { return s_draggingOut; }   // arrasto saindo da bandeja/biblioteca em andamento
+    static bool DraggingOut() { return s_draggingOut; }   // a drag leaving the tray/library is in progress
 private:
     static bool s_draggingOut;
     static LRESULT CALLBACK Proc(HWND, UINT, WPARAM, LPARAM);
     LRESULT Handle(UINT m, WPARAM w, LPARAM l);
     void Paint(HDC dc);
     int Hit(POINT p) const;
-    RECT CellRect(int i) const;                   // em coordenadas da janela (com rolagem)
-    RECT CloseRect(int i) const;                  // X no canto da miniatura
-    RECT HeaderButton(int which) const;           // 0 exportar, 1 excluir, 2 limpar seleção, 3 biblioteca/voltar
+    RECT CellRect(int i) const;                   // in window coordinates (with scrolling)
+    RECT CloseRect(int i) const;                  // X on the thumbnail corner
+    RECT HeaderButton(int which) const;           // 0 export, 1 delete, 2 clear selection, 3 library/back
     int Columns() const;
     int ContentExtent() const;
     void UpdateScroll();
@@ -249,20 +297,31 @@ private:
     void AddRecent(const std::wstring& path);
     const Image& Thumb(const std::wstring& path, bool video);
     std::vector<LibraryItem> items_;
-    std::vector<std::wstring> recent_;            // bandeja: caminhos em ordem (Tray.bin)
-    std::vector<std::wstring> hidden_;            // tirados da bandeja pelo usuário (não voltam ao preencher vagas)
-    std::vector<std::wstring> known_;             // itens da biblioteca já vistos (os novos entram na bandeja)
+    std::vector<std::wstring> recent_;            // tray: paths in order (Tray.bin)
+    std::vector<std::wstring> hidden_;            // removed from the tray by the user (they do not come back when filling free slots)
+    std::vector<std::wstring> known_;             // library items already seen (new ones go into the tray)
+    mutable std::wstring savedRecent_;            // content last written to Tray.bin
     std::map<std::wstring, Image> thumbs_;
     std::vector<bool> sel_;
     int anchor_ = -1, downItem_ = -1;
     POINT downPt_{};
     int scroll_ = 0, hover_ = -1, hoverClose_ = -1, hoverHeader_ = -1;
-    // seleção por retângulo (como no Explorer): começa no espaço vazio e marca as miniaturas que ele toca
+    // rectangle selection (as in Explorer): starts on empty space and selects the thumbnails it touches
     bool band_ = false;
-    POINT bandStart_{}, bandEnd_{};               // em coordenadas de conteúdo (sem a rolagem)
-    std::vector<bool> bandBase_;                  // seleção de antes (Ctrl/Shift somam a ela)
-    RECT BandRect() const;                        // em coordenadas da janela
+    POINT bandStart_{}, bandEnd_{};               // in content coordinates (without scrolling)
+    std::vector<bool> bandBase_;                  // previous selection (Ctrl/Shift add to it)
+    RECT BandRect() const;                        // in window coordinates
     void UpdateBand(POINT p);
+    // search by name (library) and larger preview when resting the mouse on a thumbnail
+    HWND search_ = nullptr;
+    std::wstring query_;
+    HWND preview_ = nullptr;
+    int previewItem_ = -1;
+    struct PreviewData { Image img; std::wstring title, info; FILETIME stamp{}; };
+    std::map<std::wstring, PreviewData> previews_;
+    void ShowPreview(int item);
+    void HidePreview();
+    static LRESULT CALLBACK PreviewProc(HWND, UINT, WPARAM, LPARAM);
 };
 
 } // namespace snap::ed

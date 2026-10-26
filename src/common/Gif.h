@@ -1,5 +1,5 @@
-// GIF animado (V2AGNative::GifCreator / GIFMaker::Writer, ds_pseudocode §11.5)
-//   bitsPerPixel 4 (16 cores, padrão do original) ou 8; dithering; quadros delta; laço infinito
+// Animated GIF (V2AGNative::GifCreator / GIFMaker::Writer, ds_pseudocode §11.5)
+//   bitsPerPixel 4 (16 colors, the original's default) or 8; dithering; delta frames; infinite loop
 #pragma once
 #include "Image.h"
 
@@ -20,7 +20,7 @@ private:
     HANDLE file_ = INVALID_HANDLE_VALUE;
     int w_ = 0, h_ = 0, bpp_ = 8, delay_ = 10;
     bool dither_ = false, delta_ = false, failed_ = false;
-    std::vector<uint32_t> prev_;     // último quadro exibido (para quadros delta)
+    std::vector<uint32_t> prev_;     // last frame shown (for delta frames)
     std::vector<uint8_t> buf_;
 };
 

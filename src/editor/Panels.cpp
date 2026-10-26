@@ -35,7 +35,7 @@ static void StrokeRound(Gdiplus::Graphics& g, RECT r, float rad, COLORREF c, flo
     Gdiplus::Pen pen(GC(c), w); g.DrawPath(&pen, &p);
 }
 
-// ================================================================= barra de rolagem
+// ================================================================= scroll bar
 RECT LiteScroll::Thumb() const {
     int th = track.bottom - track.top;
     int h = std::max(std::min(th, (int)(track.right - track.left) * 4), view > 0 && content > 0 ? th * view / content : th);
@@ -76,7 +76,7 @@ void LiteScroll::Paint(Gdiplus::Graphics& g) const {
     FillRound(g, t, (float)(t.right - t.left) / 2, dragging ? RGB(120, 122, 130) : hot ? RGB(150, 152, 160) : RGB(188, 190, 196));
 }
 
-// ================================================================= barra de ferramentas
+// ================================================================= toolbar
 void Toolbar::Create(HWND parent) {
     static bool reg = false;
     if (!reg) {
@@ -93,7 +93,7 @@ void Toolbar::Layout() {
     RECT cr; GetClientRect(hwnd, &cr);
     int pad = Sc(6, hwnd), gap = Sc(1, hwnd);
     int tw = Sc(46, hwnd), sw = Sc(12, hwnd);
-    // botões de ação: largura pelo rótulo (no mínimo a de uma ferramenta)
+    // action buttons: width from the label (at least a tool's width)
     HDC dc = GetDC(hwnd);
     HGDIOBJ of = SelectObject(dc, ui::UiFont(DpiForWindow(hwnd), 8));
     auto widthOf = [&](const std::wstring& label, int minW) {
@@ -117,7 +117,7 @@ void Toolbar::Layout() {
         xr -= aw + gap;
     }
     int rightStart = xr - Sc(12, hwnd);
-    // itens personalizáveis + "Mais", no meio da janela (centralizados no espaço livre se não couberem no centro)
+    // customizable items + "More", in the middle of the window (centered in the free space if they do not fit in the center)
     std::vector<int> widths;
     int total = 0, avail = rightStart - leftEnd;
     for (auto& e : center) {
@@ -126,7 +126,7 @@ void Toolbar::Layout() {
         widths.push_back(w); total += w + gap;
     }
     total += tw;
-    if (total > avail && total > 0) {          // aperta tudo proporcionalmente
+    if (total > avail && total > 0) {          // squeezes everything proportionally
         double k = std::max(0.55, (double)avail / total);
         total = 0;
         for (auto& w : widths) { w = (int)(w * k); total += w + gap; }
@@ -145,7 +145,7 @@ int Toolbar::Hit(POINT p) const {
     return -1;
 }
 
-// posição de inserção entre os itens personalizáveis (pelo meio de cada item)
+// insertion position between the customizable items (by the middle of each item)
 int Toolbar::InsertIndexAt(POINT p) const {
     RECT cr; GetClientRect(hwnd, &cr);
     if (p.y < 0 || p.y > cr.bottom) return -1;
@@ -198,7 +198,7 @@ void Toolbar::Paint(HDC hdc) {
             for (auto& s : slots_) if (s.kind == 1 && s.index == caret_) caretX = s.r.left - 1;
             if (caretX < 0) for (auto& s : slots_) if (s.kind == 2) caretX = s.r.left - 1;
         }
-        if (customizing) {             // área personalizável destacada enquanto a janela Personalizar está aberta
+        if (customizing) {             // customizable area highlighted while the Customize window is open
             int a = INT_MAX, b = INT_MIN;
             for (auto& s : slots_) if (s.kind == 1 || s.kind == 2) { a = std::min(a, (int)s.r.left); b = std::max(b, (int)s.r.right); }
             if (a < b) {
@@ -211,7 +211,7 @@ void Toolbar::Paint(HDC hdc) {
         for (int i = 0; i < (int)slots_.size(); i++) {
             const Slot& s = slots_[i];
             RECT r = s.r;
-            if (s.kind == 1 && center[s.index].type == ToolbarEntry::Spacer) {     // espaçador: fio vertical
+            if (s.kind == 1 && center[s.index].type == ToolbarEntry::Spacer) {     // spacer: vertical line
                 Gdiplus::Pen p(GC(th.line), 1.0f);
                 float x = (r.left + r.right) / 2.0f;
                 g.DrawLine(&p, x, (float)r.top + ui::Scale(10, dpi), x, (float)r.bottom - ui::Scale(10, dpi));
@@ -244,7 +244,7 @@ void Toolbar::Paint(HDC hdc) {
                 ToolbarEntryInfo in = describe ? describe(center[s.index]) : ToolbarEntryInfo{};
                 icons::Draw(g, in.icon, ir, GC(fg));
                 label = in.label;
-            } else {                                   // "Mais": três pontos
+            } else {                                   // "More": three dots
                 Gdiplus::SolidBrush b(GC(fg));
                 float d = (float)ui::Scale(4, dpi), cy = ir.Y + ir.Height / 2 - d / 2;
                 for (int k = -1; k <= 1; k++) g.FillEllipse(&b, ir.X + ir.Width / 2 - d / 2 + k * d * 1.9f, cy, d, d);
@@ -253,7 +253,7 @@ void Toolbar::Paint(HDC hdc) {
             RECT tr{ r.left - 2, r.bottom - ui::Scale(20, dpi), r.right + 2, r.bottom - ui::Scale(3, dpi) };
             ui::DrawTextCentered(mem, label, tr, fg, ui::UiFont(dpi, 8));
         }
-        if (caretX >= 0) {             // onde o item arrastado vai entrar
+        if (caretX >= 0) {             // where the dragged item will go
             Gdiplus::SolidBrush cb(GC(th.control));
             g.FillRectangle(&cb, (float)caretX - ui::Scale(1, dpi), (float)ui::Scale(8, dpi), (float)ui::Scale(3, dpi), (float)cr.bottom - ui::Scale(16, dpi));
         }
@@ -315,12 +315,12 @@ LRESULT CALLBACK Toolbar::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
         bool wasDragging = self->dragging_, out = self->dragOut_;
         int dragSlot = self->dragFrom_;
         self->dragging_ = self->dragOut_ = false; self->dragFrom_ = -1;
-        ReleaseCapture();                              // (WM_CAPTURECHANGED já não cancela: o arraste foi encerrado acima)
+        ReleaseCapture();                              // (WM_CAPTURECHANGED no longer cancels: the drag was finished above)
         if (wasDragging && dragSlot >= 0) {
             int from = self->slots_[dragSlot].index, to = self->InsertIndexAt(pt);
             self->ShowDropCaret(-1);
             InvalidateRect(h, nullptr, FALSE);
-            if (out) {                                 // arrastado para fora durante a personalização: sai da barra
+            if (out) {                                 // dragged off the bar while customizing: removed from the bar
                 self->center.erase(self->center.begin() + from);
                 self->Layout();
                 if (self->onReorder) self->onReorder(self->center);
@@ -346,7 +346,7 @@ LRESULT CALLBACK Toolbar::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
         }
         return 0;
     }
-    case WM_RBUTTONUP:           // clique direito na barra: personalizar (como o menu da barra BCG)
+    case WM_RBUTTONUP:           // right click on the bar: customize (like the BCG toolbar menu)
         if (self->onMore && !self->customizing) { POINT pt; GetCursorPos(&pt); self->onMore(pt); }
         return 0;
     case WM_CAPTURECHANGED:
@@ -356,9 +356,9 @@ LRESULT CALLBACK Toolbar::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     return DefWindowProcW(h, m, w, l);
 }
 
-// ================================================================= personalizar a barra
-// Grade de itens por grupo; arrastar um item até a barra o insere ali (a barra mostra onde). Enquanto a janela está
-// aberta, a barra fica em modo de personalização: arrastar um item dela para fora o remove.
+// ================================================================= customize the toolbar
+// Grid of items by group; dragging an item onto the bar inserts it there (the bar shows where). While the window is
+// open, the bar is in customization mode: dragging an item off it removes it.
 namespace {
 struct CustomizeState {
     struct Cell { RECT r; ToolbarEntry e; };
@@ -414,7 +414,7 @@ int CustomizeHit(CustomizeState& s, POINT p) {
     return -1;
 }
 
-// janelinha que segue o cursor com o ícone do item arrastado
+// small window that follows the cursor with the dragged item's icon
 HWND MakeDragImage(HWND owner, const ToolbarEntryInfo& in, int dpi) {
     int w = ui::Scale(64, dpi), hh = ui::Scale(52, dpi);
     Image img(w, hh, 0);
@@ -438,7 +438,7 @@ HWND MakeDragImage(HWND owner, const ToolbarEntryInfo& in, int dpi) {
                              0, 0, w, hh, owner, nullptr, GetModuleHandleW(nullptr), nullptr);
     HDC sdc = GetDC(nullptr);
     HDC mem = CreateCompatibleDC(sdc);
-    // premultiplica para o UpdateLayeredWindow
+    // premultiplies for UpdateLayeredWindow
     Image pm = img;
     for (auto& px : pm.px) { int a = CA(px); px = ARGB(a, CR(px) * a / 255, CG(px) * a / 255, CB(px) * a / 255); }
     HBITMAP hb = pm.ToHBITMAP();
@@ -579,7 +579,7 @@ LRESULT CALLBACK CustomizeProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         if (s->sb.dragging) { s->sb.Up(); if (GetCapture() == h) ReleaseCapture(); InvalidateRect(h, nullptr, FALSE); return 0; }
         bool wasDragging = s->dragging;
         int down = s->down;
-        s->dragging = false;                            // antes do ReleaseCapture (o WM_CAPTURECHANGED cancelaria o arraste)
+        s->dragging = false;                            // before ReleaseCapture (WM_CAPTURECHANGED would cancel the drag)
         if (GetCapture() == h) ReleaseCapture();
         if (wasDragging) {
             POINT sp = p; ClientToScreen(h, &sp);
@@ -640,7 +640,7 @@ bool CustomizeToolbarDialog(HWND owner, Toolbar& bar, const std::vector<std::pai
     RECT wr{ 0, 0, W, H };
     AdjustWindowRectExForDpi(&wr, WS_CAPTION | WS_SYSMENU, FALSE, WS_EX_TOOLWINDOW, dpi);
     int ww = wr.right - wr.left, wh = wr.bottom - wr.top;
-    // fica embaixo da barra, no meio da janela, para dar espaço de arrastar até ela
+    // sits below the bar, in the middle of the window, to leave room to drag up to it
     RECT tb; GetWindowRect(bar.hwnd, &tb);
     st.h = CreateWindowExW(WS_EX_TOOLWINDOW, L"SnapnabTbCustomize", Tr(L"Personalizar a barra de ferramentas"), WS_CAPTION | WS_SYSMENU | WS_POPUP,
                            (orc.left + orc.right - ww) / 2, tb.bottom + ui::Scale(40, dpi), ww, wh, owner, nullptr, hi, nullptr);
@@ -669,7 +669,7 @@ bool CustomizeToolbarDialog(HWND owner, Toolbar& bar, const std::vector<std::pai
     return st.ok;
 }
 
-// ================================================================= efeitos
+// ================================================================= effects
 namespace { enum { FX_APPLY = 90, FX_CANCEL = 91, FX_PARAM = 200 }; constexpr UINT_PTR kFxTextTimer = 1; }
 
 void EffectsPanel::Create(HWND parent) {
@@ -684,7 +684,7 @@ void EffectsPanel::Create(HWND parent) {
                            GetModuleHandleW(nullptr), this);
 }
 
-// imagem de exemplo quando não há documento aberto: janela estilizada com faixa colorida e texto
+// sample image when no document is open: stylized window with a colored strip and text
 static Image SampleImage() {
     Image img(240, 160, 0xFFFFFFFF);
     auto bmp = img.WrapGdip();
@@ -738,7 +738,7 @@ void EffectsPanel::Relayout() {
     RECT cr; GetClientRect(hwnd, &cr);
     int pad = Sc(10, hwnd), W = cr.right;
     int y = Sc(8, hwnd) + Sc(26, hwnd);
-    // galeria de efeitos rápidos: 3 colunas; a última peça é "Adicionar"
+    // quick effects gallery: 3 columns; the last tile is "Add"
     int cols = 3, gap = Sc(8, hwnd);
     int tw = std::max(Sc(40, hwnd), (W - 2 * pad - gap * (cols - 1)) / cols), th = tw * 3 / 4 + Sc(22, hwnd);
     tiles_.clear();
@@ -747,7 +747,7 @@ void EffectsPanel::Relayout() {
         tiles_.push_back({ pad + c * (tw + gap), y + r * (th + gap), pad + c * (tw + gap) + tw, y + r * (th + gap) + th });
     }
     y = tiles_.back().bottom + Sc(14, hwnd);
-    // efeitos, com o cabeçalho do grupo quando ele muda e os ajustes embaixo do efeito aberto
+    // effects, with the group header when it changes and the settings below the open effect
     int rowH = Sc(80, hwnd), headH = Sc(28, hwnd);
     rows_.clear(); heads_.clear();
     settings_ = {};
@@ -762,7 +762,7 @@ void EffectsPanel::Relayout() {
     SCROLLINFO si{ sizeof si, SIF_ALL };
     si.nMax = contentH_; si.nPage = cr.bottom; si.nPos = scroll_;
     SetScrollInfo(hwnd, SB_VERT, &si, TRUE);
-    // controles do efeito aberto: rótulo à esquerda (desenhado), controle à direita; botões embaixo
+    // controls of the open effect: label on the left (drawn), control on the right; buttons below
     if (open_ >= 0) {
         int lx = settings_.left + Sc(12, hwnd), cx = settings_.left + Sc(104, hwnd), cw = settings_.right - Sc(12, hwnd) - cx;
         int yy = settings_.top + Sc(10, hwnd) - scroll_;
@@ -835,7 +835,7 @@ void EffectsPanel::Expand(int cmd) {
     open_ = idx;
     CreateControls();
     Relayout();
-    // rola até o efeito aberto e seus ajustes
+    // scrolls to the open effect and its settings
     RECT cr; GetClientRect(hwnd, &cr);
     int top = rows_[idx].top - Sc(8, hwnd), bottom = settings_.bottom + Sc(8, hwnd);
     if (top < scroll_) scroll_ = top;
@@ -908,7 +908,7 @@ void EffectsPanel::Paint(HDC hdc) {
     auto head = [&](int y, const std::wstring& name) {
         RECT hr{ pad, y + sy + ui::Scale(6, dpi), cr.right - pad, y + sy + ui::Scale(28, dpi) };
         std::wstring up = name;
-        CharUpperBuffW(up.data(), (DWORD)up.size());      // respeita acentos (towupper no locale "C" não)
+        CharUpperBuffW(up.data(), (DWORD)up.size());      // handles accented letters (towupper in the "C" locale does not)
         SelectObject(mem, ui::UiFont(dpi, 8, true));
         SetTextColor(mem, th.accentText);
         DrawTextW(mem, up.c_str(), -1, &hr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX);
@@ -918,7 +918,7 @@ void EffectsPanel::Paint(HDC hdc) {
         Gdiplus::Graphics g(mem);
         g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
         g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-        // galeria
+        // gallery
         for (int i = 0; i < (int)tiles_.size(); i++) {
             RECT t = tiles_[i]; OffsetRect(&t, 0, sy);
             if (t.bottom < 0 || t.top > cr.bottom) continue;
@@ -939,11 +939,11 @@ void EffectsPanel::Paint(HDC hdc) {
                 if (hot) StrokeRound(g, card, (float)ui::Scale(6, dpi), th.control, (float)ui::Scale(2, dpi));
             }
         }
-        // efeitos
+        // effects
         for (size_t i = 0; i < rows_.size(); i++) {
             RECT r = rows_[i]; OffsetRect(&r, 0, sy);
             bool isOpen = (int)i == open_;
-            if (isOpen) {                       // cartão do efeito aberto, com os ajustes
+            if (isOpen) {                       // card of the open effect, with its settings
                 RECT box{ r.left, r.top, r.right, settings_.bottom + sy };
                 FillRound(g, box, (float)ui::Scale(8, dpi), Mix(th.bgMain, th.control, 0.06));
                 StrokeRound(g, box, (float)ui::Scale(8, dpi), Mix(th.bgMain, th.control, 0.55), 1.0f);
@@ -955,7 +955,7 @@ void EffectsPanel::Paint(HDC hdc) {
             int pw = ui::Scale(84, dpi), ph = ui::Scale(56, dpi);
             RECT card{ r.left + pad / 2, r.top + (r.bottom - r.top - ph) / 2, r.left + pad / 2 + pw, r.top + (r.bottom - r.top - ph) / 2 + ph };
             DrawThumbCard(g, i < previews_.size() ? previews_[i] : Image(), card, dpi, th);
-            // seta de abrir/fechar
+            // expand/collapse arrow
             Gdiplus::Pen cv(GC(isOpen ? th.accentText : RGB(120, 120, 128)), std::max(1.4f, dpi / 64.0f));
             cv.SetStartCap(Gdiplus::LineCapRound); cv.SetEndCap(Gdiplus::LineCapRound);
             float ax = (float)r.right - ui::Scale(14, dpi), ay = (float)r.top + ui::Scale(20, dpi), k = (float)ui::Scale(4, dpi);
@@ -963,7 +963,7 @@ void EffectsPanel::Paint(HDC hdc) {
             g.DrawLines(&cv, chev, 3);
         }
     }
-    // nomes da galeria
+    // gallery names
     SelectObject(mem, ui::UiFont(dpi, 8));
     for (int i = 0; i < (int)tiles_.size(); i++) {
         RECT t = tiles_[i]; OffsetRect(&t, 0, sy);
@@ -986,7 +986,7 @@ void EffectsPanel::Paint(HDC hdc) {
         SetTextColor(mem, RGB(104, 104, 112));
         DrawTextW(mem, effects[i].desc.c_str(), -1, &dr, DT_LEFT | DT_WORDBREAK | DT_END_ELLIPSIS | DT_NOPREFIX);
     }
-    // rótulos dos ajustes
+    // setting labels
     if (open_ >= 0) {
         SelectObject(mem, ui::UiFont(dpi, 9));
         SetTextColor(mem, RGB(48, 48, 54));
@@ -1066,7 +1066,7 @@ LRESULT EffectsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         return 0;
     }
     case WM_TIMER: if (w == kFxTextTimer) { KillTimer(hwnd, w); ParamChanged(-1); } return 0;
-    case WM_DRAWITEM: {          // botão de cor: amostra + valor
+    case WM_DRAWITEM: {          // color button: swatch + value
         auto* di = (DRAWITEMSTRUCT*)l;
         int k = (int)di->CtlID - FX_PARAM;
         if (open_ < 0 || k < 0 || k >= (int)effects[open_].params.size()) return FALSE;
@@ -1097,14 +1097,15 @@ LRESULT EffectsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         int id = LOWORD(w), code = HIWORD(w);
         if (id == FX_APPLY && open_ >= 0) {
             int idx = open_;
-            KillTimer(hwnd, kFxTextTimer);           // o texto já foi lido a cada tecla (EN_CHANGE)
+            KillTimer(hwnd, kFxTextTimer);           // the text was already read on each keystroke (EN_CHANGE)
             if (onApply) onApply(effects[idx].cmd, effects[idx].params);
             open_ = -1; DestroyControls(); Relayout();
             return 0;
         }
         if (id == FX_CANCEL) { Collapse(); return 0; }
         int k = id - FX_PARAM;
-        if (open_ < 0 || k < 0 || k >= (int)effects[open_].params.size()) return 0;
+        // ctls_ is filled while CreateControls runs: an EDIT created with text notifies EN_CHANGE before its push_back
+        if (open_ < 0 || k < 0 || k >= (int)effects[open_].params.size() || k >= (int)ctls_.size()) return 0;
         FxParam& p = effects[open_].params[k];
         if (p.kind == FxParam::Color && code == BN_CLICKED) {
             COLORREF c = p.color;
@@ -1112,7 +1113,7 @@ LRESULT EffectsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         } else if (p.kind == FxParam::Text && code == EN_CHANGE) {
             int n = GetWindowTextLengthW(ctls_[k]); std::wstring t(n, L'\0'); if (n) GetWindowTextW(ctls_[k], t.data(), n + 1);
             p.text = t;
-            SetTimer(hwnd, kFxTextTimer, 350, nullptr);     // digitação: prévia depois de uma pausa
+            SetTimer(hwnd, kFxTextTimer, 350, nullptr);     // typing: preview after a pause
         } else if ((p.kind == FxParam::Choice && code == CBN_SELCHANGE) || (p.kind == FxParam::Toggle && code == BN_CLICKED)) ParamChanged(k);
         return 0;
     }
@@ -1120,7 +1121,7 @@ LRESULT EffectsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
     return DefWindowProcW(hwnd, m, w, l);
 }
 
-// ================================================================= bandeja de capturas recentes e biblioteca
+// ================================================================= recent captures tray and library
 static int RecentMax() { return std::clamp((int)RegGetDword(L"RecentTrayDocs", 10, L"Editor"), 1, 100); }
 static std::wstring TrayFile() { return LibraryDir() + L"\\Tray.bin"; }
 
@@ -1135,13 +1136,38 @@ void LibraryTray::Create(HWND parent, Mode m) {
     mode = m;
     hwnd = CreateWindowExW(0, L"SnapnabTray", nullptr, WS_CHILD | WS_TABSTOP | (m == Tray ? WS_HSCROLL | WS_VISIBLE : WS_VSCROLL), 0, 0, 10, 10, parent,
                            nullptr, GetModuleHandleW(nullptr), this);
-    DragAcceptFiles(hwnd, TRUE);                  // arquivos soltos do Explorer
+    DragAcceptFiles(hwnd, TRUE);                  // files dropped from Explorer
     if (m == Tray) LoadRecent();
+    if (m == Library) {                           // search by name
+        search_ = CreateWindowExW(0, L"EDIT", L"", WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_AUTOHSCROLL, 0, 0, 10, 10, hwnd, (HMENU)71,
+                                  GetModuleHandleW(nullptr), nullptr);
+        SendMessageW(search_, WM_SETFONT, (WPARAM)ui::UiFont(DpiForWindow(hwnd), 9), TRUE);
+        SendMessageW(search_, EM_SETCUEBANNER, TRUE, (LPARAM)Tr(L"Pesquisar por nome"));
+    }
+}
+
+std::wstring LibraryTray::ItemLabel(const LibraryItem& it) {
+    std::wstring name = CaptureName(it.path);
+    if (!name.empty()) return name;
+    SYSTEMTIME st, lt; FileTimeToSystemTime(&it.modified, &st); SystemTimeToTzSpecificLocalTime(nullptr, &st, &lt);
+    return Format(L"%02d/%02d %02d:%02d", lt.wDay, lt.wMonth, lt.wHour, lt.wMinute);
+}
+
+void LibraryTray::Rename(const std::wstring& path) {
+    HWND owner = GetAncestor(hwnd, GA_ROOT);
+    std::vector<ui::Field> f = { ui::Field::MakeText(Tr(L"Nome"), CaptureName(path)),
+                                 ui::Field::MakeLabel(Tr(L"Aparece na bandeja e na biblioteca. Vazio mostra a data.")) };
+    if (!ui::RunForm(owner, Tr(L"Renomear captura"), f)) return;
+    std::wstring name = Trim(f[0].text);
+    SetCaptureName(path, name);
+    previews_.erase(ToLower(path));
+    if (onRenamed) onRenamed(path, name);
+    Reload();
 }
 
 int LibraryTray::Height() const { return Sc(142, hwnd) + GetSystemMetricsForDpi(SM_CYHSCROLL, DpiForWindow(hwnd)); }
 
-// Tray.bin: um caminho por linha (UTF-16), na ordem da bandeja; "-caminho" = tirado da bandeja pelo usuário
+// Tray.bin: one path per line (UTF-16), in tray order; "-path" = removed from the tray by the user
 void LibraryTray::LoadRecent() {
     recent_.clear();
     hidden_.clear();
@@ -1168,6 +1194,10 @@ void LibraryTray::SaveRecent() const {
     std::wstring s;
     for (auto& p : recent_) s += p + L"\r\n";
     for (auto& p : hidden_) s += L"-" + p + L"\r\n";
+    // written only when it changes: Tray.bin is in the library folder, whose watcher reloads the tray (rewriting it
+    // on every reload kept the tray reloading every 400 ms and lost the hover)
+    if (s == savedRecent_) return;
+    savedRecent_ = s;
     HANDLE f = CreateFileW(TrayFile().c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, 0, nullptr);
     if (f == INVALID_HANDLE_VALUE) return;
     DWORD wr;
@@ -1187,24 +1217,24 @@ void LibraryTray::AddRecent(const std::wstring& path) {
 void LibraryTray::RemoveFromTray(const std::vector<std::wstring>& paths) {
     for (auto& p : paths) {
         recent_.erase(std::remove_if(recent_.begin(), recent_.end(), [&](auto& r) { return !_wcsicmp(r.c_str(), p.c_str()); }), recent_.end());
-        hidden_.push_back(p);                     // não volta pelo preenchimento automático
+        hidden_.push_back(p);                     // does not come back through automatic filling
     }
     SaveRecent();
     Reload();
 }
 
 void LibraryTray::Reload() {
-    // a seleção sobrevive à recarga (por caminho)
+    // the selection survives the reload (by path)
     std::vector<std::wstring> keep = Selection();
     std::vector<LibraryItem> all = ListLibrary(100000);
     if (mode == Tray) {
         auto lower = [](std::wstring s) { return ToLower(s); };
         if (known_.empty()) {
             for (auto& it : all) known_.push_back(lower(it.path));
-            if (recent_.empty())               // primeira vez (sem Tray.bin): as mais recentes da biblioteca
+            if (recent_.empty())               // first time (no Tray.bin): the most recent library items
                 for (size_t i = 0; i < all.size() && (int)i < RecentMax(); i++) recent_.push_back(all[i].path);
         } else {
-            // capturas novas na biblioteca entram na frente da bandeja (da mais antiga para a mais nova)
+            // new captures in the library go to the front of the tray (from oldest to newest)
             std::vector<std::wstring> fresh;
             for (auto& it : all) if (std::find(known_.begin(), known_.end(), lower(it.path)) == known_.end()) fresh.push_back(it.path);
             for (auto it = fresh.rbegin(); it != fresh.rend(); ++it) {
@@ -1217,7 +1247,7 @@ void LibraryTray::Reload() {
         recent_.erase(std::remove_if(recent_.begin(), recent_.end(), [](auto& p) { return !FileExists(p); }), recent_.end());
         hidden_.erase(std::remove_if(hidden_.begin(), hidden_.end(), [](auto& p) { return !FileExists(p); }), hidden_.end());
         if ((int)recent_.size() > RecentMax()) recent_.resize(RecentMax());
-        // um item excluído abre vaga: entra a captura seguinte da biblioteca (mais antiga que a última da bandeja)
+        // a deleted item frees a slot: the next library capture comes in (older than the last one in the tray)
         if ((int)recent_.size() < RecentMax()) {
             auto has = [](const std::vector<std::wstring>& v, const std::wstring& p) {
                 return std::any_of(v.begin(), v.end(), [&](auto& r) { return !_wcsicmp(r.c_str(), p.c_str()); });
@@ -1236,13 +1266,21 @@ void LibraryTray::Reload() {
             auto f = std::find_if(all.begin(), all.end(), [&](auto& it) { return !_wcsicmp(it.path.c_str(), p.c_str()); });
             if (f != all.end()) items_.push_back(*f);
         }
-    } else items_ = std::move(all);
+    } else {
+        items_ = std::move(all);
+        if (!Trim(query_).empty()) {               // search: name (or date and time) containing the text
+            std::wstring q = ToLower(Trim(query_));
+            items_.erase(std::remove_if(items_.begin(), items_.end(), [&](const LibraryItem& it) {
+                return ToLower(ItemLabel(it)).find(q) == std::wstring::npos && ToLower(FileNameOf(it.path)).find(q) == std::wstring::npos;
+            }), items_.end());
+        }
+    }
     sel_.assign(items_.size(), false);
     for (size_t i = 0; i < items_.size(); i++)
         for (auto& k : keep) if (!_wcsicmp(k.c_str(), items_[i].path.c_str())) sel_[i] = true;
     if (anchor_ >= (int)items_.size()) anchor_ = -1;
     hover_ = hoverClose_ = -1;
-    // miniaturas vazias (arquivo ainda sendo gravado) são tentadas de novo
+    // empty thumbnails (file still being written) are retried
     for (auto it = thumbs_.begin(); it != thumbs_.end();) it = it->second.empty() ? thumbs_.erase(it) : std::next(it);
     UpdateScroll();
 }
@@ -1250,7 +1288,7 @@ void LibraryTray::Reload() {
 void LibraryTray::SetCurrent(const std::wstring& p) {
     current = p;
     if (mode == Tray) { AddRecent(p); Reload(); }
-    // abrir um item deixa só ele marcado
+    // opening an item leaves only it selected
     for (size_t i = 0; i < items_.size(); i++) sel_[i] = !_wcsicmp(items_[i].path.c_str(), p.c_str());
     EnsureVisible();
     InvalidateRect(hwnd, nullptr, FALSE);
@@ -1323,7 +1361,7 @@ RECT LibraryTray::CloseRect(int i) const {
 }
 
 RECT LibraryTray::HeaderButton(int which) const {
-    // faixa de cima, à direita: [Exportar (n)…] [Excluir (n)] [Limpar seleção]   [Biblioteca | Voltar ao editor]
+    // top strip, on the right: [Export (n)…] [Delete (n)] [Clear selection]   [Library | Back to editor]
     RECT cr; GetClientRect(hwnd, &cr);
     int h = Sc(26, hwnd), y = Sc(5, hwnd), gap = Sc(6, hwnd);
     int w[4] = { Sc(118, hwnd), Sc(100, hwnd), Sc(110, hwnd), Sc(mode == Tray ? 104 : 130, hwnd) };
@@ -1336,7 +1374,7 @@ RECT LibraryTray::HeaderButton(int which) const {
 
 int LibraryTray::Hit(POINT p) const {
     int top; { int cw, ch, pad; CellMetrics(hwnd, cw, ch, pad, top); }
-    if (p.y < top - Sc(4, hwnd)) return -1;              // faixa de cima
+    if (p.y < top - Sc(4, hwnd)) return -1;              // top strip
     for (int i = 0; i < (int)items_.size(); i++) {
         RECT c = CellRect(i);
         if (PtInRect(&c, p)) return i;
@@ -1373,9 +1411,9 @@ void LibraryTray::EnsureVisible() {
 bool LibraryTray::s_draggingOut = false;
 
 namespace {
-// IDataObject com os arquivos em dois formatos: CF_HDROP (Explorer, navegadores, mensageiros, Office) e a lista de itens
-// do Shell (CFSTR_SHELLIDLIST, que os apps empacotados como o Paint e o Fotos usam). Também guarda os formatos que o
-// IDragSourceHelper grava (a imagem que acompanha o cursor).
+// IDataObject with the files in two formats: CF_HDROP (Explorer, browsers, messengers, Office) and the Shell item
+// list (CFSTR_SHELLIDLIST, used by packaged apps such as Paint and Photos). It also stores the formats that
+// IDragSourceHelper writes (the image that follows the cursor).
 class FileDropData : public IDataObject {
     LONG ref_ = 1;
     HGLOBAL hdrop_ = nullptr, idlist_ = nullptr;
@@ -1402,7 +1440,7 @@ public:
         for (auto& f : files) { memcpy(p, f.c_str(), f.size() * sizeof(wchar_t)); p += f.size(); *p++ = 0; }
         *p = 0;
         GlobalUnlock(hdrop_);
-        // CIDA: pasta-mãe = área de trabalho (PIDL vazio) e cada item com o PIDL completo
+        // CIDA: parent folder = desktop (empty PIDL) and each item with its full PIDL
         std::vector<PIDLIST_ABSOLUTE> pidls;
         for (auto& f : files) { PIDLIST_ABSOLUTE id = nullptr; if (SUCCEEDED(SHParseDisplayName(f.c_str(), nullptr, &id, 0, nullptr)) && id) pidls.push_back(id); }
         if (!pidls.empty()) {
@@ -1414,7 +1452,7 @@ public:
             UINT* u = (UINT*)b;
             u[0] = n;
             size_t off = header;
-            u[1] = (UINT)off; off += 2;                       // PIDL vazio = área de trabalho
+            u[1] = (UINT)off; off += 2;                       // empty PIDL = desktop
             for (UINT i = 0; i < n; i++) {
                 UINT sz = ILGetSize(pidls[i]);
                 u[2 + i] = (UINT)off;
@@ -1481,7 +1519,7 @@ public:
 };
 } // namespace
 
-// arrastar itens para outros programas (TrayDragDrop): as imagens vão como PNG (com as anotações) e os vídeos como MP4
+// dragging items to other programs (TrayDragDrop): images go as PNG (with the annotations) and videos as MP4
 void LibraryTray::StartDrag(int item) {
     std::vector<std::wstring> paths;
     if (item < (int)sel_.size() && sel_[item]) paths = Selection();
@@ -1489,9 +1527,9 @@ void LibraryTray::StartDrag(int item) {
     HCURSOR old = SetCursor(LoadCursor(nullptr, IDC_WAIT));
     std::vector<std::wstring> files = filesForDrag ? filesForDrag(paths) : paths;
     SetCursor(old);
-    if (files.empty()) { Log(L"Bandeja: nada para arrastar (%zu itens)", paths.size()); return; }
+    if (files.empty()) { Log(L"Tray: nothing to drag (%zu items)", paths.size()); return; }
     auto* obj = new FileDropData(files);
-    // imagem que acompanha o cursor: a miniatura do item (com o número de itens, se forem vários)
+    // image that follows the cursor: the item's thumbnail (with the number of items, if there are several)
     IDragSourceHelper* helper = nullptr;
     if (SUCCEEDED(CoCreateInstance(CLSID_DragDropHelper, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&helper)))) {
         const Image& t = Thumb(items_[item].path, items_[item].video);
@@ -1509,8 +1547,8 @@ void LibraryTray::StartDrag(int item) {
         }
         helper->Release();
     }
-    // o Explorer segue o efeito preferido (copiar); alguns apps, como o Paint, só aceitam quando "mover" também é permitido.
-    // Mover só vale para as cópias temporárias: um vídeo vai com o caminho da biblioteca e não pode sair de lá
+    // Explorer follows the preferred effect (copy); some apps, like Paint, only accept it when "move" is also allowed.
+    // Move only applies to the temporary copies: a video goes with its library path and cannot leave it
     FORMATETC pref{ (CLIPFORMAT)RegisterClipboardFormatW(CFSTR_PREFERREDDROPEFFECT), nullptr, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
     STGMEDIUM prefData{};
     prefData.tymed = TYMED_HGLOBAL;
@@ -1524,12 +1562,12 @@ void LibraryTray::StartDrag(int item) {
     DWORD effect = 0;
     s_draggingOut = true;
     HRESULT hr = SHDoDragDrop(hwnd, obj, nullptr, allowed, &effect);
-    // soltar de volta numa janela do próprio Editor (bandeja, biblioteca, tela) chega como WM_DROPFILES postado só depois
-    // que o arrasto termina: descarta aqui para não importar uma cópia do item
+    // dropping back onto one of the Editor's own windows (tray, library, canvas) arrives as a WM_DROPFILES posted only after
+    // the drag ends: discard it here so a copy of the item is not imported
     MSG pending;
     while (PeekMessageW(&pending, nullptr, WM_DROPFILES, WM_DROPFILES, PM_REMOVE)) DragFinish((HDROP)pending.wParam);
     s_draggingOut = false;
-    Log(L"Bandeja: arrastou %zu arquivo(s), resultado 0x%08X, efeito %u", files.size(), (unsigned)hr, (unsigned)effect);
+    Log(L"Tray: dragged %zu file(s), result 0x%08X, effect %u", files.size(), (unsigned)hr, (unsigned)effect);
     obj->Release();
 }
 
@@ -1539,7 +1577,7 @@ RECT LibraryTray::BandRect() const {
     return { std::min(a.x, b.x), std::min(a.y, b.y), std::max(a.x, b.x), std::max(a.y, b.y) };
 }
 
-// retângulo de seleção: marca as miniaturas que ele toca (com Ctrl/Shift soma à seleção de antes); rola sozinho na borda
+// selection rectangle: selects the thumbnails it touches (with Ctrl/Shift adds to the previous selection); scrolls by itself at the edge
 void LibraryTray::UpdateBand(POINT p) {
     RECT cr; GetClientRect(hwnd, &cr);
     int edge = Sc(24, hwnd), step = 0;
@@ -1605,7 +1643,7 @@ void LibraryTray::Paint(HDC hdc) {
                 icons::DrawOnDC(mem, icons::VideoFill, { badge.left + 4, badge.top + 2, badge.right - 4, badge.bottom - 2 }, RGB(255, 255, 255));
             }
         }
-        if (sel && nsel > 1) {             // marca da seleção múltipla
+        if (sel && nsel > 1) {             // multiple selection mark
             int s = ui::Scale(18, dpi), m = ui::Scale(6, dpi);
             RECT c{ cell.left + m, cell.top + m, cell.left + m + s, cell.top + m + s };
             Gdiplus::SolidBrush cb(GC(accent));
@@ -1616,7 +1654,7 @@ void LibraryTray::Paint(HDC hdc) {
             Gdiplus::PointF p[3] = { { cx - k * 1.2f, cy }, { cx - k * 0.2f, cy + k }, { cx + k * 1.3f, cy - k } };
             g.DrawLines(&ck, p, 3);
         }
-        if (hot) {                         // X para excluir direto da miniatura
+        if (hot) {                         // X to delete straight from the thumbnail
             RECT x = CloseRect((int)i);
             bool xh = hoverClose_ == (int)i;
             Gdiplus::SolidBrush xb(xh ? Gdiplus::Color(255, 214, 50, 38) : Gdiplus::Color(200, 30, 30, 34));
@@ -1626,13 +1664,12 @@ void LibraryTray::Paint(HDC hdc) {
             g.DrawLine(&xp, x.left + m, x.top + m, x.right - m, x.bottom - m);
             g.DrawLine(&xp, x.right - m, x.top + m, x.left + m, x.bottom - m);
         }
-        SYSTEMTIME st, lt; FileTimeToSystemTime(&items_[i].modified, &st); SystemTimeToTzSpecificLocalTime(nullptr, &st, &lt);
-        std::wstring label = Format(L"%02d/%02d %02d:%02d", lt.wDay, lt.wMonth, lt.wHour, lt.wMinute);
+        std::wstring label = ItemLabel(items_[i]);     // the capture's name, or the date and time
         RECT lr{ cell.left + 4, cell.bottom - ui::Scale(21, dpi), cell.right - 4, cell.bottom - 3 };
         SetTextColor(mem, hot || sel ? th.accentText : RGB(84, 84, 92));
-        DrawTextW(mem, label.c_str(), -1, &lr, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+        DrawTextW(mem, label.c_str(), -1, &lr, DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
     }
-    if (band_) {                           // retângulo de seleção
+    if (band_) {                           // selection rectangle
         RECT b = BandRect();
         if (b.right - b.left > 1 || b.bottom - b.top > 1) {
             Gdiplus::SolidBrush fb(GC(accent, 40));
@@ -1641,7 +1678,7 @@ void LibraryTray::Paint(HDC hdc) {
             g.DrawRectangle(&bp, (float)b.left, (float)b.top, (float)(b.right - b.left), (float)(b.bottom - b.top));
         }
     }
-    // faixa de cima (por cima das miniaturas que rolaram na biblioteca)
+    // top strip (over the thumbnails that scrolled in the library)
     RECT band{ 0, 1, cr.right, top - ui::Scale(4, dpi) };
     HBRUSH bandB = CreateSolidBrush(mode == Tray ? th.bgSide : th.bgMain); FillRect(mem, &band, bandB); DeleteObject(bandB);
     RECT hr{ ui::Scale(12, dpi), ui::Scale(4, dpi), cr.right, ui::Scale(32, dpi) };
@@ -1664,7 +1701,19 @@ void LibraryTray::Paint(HDC hdc) {
     if (items_.empty()) {
         RECT er{ 0, top, cr.right, top + ch };
         ui::DrawTextCentered(mem, mode == Tray ? Tr(L"Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui.")
-                                               : Tr(L"A biblioteca está vazia."), er, RGB(120, 120, 125), ui::UiFont(dpi, 9));
+                                               : !Trim(query_).empty() ? Tr(L"Nenhuma captura com esse nome.") : Tr(L"A biblioteca está vazia."),
+                             er, RGB(120, 120, 125), ui::UiFont(dpi, 9));
+    }
+    if (search_) {                                 // search box between the title and the buttons
+        int sx = hr.left + ui::Scale(250, dpi), sw = ui::Scale(220, dpi), right = HeaderButton(std::count(sel_.begin(), sel_.end(), true) > 1 ? 0 : 3).left - ui::Scale(12, dpi);
+        sw = std::min(sw, right - sx);
+        RECT sb{ sx, ui::Scale(5, dpi), sx + std::max(0, sw), ui::Scale(31, dpi) };
+        if (sw > ui::Scale(80, dpi)) {
+            FillRound(g, sb, (float)ui::Scale(5, dpi), RGB(255, 255, 255));
+            StrokeRound(g, sb, (float)ui::Scale(5, dpi), Mix(th.line, 0, 0.08), 1.0f);
+            MoveWindow(search_, sb.left + ui::Scale(8, dpi), sb.top + ui::Scale(5, dpi), sb.right - sb.left - ui::Scale(14, dpi), sb.bottom - sb.top - ui::Scale(9, dpi), FALSE);
+            ShowWindow(search_, SW_SHOWNA);
+        } else ShowWindow(search_, SW_HIDE);
     }
     SelectObject(mem, of);
     BitBlt(hdc, 0, 0, cr.right, cr.bottom, mem, 0, 0, SRCCOPY);
@@ -1693,14 +1742,35 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
         UpdateScroll();
         return 0;
     }
-    case WM_MOUSEWHEEL: scroll_ -= GET_WHEEL_DELTA_WPARAM(w); UpdateScroll(); return 0;
+    case WM_MOUSEWHEEL: HidePreview(); scroll_ -= GET_WHEEL_DELTA_WPARAM(w); UpdateScroll(); return 0;
+    case WM_COMMAND:
+        if (LOWORD(w) == 71 && HIWORD(w) == EN_CHANGE) {        // search by name
+            int n = GetWindowTextLengthW(search_);
+            std::wstring t(n + 1, L'\0'); GetWindowTextW(search_, t.data(), n + 1); t.resize(n);
+            query_ = t; scroll_ = 0;
+            Reload();
+            return 0;
+        }
+        break;
+    case WM_CTLCOLOREDIT: {
+        SetBkColor((HDC)w, RGB(255, 255, 255)); SetTextColor((HDC)w, RGB(28, 28, 32));
+        static HBRUSH white = CreateSolidBrush(RGB(255, 255, 255));
+        return (LRESULT)white;
+    }
+    case WM_TIMER:
+        if (w == 0x71) {                           // resting on a thumbnail: larger preview
+            KillTimer(hwnd, w);
+            if (hover_ >= 0 && hover_ < (int)items_.size() && !band_ && GetKeyState(VK_LBUTTON) >= 0 && GetKeyState(VK_RBUTTON) >= 0 && hoverClose_ < 0) ShowPreview(hover_);
+            return 0;
+        }
+        break;
     case WM_MOUSEMOVE: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         if (band_) { UpdateBand(p); return 0; }
         if ((w & MK_LBUTTON) && downItem_ >= 0 &&
             (std::abs(p.x - downPt_.x) > GetSystemMetrics(SM_CXDRAG) || std::abs(p.y - downPt_.y) > GetSystemMetrics(SM_CYDRAG))) {
             int item = downItem_;
-            downItem_ = -2;                    // o botão solto depois do arraste não abre o item
+            downItem_ = -2;                    // releasing the button after a drag does not open the item
             if (GetCapture() == hwnd) ReleaseCapture();
             StartDrag(item);
             return 0;
@@ -1713,29 +1783,35 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
             if (k < 3 && std::count(sel_.begin(), sel_.end(), true) <= 1) continue;
             RECT b = HeaderButton(k); if (PtInRect(&b, p)) hh = k;
         }
+        if (hv != hover_) {                        // the preview follows the thumbnail under the mouse after a pause
+            if (preview_ && IsWindowVisible(preview_) && hv >= 0) { hover_ = hv; ShowPreview(hv); }
+            else { HidePreview(); if (hv >= 0) SetTimer(hwnd, 0x71, 600, nullptr); else KillTimer(hwnd, 0x71); }
+        }
         if (hv != hover_ || hc != hoverClose_ || hh != hoverHeader_) { hover_ = hv; hoverClose_ = hc; hoverHeader_ = hh; InvalidateRect(hwnd, nullptr, FALSE); }
         SetCursor(LoadCursor(nullptr, hc >= 0 || hh >= 0 || hv >= 0 ? IDC_HAND : IDC_ARROW));
         TRACKMOUSEEVENT t{ sizeof(t), TME_LEAVE, hwnd, 0 }; TrackMouseEvent(&t);
         return 0;
     }
     case WM_SETCURSOR: if (LOWORD(l) == HTCLIENT) return TRUE; break;
-    case WM_MOUSELEAVE: hover_ = hoverClose_ = hoverHeader_ = -1; InvalidateRect(hwnd, nullptr, FALSE); return 0;
+    case WM_MOUSELEAVE: hover_ = hoverClose_ = hoverHeader_ = -1; KillTimer(hwnd, 0x71); HidePreview(); InvalidateRect(hwnd, nullptr, FALSE); return 0;
     case WM_CAPTURECHANGED: if (band_ && (HWND)l != hwnd) { band_ = false; InvalidateRect(hwnd, nullptr, FALSE); } return 0;
+    case WM_DESTROY: HidePreview(); if (preview_) DestroyWindow(preview_); preview_ = nullptr; break;
     case WM_LBUTTONDOWN: {
+        KillTimer(hwnd, 0x71); HidePreview();
         SetFocus(hwnd);
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         int i = Hit(p);
         downItem_ = -1;
-        if (i >= 0) {                          // na miniatura: segura o mouse para o arraste começar mesmo se ele sair da bandeja
+        if (i >= 0) {                          // on a thumbnail: holds the mouse so the drag starts even if it leaves the tray
             RECT x = CloseRect(i);
             if (!PtInRect(&x, p)) { downItem_ = i; downPt_ = p; SetCapture(hwnd); }
             return 0;
         }
-        for (int k = 0; k < 4; k++) {          // botões da faixa de cima: tratados ao soltar
+        for (int k = 0; k < 4; k++) {          // top strip buttons: handled on release
             if (k < 3 && std::count(sel_.begin(), sel_.end(), true) <= 1) continue;
             RECT x = HeaderButton(k); if (PtInRect(&x, p)) return 0;
         }
-        // espaço vazio (também a faixa do título, já que a bandeja cheia quase não tem fresta): começa o retângulo de seleção
+        // empty space (also the title strip, since a full tray has almost no gap): starts the selection rectangle
         bool add = (w & (MK_CONTROL | MK_SHIFT)) != 0;
         bandBase_ = add ? sel_ : std::vector<bool>(items_.size(), false);
         band_ = true;
@@ -1747,7 +1823,7 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
     }
     case WM_LBUTTONDBLCLK: {
         int i = Hit({ GET_X_LPARAM(l), GET_Y_LPARAM(l) });
-        if (i >= 0 && mode == Library && onOpen) onOpen(items_[i].path);      // biblioteca: duplo clique abre
+        if (i >= 0 && mode == Library && onOpen) onOpen(items_[i].path);      // library: a double click opens
         return 0;
     }
     case WM_LBUTTONUP: {
@@ -1790,24 +1866,25 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
             std::wstring path = items_[i].path;
             std::fill(sel_.begin(), sel_.end(), false);
             sel_[i] = true;
-            if (mode == Tray && onOpen) onOpen(path);        // bandeja: um clique abre
+            if (mode == Tray && onOpen) onOpen(path);        // tray: a single click opens
         }
         InvalidateRect(hwnd, nullptr, FALSE);
         return 0;
     }
     case WM_KEYDOWN:
         if (w == VK_DELETE) { auto s = Selection(); if (!s.empty() && onDelete) onDelete(s); return 0; }
+        if (w == VK_F2) { auto s = Selection(); if (s.size() == 1) Rename(s[0]); return 0; }
         if (w == VK_ESCAPE) { std::fill(sel_.begin(), sel_.end(), false); InvalidateRect(hwnd, nullptr, FALSE); return 0; }
         if (w == VK_RETURN && mode == Library) { auto s = Selection(); if (s.size() == 1 && onOpen) onOpen(s[0]); return 0; }
         if (w == 'A' && GetKeyState(VK_CONTROL) < 0) { SelectAll(); return 0; }
         return 0;
-    case WM_DROPFILES: {                       // arquivos do Explorer soltos na bandeja/biblioteca
+    case WM_DROPFILES: {                       // Explorer files dropped on the tray/library
         HDROP d = (HDROP)w;
         std::vector<std::wstring> files;
         UINT n = DragQueryFileW(d, 0xFFFFFFFF, nullptr, 0);
         for (UINT i = 0; i < n; i++) { wchar_t f[MAX_PATH]; if (DragQueryFileW(d, i, f, MAX_PATH)) files.push_back(f); }
         DragFinish(d);
-        if (!files.empty() && onDropFiles && !s_draggingOut) onDropFiles(files);   // soltar de volta na bandeja não duplica
+        if (!files.empty() && onDropFiles && !s_draggingOut) onDropFiles(files);   // dropping back onto the tray does not duplicate
         return 0;
     }
     case WM_RBUTTONUP: {
@@ -1824,12 +1901,14 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
         }
         AppendMenuW(mm, MF_STRING, 4, s.size() > 1 ? Format(Tr(L"Exportar %zu itens…"), s.size()).c_str() : Tr(L"Exportar…"));
         AppendMenuW(mm, MF_STRING, 5, Tr(L"Selecionar tudo\tCtrl+A"));
+        if (s.size() == 1) AppendMenuW(mm, MF_STRING, 7, Tr(L"Renomear…\tF2"));
         if (mode == Tray) AppendMenuW(mm, MF_STRING, 6, s.size() > 1 ? Tr(L"Remover da bandeja") : Tr(L"Remover da bandeja (continua na biblioteca)"));
         AppendMenuW(mm, MF_SEPARATOR, 0, nullptr);
         AppendMenuW(mm, MF_STRING, 3, s.size() > 1 ? Format(Tr(L"Excluir %zu itens (Lixeira)\tDel"), s.size()).c_str() : Tr(L"Excluir (Lixeira)\tDel"));
         POINT p; GetCursorPos(&p);
         int cmd = TrackPopupMenu(mm, TPM_RETURNCMD | TPM_RIGHTBUTTON, p.x, p.y, 0, hwnd, nullptr);
         DestroyMenu(mm);
+        if (cmd == 7) Rename(s[0]);
         if (cmd == 1 && onOpen) onOpen(path);
         else if (cmd == 2) ShellExecuteW(nullptr, L"open", L"explorer.exe", (L"/select,\"" + path + L"\"").c_str(), nullptr, SW_SHOWNORMAL);
         else if (cmd == 3 && onDelete) onDelete(s);
@@ -1840,6 +1919,120 @@ LRESULT LibraryTray::Handle(UINT m, WPARAM w, LPARAM l) {
     }
     }
     return DefWindowProcW(hwnd, m, w, l);
+}
+
+// ---------------------------------------------------------------- hover preview (larger image)
+LRESULT CALLBACK LibraryTray::PreviewProc(HWND h, UINT m, WPARAM w, LPARAM l) {
+    LibraryTray* self = (LibraryTray*)GetWindowLongPtrW(h, GWLP_USERDATA);
+    switch (m) {
+    case WM_NCHITTEST: return HTTRANSPARENT;          // the mouse goes through it (does not steal the hover)
+    case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
+    case WM_ERASEBKGND: return 1;
+    case WM_PAINT: {
+        PAINTSTRUCT ps; HDC dc = BeginPaint(h, &ps);
+        RECT cr; GetClientRect(h, &cr);
+        HDC mem = CreateCompatibleDC(dc);
+        HBITMAP bb = CreateCompatibleBitmap(dc, cr.right, cr.bottom);
+        HGDIOBJ ob = SelectObject(mem, bb);
+        HBRUSH bg = CreateSolidBrush(RGB(255, 255, 255)); FillRect(mem, &cr, bg); DeleteObject(bg);
+        if (self) {
+            auto it = self->previews_.end();
+            if (self->previewItem_ >= 0 && self->previewItem_ < (int)self->items_.size()) it = self->previews_.find(ToLower(self->items_[self->previewItem_].path));
+            if (it != self->previews_.end()) {
+                const auto& pd = it->second;
+                int dpi = DpiForWindow(h), pad = ui::Scale(8, dpi);
+                if (!pd.img.empty()) {
+                    if (pd.img.HasTransparency()) { Image o(pd.img.w, pd.img.h, 0xFFFFFFFF); o.Blit(pd.img, 0, 0); o.DrawTo(mem, pad, pad, pd.img.w, pd.img.h, false); }
+                    else pd.img.DrawTo(mem, pad, pad, pd.img.w, pd.img.h, false);
+                }
+                int ty = pad + pd.img.h + ui::Scale(6, dpi);
+                SetBkMode(mem, TRANSPARENT);
+                HGDIOBJ of = SelectObject(mem, ui::UiFont(dpi, 9, true));
+                SetTextColor(mem, RGB(30, 32, 38));
+                RECT t1{ pad, ty, cr.right - pad, ty + ui::Scale(18, dpi) };
+                DrawTextW(mem, pd.title.c_str(), -1, &t1, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
+                SelectObject(mem, ui::UiFont(dpi, 8));
+                SetTextColor(mem, RGB(100, 102, 110));
+                RECT t2{ pad, t1.bottom, cr.right - pad, t1.bottom + ui::Scale(18, dpi) };
+                DrawTextW(mem, pd.info.c_str(), -1, &t2, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
+                SelectObject(mem, of);
+            }
+        }
+        HBRUSH fr = CreateSolidBrush(RGB(200, 202, 208)); FrameRect(mem, &cr, fr); DeleteObject(fr);
+        BitBlt(dc, 0, 0, cr.right, cr.bottom, mem, 0, 0, SRCCOPY);
+        SelectObject(mem, ob); DeleteObject(bb); DeleteDC(mem);
+        EndPaint(h, &ps);
+        return 0;
+    }
+    }
+    return DefWindowProcW(h, m, w, l);
+}
+
+void LibraryTray::HidePreview() {
+    if (preview_ && IsWindowVisible(preview_)) ShowWindow(preview_, SW_HIDE);
+    previewItem_ = -1;
+}
+
+// larger preview of a capture: the composed image (with the objects) or, for videos, the first frame and the duration
+void LibraryTray::ShowPreview(int item) {
+    if (item < 0 || item >= (int)items_.size()) return;
+    const LibraryItem& it = items_[item];
+    std::wstring key = ToLower(it.path);
+    int dpi = DpiForWindow(hwnd);
+    int maxW = ui::Scale(440, dpi), maxH = ui::Scale(320, dpi);
+    auto found = previews_.find(key);
+    if (found == previews_.end() || CompareFileTime(&found->second.stamp, &it.modified) != 0) {
+        if (previews_.size() > 24) previews_.clear();
+        PreviewData pd;
+        pd.stamp = it.modified;
+        Image full;
+        std::wstring dims;
+        if (it.video) {
+            VideoReader r; Image f; LONGLONG ts;
+            if (r.Open(it.path) && r.ReadFrame(f, ts)) full = std::move(f);
+            LONGLONG secs = r.duration / 10000000;
+            dims = Format(Tr(L"Vídeo  •  %lld:%02lld  •  %d × %d"), secs / 60, secs % 60, r.width, r.height);
+        } else if (auto d = Document::Load(it.path)) {
+            full = d->Render();
+            dims = Format(L"%d × %d px", d->w(), d->h());
+        }
+        if (!full.empty()) {
+            double k = std::min({ 1.0, (double)maxW / full.w, (double)maxH / full.h });
+            pd.img = ScaleImage(full, std::max(1, (int)(full.w * k)), std::max(1, (int)(full.h * k)));
+        }
+        SYSTEMTIME st, lt; FileTimeToSystemTime(&it.modified, &st); SystemTimeToTzSpecificLocalTime(nullptr, &st, &lt);
+        std::wstring when = Format(L"%02d/%02d/%04d %02d:%02d", lt.wDay, lt.wMonth, lt.wYear, lt.wHour, lt.wMinute);
+        std::wstring name = CaptureName(it.path);
+        pd.title = name.empty() ? when : name;
+        pd.info = dims + (name.empty() ? L"" : L"  •  " + when);
+        found = previews_.insert_or_assign(key, std::move(pd)).first;
+    }
+    const PreviewData& pd = found->second;
+    if (pd.img.empty()) { HidePreview(); return; }
+    if (!preview_) {
+        static bool reg = false;
+        if (!reg) {
+            WNDCLASSW wc{}; wc.lpfnWndProc = PreviewProc; wc.hInstance = GetModuleHandleW(nullptr); wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+            wc.lpszClassName = L"SnapnabHoverPreview"; wc.style = CS_DROPSHADOW;
+            RegisterClassW(&wc); reg = true;
+        }
+        preview_ = CreateWindowExW(WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE | WS_EX_TOPMOST, L"SnapnabHoverPreview", nullptr, WS_POPUP, 0, 0, 10, 10,
+                                   GetAncestor(hwnd, GA_ROOT), nullptr, GetModuleHandleW(nullptr), nullptr);
+        SetWindowLongPtrW(preview_, GWLP_USERDATA, (LONG_PTR)this);
+    }
+    previewItem_ = item;
+    int pad = ui::Scale(8, dpi);
+    int w = std::max(pd.img.w + 2 * pad, ui::Scale(220, dpi)), h = pd.img.h + 2 * pad + ui::Scale(42, dpi);
+    RECT cell = CellRect(item);
+    POINT a{ (cell.left + cell.right) / 2, cell.top };
+    ClientToScreen(hwnd, &a);
+    POINT b{ 0, cell.bottom }; ClientToScreen(hwnd, &b);
+    MONITORINFO mi{ sizeof(mi) }; GetMonitorInfoW(MonitorFromPoint(a, MONITOR_DEFAULTTONEAREST), &mi);
+    int x = std::clamp((int)a.x - w / 2, (int)mi.rcWork.left + 4, (int)mi.rcWork.right - w - 4);
+    int y = a.y - h - ui::Scale(8, dpi);                    // above the thumbnail (the tray is at the bottom)
+    if (y < mi.rcWork.top + 4) y = std::min((int)b.y + ui::Scale(8, dpi), (int)mi.rcWork.bottom - h - 4);
+    SetWindowPos(preview_, HWND_TOPMOST, x, y, w, h, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    InvalidateRect(preview_, nullptr, FALSE);
 }
 
 } // namespace snap::ed

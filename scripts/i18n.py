@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Traduções do Snapnab (formato gettext).
+"""Snapnab translations (gettext format).
 
-    python scripts/i18n.py extract    gera lang/snapnab.pot com os textos marcados no código
-    python scripts/i18n.py update     acrescenta aos lang/*.po os textos novos do .pot (e marca os que saíram)
-    python scripts/i18n.py check      confere os catálogos: textos faltando e marcadores %d/%s diferentes do original
+    python scripts/i18n.py extract    writes lang/snapnab.pot with the strings marked in the code
+    python scripts/i18n.py update     adds the new .pot strings to lang/*.po (and marks the ones that were removed)
+    python scripts/i18n.py check      checks the catalogs: missing strings and %d/%s markers that differ from the original
 
-Os textos do código são o português do Brasil. Marcar com Tr(L"...") onde o texto aparece ou com TR_NOOP(L"...") em
-tabelas estáticas (que chamam Tr() ao mostrar). Os nomes dos carimbos de fábrica (src/editor/Stamps.cpp) também
-entram, um a um. O msgid é o texto do literal como está no código (os escapes \\n, \\t, \\" e \\\\ são os mesmos do .po).
+The strings in the code are Brazilian Portuguese. Mark them with Tr(L"...") where the string is shown or with
+TR_NOOP(L"...") in static tables (which call Tr() when showing it). The names of the built-in stamps
+(src/editor/Stamps.cpp) are extracted too, one by one. The msgid is the literal's text as it is in the code (the \\n,
+\\t, \\" and \\\\ escapes are the same as in the .po).
 """
 import os
 import re
@@ -23,7 +24,7 @@ SPEC = re.compile(r'%(?:\d+\$)?[-+ #0]*(?:\d+|\*)?(?:\.\d+)?(?:hh|h|ll|l|z|j|t|I
 
 
 def strip_comments(src):
-    # troca comentários por espaços do mesmo tamanho (mantém os números de linha)
+    # replaces comments with spaces of the same length (keeps the line numbers)
     out, i, n = [], 0, len(src)
     while i < n:
         if src.startswith('//', i):
@@ -50,7 +51,7 @@ def strip_comments(src):
 
 
 def extract():
-    entries = {}            # msgid -> [referências]
+    entries = {}            # msgid -> [references]
     order = []
     def add(msgid, ref):
         if msgid not in entries:
@@ -68,7 +69,7 @@ def extract():
                 msgid = ''.join(LIT.findall(m.group(2)))
                 if msgid:
                     add(msgid, f'{rel}:{src.count(chr(10), 0, m.start()) + 1}')
-            if f == 'Stamps.cpp':          # nomes dos carimbos de fábrica: "emoji nome|emoji nome|…"
+            if f == 'Stamps.cpp':          # names of the built-in stamps: "emoji name|emoji name|…"
                 start = src.find('kStock[]')
                 end = src.find('\n};', start)
                 for m in re.finditer(r'TR_NOOP\(L"[^"]*"\),\s*((?:L"(?:[^"\\]|\\.)*"\s*)+)\}', src[start:end]):
@@ -80,7 +81,7 @@ def extract():
 
 
 def po_quote(s):
-    # o texto já está escapado como no C (\n, \", \\); quebra as linhas longas depois de cada \n
+    # the text is already escaped as in C (\n, \", \\); breaks long lines after each \n
     parts = re.split(r'(?<=\\n)', s)
     parts = [p for p in parts if p]
     if len(parts) <= 1:
@@ -89,9 +90,9 @@ def po_quote(s):
 
 
 def header(lang=None):
-    h = ['# Snapnab — traduções da interface.', '# Copyright © 2026 Antonio Rezende. GPL-3.0.']
+    h = ['# Snapnab — interface translations.', '# Copyright © 2026 Antonio Rezende. GPL-3.0.']
     if lang:
-        h.append(f'# Idioma: {lang}.')
+        h.append(f'# Language: {lang}.')
     h += ['#', 'msgid ""', 'msgstr ""', '"Project-Id-Version: Snapnab\\n"', '"MIME-Version: 1.0\\n"',
           '"Content-Type: text/plain; charset=UTF-8\\n"', '"Content-Transfer-Encoding: 8bit\\n"']
     if lang:
@@ -112,11 +113,11 @@ def write_pot():
         block.append('msgstr ""')
         out.append('\n'.join(block) + '\n')
     open(POT, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
-    print(f'{POT}: {len(order)} textos')
+    print(f'{POT}: {len(order)} strings')
 
 
 def parse_po(path):
-    """devolve (cabeçalho, [(comentários, msgid, msgstr, fuzzy)]) com os textos ainda escapados"""
+    """returns (header, [(comments, msgid, msgstr, fuzzy)]) with the strings still escaped"""
     text = open(path, encoding='utf-8-sig').read()
     blocks = re.split(r'\n\s*\n', text.strip('\n'))
     head, items = '', []
@@ -143,7 +144,7 @@ def parse_po(path):
 
 
 def specs(s):
-    # sequência de conversões (%1$s conta na posição indicada)
+    # sequence of conversions (%1$s counts at the given position)
     found = []
     for m in SPEC.finditer(s):
         if m.group(1) == '%':
@@ -176,7 +177,7 @@ def update():
         for _, msgid, msgstr, _ in gone:
             out.append(f'#~ msgid "{msgid}"\n#~ msgstr "{msgstr}"\n')
         open(path, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
-        print(f'{f}: {sum(1 for m in order if have.get(m, ("",))[0])}/{len(order)} traduzidos, {len(gone)} obsoletos')
+        print(f'{f}: {sum(1 for m in order if have.get(m, ("",))[0])}/{len(order)} translated, {len(gone)} obsolete')
 
 
 def check():
@@ -189,9 +190,9 @@ def check():
         have = {msgid: msgstr for _, msgid, msgstr, fuzzy in items if msgstr and not fuzzy}
         missing = [m for m in order if m not in have]
         bad = [m for m in order if m in have and specs(m) != specs(have[m])]
-        print(f'{f}: {len(order) - len(missing)}/{len(order)} traduzidos' + (f', {len(bad)} com marcadores diferentes' if bad else ''))
+        print(f'{f}: {len(order) - len(missing)}/{len(order)} translated' + (f', {len(bad)} with different markers' if bad else ''))
         for m in bad[:20]:
-            print(f'   marcadores: "{m}"  →  "{have[m]}"')
+            print(f'   markers: "{m}"  →  "{have[m]}"')
         ok &= not bad
     return ok
 

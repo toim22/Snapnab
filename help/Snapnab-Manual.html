@@ -1,0 +1,1691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snapnab User Manual</title>
+<style>
+:root {
+  --bg: #ffffff; --panel: #f6f7f9; --text: #1f2328; --muted: #5b6470; --line: #dde1e6;
+  --accent: #0a64c8; --accent-soft: #e7f0fb; --tip: #e9f7ef; --tip-line: #2e9e5b; --warn: #fff6e5; --warn-line: #d08a00;
+  --note: #eef1f5; --note-line: #7a8796; --code: #f1f3f5; --kbd: #ffffff; --kbd-line: #b9c0c8; --red: #e2382c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17191c; --panel: #1f2226; --text: #e6e8eb; --muted: #a2aab4; --line: #33383e;
+    --accent: #5aa7ff; --accent-soft: #1d2b3c; --tip: #16291e; --tip-line: #3fbf73; --warn: #2e2614; --warn-line: #e0a52a;
+    --note: #23272c; --note-line: #7f8b99; --code: #262a2f; --kbd: #2a2e34; --kbd-line: #4a5058; --red: #ff5a4f;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17191c; --panel: #1f2226; --text: #e6e8eb; --muted: #a2aab4; --line: #33383e;
+  --accent: #5aa7ff; --accent-soft: #1d2b3c; --tip: #16291e; --tip-line: #3fbf73; --warn: #2e2614; --warn-line: #e0a52a;
+  --note: #23272c; --note-line: #7f8b99; --code: #262a2f; --kbd: #2a2e34; --kbd-line: #4a5058; --red: #ff5a4f;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; }
+nav#toc { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); padding: 18px 14px 40px; }
+nav#toc .brand { font-weight: 700; font-size: 18px; margin: 0 6px 2px; }
+nav#toc .brand small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+nav#toc input { width: 100%; margin: 14px 0 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; }
+nav#toc ol { list-style: none; margin: 0; padding: 0; }
+nav#toc li { margin: 0; }
+nav#toc li a { display: block; padding: 3px 8px; border-radius: 6px; color: var(--text); font-size: 13.5px; }
+nav#toc li a:hover { background: var(--accent-soft); text-decoration: none; }
+nav#toc li a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+nav#toc .part { margin-top: 12px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 4px 8px; }
+nav#toc ol ol a { padding-left: 22px; font-size: 13px; color: var(--muted); }
+nav#toc .tools { display: flex; gap: 6px; margin-top: 16px; }
+nav#toc .tools button { flex: 1; padding: 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; font-size: 12.5px; cursor: pointer; }
+main { padding: 32px 48px 120px; max-width: 980px; }
+h1 { font-size: 34px; line-height: 1.2; margin: 0 0 6px; }
+h2 { font-size: 26px; margin: 56px 0 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+h3 { font-size: 19px; margin: 34px 0 6px; }
+h4 { font-size: 16px; margin: 22px 0 4px; }
+.part-title { margin: 72px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.part-title + h2 { margin-top: 6px; border-top: 0; padding-top: 0; }
+p.lead { font-size: 17px; color: var(--muted); margin-top: 4px; }
+kbd { display: inline-block; min-width: 1.6em; padding: 0 6px; border: 1px solid var(--kbd-line); border-bottom-width: 2px; border-radius: 5px; background: var(--kbd); font: 12.5px/1.6 "Cascadia Mono", Consolas, monospace; text-align: center; white-space: nowrap; }
+code { padding: 1px 5px; border-radius: 4px; background: var(--code); font: 13px "Cascadia Mono", Consolas, monospace; word-break: break-word; }
+pre { padding: 12px 14px; border-radius: 8px; background: var(--code); overflow-x: auto; font: 13px/1.5 "Cascadia Mono", Consolas, monospace; }
+.ui { font-weight: 600; }
+.path { font-style: italic; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+th { background: var(--panel); font-weight: 600; }
+td:first-child { white-space: nowrap; }
+td.wrap, th.wrap { white-space: normal; }
+.callout { margin: 14px 0; padding: 10px 14px; border-left: 4px solid var(--note-line); background: var(--note); border-radius: 0 8px 8px 0; }
+.callout.tip { border-color: var(--tip-line); background: var(--tip); }
+.callout.warn { border-color: var(--warn-line); background: var(--warn); }
+.callout b:first-child { display: block; margin-bottom: 2px; }
+ol.steps { counter-reset: step; list-style: none; padding-left: 0; }
+ol.steps > li { counter-increment: step; position: relative; padding: 2px 0 10px 40px; }
+ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 2px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; text-align: center; line-height: 26px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin: 14px 0; }
+.card { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--panel); }
+.card b { display: block; margin-bottom: 4px; }
+.card p { margin: 0; font-size: 14px; color: var(--muted); }
+.diagram { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 14px; margin: 16px 0; overflow-x: auto; }
+.diagram figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.mock { min-width: 620px; font-size: 13px; }
+.mock .bar { display: flex; align-items: center; gap: 14px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px 8px 0 0; background: var(--bg); }
+.mock .bar .ico { width: 18px; height: 18px; border-radius: 5px; background: var(--accent); }
+.mock .body { display: grid; grid-template-columns: 70px 1fr 1fr 120px; gap: 10px; padding: 12px; border: 1px solid var(--line); border-top: 0; background: var(--bg); }
+.mock .tabs div { padding: 8px 4px; text-align: center; border-radius: 6px; margin-bottom: 6px; background: var(--panel); }
+.mock .tabs div.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.mock .field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.mock .box { flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+.mock .sw { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.mock .tg { width: 30px; height: 16px; border-radius: 8px; background: var(--accent); display: inline-block; }
+.mock .tg.off { background: var(--line); }
+.mock .rec { width: 92px; height: 92px; border-radius: 50%; background: var(--red); margin: 4px auto; }
+.mock .foot { display: flex; justify-content: space-between; padding: 7px 12px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; background: var(--bg); }
+.num { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 18px; margin-right: 4px; vertical-align: 1px; }
+.ed { min-width: 640px; font-size: 12.5px; display: grid; grid-template-columns: 1fr 190px; grid-template-rows: auto auto 1fr auto auto; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); }
+.ed > div { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.ed .t { grid-column: 1 / 3; }
+.ed .tb { grid-column: 1 / 3; display: flex; justify-content: space-between; }
+.ed .cv { min-height: 140px; background: repeating-conic-gradient(var(--panel) 0 25%, var(--bg) 0 50%) 0 0 / 18px 18px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+.ed .rp { border-left: 1px solid var(--line); background: var(--panel); }
+.ed .tr { grid-column: 1 / 3; }
+.ed .sb { grid-column: 1 / 3; border-bottom: 0; color: var(--muted); }
+.toolgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 6px; margin: 10px 0 16px; }
+.toolgrid a { display: flex; justify-content: space-between; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--text); font-size: 14px; }
+.toolgrid a:hover { background: var(--accent-soft); text-decoration: none; }
+.toolgrid kbd { margin-left: 8px; }
+section.hidden { display: none; }
+mark { background: #ffe86b; color: #1f2328; border-radius: 2px; }
+.nores { display: none; padding: 20px; color: var(--muted); }
+.top { position: fixed; right: 18px; bottom: 18px; padding: 8px 12px; border-radius: 20px; background: var(--accent); color: #fff; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.top:hover { text-decoration: none; }
+@media (max-width: 860px) {
+  .layout { display: block; }
+  nav#toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  main { padding: 20px 16px 80px; }
+  td:first-child { white-space: normal; }
+}
+@media print {
+  nav#toc, .top { display: none; }
+  .layout { display: block; }
+  main { max-width: none; padding: 0; }
+  section.hidden { display: block; }
+  h2 { break-before: page; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav id="toc" aria-label="Contents">
+  <div class="brand">Snapnab<small>User Manual</small></div>
+  <input id="search" type="search" placeholder="Search the manual…" aria-label="Search the manual">
+  <ol id="toclist">
+    <li class="part">Start here</li>
+    <li><a href="#welcome">Welcome to Snapnab</a></li>
+    <li><a href="#install">Installing and starting</a></li>
+    <li><a href="#quickstart">Quick start: 5 lessons</a></li>
+    <li class="part">Part 1 — Capturing images</li>
+    <li><a href="#capture-window">The capture window</a></li>
+    <li><a href="#start-capture">Ways to start a capture</a></li>
+    <li><a href="#crosshair">The crosshair and selecting</a></li>
+    <li><a href="#selection-types">Selection types</a>
+      <ol>
+        <li><a href="#sel-region">Region and fixed region</a></li>
+        <li><a href="#sel-window">Window, screen, monitor</a></li>
+        <li><a href="#sel-freehand">Freehand, multiple areas, object</a></li>
+        <li><a href="#sel-panoramic">Panoramic scrolling</a></li>
+        <li><a href="#sel-scrolling">Automatic scrolling</a></li>
+        <li><a href="#sel-extended">Extended window</a></li>
+        <li><a href="#sel-menu">Menu, clipboard, file</a></li>
+        <li><a href="#sel-objects">Windows as objects and links</a></li>
+      </ol>
+    </li>
+    <li><a href="#capture-options">Capture options</a></li>
+    <li><a href="#capture-effects">Capture effects</a></li>
+    <li><a href="#share">Share destinations</a></li>
+    <li><a href="#grab-text">Capturing text (OCR)</a></li>
+    <li><a href="#oneclick">One Click</a></li>
+    <li class="part">Part 2 — Recording video</li>
+    <li><a href="#video-setup">Setting up a recording</a></li>
+    <li><a href="#recording">Recording, step by step</a></li>
+    <li><a href="#audio">Microphone and system audio</a></li>
+    <li><a href="#webcam">Webcam</a></li>
+    <li class="part">Part 3 — Presets and shortcuts</li>
+    <li><a href="#presets">Presets</a></li>
+    <li><a href="#hotkeys">Global shortcuts</a></li>
+    <li class="part">Part 4 — The Editor</li>
+    <li><a href="#editor-tour">A tour of the Editor</a></li>
+    <li><a href="#objects-basics">Objects: the basics</a></li>
+    <li><a href="#styles">Quick styles, themes and favorites</a></li>
+    <li><a href="#tools">Tool reference</a>
+      <ol>
+        <li><a href="#tools-annotate">Annotation tools</a></li>
+        <li><a href="#tools-hide">Highlight and hide tools</a></li>
+        <li><a href="#tools-image">Image tools</a></li>
+      </ol>
+    </li>
+    <li><a href="#area-shapes">Area shapes and perfect geometry</a></li>
+    <li><a href="#colors">Colors and gradients</a></li>
+    <li><a href="#arrange">Arranging objects</a></li>
+    <li><a href="#layers">The Layers panel</a></li>
+    <li><a href="#precision">Rulers, guides and exact sizes</a></li>
+    <li><a href="#clipboard-editor">Copy, paste and paste in place</a></li>
+    <li><a href="#raster">Editing the image itself</a></li>
+    <li><a href="#effects-panel">Effects panel and quick effects</a></li>
+    <li><a href="#stamps">Stamps</a></li>
+    <li><a href="#editor-ocr">Grab Text in the Editor</a></li>
+    <li><a href="#toolbar">Customizing the toolbar</a></li>
+    <li><a href="#tray-library">Recent captures and the Library</a></li>
+    <li><a href="#saving">Saving, exporting and sharing</a></li>
+    <li><a href="#video-editing">Editing videos and making GIFs</a></li>
+    <li class="part">Part 5 — Settings and data</li>
+    <li><a href="#options">Options and language</a></li>
+    <li><a href="#backup">Backing up your settings</a></li>
+    <li><a href="#data">Where your data lives</a></li>
+    <li class="part">Reference</li>
+    <li><a href="#shortcuts">Keyboard shortcuts</a></li>
+    <li><a href="#cmdline">Command line</a></li>
+    <li><a href="#troubleshooting">Troubleshooting and FAQ</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ol>
+  <div class="tools">
+    <button type="button" id="themeBtn">Light / dark</button>
+    <button type="button" onclick="window.print()">Print</button>
+  </div>
+</nav>
+
+<main id="content">
+
+<!-- ============================================================ START HERE -->
+<section id="welcome">
+<h1>Snapnab User Manual</h1>
+<p class="lead">Everything Snapnab can do, explained step by step: capturing images, recording video, annotating and editing,
+and keeping your captures organized.</p>
+
+<p>Snapnab is a screen capture, video recording and image editing tool for Windows. It is made of two programs that work
+together:</p>
+<div class="cards">
+  <div class="card"><b>Snapnab (the capturer)</b><p>Lives in the notification area next to the clock. It owns the global
+  shortcuts, the capture window, the crosshair, the video recorder and One Click.</p></div>
+  <div class="card"><b>Snapnab Editor</b><p>Opens your captures so you can annotate, highlight, blur, crop, apply effects,
+  recognize text, cut videos, make GIFs and save or share the result.</p></div>
+  <div class="card"><b>The Library</b><p>Every capture and recording is kept automatically in a library folder, so nothing
+  is lost even if you close the Editor without saving.</p></div>
+</div>
+
+<h3>How to read this manual</h3>
+<ul>
+  <li>New to Snapnab? Read <a href="#install">Installing and starting</a> and do the <a href="#quickstart">five quick-start
+  lessons</a>. They take about fifteen minutes and cover what most people use every day.</li>
+  <li>Each later chapter is a complete reference for one area. You do not have to read them in order.</li>
+  <li>Use the <b>search box</b> at the top of the contents to find any word in the manual. Press <kbd>Esc</kbd> in the box to
+  clear it.</li>
+  <li>Press <kbd>F1</kbd> in the capture window or in the Editor to open this manual. In the Editor, <kbd>F1</kbd> jumps to the
+  description of the tool you are using.</li>
+</ul>
+<p>In the text, names in <span class="ui">bold</span> are labels you see on screen, a path like
+<span class="path">File › Options…</span> means "open the File menu and choose Options…", and keys look like <kbd>Ctrl</kbd>+<kbd>S</kbd>.</p>
+
+<div class="callout"><b>Your captures stay on your computer.</b>Snapnab does not send anything to the internet: there is no
+account, no cloud upload and no telemetry.</div>
+</section>
+
+<section id="install">
+<h2>Installing and starting</h2>
+<p>Snapnab runs on <b>Windows 10 version 2004 or later, or Windows 11 (64-bit)</b>. Nothing else needs to be installed.</p>
+
+<h3>Installer or portable</h3>
+<table>
+<tr><th>Package</th><th class="wrap">What to do</th></tr>
+<tr><td><code>Snapnab-&lt;version&gt;-setup.exe</code></td><td class="wrap">Run it and follow the wizard. Choose to install just for
+you (no administrator prompt) or for all users. The wizard creates the Start menu shortcuts and can add a desktop shortcut
+and start Snapnab with Windows. If Snapnab is running, the installer closes it before updating. To uninstall, use
+<span class="path">Windows Settings › Apps</span>; your captures and settings are kept.</td></tr>
+<tr><td><code>Snapnab-&lt;version&gt;-win-x64.zip</code></td><td class="wrap">Portable version. Extract it to any folder and run
+<code>Snapnab.exe</code>. Keep the <code>lang</code> and <code>help</code> folders next to the programs.</td></tr>
+</table>
+
+<h3>What you see after starting</h3>
+<ol class="steps">
+  <li>The Snapnab icon appears in the notification area (next to the clock). If you do not see it, click the small arrow
+  that shows hidden icons; you can drag the icon onto the taskbar to keep it visible.</li>
+  <li>The <a href="#capture-window">capture window</a> opens. You can close it: Snapnab keeps running in the notification
+  area and the shortcuts keep working. To stop it showing at every start, turn off
+  <span class="ui">Show the capture window at startup</span> in <span class="path">File › Options…</span>.</li>
+  <li>Press <kbd>Print Screen</kbd> at any time to capture.</li>
+</ol>
+
+<h3>The notification area icon</h3>
+<table>
+<tr><th>Action</th><th class="wrap">Result</th></tr>
+<tr><td>Single click</td><td class="wrap">Starts an image capture with the current image preset.</td></tr>
+<tr><td>Double click</td><td class="wrap">Opens the capture window.</td></tr>
+<tr><td>Right click</td><td class="wrap">Menu with <span class="ui">Capture image</span>, <span class="ui">Record video</span>, the list
+of <span class="ui">Presets</span>, <span class="ui">Open the capture window</span>, <span class="ui">Show One Click</span>,
+<span class="ui">Open the Editor</span>, <span class="ui">Options…</span> and <span class="ui">Exit</span>.</td></tr>
+</table>
+
+<div class="callout tip"><b>Print Screen already used by Windows?</b>On Windows 11 the Print Screen key may open the
+Windows Snipping Tool. Snapnab detects the conflict and intercepts the key anyway with a keyboard hook. If you prefer, turn off
+<span class="path">Windows Settings › Accessibility › Keyboard › Use the Print screen key to open screen capture</span>, or choose
+another shortcut in <a href="#hotkeys">Options</a>.</div>
+</section>
+
+<section id="quickstart">
+<h2>Quick start: 5 lessons</h2>
+<p>Each lesson takes two or three minutes. Do them in order; each one builds on the previous one.</p>
+
+<h3>Lesson 1 — Capture part of the screen</h3>
+<ol class="steps">
+  <li>Press <kbd>Print Screen</kbd>. The screen freezes and a crosshair appears, with a magnifier and the pixel coordinates
+  next to the pointer.</li>
+  <li>Drag a rectangle around what you want. The size in pixels is shown above the rectangle. Release the mouse button.</li>
+  <li>The capture opens in <b>Snapnab Editor</b>. It is already saved in your Library.</li>
+</ol>
+<div class="callout tip"><b>Shortcut inside the crosshair</b>Instead of dragging, move the pointer over a window, a button
+or a panel: Snapnab outlines it. A single click captures exactly that area. <kbd>Enter</kbd> captures the whole monitor and
+<kbd>Esc</kbd> cancels.</div>
+
+<h3>Lesson 2 — Annotate it</h3>
+<ol class="steps">
+  <li>In the Editor, press <kbd>A</kbd> (Arrow) and drag from where the arrow starts to where it points.</li>
+  <li>Right after drawing, just type: the text appears at the tail of the arrow. Click elsewhere to finish.</li>
+  <li>Press <kbd>H</kbd> (Highlighter) and drag over a line of text to highlight it.</li>
+  <li>Press <kbd>N</kbd> (Steps) and click three times on the image: you get the numbers 1, 2 and 3.</li>
+  <li>Press <kbd>B</kbd> (Blur) and drag over something private, such as an e-mail address.</li>
+  <li>Made a mistake? <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes and <kbd>Ctrl</kbd>+<kbd>Y</kbd> redoes. Everything you drew stays editable:
+  press <kbd>V</kbd> (Move), click an object and drag it, or change its color in the <span class="ui">Properties</span> panel on the right.</li>
+</ol>
+
+<h3>Lesson 3 — Share it</h3>
+<ol class="steps">
+  <li>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> (<span class="ui">Copy all</span>) and paste the annotated image into
+  a chat, an e-mail or a document with <kbd>Ctrl</kbd>+<kbd>V</kbd>.</li>
+  <li>Or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> (<span class="ui">Save as</span>) to save a PNG, JPG, PDF or another format.</li>
+  <li>Or drag the capture's thumbnail from the <span class="ui">Recent captures</span> strip at the bottom of the Editor straight
+  into another program.</li>
+</ol>
+
+<h3>Lesson 4 — Record a short video</h3>
+<ol class="steps">
+  <li>Press <kbd>Shift</kbd>+<kbd>Print Screen</kbd> and drag the area to record (or click a window, or press <kbd>Enter</kbd> for the
+  whole monitor).</li>
+  <li>A red frame marks the area and a small recording panel appears. Check that the microphone and system audio buttons are
+  as you want, then click the red <b>record</b> button.</li>
+  <li>After a 3-second countdown, recording starts. <kbd>Shift</kbd>+<kbd>F9</kbd> pauses and resumes;
+  <kbd>Shift</kbd>+<kbd>F10</kbd> (or <kbd>Shift</kbd>+<kbd>Print Screen</kbd> again) stops.</li>
+  <li>The MP4 opens in the Editor, where you can play it, cut out parts and make a GIF.</li>
+</ol>
+
+<h3>Lesson 5 — Make it one keystroke</h3>
+<ol class="steps">
+  <li>Open the capture window (double-click the notification area icon).</li>
+  <li>Set it up the way you like, for example <span class="ui">Selection: Window</span>, <span class="ui">Effects: Shadow</span>,
+  <span class="ui">Copy to clipboard</span> on.</li>
+  <li>Click <span class="ui">+</span> at the bottom and choose <span class="ui">New preset from current settings</span>. Give it a name.</li>
+  <li>In the preset list, click <span class="ui">Add shortcut</span> on its row and press a key combination, for example
+  <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>. That key now runs the whole setup from anywhere in Windows.</li>
+</ol>
+<p>You now know the core workflow. The rest of this manual explains every option in detail.</p>
+</section>
+
+<!-- ============================================================ PART 1 -->
+<p class="part-title">Part 1 — Capturing images</p>
+<section id="capture-window">
+<h2>The capture window</h2>
+<p>The capture window is where you choose <i>what</i> to capture, <i>what to do</i> to the image and <i>where</i> it goes. Open it
+by double-clicking the notification area icon, from its right-click menu, or with <span class="ui">Open the capture window</span>
+in One Click.</p>
+
+<figure class="diagram">
+<div class="mock" aria-hidden="true">
+  <div class="bar"><span class="ico"></span><span><span class="num">1</span>File</span><span>Capture</span><span>View</span><span>Help</span></div>
+  <div class="body">
+    <div class="tabs"><span class="num">2</span><div class="on">Image</div><div>Video</div></div>
+    <div>
+      <div class="field"><span><span class="num">3</span>Selection:</span><span class="box">Region ⚙</span></div>
+      <div class="field"><span><span class="num">4</span>Effects:</span><span class="box">None</span></div>
+      <div class="field"><span><span class="num">5</span>Share:</span><span class="box">None</span></div>
+    </div>
+    <div>
+      <div class="sw"><span><span class="num">6</span>Preview in Editor</span><span class="tg"></span></div>
+      <div class="sw"><span>Copy to clipboard</span><span class="tg off"></span></div>
+      <div class="sw"><span>Capture cursor</span><span class="tg off"></span></div>
+      <div class="sw"><span><span class="num">7</span>Delay</span><span>Off ›</span></div>
+    </div>
+    <div><span class="num">8</span><div class="rec"></div></div>
+  </div>
+  <div class="foot"><span><span class="num">9</span>⚙ Presets &nbsp; + ▾</span><span><span class="num">10</span>Open Editor</span></div>
+</div>
+<figcaption>The capture window (Image tab). The numbers match the table below.</figcaption>
+</figure>
+
+<table>
+<tr><th>#</th><th class="wrap">Part</th></tr>
+<tr><td>1</td><td class="wrap"><b>Menus</b> — <span class="ui">File</span>, <span class="ui">Capture</span>, <span class="ui">View</span> and
+<span class="ui">Help</span>, in the title bar. Open them with <kbd>Alt</kbd> + the underlined letter or with <kbd>F10</kbd>.</td></tr>
+<tr><td>2</td><td class="wrap"><b>Image / Video tabs</b> — switch between capturing a picture and recording a video. Each tab
+remembers its own settings.</td></tr>
+<tr><td>3</td><td class="wrap"><b>Selection</b> — what part of the screen to capture. See <a href="#selection-types">Selection
+types</a>. Some selections show a gear ⚙ inside the box with extra options.</td></tr>
+<tr><td>4</td><td class="wrap"><b>Effects</b> — automatic effects applied to every capture (border, shadow, watermark…). See
+<a href="#capture-effects">Capture effects</a>.</td></tr>
+<tr><td>5</td><td class="wrap"><b>Share</b> — an extra destination: a file, an external program or text recognition. See
+<a href="#share">Share destinations</a>.</td></tr>
+<tr><td>6</td><td class="wrap"><b>Switches</b> — <span class="ui">Preview in Editor</span>, <span class="ui">Copy to clipboard</span>
+and <span class="ui">Capture cursor</span>. See <a href="#capture-options">Capture options</a>.</td></tr>
+<tr><td>7</td><td class="wrap"><b>Delay</b> — wait a few seconds before capturing (Off, 1, 2, 3, 5, 10, 15, 30 or 60 seconds).</td></tr>
+<tr><td>8</td><td class="wrap"><b>Capture button</b> — the big red button starts the capture. Its tooltip shows the shortcut.</td></tr>
+<tr><td>9</td><td class="wrap"><b>Presets</b> — <span class="ui">⚙ Presets</span> opens the list of saved setups;
+<span class="ui">+</span> creates a new one. See <a href="#presets">Presets</a>.</td></tr>
+<tr><td>10</td><td class="wrap"><b>Open Editor</b> — opens Snapnab Editor without capturing.</td></tr>
+</table>
+
+<p>On the <b>Video</b> tab, the middle column shows <span class="ui">Selection</span>, <span class="ui">Quality</span> and
+<span class="ui">Webcam</span>, and the switches become <span class="ui">Preview in Editor</span>, <span class="ui">Capture cursor</span>,
+<span class="ui">Record microphone</span> and <span class="ui">Record system audio</span>. See <a href="#video-setup">Setting up a
+recording</a>.</p>
+
+<div class="callout"><b>Changes are saved immediately.</b>Everything you change in the capture window is stored in the
+current preset at once. There is no "OK" button.</div>
+
+<h3>Menus of the capture window</h3>
+<table>
+<tr><th>Menu</th><th class="wrap">Commands</th></tr>
+<tr><td>File</td><td class="wrap"><span class="ui">Open the Editor</span>; <span class="ui">Open the library folder</span>;
+<span class="ui">Open the logs folder</span>; <span class="ui">Import presets…</span> / <span class="ui">Export presets…</span>;
+<span class="ui">Export all settings…</span> / <span class="ui">Import all settings…</span>; <span class="ui">Open the backups folder</span>;
+<span class="ui">Options…</span>; <span class="ui">Exit Snapnab</span>.</td></tr>
+<tr><td>Capture</td><td class="wrap"><span class="ui">Capture image</span>; <span class="ui">Record video</span>;
+<span class="ui">Repeat last capture</span> (runs the last used preset again); <span class="ui">From the clipboard</span> (turns the image on the
+clipboard into a capture); <span class="ui">From a graphics file…</span> (imports an image file as a capture).</td></tr>
+<tr><td>View</td><td class="wrap"><span class="ui">Show One Click</span>; <span class="ui">Presets list</span>.</td></tr>
+<tr><td>Help</td><td class="wrap"><span class="ui">Snapnab Manual</span> (<kbd>F1</kbd>); <span class="ui">How to use presets</span>;
+<span class="ui">About Snapnab</span>.</td></tr>
+</table>
+</section>
+
+<section id="start-capture">
+<h2>Ways to start a capture</h2>
+<p>All of these run a capture with a preset. Pick whichever is most comfortable.</p>
+<table>
+<tr><th>Way</th><th class="wrap">What it captures</th></tr>
+<tr><td><kbd>Print Screen</kbd></td><td class="wrap">An image with the current image preset (the one selected on the Image tab).</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Print Screen</kbd></td><td class="wrap">A video with the current video preset. Press again to stop.</td></tr>
+<tr><td>A preset's own shortcut</td><td class="wrap">That preset, whatever tab is open. See <a href="#presets">Presets</a>.</td></tr>
+<tr><td>Red capture button</td><td class="wrap">The preset shown in the capture window.</td></tr>
+<tr><td>Notification area icon</td><td class="wrap">Single click = image capture; right click › <span class="ui">Presets</span> runs any preset.</td></tr>
+<tr><td><a href="#oneclick">One Click</a></td><td class="wrap">A small panel on the edge of the screen with a capture button and a menu.</td></tr>
+<tr><td>Editor</td><td class="wrap"><span class="ui">Capture</span> and <span class="ui">Record</span> buttons at the top left, or
+<span class="path">File › New capture</span> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>) and <span class="path">File › New video recording</span>.</td></tr>
+<tr><td>Preset list</td><td class="wrap">Double-click a preset, or use its gear › <span class="ui">Capture with this preset</span>.</td></tr>
+<tr><td><a href="#cmdline">Command line</a></td><td class="wrap"><code>Snapnab.exe /capture</code>, <code>/video</code>, <code>/preset "name"</code>, <code>/clipboard</code>.</td></tr>
+<tr><td>Clipboard monitor</td><td class="wrap">When another program copies an image (for example the Windows Snipping Tool), the Editor
+can open it automatically. See <a href="#options">Options</a>.</td></tr>
+</table>
+</section>
+
+<section id="crosshair">
+<h2>The crosshair and selecting</h2>
+<p>For most selection types, Snapnab first <b>freezes the screen</b> and shows a crosshair. Because the image is frozen, tooltips,
+hover effects and animations stay exactly as they were when you pressed the key.</p>
+<ul>
+  <li><b>Magnifier</b> — a zoomed view of the pixels around the pointer, with the screen <b>coordinates</b> (X, Y) and the
+  <b>color</b> under the pointer (swatch and hex code). Use it to start a selection on the exact pixel.</li>
+  <li><b>Size label</b> — while you drag, the width × height of the selection is shown above it.</li>
+  <li><b>Hint bar</b> — a strip at the top of the monitor reminds you of the keys for the current mode.</li>
+</ul>
+<table>
+<tr><th>Key / mouse</th><th class="wrap">Effect</th></tr>
+<tr><td>Drag</td><td class="wrap">Selects a rectangle (Region mode).</td></tr>
+<tr><td>Click</td><td class="wrap">Captures the highlighted window, control or area under the pointer.</td></tr>
+<tr><td><kbd>Enter</kbd></td><td class="wrap">Captures the whole monitor under the pointer (Region mode); finishes a multiple-area selection.</td></tr>
+<tr><td>Arrow keys</td><td class="wrap">Move the pointer by 1 pixel (with <kbd>Shift</kbd>, by 10 pixels) for pixel-perfect selections.</td></tr>
+<tr><td><kbd>Backspace</kbd></td><td class="wrap">Removes the last area in <span class="ui">Multiple areas</span>.</td></tr>
+<tr><td>Right click</td><td class="wrap">Finishes <span class="ui">Multiple areas</span>; cancels the other modes.</td></tr>
+<tr><td><kbd>Esc</kbd></td><td class="wrap">Cancels the capture.</td></tr>
+</table>
+<div class="callout tip"><b>Need to open a menu or hover something first?</b>Set a <span class="ui">Delay</span> in the capture window.
+The countdown ("Capturing in 3 s…") gives you time to open the menu or tooltip before the screen freezes.</div>
+</section>
+
+<section id="selection-types">
+<h2>Selection types</h2>
+<p>The <span class="ui">Selection</span> box decides what part of the screen is captured. Image presets offer all of them; video
+presets offer Region, Window, Full screen and Current monitor.</p>
+<table>
+<tr><th>Selection</th><th class="wrap">Best for</th></tr>
+<tr><td><a href="#sel-region">Region</a></td><td class="wrap">Any rectangle, window or control — the everyday choice.</td></tr>
+<tr><td><a href="#sel-window">Window</a></td><td class="wrap">One whole window, with nothing else around it.</td></tr>
+<tr><td><a href="#sel-window">Full screen (all monitors)</a></td><td class="wrap">Everything on every monitor.</td></tr>
+<tr><td><a href="#sel-window">Current monitor</a></td><td class="wrap">The monitor where the pointer is.</td></tr>
+<tr><td><a href="#sel-freehand">Freehand</a></td><td class="wrap">An irregular shape; the outside becomes transparent.</td></tr>
+<tr><td><a href="#sel-freehand">Multiple areas</a></td><td class="wrap">Several rectangles combined into one image.</td></tr>
+<tr><td><a href="#sel-freehand">Object (control under the cursor)</a></td><td class="wrap">A single button, toolbar, panel or field.</td></tr>
+<tr><td><a href="#sel-panoramic">Panoramic scrolling</a></td><td class="wrap">Long content that you scroll yourself: web pages, chats, spreadsheets, wide timelines.</td></tr>
+<tr><td><a href="#sel-scrolling">Automatic scrolling (window)</a></td><td class="wrap">A scrollable window that Snapnab scrolls for you.</td></tr>
+<tr><td><a href="#sel-extended">Extended window</a></td><td class="wrap">A window enlarged beyond the size of the screen.</td></tr>
+<tr><td><a href="#sel-menu">Menu</a></td><td class="wrap">Open menus and submenus.</td></tr>
+<tr><td><a href="#sel-menu">Clipboard</a></td><td class="wrap">The image currently on the clipboard.</td></tr>
+<tr><td><a href="#sel-menu">Graphics file</a></td><td class="wrap">An image file on disk.</td></tr>
+</table>
+
+<h3 id="sel-region">Region and fixed region</h3>
+<p><b>Region</b> combines the most common selections in one mode: drag a rectangle, click a highlighted window or control, or
+press <kbd>Enter</kbd> for the whole monitor.</p>
+<p>The gear ⚙ in the Selection box offers two ways to choose the region:</p>
+<ul>
+  <li><span class="ui">Select the region at capture time</span> — the normal, interactive crosshair.</li>
+  <li><span class="ui">Fixed region…</span> — always the same size. Enter the <span class="ui">Width (px)</span> and
+  <span class="ui">Height (px)</span>. During the capture a rectangle of that size follows the pointer; click to capture. Turn on
+  <span class="ui">Always capture at the same position</span> and enter <span class="ui">Left (X)</span> and <span class="ui">Top (Y)</span>
+  to skip the crosshair entirely: the capture happens instantly at that spot. The box then shows "Fixed region".</li>
+</ul>
+<div class="callout tip"><b>When to use a fixed region</b>Documentation where every screenshot must be the same size, product
+images for a store, or repeating a capture of the same dashboard every day.</div>
+
+<h3 id="sel-window">Window, Full screen and Current monitor</h3>
+<ul>
+  <li><b>Window</b> — the pointer becomes a hand; click the window to capture. In video, the recording follows the window's
+  outline at the moment you click.</li>
+  <li><b>Full screen (all monitors)</b> — captures every monitor at once, with no crosshair.</li>
+  <li><b>Current monitor</b> — captures only the monitor where the mouse pointer is.</li>
+</ul>
+<p>For Full screen and Current monitor, the gear offers <a href="#sel-objects">Each window as a separate object</a>.</p>
+
+<h3 id="sel-freehand">Freehand, Multiple areas and Object</h3>
+<ul>
+  <li><b>Freehand</b> — hold the mouse button and draw an outline around what you want. When you release, the area inside the
+  outline is captured and everything outside it is transparent.</li>
+  <li><b>Multiple areas</b> — drag as many rectangles as you want. <kbd>Backspace</kbd> removes the last one. Press
+  <kbd>Enter</kbd> or right-click to finish. The result is one image containing all the areas in their original positions;
+  the space between them is transparent.</li>
+  <li><b>Object (control under the cursor)</b> — move the pointer over a button, a toolbar, a list or any other element; it is
+  outlined. Click to capture just that element.</li>
+</ul>
+
+<h3 id="sel-panoramic">Panoramic scrolling</h3>
+<p>Captures content that is longer or wider than the screen while <b>you</b> scroll it. It works in almost any program: web
+browsers, chat apps, spreadsheets, PDF viewers, code editors, wide timelines.</p>
+<ol class="steps">
+  <li>Choose the <span class="ui">Panoramic scrolling capture</span> preset (or set <span class="ui">Selection: Panoramic
+  scrolling</span>) and start the capture.</li>
+  <li>Drag a rectangle around the part of the window that scrolls (the page content, not the whole window).</li>
+  <li>A frame and a small bar appear: "Scroll the content inside the frame…". Scroll at a normal pace with the mouse wheel, the
+  scroll bar or the keyboard, down or sideways. The bar shows the size captured so far.</li>
+  <li>Click <span class="ui">Finish</span>. The frames are stitched into one long image. <span class="ui">Cancel</span> discards it.</li>
+</ol>
+<div class="callout tip"><b>Tips for clean results</b>Only include the scrolling part in the frame. Sticky headers outside the
+frame are not repeated. Scroll steadily; scrolling back up a little is fine. Very long images are limited to 32,000 pixels.</div>
+
+<h3 id="sel-scrolling">Automatic scrolling (window)</h3>
+<p>Snapnab scrolls the window for you and stitches the result. The built-in preset <span class="ui">Scrolling (full page)</span>
+uses it.</p>
+<ol class="steps">
+  <li>Start the capture; the pointer becomes a hand.</li>
+  <li>Click inside the scrollable area (for example, a web page).</li>
+  <li>Snapnab scrolls it from top to bottom with the mouse wheel, detects how far each step moved and joins the pieces. Do not
+  move the mouse until it finishes.</li>
+</ol>
+<p>If the program scrolls in an unusual way (animated scrolling, lazy-loading pages), use <a href="#sel-panoramic">Panoramic
+scrolling</a> instead.</p>
+
+<h3 id="sel-extended">Extended window</h3>
+<p>Some windows can show more content if they are bigger than the screen. Extended window temporarily enlarges a window, captures
+it and puts it back.</p>
+<ol class="steps">
+  <li>Start the capture and click the window.</li>
+  <li>In the <span class="ui">Extended window</span> dialog, enter the <span class="ui">New width (px)</span> and
+  <span class="ui">New height (px)</span> (up to 19,500 pixels).</li>
+  <li>The window is resized, captured and restored to its original size and position.</li>
+</ol>
+
+<h3 id="sel-menu">Menu, Clipboard and Graphics file</h3>
+<ul>
+  <li><b>Menu</b> — captures the open menu and its open submenus together. Use a <span class="ui">Delay</span> so you have time to
+  open the menu first. If no open menu is found, Snapnab lets you select a region instead.</li>
+  <li><b>Clipboard</b> — uses the image currently on the clipboard as the capture, so it gets your preset's effects and destinations
+  and goes to the Library. Also available in <span class="path">Capture › From the clipboard</span>.</li>
+  <li><b>Graphics file</b> — asks for an image file and treats it as a capture. Also in <span class="path">Capture › From a graphics file…</span>.</li>
+</ul>
+
+<h3 id="sel-objects">Each window as a separate object, and page links</h3>
+<p>The Selection gear has two more options for image presets:</p>
+<h4>Each window as a separate object</h4>
+<p>Available for <span class="ui">Full screen</span> and <span class="ui">Current monitor</span>. The capture opens in the Editor with the
+desktop wallpaper and the taskbar as the background and <b>every visible window as its own image object</b>, named after its title.
+You can then move windows around, hide or delete one (for example a private chat), or rearrange them for a clean screenshot. Each
+window is captured complete, even the parts that were covered by other windows. Use the <a href="#layers">Layers panel</a> to see
+and manage them.</p>
+<h4>Keep the page links (clickable, also in PDF)</h4>
+<p>On by default. When you capture a web browser or document viewer, Snapnab records where the links are and their addresses.
+In the Editor, resting the mouse on a link area shows its address; double-click opens it. When you export to PDF, the links
+stay clickable. Links are kept when the capture effects only resize or add a border; effects that change the geometry (rotate,
+trim, edges, shadow, capture info) drop them.</p>
+</section>
+
+<section id="capture-options">
+<h2>Capture options</h2>
+<table>
+<tr><th>Option</th><th class="wrap">What it does</th></tr>
+<tr><td>Preview in Editor</td><td class="wrap">On: the capture opens in the Editor. Off: the capture is only stored in the Library
+(and sent to the other destinations); a notification confirms it.</td></tr>
+<tr><td>Copy to clipboard</td><td class="wrap">Also copies the final image to the clipboard, ready to paste.</td></tr>
+<tr><td>Capture cursor</td><td class="wrap">Includes the mouse pointer in the image or video.</td></tr>
+<tr><td>Delay</td><td class="wrap">Waits before capturing (1 to 60 seconds). A countdown appears on screen.</td></tr>
+</table>
+<p>Whatever you choose, <b>every capture is stored in the Library</b>. You can always find it later in the Editor's
+<a href="#tray-library">Library</a>.</p>
+</section>
+
+<section id="capture-effects">
+<h2>Capture effects</h2>
+<p>Capture effects are applied automatically to every capture made with the preset, before it reaches the Editor or any destination.
+They are perfect for a consistent look: every screenshot with the same border and shadow, a watermark on everything, or captures
+always resized to 50%.</p>
+<h3>Adding, changing and removing effects</h3>
+<ol class="steps">
+  <li>Open the <span class="ui">Effects</span> box and choose an effect. Its settings open; click OK to turn it on.</li>
+  <li>To combine effects, open the box again and choose <span class="ui">Add another effect</span>.</li>
+  <li>To change one, choose it again in the list. To turn one off, choose it and then <span class="ui">Remove this effect</span>.
+  <span class="ui">None</span> turns them all off.</li>
+</ol>
+<h3>The 12 capture effects</h3>
+<table>
+<tr><th>Effect</th><th class="wrap">Settings</th></tr>
+<tr><td>Border</td><td class="wrap">A solid outline. <span class="ui">Width (px)</span> and <span class="ui">Color</span>.</td></tr>
+<tr><td>Filters</td><td class="wrap"><span class="ui">Grayscale</span>, <span class="ui">Sepia</span>, <span class="ui">Invert colors</span> or <span class="ui">Black and white</span>.</td></tr>
+<tr><td>Shadow</td><td class="wrap">A soft drop shadow. <span class="ui">Offset (px)</span>, <span class="ui">Blur (px)</span>, <span class="ui">Opacity (%)</span>.</td></tr>
+<tr><td>Capture info</td><td class="wrap">A text band with information. <span class="ui">Text</span> accepts the fields <code>{date}</code>,
+<code>{time}</code>, <code>{computer}</code> and <code>{user}</code>; <span class="ui">Position</span> at the bottom or the top.</td></tr>
+<tr><td>Color replacement</td><td class="wrap">Replaces one color with another: <span class="ui">Color to replace</span>, <span class="ui">New color</span>, <span class="ui">Tolerance</span>.</td></tr>
+<tr><td>Resize image</td><td class="wrap"><span class="ui">Scale (%)</span>, from 10% to 400%.</td></tr>
+<tr><td>Special edges</td><td class="wrap"><span class="ui">Style</span>: Torn, Wave, Saw tooth, Shark tooth, Fade or Bevel; <span class="ui">Size (px)</span>;
+and which sides (Top, Right, Bottom, Left).</td></tr>
+<tr><td>Trim edges</td><td class="wrap">Removes bands of uniform color around the capture. <span class="ui">Tolerance</span>.</td></tr>
+<tr><td>Color adjustment</td><td class="wrap"><span class="ui">Brightness</span>, <span class="ui">Contrast</span>, <span class="ui">Hue (degrees)</span>, <span class="ui">Saturation</span>.</td></tr>
+<tr><td>Rotate image</td><td class="wrap">90° right, 90° left, 180°, flip horizontally or flip vertically.</td></tr>
+<tr><td>Watermark</td><td class="wrap">Translucent text. <span class="ui">Text</span>, <span class="ui">Opacity (%)</span>, and
+<span class="ui">Repeat across the whole image</span> to tile it.</td></tr>
+<tr><td>Image resolution</td><td class="wrap"><span class="ui">Resolution (DPI)</span> written into files saved by the capture
+(PNG, JPEG, TIFF, BMP). Useful for print documents.</td></tr>
+</table>
+<div class="callout"><b>Capture effects vs. Editor effects</b>Capture effects run automatically on every capture of a preset. The
+Editor's <a href="#effects-panel">Effects panel</a> applies effects by hand to the image you are editing, with a live preview.</div>
+</section>
+
+<section id="share">
+<h2>Share destinations</h2>
+<p>Besides the Library, the Editor and the clipboard, a preset can send each capture to one extra destination chosen in the
+<span class="ui">Share</span> box. Destinations with settings show a gear ⚙.</p>
+<table>
+<tr><th>Destination</th><th class="wrap">What happens</th></tr>
+<tr><td>None</td><td class="wrap">No extra destination.</td></tr>
+<tr><td>File</td><td class="wrap">Saves each capture automatically, without asking. Gear: <span class="ui">Format</span> (PNG, JPEG, BMP,
+GIF or TIFF), <span class="ui">Name prefix</span> and <span class="ui">Folder</span>. Files are named <i>prefix + number</i>, for example
+<code>Capture001.png</code>, <code>Capture002.png</code>…</td></tr>
+<tr><td>External program</td><td class="wrap">Opens each capture in another program. Gear: <span class="ui">Program</span>, for example
+<code>mspaint.exe</code> or the full path of an image editor.</td></tr>
+<tr><td>Text (OCR)</td><td class="wrap">Recognizes the text in the capture and copies it to the clipboard. See <a href="#grab-text">Capturing text</a>.</td></tr>
+</table>
+</section>
+
+<section id="grab-text">
+<h2>Capturing text (OCR)</h2>
+<p>Use it to copy text that cannot be selected: an error message, a video frame, a scanned document, text in an image.</p>
+<ol class="steps">
+  <li>Run the built-in <span class="ui">Grab Text</span> preset (or any preset with <span class="ui">Share: Text (OCR)</span>).</li>
+  <li>Select the area with the text.</li>
+  <li>The recognized text is copied to the clipboard and shown in a window, where you can check it or copy part of it.</li>
+</ol>
+<p>Text recognition uses the OCR engine built into Windows, so the languages it reads are the ones installed in
+<span class="path">Windows Settings › Time &amp; language › Language</span>. If no OCR language is installed, Snapnab tells you so.
+You can also recognize text of an image already open in the Editor: see <a href="#editor-ocr">Grab Text in the Editor</a>.</p>
+<div class="callout tip"><b>Better recognition</b>Capture at 100% zoom or larger, avoid busy backgrounds, and include whole lines.</div>
+</section>
+
+<section id="oneclick">
+<h2>One Click</h2>
+<p>One Click is a small, discreet panel docked to an edge of the screen. It stays collapsed as a thin colored strip and opens when
+the mouse moves over it.</p>
+<ul>
+  <li>Turn it on or off with <span class="path">View › Show One Click</span> in the capture window, or from the notification area menu.</li>
+  <li>The red button starts an image capture with the current preset.</li>
+  <li>The gear opens a menu: <span class="ui">Capture image</span>, <span class="ui">Record video</span>, <span class="ui">Presets</span>,
+  <span class="ui">Open the capture window</span> and <span class="ui">Hide One Click</span>.</li>
+  <li>Drag the panel to move it; when you let go, it snaps to the nearest edge of the nearest monitor. Its position is remembered.</li>
+  <li>One Click hides itself during captures and never appears in your images or videos.</li>
+</ul>
+</section>
+
+<!-- ============================================================ PART 2 -->
+<p class="part-title">Part 2 — Recording video</p>
+<section id="video-setup">
+<h2>Setting up a recording</h2>
+<p>Snapnab records the screen as an <b>MP4</b> video (H.264 video and AAC audio), with microphone and system audio. Open the
+<span class="ui">Video</span> tab of the capture window to set it up.</p>
+<table>
+<tr><th>Setting</th><th class="wrap">What it does</th></tr>
+<tr><td>Selection</td><td class="wrap">Region (with the <a href="#sel-region">fixed region</a> option in the gear), Window, Full screen
+(all monitors) or Current monitor.</td></tr>
+<tr><td>Quality</td><td class="wrap">Very low, Low, Medium or High. Higher quality means larger files.</td></tr>
+<tr><td>Quality gear ⚙ — <span class="ui">Video options</span></td><td class="wrap"><span class="ui">Frames per second</span> (10, 15, 24, 30 or 60);
+<span class="ui">Downscale to 1080p</span> (smaller files when recording a 4K screen); <span class="ui">Hardware encoding</span>
+(uses the graphics card's encoder, falling back to software if it is not available); and the default
+<span class="ui">Microphone volume (%)</span>, <span class="ui">System audio volume (%)</span> and <span class="ui">Automatic microphone gain</span>.</td></tr>
+<tr><td>Webcam</td><td class="wrap">Off or the camera to show inside the video, its shape and background removal. See <a href="#webcam">Webcam</a>.</td></tr>
+<tr><td>Preview in Editor</td><td class="wrap">Opens the finished video in the Editor. Off: only a notification.</td></tr>
+<tr><td>Capture cursor</td><td class="wrap">Shows the mouse pointer in the video.</td></tr>
+<tr><td>Record microphone</td><td class="wrap">Records your voice.</td></tr>
+<tr><td>Record system audio</td><td class="wrap">Records what the computer plays (videos, calls, notification sounds).</td></tr>
+</table>
+<div class="callout tip"><b>Recommended settings</b>For tutorials: 30 fps, Medium or High quality, microphone on. For
+fast-moving content such as games: 60 fps and hardware encoding. For long recordings on a 4K screen: Downscale to 1080p.</div>
+</section>
+
+<section id="recording">
+<h2>Recording, step by step</h2>
+<ol class="steps">
+  <li>Press <kbd>Shift</kbd>+<kbd>Print Screen</kbd> (or the record button on the Video tab).</li>
+  <li>Select the area: drag a rectangle, click a window or press <kbd>Enter</kbd> for the monitor. The hint bar starts with
+  "Recording:" so you know you are selecting for a video.</li>
+  <li>A <b>red frame</b> marks the recorded area and the <b>recording panel</b> appears below it (or above it, or inside it if there is no
+  room). The panel says "Ready". The audio meters already move, so you can check your microphone before starting.</li>
+  <li>Click the red <b>record</b> button. A 3-second countdown appears; click <span class="ui">Skip</span> (or press the record
+  button or shortcut again) to start right away.</li>
+  <li>Record. The panel shows the elapsed time.</li>
+  <li>Click <b>stop</b> or press <kbd>Shift</kbd>+<kbd>F10</kbd>. The MP4 is saved to the Library and opens in the Editor.</li>
+</ol>
+<div class="callout"><b>Not in your video</b>The red frame, the recording panel, the volume panel and One Click are invisible to the
+recording. You can leave them where they are.</div>
+
+<h3>The recording panel</h3>
+<table>
+<tr><th>Button</th><th class="wrap">Function</th></tr>
+<tr><td>Record / Pause</td><td class="wrap">Starts the recording; during the recording, pauses and resumes it. The paused time is
+left out of the video, with no gap or frozen frame.</td></tr>
+<tr><td>Stop</td><td class="wrap">Finishes and saves the video.</td></tr>
+<tr><td>Restart</td><td class="wrap">Throws away what was recorded so far and starts again after a new countdown.</td></tr>
+<tr><td>Cancel</td><td class="wrap">Stops without saving anything.</td></tr>
+<tr><td>Microphone</td><td class="wrap">Before recording: turns the microphone on or off. During: mutes or unmutes it.</td></tr>
+<tr><td>System audio</td><td class="wrap">Same, for the computer's sound.</td></tr>
+<tr><td>Volume (sliders icon)</td><td class="wrap">Opens the volume panel. See <a href="#audio">Microphone and system audio</a>.</td></tr>
+<tr><td>Webcam</td><td class="wrap">Shows or hides the webcam in the video (only when a webcam is turned on in the preset).</td></tr>
+<tr><td>Camera</td><td class="wrap">Takes a still image of the recorded area without stopping the recording. The image goes to the Library.</td></tr>
+</table>
+<p>You can drag the panel by its background to move it.</p>
+
+<h3>Shortcuts while recording</h3>
+<table>
+<tr><th>Keys</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F9</kbd></td><td class="wrap">Starts (skipping the countdown), pauses and resumes.</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F10</kbd></td><td class="wrap">Stops and saves.</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Print Screen</kbd></td><td class="wrap">Stops and saves (the video shortcut works as a toggle).</td></tr>
+</table>
+
+<h3>Disk space and safety</h3>
+<ul>
+  <li>When less than 1 GB is free on the Library's drive, Snapnab warns you. If the disk fills up, the recording stops and what was
+  recorded is saved.</li>
+  <li>The computer does not go to sleep while recording.</li>
+  <li>If you try to exit Snapnab during a recording, it asks before stopping.</li>
+</ul>
+</section>
+
+<section id="audio">
+<h2>Microphone and system audio</h2>
+<p>The microphone and the system audio are recorded on separate channels and mixed into the video's sound track.</p>
+<ul>
+  <li><b>Volume panel</b> — click the sliders button on the recording panel. Each source has a slider from 0% to 200% (it sticks
+  at 100%) and a live level meter that shows the level after the volume, so you can see whether you are too quiet or too loud.</li>
+  <li><b>Automatic microphone gain</b> — evens out the microphone level, raising a quiet voice and avoiding clipping. Turn it off
+  if you have a good microphone and set the level by hand.</li>
+  <li>The volumes work before and during the recording, and are saved back into the preset, so next time you start with the same values.
+  The defaults can also be set in the Quality gear (<span class="ui">Video options</span>).</li>
+</ul>
+<div class="callout tip"><b>Check before you record</b>The meters move as soon as the recording panel appears, before you press
+record. Say a few words and watch the microphone meter.</div>
+</section>
+
+<section id="webcam">
+<h2>Webcam</h2>
+<p>You can show your face in a corner of the video, as in a presentation or tutorial.</p>
+<ol class="steps">
+  <li>On the Video tab, open the <span class="ui">Webcam</span> menu and choose your camera.</li>
+  <li>In the same menu, choose the <span class="ui">Shape</span>: Circle, Rounded square, Square, Rectangle 16:9 or Rectangle 4:3.</li>
+  <li>Start the recording. The webcam appears inside the recorded area, mirrored like a mirror. <b>Drag it</b> to where you want it,
+  even during the recording.</li>
+  <li>Use the webcam button on the recording panel to hide it and show it again at any time.</li>
+</ol>
+<h3>Removing the background (chroma key)</h3>
+<p><span class="ui">Remove background (chroma key)…</span> in the Webcam menu removes a plain background behind you, so only you appear
+in the video, without a frame.</p>
+<ul>
+  <li><span class="ui">Background color</span> — the color of your background (green is ideal).</li>
+  <li><span class="ui">Tolerance (0–100)</span> — how different a color can be and still be removed. Raise it if bits of background remain;
+  lower it if parts of you disappear.</li>
+  <li>Use a plain, evenly lit background. A green screen gives the best result.</li>
+</ul>
+<p>If Windows blocks the camera, allow it in <span class="path">Windows Settings › Privacy &amp; security › Camera</span>.</p>
+</section>
+
+<!-- ============================================================ PART 3 -->
+<p class="part-title">Part 3 — Presets and shortcuts</p>
+<section id="presets">
+<h2>Presets</h2>
+<p>A <b>preset</b> stores everything the capture window shows: the type (image or video), the selection, the effects, the
+destination, the switches, the delay, the recording options and the webcam. Presets let you switch between completely different
+setups with one click or one key.</p>
+
+<h3>Built-in presets</h3>
+<table>
+<tr><th>Preset</th><th class="wrap">Setup</th></tr>
+<tr><td>Panoramic scrolling capture</td><td class="wrap">Panoramic scrolling selection.</td></tr>
+<tr><td>Grab Text</td><td class="wrap">Region; recognizes text and copies it, without opening the Editor.</td></tr>
+<tr><td>Image — Region</td><td class="wrap">The everyday region capture.</td></tr>
+<tr><td>Image — Window</td><td class="wrap">Window selection with a shadow effect.</td></tr>
+<tr><td>Full screen → Clipboard</td><td class="wrap">Whole screen straight to the clipboard, without opening the Editor.</td></tr>
+<tr><td>Scrolling (full page)</td><td class="wrap">Automatic scrolling of a window.</td></tr>
+<tr><td>Video — Region</td><td class="wrap">Records a region, with the cursor.</td></tr>
+<tr><td>Video — Full screen</td><td class="wrap">Records the current monitor, with the cursor.</td></tr>
+</table>
+<p>You can change, rename or delete the built-in presets; deleted ones do not come back.</p>
+
+<h3>Using the preset list</h3>
+<p>Click <span class="ui">⚙ Presets</span> at the bottom of the capture window (or <span class="path">View › Presets list</span>) to show the list.</p>
+<ul>
+  <li><b>Click</b> a preset to load it into the window. Any change you make is saved into that preset.</li>
+  <li><b>Double-click</b> a preset to capture with it.</li>
+  <li><span class="ui">Add shortcut</span> on a row gives the preset its own global shortcut.</li>
+  <li>The <b>gear</b> on a row: <span class="ui">Capture with this preset</span>, <span class="ui">Rename…</span>, <span class="ui">Shortcut…</span>,
+  <span class="ui">Duplicate</span> and <span class="ui">Delete</span>. At least one preset must remain.</li>
+</ul>
+
+<h3>Creating presets</h3>
+<p>The <span class="ui">+</span> button next to Presets offers:</p>
+<ul>
+  <li><span class="ui">New preset from current settings</span> — saves what the window shows now as a new preset.</li>
+  <li><span class="ui">New preset…</span> — starts a new preset with the default settings.</li>
+  <li><span class="ui">Help</span> — a short reminder of how presets work.</li>
+</ul>
+<div class="callout tip"><b>A good habit</b>Keep the everyday preset selected, and create presets for special jobs, each with a
+shortcut: "Window with shadow to clipboard", "Product photo 800×800 to file", "Tutorial video with webcam"…</div>
+
+<h3>Sharing presets</h3>
+<p><span class="path">File › Export presets…</span> saves all presets to a <code>.snappresets</code> file;
+<span class="path">File › Import presets…</span> adds the presets from such a file. To move <i>all</i> settings to another computer, see
+<a href="#backup">Backing up your settings</a>.</p>
+</section>
+
+<section id="hotkeys">
+<h2>Global shortcuts</h2>
+<p>Global shortcuts work anywhere in Windows, even when Snapnab is hidden. Change them in <span class="path">File › Options…</span>:</p>
+<table>
+<tr><th>Shortcut (default)</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>Print Screen</kbd></td><td class="wrap">Capture image (current image preset).</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Print Screen</kbd></td><td class="wrap">Record video (current video preset); again to stop.</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F9</kbd></td><td class="wrap">Pause/resume video.</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F10</kbd></td><td class="wrap">Stop video.</td></tr>
+</table>
+<p>Each preset can also have its own shortcut (<span class="ui">Add shortcut</span> in the preset list). In the shortcut box, press the
+key combination you want; press <kbd>Backspace</kbd> to leave it empty and remove the shortcut.</p>
+<ul>
+  <li>If the combination is already used by another Snapnab action, Snapnab refuses it and tells you which one.</li>
+  <li>If another program already uses it, Snapnab warns you and intercepts it with a keyboard hook, so the key still works for Snapnab.</li>
+</ul>
+</section>
+
+<!-- ============================================================ PART 4 -->
+<p class="part-title">Part 4 — The Editor</p>
+<section id="editor-tour">
+<h2>A tour of the Editor</h2>
+<figure class="diagram">
+<div class="ed" aria-hidden="true">
+  <div class="t"><span class="num">1</span>File · Edit · Image · View · Help</div>
+  <div class="tb"><span><span class="num">2</span>Capture · Record</span><span><span class="num">3</span>Move · Selection · Text · Highlighter · Shape · … · Magnify · More</span><span><span class="num">4</span>Copy all · Save as · Share</span></div>
+  <div class="cv"><span class="num">5</span>&nbsp;Canvas (your capture)</div>
+  <div class="rp"><span class="num">6</span>Properties | Effects | Layers<br><br>Quick styles<br>Tool properties</div>
+  <div class="tr"><span class="num">7</span>Recent captures ▸ [thumb] [thumb] [thumb] … Library</div>
+  <div class="sb"><span class="num">8</span>Status messages · X, Y · 1280 × 720 px ▾ · Zoom 100% ▾</div>
+</div>
+<figcaption>Layout of Snapnab Editor.</figcaption>
+</figure>
+<table>
+<tr><th>#</th><th class="wrap">Part</th></tr>
+<tr><td>1</td><td class="wrap"><b>Menus</b> — File, Edit, Image, View and Help (<kbd>Alt</kbd> + letter or <kbd>F10</kbd>).</td></tr>
+<tr><td>2</td><td class="wrap"><b>Capture / Record</b> — ask Snapnab for a new image capture or video recording.</td></tr>
+<tr><td>3</td><td class="wrap"><b>Toolbar</b> — the drawing tools. <span class="ui">More</span> at the end lists every tool and opens
+<a href="#toolbar">Customize toolbar</a>.</td></tr>
+<tr><td>4</td><td class="wrap"><b>Copy all, Save as, Share</b> — copy the finished image, save it as a file, or share it (file, clipboard,
+e-mail, printer, external program).</td></tr>
+<tr><td>5</td><td class="wrap"><b>Canvas</b> — your capture. <kbd>Ctrl</kbd>+mouse wheel zooms; the middle mouse button pans.</td></tr>
+<tr><td>6</td><td class="wrap"><b>Right panel</b> — three tabs: <a href="#styles">Properties</a> (quick styles and tool properties),
+<a href="#effects-panel">Effects</a> and <a href="#layers">Layers</a>.</td></tr>
+<tr><td>7</td><td class="wrap"><b>Recent captures tray</b> — your latest captures. <span class="ui">Library</span> shows all of them.
+See <a href="#tray-library">Recent captures and the Library</a>.</td></tr>
+<tr><td>8</td><td class="wrap"><b>Status bar</b> — hints and messages, the pointer's coordinates (with rulers on), the image size (click to
+resize) and the zoom (click for zoom options).</td></tr>
+</table>
+
+<h3>Opening and creating images</h3>
+<table>
+<tr><th>Command</th><th class="wrap">What it does</th></tr>
+<tr><td><span class="path">File › New capture</span> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td><td class="wrap">Asks Snapnab for a new image capture.</td></tr>
+<tr><td><span class="path">File › New video recording</span></td><td class="wrap">Starts a new recording.</td></tr>
+<tr><td><span class="path">File › New from clipboard</span></td><td class="wrap">Creates an image from the clipboard.</td></tr>
+<tr><td><span class="path">File › New image…</span></td><td class="wrap">Creates a blank image of the size and color you choose.</td></tr>
+<tr><td><span class="path">File › Open…</span> <kbd>Ctrl</kbd>+<kbd>O</kbd></td><td class="wrap">Opens <code>.snap</code>, PNG, JPG, BMP, GIF, TIFF, ICO or MP4 files.</td></tr>
+<tr><td>Drag and drop</td><td class="wrap">Drop image or video files from File Explorer onto the Editor to import them.</td></tr>
+<tr><td><span class="path">File › Duplicate</span></td><td class="wrap">Makes a copy of the current capture in the Library.</td></tr>
+<tr><td><span class="path">File › Close document</span> <kbd>Ctrl</kbd>+<kbd>W</kbd></td><td class="wrap">Closes the current capture (it stays in the Library).</td></tr>
+</table>
+
+<h3>Zoom and view</h3>
+<ul>
+  <li><kbd>Ctrl</kbd>+mouse wheel zooms around the pointer (smoothly on touchpads). <kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>-</kbd>
+  zoom in and out, <kbd>Ctrl</kbd>+<kbd>1</kbd> shows the actual size, <kbd>Ctrl</kbd>+<kbd>0</kbd> fits the image to the window.</li>
+  <li>Scroll with the mouse wheel and the scroll bars, or drag with the middle mouse button.</li>
+  <li><span class="path">View › Background color of the area…</span> changes the color around the image.</li>
+  <li><span class="path">View</span> also shows or hides the <span class="ui">Effects panel</span>, <span class="ui">Layers panel</span>,
+  <span class="ui">Library</span>, <span class="ui">Recent captures (tray)</span> and <span class="ui">Rulers and guides</span>.</li>
+</ul>
+</section>
+
+<section id="objects-basics">
+<h2>Objects: the basics</h2>
+<p>Everything you draw in the Editor — arrows, text, shapes, steps, stamps, blurs — is an <b>object</b> that floats above the
+image. Objects stay editable until you <i>merge</i> them into the image, and they are kept editable in the <code>.snap</code> file.</p>
+
+<h3>Drawing</h3>
+<ul>
+  <li>Choose a tool on the toolbar or with its letter key (<a href="#tools">tool reference</a>), then drag on the canvas.</li>
+  <li>A drawing tool only picks up objects of its own kind; over other objects it draws. So you can highlight a text or point an arrow at a
+  stamp without moving them. Hold <kbd>Ctrl</kbd> to draw over an object of the same kind.</li>
+  <li><kbd>Shift</kbd> while drawing makes perfect squares, circles and 45° lines. See <a href="#area-shapes">Perfect geometry</a>.</li>
+</ul>
+
+<h3>Selecting, moving and resizing</h3>
+<ul>
+  <li>With <b>Move</b> (<kbd>V</kbd>), click an object to select it. Handles appear: drag a corner or side to resize, drag the
+  object to move it. Yellow handles adjust special points (a callout's tail, a magnifier's lens, a curved arrow's bend).</li>
+  <li>Arrow keys nudge the selected object by 1 pixel; <kbd>Shift</kbd>+arrow by 10 pixels.</li>
+  <li><kbd>Shift</kbd> while dragging an existing object locks the movement to the first direction you moved.</li>
+  <li>Double-click a text, callout or arrow label to edit its text.</li>
+  <li><kbd>Del</kbd> deletes the selection. <kbd>Esc</kbd> cancels the current action.</li>
+</ul>
+
+<h3>Selecting several objects</h3>
+<ul>
+  <li><kbd>Ctrl</kbd>+click or <kbd>Shift</kbd>+click adds or removes an object from the selection.</li>
+  <li>With Move, drag on an empty part of the image to draw a selection rectangle: every object it touches is selected.</li>
+  <li><kbd>Ctrl</kbd>+<kbd>A</kbd> selects all objects.</li>
+  <li>Selected objects move, delete, change order, align, flip and merge together. A style change applies to the selected objects of
+  the same kind as the last one clicked.</li>
+</ul>
+
+<h3>Changing an object's look</h3>
+<p>Select it and use the <span class="ui">Properties</span> tab: click a quick style, or change colors, width, font and the other
+properties. Changes apply live. The tool also remembers your last settings for the next object, even after restarting.</p>
+
+<h3>Right-click menu</h3>
+<p>Right-click the canvas for: cut, copy, paste, paste in place, delete, lock/unlock, rename, order, align, distribute, group, drop
+the floating piece and open link.</p>
+
+<h3>Undo</h3>
+<p><kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>Y</kbd> (or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>) redoes, and
+<span class="path">Edit › Undo all</span> returns to the original capture. Every capture has its own undo history.</p>
+</section>
+
+<section id="styles">
+<h2>Quick styles, themes and favorites</h2>
+<p>At the top of the <span class="ui">Properties</span> tab, every tool shows a gallery of <b>quick styles</b> — ready-made
+combinations of colors, widths, fonts and shadows. Click one to use it for the next object, or to restyle the selected object.</p>
+<ul>
+  <li><b>+</b> saves the current settings as a new quick style.</li>
+  <li><b>Star</b> on a style adds it to your favorites. Right-click a style for <span class="ui">Apply this style</span>,
+  <span class="ui">Add to favorites</span> / <span class="ui">Remove from favorites</span> and <span class="ui">Delete this quick style</span>.</li>
+  <li>The <b>Favorites</b> tool (star icon on the toolbar) shows your favorite styles from <i>all</i> tools in one place. Picking one
+  switches to the right tool automatically.</li>
+</ul>
+<h3>Themes</h3>
+<p>The quick styles of all tools are generated from a <b>theme</b> of up to four colors. Choose the theme in the <span class="ui">Theme:</span>
+box (<span class="ui">Basic</span>, <span class="ui">Industrial</span> or your own). Its gear offers <span class="ui">New theme…</span>,
+<span class="ui">Edit theme…</span> (or <span class="ui">Edit a copy of the theme…</span> for built-in ones), duplicate, <span class="ui">Import theme</span>,
+<span class="ui">Export theme</span> (<code>.snaptheme</code> file, to share with colleagues) and delete. Use your company colors in a theme
+and every tool matches your brand.</p>
+
+<h3>Tool properties</h3>
+<p>Below the quick styles, <span class="ui">Tool properties</span> shows the settings of the current tool. Common ones:</p>
+<table>
+<tr><th>Property</th><th class="wrap">Meaning</th></tr>
+<tr><td>Color / Fill / Outline</td><td class="wrap">Click the swatch to open the <a href="#colors">color palette</a>.</td></tr>
+<tr><td>Shadow</td><td class="wrap"><span class="ui">Show shadow</span>, direction (3×3 grid), <span class="ui">Shadow color…</span>, opacity, blur and <span class="ui">Distance</span>.</td></tr>
+<tr><td>Width / Thickness</td><td class="wrap">Line or outline thickness, with a slider and a number box.</td></tr>
+<tr><td>Opacity</td><td class="wrap">0% (invisible) to 100% (solid). Applies to the whole object.</td></tr>
+<tr><td>Start cap / Dashes / End cap</td><td class="wrap">Arrowheads (8 kinds) and dash patterns for arrows and lines.</td></tr>
+<tr><td>Font, Font size, Advanced</td><td class="wrap">For texts and callouts: bold, italic, underline, horizontal and vertical alignment,
+opacity, padding and line spacing.</td></tr>
+<tr><td>Position and size (px)</td><td class="wrap">Exact X, Y, W and H. See <a href="#precision">Exact sizes</a>.</td></tr>
+</table>
+</section>
+
+<section id="tools">
+<h2>Tool reference</h2>
+<p>Letter keys work when the canvas has focus. Click a tool to jump to its description.</p>
+<div class="toolgrid">
+  <a href="#tool-move">Move <kbd>V</kbd></a><a href="#tool-arrow">Arrow <kbd>A</kbd></a><a href="#tool-line">Line <kbd>L</kbd></a>
+  <a href="#tool-shape">Shape <kbd>R</kbd></a><a href="#tool-pen">Pen <kbd>P</kbd></a><a href="#tool-highlighter">Highlighter <kbd>H</kbd></a>
+  <a href="#tool-text">Text <kbd>T</kbd></a><a href="#tool-callout">Callout <kbd>C</kbd></a><a href="#tool-steps">Steps <kbd>N</kbd></a>
+  <a href="#tool-stamp">Stamp <kbd>K</kbd></a><a href="#tool-blur">Blur <kbd>B</kbd></a><a href="#tool-spotlight">Spotlight <kbd>G</kbd></a>
+  <a href="#tool-magnify">Magnify <kbd>Z</kbd></a><a href="#tool-fill">Fill <kbd>F</kbd></a><a href="#tool-eraser">Eraser <kbd>E</kbd></a>
+  <a href="#tool-crop">Crop <kbd>X</kbd></a><a href="#tool-selection">Selection <kbd>S</kbd></a><a href="#tool-cutout">Cut Out <kbd>U</kbd></a>
+  <a href="#tool-eyedropper">Eyedropper <kbd>I</kbd></a><a href="#tool-magicwand">Magic Wand</a><a href="#tool-favorites">Favorites</a>
+</div>
+
+<h3 id="tools-annotate">Annotation tools</h3>
+
+<h4 id="tool-move">Move (V)</h4>
+<p>Selects, moves and resizes objects. Click an object to select it; <kbd>Ctrl</kbd>+click or drag a rectangle on the background to
+select several. With the <span class="ui">Smart Move</span> switch on, you can also drag an <i>area of the image itself</i> — for example
+a button — and move it somewhere else; the place it left is filled in automatically to match the surroundings.</p>
+
+<h4 id="tool-arrow">Arrow (A)</h4>
+<p>Drag from the tail to the head. <kbd>Shift</kbd> keeps the angle in 45° steps. Properties: color, shadow, start and end caps (8
+arrowhead kinds), dashes, width, opacity, start and end size, and <span class="ui">Bézier curve</span> — drag the middle handle to bend the arrow.</p>
+<p><b>Text on the arrow:</b> right after drawing an arrow, simply type. The text appears beyond the tail and follows the arrow when
+either end moves. Double-click it to edit later; <span class="ui">Text font</span> and <span class="ui">Text size</span> set its look. (While an
+arrow is just drawn, letter keys type the label instead of switching tools; click elsewhere or press <kbd>Esc</kbd> first.)</p>
+
+<h4 id="tool-line">Line (L)</h4>
+<p>Like the arrow, without heads by default. <kbd>Shift</kbd> keeps 45° steps. Supports caps, dashes and Bézier curves.</p>
+
+<h4 id="tool-shape">Shape (R)</h4>
+<p>Rectangle, rounded rectangle, ellipse, triangle, diamond, parallelogram, hexagon and star. Properties: <span class="ui">Fill</span> (a color,
+a <a href="#colors">gradient</a> or no color for an empty frame), <span class="ui">Outline</span>, <span class="ui">Shape</span>, shadow,
+thickness and opacity. <kbd>Shift</kbd> makes it perfect (square, circle, equilateral triangle, regular hexagon).</p>
+
+<h4 id="tool-pen">Pen (P)</h4>
+<p>Draws freehand lines: circle something, underline, sign. Properties: color, shadow, dashes, width and opacity.</p>
+
+<h4 id="tool-text">Text (T)</h4>
+<p>Click to start typing, or drag to create a box of a fixed width; the text wraps and the box grows downward. Double-click edits.
+Properties: fill (text color), outline (a contour around the letters for contrast), shadow, font, size, outline thickness, and under
+<span class="ui">Advanced</span> bold/italic/underline, alignment, opacity, padding and <span class="ui">Line spacing (%)</span> (80% to 300%).</p>
+
+<h4 id="tool-callout">Callout (C)</h4>
+<p>A text box with a shape: 24 shapes, including speech bubbles, clouds, thought bubbles, boxes with arrows, notes, explosions and
+whispers. Drag to create it and type. The yellow handle moves the tail (or the direction of arrow shapes). Properties: fill,
+outline, shape, shadow, font and text color, size, thickness, arrow style/color/size for shapes with a pointer, and:</p>
+<ul>
+  <li><span class="ui">Blur the background (frosted glass)</span> — blurs what is behind the callout, with an adjustable amount; combine
+  with <span class="ui">Fill opacity</span> for a modern translucent look.</li>
+  <li><span class="ui">Shaded (gradient)</span> under Advanced, plus the same text options as the Text tool.</li>
+</ul>
+
+<h4 id="tool-steps">Steps (N)</h4>
+<p>Click to place numbered markers in sequence — perfect for "click here, then here" instructions. Properties: fill, text color,
+shape (circle, teardrop or square), shadow, opacity, <span class="ui">Type</span> (1, 2, 3… / A, B, C… / a, b, c… / I, II, III… / i, ii, iii…),
+<span class="ui">Restart the sequence</span> (next step is 1 again), and an <span class="ui">Outline</span> with its width for contrast on
+any background.</p>
+
+<h4 id="tool-stamp">Stamp (K)</h4>
+<p>Places a color emoji, a symbol, a label or your own image. See <a href="#stamps">Stamps</a>.</p>
+
+<h3 id="tools-hide">Highlight and hide tools</h3>
+
+<h4 id="tool-highlighter">Highlighter (H)</h4>
+<p>Drag over what you want to highlight; it is tinted with the chosen color and opacity, like a highlighter pen. Choose the
+<a href="#area-shapes">area shape</a>: rectangle, ellipse, polygon, freehand and more.</p>
+
+<h4 id="tool-blur">Blur (B)</h4>
+<p>Hides sensitive information: passwords, e-mails, faces, account numbers. Drag over the area. <span class="ui">Type</span>: Blur or
+Pixelate; <span class="ui">Intensity</span>; and the <a href="#area-shapes">area shape</a>. The blur stays an editable object: you can move or
+resize it, and it updates with what is underneath.</p>
+<div class="callout warn"><b>Before sharing</b>For truly sensitive data, use a high intensity, or cover it with a solid
+<a href="#tool-shape">Shape</a>. Light blurs on short text can sometimes be guessed.</div>
+
+<h4 id="tool-spotlight">Spotlight (G)</h4>
+<p>Drag over the area to focus on; everything else is darkened. <span class="ui">Intensity</span> sets how dark; the area can have any
+<a href="#area-shapes">shape</a>. Add several spotlights to focus on more than one area.</p>
+
+<h4 id="tool-magnify">Magnify (Z)</h4>
+<p>Shows a zoomed-in view of a detail. Drag to create the magnifier. Properties: outline, shape (round, square, hexagon, diamond, star),
+shadow, <span class="ui">Magnification (%)</span> (110% to 800%), thickness, and:</p>
+<ul>
+  <li><span class="ui">Lens separate from the magnified area</span> — the lens can sit anywhere; the yellow handle chooses the area it magnifies.</li>
+  <li><span class="ui">Realistic magnifier (rim and reflection)</span> — a thick shaded rim with reflection; <span class="ui">With handle</span> adds a handle.</li>
+</ul>
+
+<h3 id="tools-image">Image tools</h3>
+<p>These tools change the pixels of the image itself (they are not objects).</p>
+
+<h4 id="tool-selection">Selection (S)</h4>
+<p>Selects part of the image to move, copy, delete or crop. <span class="ui">Mode</span>: Rectangle, Ellipse, Lasso (freehand) or Magic wand.
+Then:</p>
+<ul>
+  <li>Drag the selection to move it (Smart Move); <span class="ui">Fill when moving</span> decides what is left behind:
+  <span class="ui">Transparency</span>, <span class="ui">Canvas color (white)</span> or <span class="ui">Smart fill</span> (rebuilds the background).</li>
+  <li><kbd>Del</kbd> erases the selection; <kbd>Ctrl</kbd>+<kbd>C</kbd> copies it.</li>
+  <li>Buttons: <span class="ui">Crop to selection</span>, <span class="ui">Copy selection</span>, <span class="ui">Delete selection</span>,
+  <span class="ui">Lift out the selection (floating piece)</span>.</li>
+  <li>The selection snaps to contrast edges such as window borders and table lines (<span class="path">Edit › Selection snaps to image edges</span>; hold
+  <kbd>Alt</kbd> to turn it off for a moment). <kbd>Shift</kbd> makes a perfect square or circle.</li>
+</ul>
+
+<h4 id="tool-magicwand">Magic Wand</h4>
+<p>Selects by color: click an area and every connected pixel of a similar color is selected. <span class="ui">Tolerance</span> decides how similar;
+<span class="ui">Global selection (same color)</span> selects that color everywhere in the image. It is the Selection tool in Magic wand mode, so the
+same move, fill and crop options apply.</p>
+
+<h4 id="tool-crop">Crop (X)</h4>
+<p>Drag the area to keep; the size is shown as you drag. <kbd>Enter</kbd> or double-click applies, <kbd>Esc</kbd> cancels. The crop area snaps to
+contrast edges and can be typed exactly in <span class="ui">Crop area (px)</span>. Buttons: <span class="ui">Apply cut</span> and
+<span class="ui">Auto trim</span> (removes uniform borders).</p>
+
+<h4 id="tool-cutout">Cut Out (U)</h4>
+<p>Removes a strip from the middle of the image and joins the parts — great for shortening a long screenshot.
+<span class="ui">Direction</span>: <span class="ui">Horizontal (removes rows)</span> or <span class="ui">Vertical (removes columns)</span>. Drag over the strip to remove.</p>
+
+<h4 id="tool-fill">Fill (F)</h4>
+<p>Click to fill an area of similar color with the fill color or a gradient. <span class="ui">Tolerance</span> sets how similar the colors must be;
+<span class="ui">Same color across the image</span> fills every occurrence; the eyedropper button picks the fill color from the image.</p>
+
+<h4 id="tool-eraser">Eraser (E)</h4>
+<p>Drag to erase image pixels; they become transparent. <span class="ui">Width</span>, <span class="ui">Opacity</span> (partial erasing) and
+<span class="ui">Smooth edges</span>.</p>
+
+<h4 id="tool-eyedropper">Eyedropper (I)</h4>
+<p>Click the image to pick a color. It is applied to the drawing tools, so your next arrow or text matches the color you picked.</p>
+
+<h4 id="tool-favorites">Favorites</h4>
+<p>Shows your favorite <a href="#styles">quick styles</a> from every tool. Choose one to draw with it.</p>
+</section>
+
+<section id="area-shapes">
+<h2>Area shapes and perfect geometry</h2>
+<h3>Area shapes</h3>
+<p>Highlighter, Blur and Spotlight can use any of these shapes (the <span class="ui">Shape</span> swatch in their properties):
+rectangle, rounded rectangle, ellipse/circle, triangle, diamond, parallelogram, hexagon, star, <b>polygon</b> and <b>freehand</b>.</p>
+<ul>
+  <li><b>Polygon</b> — click each corner. To close it, click the first corner, double-click, or press <kbd>Enter</kbd>.
+  <kbd>Backspace</kbd> removes the last corner; <kbd>Esc</kbd> cancels.</li>
+  <li><b>Freehand</b> — drag around the area.</li>
+  <li>You can change the shape of an existing area later; a polygon or freehand outline then starts from its box.</li>
+</ul>
+<h3>Perfect geometry with Shift</h3>
+<table>
+<tr><th>While…</th><th class="wrap">Shift does</th></tr>
+<tr><td>Drawing a shape or area</td><td class="wrap">Rectangle → square, ellipse → circle, rounded rectangle → rounded square, triangle →
+equilateral, hexagon → regular.</td></tr>
+<tr><td>Drawing a line, arrow or polygon side</td><td class="wrap">Angles in 45° steps.</td></tr>
+<tr><td>Drawing a stamp</td><td class="wrap">Keeps the image's proportions.</td></tr>
+<tr><td>Making a selection or crop</td><td class="wrap">Square (or circle) area.</td></tr>
+<tr><td>Dragging an existing object</td><td class="wrap">Locks the movement to the axis you moved along first.</td></tr>
+<tr><td>Dragging a line end</td><td class="wrap">Keeps 45° steps.</td></tr>
+</table>
+</section>
+
+<section id="colors">
+<h2>Colors and gradients</h2>
+<p>Clicking any color swatch opens the palette:</p>
+<ul>
+  <li><span class="ui">Theme colors</span> (from the current <a href="#styles">theme</a>), <span class="ui">Standard colors</span> and <span class="ui">Recent</span> colors.</li>
+  <li><span class="ui">No color</span> — transparent (for example a shape with no fill).</li>
+  <li><span class="ui">More colors…</span> — any color, with a picker.</li>
+  <li><span class="ui">Gradients</span> — ready-made gradient presets, and <span class="ui">Edit gradient…</span> to make your own.</li>
+</ul>
+<h3>Gradients</h3>
+<p>Gradients work in the Shape fill, the Fill tool and <span class="path">Image › Canvas color…</span>. In <span class="ui">Edit gradient…</span>:</p>
+<ul>
+  <li><span class="ui">Type</span>: <span class="ui">Linear</span> or <span class="ui">Radial (from the center)</span>.</li>
+  <li><span class="ui">Angle (degrees)</span> for linear gradients: 0° goes left to right, 90° top to bottom.</li>
+  <li><span class="ui">Start color</span>, <span class="ui">End color</span> and up to two middle colors, each with a <span class="ui">Position (%)</span>.</li>
+</ul>
+</section>
+
+<section id="arrange">
+<h2>Arranging objects</h2>
+<p>All these commands are in <span class="path">Image › Arrange</span>, in the right-click menu, and can be added to the toolbar.</p>
+<table>
+<tr><th>Command</th><th class="wrap">What it does</th></tr>
+<tr><td>Bring forward <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></td><td class="wrap">One step toward the front.</td></tr>
+<tr><td>Bring to front</td><td class="wrap">In front of all other objects.</td></tr>
+<tr><td>Send backward <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd></td><td class="wrap">One step toward the back.</td></tr>
+<tr><td>Send to back</td><td class="wrap">Behind all other objects (still above the image).</td></tr>
+<tr><td>Align</td><td class="wrap">Left, Center, Right, Top, Middle, Bottom. One object aligns to the image; several align to each other.</td></tr>
+<tr><td>Distribute horizontally / vertically</td><td class="wrap">Spaces 3 or more objects with equal gaps.</td></tr>
+<tr><td>Flip vertically / horizontally</td><td class="wrap">Mirrors the selected objects; with nothing selected, the whole image.</td></tr>
+<tr><td>Group <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td><td class="wrap">Joins the selected objects so they move and resize as one.</td></tr>
+<tr><td>Ungroup <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd></td><td class="wrap">Separates a group.</td></tr>
+<tr><td>Lock object <kbd>Ctrl</kbd>+<kbd>L</kbd></td><td class="wrap">The object shows a lock badge and cannot be moved, resized, cut or deleted.</td></tr>
+<tr><td>Unlock object <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd></td><td class="wrap">Unlocks it.</td></tr>
+<tr><td>Canvas snapping <kbd>Ctrl</kbd>+<kbd>;</kbd></td><td class="wrap">While moving, object edges and centers snap to the image's edges and center (and to guides).
+Hold <kbd>Alt</kbd> to turn it off for a moment.</td></tr>
+</table>
+</section>
+
+<section id="layers">
+<h2>The Layers panel</h2>
+<p>The <span class="ui">Layers</span> tab (third tab on the right, or <span class="path">View › Layers panel</span>) lists every object from the front
+to the back, with a thumbnail. The image itself is the <span class="ui">Background (image)</span> row at the bottom.</p>
+<ul>
+  <li><b>Eye</b> — hides or shows an object. Hidden objects are not drawn and not exported.</li>
+  <li><b>Lock</b> — locks or unlocks it.</li>
+  <li><b>Name</b> — double-click or press <kbd>F2</kbd> to rename (for example "Login button arrow").</li>
+  <li><b>Groups</b> expand to show the objects inside.</li>
+  <li><b>Select</b> — click, <kbd>Ctrl</kbd>+click and <kbd>Shift</kbd>+click select objects; the selection is shared with the canvas.</li>
+  <li><b>Reorder</b> — drag rows up or down.</li>
+  <li><b>Right-click</b> for the object menu.</li>
+</ul>
+<p>Visibility, locks and names are saved in the <code>.snap</code> file. The Layers panel is especially useful with
+<a href="#sel-objects">windows as objects</a> captures.</p>
+</section>
+
+<section id="precision">
+<h2>Rulers, guides and exact sizes</h2>
+<h3>Rulers and guides</h3>
+<p><span class="path">View › Rulers and guides</span> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>) shows rulers that follow the zoom and
+scrolling, and the pointer's X/Y position in the status bar.</p>
+<ul>
+  <li>Drag from a ruler onto the image to create a <b>guide</b>.</li>
+  <li>Move a guide with the Move tool; drag it back onto the ruler to remove it. <span class="path">View › Remove the guides</span> removes all.</li>
+  <li>With <span class="ui">Canvas snapping</span> on, objects snap to the guides. Guides are saved with the capture.</li>
+</ul>
+<h3>Exact position and size</h3>
+<p>When an object, a selection or a crop area is active, the Properties panel shows <span class="ui">X</span>, <span class="ui">Y</span>,
+<span class="ui">W</span> and <span class="ui">H</span> in image pixels. Type a value and it applies live. The chain button
+(<span class="ui">Keep proportions</span>) keeps the aspect ratio. Example: choose Crop and type W 800 and H 600 to crop to exactly 800×600.</p>
+</section>
+
+<section id="clipboard-editor">
+<h2>Copy, paste and paste in place</h2>
+<table>
+<tr><th>Command</th><th class="wrap">What it does</th></tr>
+<tr><td>Copy <kbd>Ctrl</kbd>+<kbd>C</kbd></td><td class="wrap">Copies the selected objects (or the image selection). Objects are copied with their styles and images,
+so they paste perfectly into another capture.</td></tr>
+<tr><td>Cut <kbd>Ctrl</kbd>+<kbd>X</kbd></td><td class="wrap">Copies and removes. Locked objects are not cut.</td></tr>
+<tr><td>Copy all <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></td><td class="wrap">Copies the finished image with all annotations — ready to paste anywhere.</td></tr>
+<tr><td>Paste <kbd>Ctrl</kbd>+<kbd>V</kbd></td><td class="wrap">Pastes objects, images or text. In the same capture, the copy is shifted slightly.
+Text pasted on the canvas becomes a Text object.</td></tr>
+<tr><td>Paste in place <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd></td><td class="wrap">Pastes at exactly the same position as the original — ideal for
+putting the same annotation on a series of screenshots.</td></tr>
+</table>
+<h3>Pasting text into a text or callout</h3>
+<p>By default (<span class="path">Edit › Paste text without formatting</span>), pasted text takes the object's style. While typing,
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> does the opposite and keeps the source font, size, color and bold/italic/underline.</p>
+</section>
+
+<section id="raster">
+<h2>Editing the image itself</h2>
+<h3>Lift a piece, edit the rest, drop it back</h3>
+<p>Useful when you want to crop or cut out around something but keep that thing.</p>
+<ol class="steps">
+  <li>Select an area with the Selection tool.</li>
+  <li><span class="path">Edit › Lift out the selection (floating piece)</span> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>). The area becomes a floating piece.</li>
+  <li>Crop, cut out or edit the rest of the image. Move the piece where you want it.</li>
+  <li>Press <kbd>Enter</kbd>, double-click the piece, or choose <span class="ui">Drop the piece into the image</span> to merge it.</li>
+</ol>
+<h3>Image menu commands</h3>
+<table>
+<tr><th>Command</th><th class="wrap">What it does</th></tr>
+<tr><td>Merge <kbd>Ctrl</kbd>+<kbd>T</kbd></td><td class="wrap">Burns the selected object into the image (it is no longer editable).</td></tr>
+<tr><td>Merge all <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td><td class="wrap">Burns all objects into the image.</td></tr>
+<tr><td>Trim</td><td class="wrap">Removes the bands of uniform color around the image.</td></tr>
+<tr><td>Resize image…</td><td class="wrap">New width and height, or a scale in %.</td></tr>
+<tr><td>Resize canvas…</td><td class="wrap">Adds or removes space around the image. Choose the <span class="ui">Anchor</span> (which side stays put) and the
+<span class="ui">Canvas color</span> or <span class="ui">Transparent</span>.</td></tr>
+<tr><td>Rotate</td><td class="wrap">Clockwise (<kbd>Ctrl</kbd>+<kbd>R</kbd>), counterclockwise, 180 degrees, or a custom angle with a background color or a transparent background.</td></tr>
+<tr><td>Canvas color…</td><td class="wrap">The color (or gradient) of transparent and added areas.</td></tr>
+<tr><td>Tag image…</td><td class="wrap">Adds tags separated by commas. They are saved in the capture and shown in its information.</td></tr>
+<tr><td>Crop to selection (Edit menu)</td><td class="wrap">Crops to the current selection.</td></tr>
+</table>
+</section>
+
+<section id="effects-panel">
+<h2>Effects panel and quick effects</h2>
+<p>The <span class="ui">Effects</span> tab (or <span class="path">Image › Effects</span>) applies effects to the image you are editing, with a
+<b>live preview</b>.</p>
+<ol class="steps">
+  <li>Open the Effects tab. At the top are the <b>quick effects</b>; below them, every effect with a preview of your image.</li>
+  <li>Click an effect. Its settings open in the panel and the canvas shows the result live as you change them.</li>
+  <li>Click <span class="ui">Apply</span> to keep it (one <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes it) or <span class="ui">Cancel</span>.</li>
+</ol>
+<table>
+<tr><th>Effect</th><th class="wrap">Description</th></tr>
+<tr><td>Border</td><td class="wrap">Solid outline around the image.</td></tr>
+<tr><td>Shadow</td><td class="wrap">Soft shadow that lifts the capture off the background.</td></tr>
+<tr><td>Perspective</td><td class="wrap">Tilts the image as if turned sideways, standing or lying down (horizontal, vertical, tilt).</td></tr>
+<tr><td>Page curl</td><td class="wrap">Curls a corner like the tip of a sheet of paper (size and corner).</td></tr>
+<tr><td>Edges</td><td class="wrap">Torn, wave, saw tooth, shark tooth, fade or bevel edges.</td></tr>
+<tr><td>Filters</td><td class="wrap">Gray, sepia, invert, black and white, emboss, mosaic, sharpen, blur.</td></tr>
+<tr><td>Color adjustment</td><td class="wrap">Brightness, contrast, gamma, hue and saturation.</td></tr>
+<tr><td>Color replacement</td><td class="wrap">Replaces one color with another or with transparency (<span class="ui">Make transparent</span>).</td></tr>
+<tr><td>Spotlight and magnify</td><td class="wrap">Highlights the selection (or the middle of the image), darkens the rest, can magnify it and add a shadow on the focus area.</td></tr>
+<tr><td>Watermark</td><td class="wrap">Translucent text, once or tiled.</td></tr>
+<tr><td>Capture info</td><td class="wrap">A text band at the top or bottom; accepts <code>{date}</code> and <code>{time}</code>.</td></tr>
+</table>
+<p>Border, shadow and capture info keep your objects editable. The other effects merge the objects into the image first, so the
+result looks exactly like the preview.</p>
+<h3>Quick effects</h3>
+<p>Quick effects apply a combination in one click: Shadow, Border and shadow, Torn paper, Page curl, Wave, Sawtooth (Jagged), Fade,
+Bevel… To make your own, set up the border, edges, page curl and shadow in the panel and click <span class="ui">Add</span>
+(<span class="ui">Add to quick effects</span>). Right-click one of yours to delete it.</p>
+</section>
+
+<section id="stamps">
+<h2>Stamps</h2>
+<p>The Stamp tool (<kbd>K</kbd>) places colorful emoji, symbols and labels — or your own images.</p>
+<ul>
+  <li><b>Categories</b>: Pinned, Labels, Business, Interface, Activities, Food &amp; drink, Holidays, Smileys &amp; people, Stickers,
+  Symbols, Travel &amp; places and My stamps.</li>
+  <li><b>Labels</b> are badges with text in your interface language: Before/After, Wrong/Right, Incorrect/Correct, New, Updated, Yes/No,
+  Do/Don't, Important, Tip, Note, Example, Draft, Beta, Deprecated and Coming soon.</li>
+  <li><b>Search stamps</b> by name (for example "check", "warning", "rocket").</li>
+  <li>Click on the image to place a stamp at its default size, or drag to choose the size (<kbd>Shift</kbd> keeps its proportions).</li>
+  <li><span class="ui">Import…</span> adds your own images (logos, icons, signatures) to <b>My stamps</b>.</li>
+  <li><b>Organize</b>: drag stamps in the gallery to reorder them; right-click › <span class="ui">Pin to the top</span> to keep favorites first
+  and in the Pinned category. The order is remembered.</li>
+</ul>
+</section>
+
+<section id="editor-ocr">
+<h2>Grab Text in the Editor</h2>
+<p><span class="path">Edit › Grab Text (OCR)</span> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd>) recognizes the text in the current image and
+shows it in a window, from where you can copy it. It uses the same Windows OCR as <a href="#grab-text">Capturing text</a>.</p>
+</section>
+
+<section id="toolbar">
+<h2>Customizing the toolbar</h2>
+<p>By default the toolbar is <b>automatic</b>: Move, Selection, Text, Highlighter and Shape first, then your most recently used tools,
+and Magnify at the end. <span class="ui">More</span> lists every tool with its icon, name and shortcut.</p>
+<p>To make it your own, choose <span class="path">More › Customize toolbar…</span> (or <span class="path">View › Customize toolbar…</span>):</p>
+<ul>
+  <li>The window lists <span class="ui">Drawing tools</span>, <span class="ui">Menu items</span>, <span class="ui">Sharing destinations</span>,
+  <span class="ui">Effects</span> and <span class="ui">Miscellaneous</span> (spacer).</li>
+  <li>Drag an item onto the toolbar; the toolbar shows where it will go.</li>
+  <li>On the toolbar, drag an item to move it, or drag it off the toolbar to remove it.</li>
+  <li><span class="ui">Number of tools on the automatic toolbar</span> chooses 6 to 16.</li>
+  <li><span class="ui">Restore defaults</span> goes back to the automatic toolbar; <span class="ui">Done</span> keeps your changes.</li>
+</ul>
+<p>Besides tools, you can add effects, outputs (file, copy all, e-mail, print, external program), commands (undo, redo, new image,
+open, save, duplicate, delete, merge all, rotate, trim, Grab Text, align, distribute, lock, rulers) and spacers.
+<span class="path">More › Back to default (automatic)</span> undoes the customization.</p>
+</section>
+
+<section id="tray-library">
+<h2>Recent captures and the Library</h2>
+<h3>The Library</h3>
+<p>Every capture and recording is saved automatically in the Library. Images are stored as <code>.snap</code> files, which keep all
+objects editable; videos as MP4. You never lose a capture by forgetting to save it.</p>
+
+<h3>Recent captures tray</h3>
+<p>The strip at the bottom of the Editor shows your most recent captures (10 by default). New captures and opened files go to the
+front. Hide or show it with <span class="path">View › Recent captures (tray)</span>.</p>
+<ul>
+  <li>Click a thumbnail to open it. Rest the mouse on it for a larger preview with its annotations, size and date (videos show the
+  first frame and the duration).</li>
+  <li><b>Select several</b> with <kbd>Ctrl</kbd>+click, <kbd>Shift</kbd>+click, <kbd>Ctrl</kbd>+<kbd>A</kbd>, or by dragging a rectangle from empty
+  space (as in File Explorer).</li>
+  <li><b>Drag thumbnails into other programs</b> — chats, e-mails, documents, File Explorer. Images go as PNG with the annotations; videos as MP4.</li>
+  <li><b>Drop files</b> from File Explorer onto the Editor to import them.</li>
+  <li><b>Right-click</b>: <span class="ui">Open</span>, <span class="ui">Show in folder</span>, <span class="ui">Export…</span>,
+  <span class="ui">Select all</span>, <span class="ui">Rename…</span> (<kbd>F2</kbd>), <span class="ui">Remove from tray</span> (it stays in the Library) and
+  <span class="ui">Delete</span> (to the Recycle Bin, <kbd>Del</kbd>).</li>
+</ul>
+
+<h3>The Library view</h3>
+<p>Click <span class="ui">Library</span> on the tray (or <span class="path">View › Library</span>) to see all captures in a grid in place of the
+image; <span class="ui">Back to editor</span> returns.</p>
+<ul>
+  <li><span class="ui">Search by name</span> filters by capture name.</li>
+  <li>Multiple selection as in the tray. With items selected: <span class="ui">Export (n)…</span> copies them to a folder in an image format of
+  your choice (videos are copied as MP4); <span class="ui">Delete (n)</span> sends them to the Recycle Bin; <span class="ui">Clear selection</span>.</li>
+  <li>The X on a thumbnail deletes it; <kbd>Del</kbd> deletes the selected items.</li>
+</ul>
+
+<h3>Naming captures</h3>
+<p>Give a capture a name with <span class="ui">Rename…</span> or <kbd>F2</kbd> in the tray or the library. The name replaces the date under the
+thumbnail, becomes the document title and can be searched. <span class="ui">Save as</span> also names an unnamed capture. Leave the name empty to
+show the date again.</p>
+</section>
+
+<section id="saving">
+<h2>Saving, exporting and sharing</h2>
+<table>
+<tr><th>Command</th><th class="wrap">What it does</th></tr>
+<tr><td>Save <kbd>Ctrl</kbd>+<kbd>S</kbd></td><td class="wrap">Saves the capture in the Library (as <code>.snap</code>, objects stay editable).</td></tr>
+<tr><td>Save as… <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td class="wrap">Saves a file anywhere: PNG, JPG (with <span class="ui">JPEG quality (1–100)</span>), BMP,
+GIF, TIFF, PDF or <code>.snap</code>.</td></tr>
+<tr><td>Copy all <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></td><td class="wrap">Copies the final image to the clipboard.</td></tr>
+<tr><td>Print… <kbd>Ctrl</kbd>+<kbd>P</kbd></td><td class="wrap">Prints the image.</td></tr>
+<tr><td>Send by e-mail…</td><td class="wrap">Creates an e-mail with the image attached in your e-mail program (needs a MAPI e-mail client, such
+as Outlook or Thunderbird). Without one, Snapnab saves the image and tells you where.</td></tr>
+<tr><td>Open in external program…</td><td class="wrap">Opens the image in another program, for example a photo editor.</td></tr>
+<tr><td>Share button</td><td class="wrap">File, clipboard, e-mail, printer or external program, in one menu.</td></tr>
+<tr><td>Delete (Recycle Bin)</td><td class="wrap">Sends the current capture to the Recycle Bin.</td></tr>
+</table>
+<h3>Which format should I use?</h3>
+<table>
+<tr><th>Format</th><th class="wrap">Use it for</th></tr>
+<tr><td>.snap</td><td class="wrap">Keeping the capture editable later (objects, layers, guides, links, tags). Opens only in Snapnab Editor.</td></tr>
+<tr><td>PNG</td><td class="wrap">Screenshots in general: sharp text, transparency, lossless.</td></tr>
+<tr><td>JPG</td><td class="wrap">Photos and very large images where file size matters.</td></tr>
+<tr><td>GIF</td><td class="wrap">Simple images for old systems (for animations see <a href="#video-editing">Create GIF</a>).</td></tr>
+<tr><td>PDF</td><td class="wrap">Documents to print or send. A4 or Letter page according to your region; captured links stay clickable.</td></tr>
+<tr><td>TIFF, BMP</td><td class="wrap">Programs that require them.</td></tr>
+</table>
+</section>
+
+<section id="video-editing">
+<h2>Editing videos and making GIFs</h2>
+<p>When you open a video (a recording, or any MP4), the Editor shows a player with editing controls.</p>
+<table>
+<tr><th>Control</th><th class="wrap">What it does</th></tr>
+<tr><td>▶ Play / ❚❚ Pause <kbd>Space</kbd></td><td class="wrap">Plays the video with its sound; cut parts are skipped.</td></tr>
+<tr><td>◀ Frame / Frame ▶ <kbd>←</kbd> <kbd>→</kbd></td><td class="wrap">Moves one frame back or forward.</td></tr>
+<tr><td>[ Start <kbd>I</kbd> / End ] <kbd>O</kbd></td><td class="wrap">Marks the start and end of a selection on the timeline.</td></tr>
+<tr><td>✂ Cut selection</td><td class="wrap">Marks the selected part to be removed (shown as a cut segment). You can cut several parts.</td></tr>
+<tr><td>Undo cut</td><td class="wrap">Restores the last cut.</td></tr>
+<tr><td>Save frame</td><td class="wrap">Saves the current frame as a new image capture, ready to annotate.</td></tr>
+<tr><td>Create GIF…</td><td class="wrap">Makes an animated GIF of the selection (or the whole video): <span class="ui">Colors</span> (256, or 16 for a smaller
+file), <span class="ui">Dithering</span> and <span class="ui">Delta frames (only what changed)</span> for smaller files.</td></tr>
+<tr><td>Save MP4…</td><td class="wrap">Saves a new MP4 without the cut parts (choose a file different from the original).</td></tr>
+<tr><td>Open in player</td><td class="wrap">Opens the video in your default video player.</td></tr>
+</table>
+<p>The information line shows the video size, frame rate, the duration after cuts and the selection.</p>
+<h4>Example: trim the start and end of a recording</h4>
+<ol class="steps">
+  <li>Go to the start of the video, press <kbd>I</kbd>; move to where the useful part begins, press <kbd>O</kbd>; click <span class="ui">✂ Cut selection</span>.</li>
+  <li>Do the same for the unwanted end.</li>
+  <li>Click <span class="ui">Save MP4…</span>.</li>
+</ol>
+</section>
+
+<!-- ============================================================ PART 5 -->
+<p class="part-title">Part 5 — Settings and data</p>
+<section id="options">
+<h2>Options and language</h2>
+<p>Open <span class="path">File › Options…</span> in the capture window (or <span class="ui">Options…</span> in the notification area menu).</p>
+<table>
+<tr><th>Option</th><th class="wrap">What it does</th></tr>
+<tr><td>Global shortcuts</td><td class="wrap">Capture image, Record video, Pause/resume video and Stop video. See <a href="#hotkeys">Global shortcuts</a>.</td></tr>
+<tr><td>Output folder</td><td class="wrap">Default folder for the <span class="ui">File</span> destination.</td></tr>
+<tr><td>Monitor clipboard</td><td class="wrap"><span class="ui">Off</span>; <span class="ui">Only the Windows Snipping Tool</span> (default) — an image
+copied by the Snipping Tool opens in the Editor automatically; or <span class="ui">Any application</span> — any image copied by any program opens in the Editor.</td></tr>
+<tr><td>Start with Windows</td><td class="wrap">Starts Snapnab (hidden in the notification area) when you sign in.</td></tr>
+<tr><td>Show the capture window at startup</td><td class="wrap">Shows the capture window when Snapnab starts.</td></tr>
+<tr><td>Language</td><td class="wrap"><span class="ui">Automatic (Windows language)</span> or one of 12 languages: English, Portuguese, Chinese (Simplified),
+Hindi, Spanish, Arabic, French, Bengali, Russian, Indonesian, Urdu and German. Changing it restarts Snapnab and the Editor.</td></tr>
+<tr><td>Library</td><td class="wrap">Shows where the Library folder is.</td></tr>
+</table>
+<h3>Appearance</h3>
+<p>Snapnab's windows follow the accent color chosen in <span class="path">Windows Settings › Personalization › Colors</span> and update
+as soon as you change it.</p>
+</section>
+
+<section id="backup">
+<h2>Backing up your settings</h2>
+<p>All your settings can be saved in a single <code>.snapsettings</code> file: the options, presets, themes and quick styles, favorites,
+tool styles, quick effects, stamp order and toolbar layout.</p>
+<ul>
+  <li><span class="path">File › Export all settings…</span> creates the file. Use it to move to a new computer or share a setup with your team.</li>
+  <li><span class="path">File › Import all settings…</span> reads it and asks whether to <span class="ui">Replace</span> (the file's settings
+  take over) or <span class="ui">Merge</span> (keep yours and add what is missing, such as presets, themes, favorites and quick effects).
+  A copy of your current settings is saved first, and both programs restart.</li>
+  <li><b>Automatic backup</b>: once a week Snapnab saves a backup by itself and keeps the last 5. <span class="path">File › Open the backups folder</span>
+  shows them; import one to go back.</li>
+</ul>
+<div class="callout"><b>Captures are not in the settings file.</b>To back up the captures themselves, copy the Library folder (see below).</div>
+</section>
+
+<section id="data">
+<h2>Where your data lives</h2>
+<table>
+<tr><th>What</th><th class="wrap">Where</th></tr>
+<tr><td>Captures and videos (Library)</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\Library</code></td></tr>
+<tr><td>Presets</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\Presets1.xml</code></td></tr>
+<tr><td>Themes, quick styles, favorites, tool styles, quick effects, stamp order</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\*.xml</code></td></tr>
+<tr><td>My stamps</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\Stamps</code></td></tr>
+<tr><td>Settings backups</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\Backups</code></td></tr>
+<tr><td>Logs</td><td class="wrap"><code>%LOCALAPPDATA%\Snapnab\Logs</code></td></tr>
+<tr><td>Options</td><td class="wrap">Registry: <code>HKEY_CURRENT_USER\Software\Snapnab</code></td></tr>
+</table>
+<p>Type <code>%LOCALAPPDATA%\Snapnab</code> in the File Explorer address bar to open the folder, or use <span class="path">File › Open the library folder</span>.
+Uninstalling Snapnab keeps all of this.</p>
+</section>
+
+<!-- ============================================================ REFERENCE -->
+<p class="part-title">Reference</p>
+<section id="shortcuts">
+<h2>Keyboard shortcuts</h2>
+<h3>Anywhere in Windows</h3>
+<table>
+<tr><th>Keys</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>Print Screen</kbd></td><td class="wrap">Capture image</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Print Screen</kbd></td><td class="wrap">Record video / stop</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F9</kbd></td><td class="wrap">Start (skip countdown), pause and resume the recording</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>F10</kbd></td><td class="wrap">Stop the recording</td></tr>
+<tr><td>Your preset shortcuts</td><td class="wrap">Run that preset</td></tr>
+</table>
+<h3>Crosshair</h3>
+<table>
+<tr><th>Keys</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>Enter</kbd></td><td class="wrap">Capture the monitor / finish multiple areas</td></tr>
+<tr><td>Arrow keys (<kbd>Shift</kbd> = 10 px)</td><td class="wrap">Move the pointer 1 pixel</td></tr>
+<tr><td><kbd>Backspace</kbd></td><td class="wrap">Remove the last area (Multiple areas)</td></tr>
+<tr><td><kbd>Esc</kbd></td><td class="wrap">Cancel</td></tr>
+</table>
+<h3>Editor — tools</h3>
+<table>
+<tr><th>Key</th><th class="wrap">Tool</th><th>Key</th><th class="wrap">Tool</th></tr>
+<tr><td><kbd>V</kbd></td><td class="wrap">Move</td><td><kbd>B</kbd></td><td class="wrap">Blur</td></tr>
+<tr><td><kbd>A</kbd></td><td class="wrap">Arrow</td><td><kbd>G</kbd></td><td class="wrap">Spotlight</td></tr>
+<tr><td><kbd>L</kbd></td><td class="wrap">Line</td><td><kbd>Z</kbd></td><td class="wrap">Magnify</td></tr>
+<tr><td><kbd>R</kbd></td><td class="wrap">Shape</td><td><kbd>F</kbd></td><td class="wrap">Fill</td></tr>
+<tr><td><kbd>P</kbd></td><td class="wrap">Pen</td><td><kbd>E</kbd></td><td class="wrap">Eraser</td></tr>
+<tr><td><kbd>H</kbd></td><td class="wrap">Highlighter</td><td><kbd>X</kbd></td><td class="wrap">Crop</td></tr>
+<tr><td><kbd>T</kbd></td><td class="wrap">Text</td><td><kbd>S</kbd></td><td class="wrap">Selection</td></tr>
+<tr><td><kbd>C</kbd></td><td class="wrap">Callout</td><td><kbd>U</kbd></td><td class="wrap">Cut Out</td></tr>
+<tr><td><kbd>N</kbd></td><td class="wrap">Steps</td><td><kbd>I</kbd></td><td class="wrap">Eyedropper</td></tr>
+<tr><td><kbd>K</kbd></td><td class="wrap">Stamp</td><td></td><td></td></tr>
+</table>
+<h3>Editor — commands</h3>
+<table>
+<tr><th>Keys</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>F1</kbd></td><td class="wrap">Open this manual at the current tool</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td><td class="wrap">New capture</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td class="wrap">Open</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td class="wrap">Save to the Library / Save as</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td class="wrap">Print</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>W</kbd></td><td class="wrap">Close document</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td class="wrap">Undo / redo (also <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>)</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>X</kbd> / <kbd>C</kbd> / <kbd>V</kbd></td><td class="wrap">Cut / copy / paste</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd></td><td class="wrap">Paste in place (while typing: paste keeping/removing formatting)</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></td><td class="wrap">Copy all</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td class="wrap">Select all</td></tr>
+<tr><td><kbd>Del</kbd></td><td class="wrap">Delete</td></tr>
+<tr><td>Arrow keys (<kbd>Shift</kbd> = 10 px)</td><td class="wrap">Nudge the selected object 1 pixel</td></tr>
+<tr><td><kbd>Enter</kbd> / <kbd>Esc</kbd></td><td class="wrap">Apply crop, close polygon, drop piece / cancel</td></tr>
+<tr><td><kbd>F2</kbd></td><td class="wrap">Rename (layer, or capture in the tray/library)</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd></td><td class="wrap">Grab Text (OCR)</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></td><td class="wrap">Lift out the selection</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> / <kbd>B</kbd></td><td class="wrap">Bring forward / send backward</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> / <kbd>U</kbd></td><td class="wrap">Group / ungroup</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>L</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd></td><td class="wrap">Lock / unlock</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>T</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td><td class="wrap">Merge object / merge all</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td class="wrap">Rotate clockwise</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>;</kbd></td><td class="wrap">Canvas snapping on/off</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd></td><td class="wrap">Rulers and guides</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>-</kbd></td><td class="wrap">Zoom in / out</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>1</kbd> / <kbd>Ctrl</kbd>+<kbd>0</kbd></td><td class="wrap">Actual size / fit to window</td></tr>
+<tr><td><kbd>Ctrl</kbd>+wheel, middle button</td><td class="wrap">Zoom, pan</td></tr>
+<tr><td><kbd>Shift</kbd> (drawing / dragging)</td><td class="wrap">Perfect shapes, 45° lines / lock axis</td></tr>
+<tr><td><kbd>Alt</kbd> (dragging)</td><td class="wrap">Temporarily turn off snapping</td></tr>
+<tr><td><kbd>Ctrl</kbd> (drawing)</td><td class="wrap">Draw over an object of the same kind</td></tr>
+</table>
+<h3>Editor — video</h3>
+<table>
+<tr><th>Keys</th><th class="wrap">Action</th></tr>
+<tr><td><kbd>Space</kbd></td><td class="wrap">Play / pause</td></tr>
+<tr><td><kbd>←</kbd> / <kbd>→</kbd></td><td class="wrap">Previous / next frame</td></tr>
+<tr><td><kbd>I</kbd> / <kbd>O</kbd></td><td class="wrap">Mark start / end</td></tr>
+</table>
+</section>
+
+<section id="cmdline">
+<h2>Command line</h2>
+<p>Useful for scripts, launchers and shortcuts on the desktop or a stream deck.</p>
+<pre>Snapnab.exe [options]
+  /hide            start in the notification area only
+  /capture         capture an image with the current image preset
+  /video           record video with the current video preset
+  /preset "name"   run a preset by name
+  /clipboard       capture the image on the clipboard
+  /exit            close the running Snapnab
+  /help            show this list
+
+SnapnabEditor.exe [options] [file…]
+  /Open "file"       open a file (.snap, image, .mp4)
+  /NewFromClipboard  create an image from the clipboard
+  /help              show this list</pre>
+<p>If Snapnab is already running, the command is passed to the running copy.</p>
+</section>
+
+<section id="troubleshooting">
+<h2>Troubleshooting and FAQ</h2>
+<h4>Print Screen opens the Windows Snipping Tool instead of Snapnab.</h4>
+<p>Snapnab normally takes over the key automatically. If it does not, turn off <span class="path">Windows Settings › Accessibility ›
+Keyboard › Use the Print screen key to open screen capture</span>, then restart Snapnab, or choose another shortcut in
+<span class="path">File › Options…</span>.</p>
+<h4>A shortcut does nothing.</h4>
+<p>Check that Snapnab is running (its icon is in the notification area). Another program may own the combination; open
+<span class="path">File › Options…</span> or the preset's <span class="ui">Shortcut…</span> to choose a different one.</p>
+<h4>Where did my capture go?</h4>
+<p>Every capture is in the Library: open the Editor and click <span class="ui">Library</span>. If <span class="ui">Preview in Editor</span> was off,
+the capture was only stored there (and sent to the other destinations).</p>
+<h4>The scrolling capture is cut or repeats parts.</h4>
+<p>Try <a href="#sel-panoramic">Panoramic scrolling</a> and include only the scrolling content in the frame. Scroll at a steady pace.</p>
+<h4>Grab Text says no OCR language is installed.</h4>
+<p>Add a language with its text recognition feature in <span class="path">Windows Settings › Time &amp; language › Language</span>.</p>
+<h4>My microphone is too quiet or too loud.</h4>
+<p>Open the volume panel on the recording panel and adjust the slider while watching the meter, or turn on <span class="ui">Automatic
+microphone gain</span>.</p>
+<h4>The webcam does not appear.</h4>
+<p>Allow camera access in <span class="path">Windows Settings › Privacy &amp; security › Camera</span>, close other programs that use the camera,
+and check that the camera is selected in the Webcam menu.</p>
+<h4>The recording does not start or the video fails.</h4>
+<p>Turn off <span class="ui">Hardware encoding</span> in <span class="ui">Video options</span>, check the free disk space, and try a lower frame rate.
+<span class="path">File › Open the logs folder</span> contains details that help diagnose the problem.</p>
+<h4>Send by e-mail does nothing.</h4>
+<p>It needs a desktop e-mail program registered as the Windows default mail client. Otherwise, drag the thumbnail from the tray into your web mail.</p>
+<h4>Can I move my settings to another computer?</h4>
+<p>Yes: <a href="#backup">Export all settings</a> on the old computer and import them on the new one. Copy the Library folder too if you want your captures.</p>
+<h4>The interface is in the wrong language.</h4>
+<p>Choose the language in <span class="path">File › Options… › Language</span>. This manual is in English.</p>
+</section>
+
+<section id="glossary">
+<h2>Glossary</h2>
+<table>
+<tr><th>Term</th><th class="wrap">Meaning</th></tr>
+<tr><td>Capture</td><td class="wrap">An image or video made with Snapnab. Stored in the Library.</td></tr>
+<tr><td>Preset</td><td class="wrap">A saved capture setup (selection, effects, destinations, options), optionally with a shortcut.</td></tr>
+<tr><td>Selection</td><td class="wrap">In the capture window: what part of the screen to capture. In the Editor: a part of the image chosen with the Selection tool.</td></tr>
+<tr><td>Crosshair</td><td class="wrap">The frozen screen with the cross pointer where you choose what to capture.</td></tr>
+<tr><td>Object</td><td class="wrap">Anything drawn in the Editor (arrow, text, shape…). It floats above the image and stays editable.</td></tr>
+<tr><td>Merge</td><td class="wrap">Burning objects into the image pixels.</td></tr>
+<tr><td>Quick style</td><td class="wrap">A saved look for a tool (colors, width, font, shadow).</td></tr>
+<tr><td>Theme</td><td class="wrap">Up to four colors from which the quick styles of all tools are generated.</td></tr>
+<tr><td>Quick effect</td><td class="wrap">A one-click combination of border, edges, page curl and shadow.</td></tr>
+<tr><td>Smart Move</td><td class="wrap">Moving part of the image and filling the place it left automatically.</td></tr>
+<tr><td>Floating piece</td><td class="wrap">A part of the image lifted out to be placed back later.</td></tr>
+<tr><td>Tray</td><td class="wrap">The Recent captures strip at the bottom of the Editor.</td></tr>
+<tr><td>Library</td><td class="wrap">The folder and view with all your captures.</td></tr>
+<tr><td>.snap</td><td class="wrap">Snapnab's file format: the image plus its editable objects.</td></tr>
+<tr><td>OCR</td><td class="wrap">Optical character recognition: turning text in an image into real text.</td></tr>
+<tr><td>Chroma key</td><td class="wrap">Removing a plain-colored background (usually green) behind the webcam image.</td></tr>
+<tr><td>One Click</td><td class="wrap">The small capture panel docked to the edge of the screen.</td></tr>
+<tr><td>HUD / recording panel</td><td class="wrap">The small control panel shown while recording a video.</td></tr>
+</table>
+<p style="color:var(--muted);margin-top:40px">Snapnab is free software under the GNU General Public License version 3. Copyright © 2026 Antonio Rezende.</p>
+</section>
+
+<div class="nores" id="nores">No section matches your search.</div>
+</main>
+</div>
+<a class="top" href="#welcome">↑ Top</a>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var t = localStorage.getItem('snapnab-manual-theme'); if (t) root.setAttribute('data-theme', t); } catch (e) {}
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var dark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('snapnab-manual-theme', next); } catch (e) {}
+  });
+
+  // highlights the contents entry of the section being read
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toclist a'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  function markActive() {
+    var cur = sections[0];
+    for (var i = 0; i < sections.length; i++)
+      if (!sections[i].classList.contains('hidden') && sections[i].getBoundingClientRect().top < 120) cur = sections[i];
+    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', markActive, { passive: true });
+  markActive();
+
+  // search: shows only the sections that contain every word typed, and marks the words
+  var input = document.getElementById('search');
+  var originals = sections.map(function (s) { return s.innerHTML; });
+  function esc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function mark(node, re) {
+    if (node.nodeType === 3) {
+      var m = node.nodeValue.match(re);
+      if (!m) return;
+      var span = document.createElement('span');
+      span.innerHTML = node.nodeValue.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(re, '<mark>$1</mark>');
+      node.parentNode.replaceChild(span, node);
+    } else if (node.nodeType === 1 && !/^(SCRIPT|STYLE|MARK)$/.test(node.nodeName)) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (c) { mark(c, re); });
+    }
+  }
+  function run() {
+    var words = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var shown = 0;
+    sections.forEach(function (s, i) {
+      s.innerHTML = originals[i];
+      var text = s.textContent.toLowerCase();
+      var ok = words.every(function (w) { return text.indexOf(w) >= 0; });
+      s.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+      if (ok && words.length) mark(s, new RegExp('(' + words.map(esc).join('|') + ')', 'gi'));
+    });
+    document.querySelectorAll('.part-title').forEach(function (p) { p.style.display = words.length ? 'none' : ''; });
+    document.getElementById('nores').style.display = shown ? 'none' : 'block';
+    document.querySelectorAll('#toclist .part').forEach(function (p) { p.style.display = words.length ? 'none' : ''; });
+    links.forEach(function (a) {
+      var s = document.getElementById(a.getAttribute('href').slice(1));
+      var sec = s && (s.tagName === 'SECTION' ? s : s.closest('section'));
+      a.parentNode.style.display = !words.length || (sec && !sec.classList.contains('hidden')) ? '' : 'none';
+    });
+    if (words.length) window.scrollTo(0, 0);
+  }
+  var timer;
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 150); });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; run(); } });
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey && e.key === 'f') || (e.key === '/' && document.activeElement !== input)) { e.preventDefault(); input.focus(); input.select(); }
+  });
+})();
+</script>
+</body>
+</html>

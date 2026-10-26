@@ -103,13 +103,13 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         g.DrawPath(&p, &gp);
         break;
     }
-    case Step: {              // passos: o "1" e o "2" atrás, o "3" na frente
+    case Step: {              // steps: "1" and "2" behind, "3" in front
         FontFamily ff(L"Segoe UI");
         Font f(&ff, 8.5f, FontStyleBold, UnitPixel), f1(&ff, 7.0f, FontStyleBold, UnitPixel);
         StringFormat sf; sf.SetAlignment(StringAlignmentCenter); sf.SetLineAlignment(StringAlignmentCenter);
         SolidBrush white(Color(255, 255, 255, 255));
         Gdiplus::Pen ring1(Color(150, c.GetR(), c.GetG(), c.GetB()), 1.0f);
-        g.FillEllipse(&white, 1.5f, 1.f, 9.f, 9.f);                    // 1: bolinha branca com o número na cor do 2
+        g.FillEllipse(&white, 1.5f, 1.f, 9.f, 9.f);                    // 1: white dot with the number in the color of 2
         g.DrawEllipse(&ring1, 1.5f, 1.f, 9.f, 9.f);
         g.DrawString(L"1", 1, &f1, RectF(1.5f, 1.4f, 9.f, 9.f), &sf, &b);
         g.FillEllipse(&faint, 10.5f, 2.f, 11.5f, 11.5f);
@@ -119,7 +119,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         g.DrawString(L"3", 1, &f, RectF(2.f, 10.f, 12.f, 12.f), &sf, &white);
         break;
     }
-    case Stamp: {             // carimbo de borracha: pegador, haste, corpo e base
+    case Stamp: {             // rubber stamp: handle, stem, body and base
         g.FillEllipse(&b, 8.6f, 1.6f, 6.8f, 6.8f);
         g.FillRectangle(&b, 10.6f, 7.f, 2.8f, 4.5f);
         PointF body[] = { { 7.f, 11.f }, { 17.f, 11.f }, { 18.5f, 14.5f }, { 5.5f, 14.5f } };
@@ -152,7 +152,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
             g.DrawString(L"Aa", 2, &f, RectF(3, 3, 13, 13), &sf, &b);
         }
         break;
-    case Fill: {              // balde inclinado com a boca para cima à esquerda, alça em pé e a gota de tinta caindo
+    case Fill: {              // tilted bucket with its mouth up to the left, upright handle and a falling paint drop
         Color light(150, c.GetR(), c.GetG(), c.GetB());
         SolidBrush lb(light);
         Gdiplus::Pen handle(light, 2.f);
@@ -162,7 +162,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         Gdiplus::Pen edge(c, 1.4f);
         edge.SetLineJoin(LineJoinRound);
         g.FillPolygon(&b, bucket, 7);
-        g.DrawPolygon(&edge, bucket, 7);              // cantos arredondados
+        g.DrawPolygon(&edge, bucket, 7);              // rounded corners
         GraphicsPath drop;
         drop.AddBezier(4.5f, 15.f, 5.5f, 16.7f, 7.f, 18.3f, 7.f, 20.4f);
         drop.AddArc(2.f, 17.9f, 5.f, 5.f, 0.f, 180.f);
@@ -193,7 +193,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
             float a = i * 1.5708f; g.DrawLine(&thin, 18 + 2 * std::cos(a), 6 + 2 * std::sin(a), 18 + 4.5f * std::cos(a), 6 + 4.5f * std::sin(a));
         }
         break;
-    case Cutout: {            // recortar faixa: imagem com um rasgo em zigue-zague
+    case Cutout: {            // cut out: image with a zigzag tear
         GraphicsPath gp;
         float r = 2.5f, d = r * 2;
         gp.AddArc(2.f, 4.f, d, d, 180, 90); gp.AddArc(22.f - d, 4.f, d, d, 270, 90);
@@ -252,7 +252,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         g.DrawRectangle(&p, 3.f, 4.f, 7.f, 7.f); g.DrawRectangle(&p, 14.f, 4.f, 7.f, 7.f);
         g.DrawRectangle(&p, 3.f, 14.f, 7.f, 7.f); g.DrawRectangle(&p, 14.f, 14.f, 7.f, 7.f);
         break;
-    case CameraFill: {        // câmera preenchida (abas e listas da janela de captura, estilo material)
+    case CameraFill: {        // filled camera (tabs and lists of the capture window, material style)
         GraphicsPath gp(FillModeAlternate);
         gp.AddLine(4.5f, 6.f, 8.f, 6.f); gp.AddLine(8.f, 6.f, 9.6f, 3.6f); gp.AddLine(9.6f, 3.6f, 14.4f, 3.6f);
         gp.AddLine(14.4f, 3.6f, 16.f, 6.f); gp.AddLine(16.f, 6.f, 19.5f, 6.f);
@@ -308,7 +308,7 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         arrowHead({ 19.f, 9.f }, 1.35f, 5.5f);
         g.DrawRectangle(&thin, 9.f, 10.f, 6.f, 6.f);
         break;
-    case Effects: {           // varinha com brilhos: efeitos de imagem
+    case Effects: {           // wand with sparkles: image effects
         g.DrawLine(&p26, 4.f, 20.f, 14.f, 10.f);
         auto spark = [&](float x, float y, float r) {
             PointF s[8] = { { x, y - r }, { x + r * .28f, y - r * .28f }, { x + r, y }, { x + r * .28f, y + r * .28f },
@@ -414,6 +414,81 @@ void Draw(Graphics& g, Id id, RectF r, Color c) {
         g.DrawLine(&p, 12.f, 16.f, 12.f, 20.5f);
         g.DrawLine(&p, 7.5f, 20.8f, 16.5f, 20.8f);
         if (id == WebcamOff) g.DrawLine(&p, 3.5f, 3.5f, 20.5f, 20.5f);
+        break;
+    case Lock: case Unlock: {             // padlock: shackle closed or open
+        g.FillRectangle(&b, 5.f, 11.f, 14.f, 10.f);
+        if (id == Lock) {
+            g.DrawArc(&p, 8.f, 4.f, 8.f, 12.f, 180.f, 180.f);
+            g.DrawLine(&p, 8.f, 10.f, 8.f, 11.5f); g.DrawLine(&p, 16.f, 10.f, 16.f, 11.5f);
+        } else {
+            g.DrawArc(&p, 12.f, 3.f, 8.f, 11.f, 180.f, 180.f);
+            g.DrawLine(&p, 20.f, 8.5f, 20.f, 10.f);
+        }
+        break;
+    }
+    case Eye: case EyeOff: {
+        GraphicsPath e;
+        e.AddBezier(2.5f, 12.f, 7.f, 4.5f, 17.f, 4.5f, 21.5f, 12.f);
+        e.AddBezier(21.5f, 12.f, 17.f, 19.5f, 7.f, 19.5f, 2.5f, 12.f);
+        g.DrawPath(&p, &e);
+        g.FillEllipse(&b, 9.f, 9.f, 6.f, 6.f);
+        if (id == EyeOff) g.DrawLine(&p, 4.f, 20.f, 20.f, 4.f);
+        break;
+    }
+    case Pin: {                           // push pin
+        PointF head[] = { { 14, 2.5f }, { 21.5f, 10 }, { 18.5f, 11 }, { 13.5f, 16 }, { 13, 19 }, { 5, 11 }, { 8, 10.5f }, { 13, 5.5f } };
+        g.FillPolygon(&b, head, 8);
+        g.DrawLine(&p, 8.5f, 15.5f, 3.f, 21.f);
+        break;
+    }
+    case AlignLeft: case AlignCenter: case AlignRight: {
+        float x = id == AlignLeft ? 4.f : id == AlignCenter ? 12.f : 20.f;
+        g.DrawLine(&p, x, 3.f, x, 21.f);
+        float w1 = 13.f, w2 = 8.f;
+        float a1 = id == AlignLeft ? x + 2 : id == AlignCenter ? x - w1 / 2 : x - 2 - w1, a2 = id == AlignLeft ? x + 2 : id == AlignCenter ? x - w2 / 2 : x - 2 - w2;
+        g.FillRectangle(&b, a1, 6.f, w1, 4.5f);
+        g.FillRectangle(&b, a2, 13.5f, w2, 4.5f);
+        break;
+    }
+    case AlignTop: case AlignMiddle: case AlignBottom: {
+        float y = id == AlignTop ? 4.f : id == AlignMiddle ? 12.f : 20.f;
+        g.DrawLine(&p, 3.f, y, 21.f, y);
+        float h1 = 13.f, h2 = 8.f;
+        float a1 = id == AlignTop ? y + 2 : id == AlignMiddle ? y - h1 / 2 : y - 2 - h1, a2 = id == AlignTop ? y + 2 : id == AlignMiddle ? y - h2 / 2 : y - 2 - h2;
+        g.FillRectangle(&b, 6.f, a1, 4.5f, h1);
+        g.FillRectangle(&b, 13.5f, a2, 4.5f, h2);
+        break;
+    }
+    case DistributeH:                     // three blocks with equal gaps between two vertical lines
+        g.DrawLine(&thin, 2.5f, 3.f, 2.5f, 21.f); g.DrawLine(&thin, 21.5f, 3.f, 21.5f, 21.f);
+        g.FillRectangle(&b, 5.f, 8.f, 3.5f, 8.f); g.FillRectangle(&b, 10.25f, 5.f, 3.5f, 14.f); g.FillRectangle(&b, 15.5f, 9.f, 3.5f, 6.f);
+        break;
+    case DistributeV:
+        g.DrawLine(&thin, 3.f, 2.5f, 21.f, 2.5f); g.DrawLine(&thin, 3.f, 21.5f, 21.f, 21.5f);
+        g.FillRectangle(&b, 8.f, 5.f, 8.f, 3.5f); g.FillRectangle(&b, 5.f, 10.25f, 14.f, 3.5f); g.FillRectangle(&b, 9.f, 15.5f, 6.f, 3.5f);
+        break;
+    case Ruler: {
+        GraphicsPath rp; rp.AddRectangle(RectF(2.5f, 8.f, 19.f, 8.f));
+        g.DrawPath(&p, &rp);
+        for (int i = 0; i < 5; i++) { float x = 5.5f + i * 3.3f; g.DrawLine(&thin, x, 8.f, x, i % 2 ? 11.f : 12.5f); }
+        break;
+    }
+    case Link:                            // two chain links
+        g.DrawArc(&p, 3.f, 9.f, 10.f, 6.f, 90.f, 180.f); g.DrawLine(&p, 8.f, 9.f, 11.f, 9.f); g.DrawLine(&p, 8.f, 15.f, 11.f, 15.f);
+        g.DrawArc(&p, 11.f, 9.f, 10.f, 6.f, -90.f, 180.f); g.DrawLine(&p, 13.f, 9.f, 16.f, 9.f); g.DrawLine(&p, 13.f, 15.f, 16.f, 15.f);
+        g.DrawLine(&p, 8.5f, 12.f, 15.5f, 12.f);
+        break;
+    case Sliders:                         // volume: three sliders with knobs
+        for (int i = 0; i < 3; i++) {
+            float y = 6.f + i * 6.f, k = i == 0 ? 15.f : i == 1 ? 8.f : 13.f;
+            g.DrawLine(&p, 3.f, y, 21.f, y);
+            g.FillEllipse(&b, k - 2.6f, y - 2.6f, 5.2f, 5.2f);
+        }
+        break;
+    case Group:                           // two shapes inside a dashed frame
+        { Gdiplus::Pen d(c, 1.2f); d.SetDashStyle(DashStyleDash); g.DrawRectangle(&d, 2.5f, 2.5f, 19.f, 19.f); }
+        g.FillRectangle(&b, 6.f, 6.f, 7.f, 7.f);
+        g.DrawEllipse(&p, 11.f, 11.f, 7.f, 7.f);
         break;
     }
     g.Restore(st);

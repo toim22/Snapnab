@@ -1,10 +1,10 @@
-// Idioma da interface — equivalente da SnagItEditorRes.dll escolhida pela pasta do idioma (ed_comp_1 §3, passo 5):
-// no início cada programa carrega lang\<código>.po (formato gettext) da pasta do executável; sem o catálogo do idioma
-// pedido fica o inglês e, sem ele, o português do próprio código.
+// Interface language — equivalent of the SnagItEditorRes.dll chosen by the language folder (ed_comp_1 §3, step 5):
+// at startup each program loads lang\<code>.po (gettext format) from the executable's folder; without the catalog of
+// the requested language it falls back to English and, without that, to the Portuguese in the code itself.
 //
-// Os textos do código são o português do Brasil; Tr(L"...") devolve a tradução do idioma em uso. Tabelas estáticas
-// (inicializadas antes do catálogo) marcam os textos com TR_NOOP e chamam Tr() onde eles aparecem.
-// scripts/i18n.py extrai os textos para lang/snapnab.pot e confere os catálogos.
+// The strings in the code are Brazilian Portuguese; Tr(L"...") returns the translation for the current language. Static
+// tables (initialized before the catalog) mark their strings with TR_NOOP and call Tr() where they are shown.
+// scripts/i18n.py extracts the strings to lang/snapnab.pot and checks the catalogs.
 #pragma once
 #include <string>
 #include <vector>
@@ -19,22 +19,22 @@ std::wstring   Tr(const std::wstring& pt);
 namespace i18n {
 
 struct Language {
-    const wchar_t* code;        // "en", "zh"… (subtag principal do BCP 47)
-    const wchar_t* name;        // nome no próprio idioma
+    const wchar_t* code;        // "en", "zh"… (primary BCP 47 subtag)
+    const wchar_t* name;        // name in the language itself
 };
 
-const std::vector<Language>& Languages();   // os 12 idiomas, o português primeiro
-bool Available(const std::wstring& code);    // o português sempre; os outros se lang\<código>.po existe
-std::wstring Configured();                   // escolhido nas Opções; "" = o do Windows
+const std::vector<Language>& Languages();   // the 12 languages, Portuguese first
+bool Available(const std::wstring& code);    // Portuguese always; the others if lang\<code>.po exists
+std::wstring Configured();                   // chosen in Options; "" = the Windows language
 void SetConfigured(const std::wstring& code);
-std::wstring Resolve();                      // o que Init() vai usar: o escolhido ou o do Windows, se houver catálogo
-void Init();                                 // carrega o catálogo (chamar no início do WinMain)
-const std::wstring& Current();               // idioma em uso
-bool Rtl();                                  // árabe e urdu: leitura da direita para a esquerda
-const wchar_t* UiFontFace();                 // fonte da interface com os caracteres do idioma
-wchar_t AltKey(const std::wstring& name, wchar_t fallback);   // letra do Alt de um menu: a inicial latina do nome traduzido
+std::wstring Resolve();                      // what Init() will use: the chosen one or the Windows one, if there is a catalog
+void Init();                                 // loads the catalog (call at the start of WinMain)
+const std::wstring& Current();               // language in use
+bool Rtl();                                  // Arabic and Urdu: right-to-left reading
+const wchar_t* UiFontFace();                 // interface font with the language's characters
+wchar_t AltKey(const std::wstring& name, wchar_t fallback);   // Alt letter of a menu: the Latin initial of the translated name
 
-// Lê um catálogo .po (só as entradas traduzidas e sem "fuzzy"); devolve false se o arquivo não abre
+// Reads a .po catalog (only translated, non-"fuzzy" entries); returns false if the file does not open
 bool LoadPo(const std::wstring& path, std::vector<std::pair<std::wstring, std::wstring>>& out);
 
 } // namespace i18n

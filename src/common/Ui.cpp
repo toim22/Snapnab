@@ -12,8 +12,8 @@ HFONT UiFont(int dpi, int pt, bool bold) {
     int key = dpi * 1000 + pt * 2 + (bold ? 1 : 0);
     auto it = cache.find(key);
     if (it != cache.end()) return it->second;
-    // Segoe UI Variable (Windows 11) tem desenho mais leve e espaçamento óptico; no Windows 10 fica a Segoe UI
-    // chinês, hindi e bengali usam a fonte com os caracteres do idioma (i18n::UiFontFace)
+    // Segoe UI Variable (Windows 11) has a lighter design and optical spacing; on Windows 10 Segoe UI is used
+    // Chinese, Hindi and Bengali use the font with the language's characters (i18n::UiFontFace)
     static const wchar_t* face = i18n::UiFontFace() ? i18n::UiFontFace()
                                : FontExists(L"Segoe UI Variable Text") ? L"Segoe UI Variable Text" : L"Segoe UI";
     LOGFONTW lf{};
@@ -68,7 +68,7 @@ void DrawTextCentered(HDC dc, const std::wstring& t, RECT r, COLORREF color, HFO
     SelectObject(dc, of);
 }
 
-// ---------------------------------------------------------------- formulário
+// ---------------------------------------------------------------- form
 namespace {
 struct FormState {
     std::vector<Field>* fields;
@@ -161,7 +161,7 @@ bool RunForm(HWND owner, const std::wstring& title, std::vector<Field>& fields,
     int dpi = st.dpi;
     int W = Scale(width, dpi), pad = Scale(14, dpi), rowH = Scale(30, dpi), ctlH = Scale(24, dpi);
     int labelW = Scale(150, dpi);
-    {   // a coluna dos rótulos cresce com o rótulo mais longo (traduções), e a janela junto
+    {   // the label column grows with the longest label (translations), and the window with it
         HDC dc = GetDC(nullptr);
         HGDIOBJ of = SelectObject(dc, UiFont(dpi));
         int widest = 0;
@@ -278,7 +278,7 @@ bool RunForm(HWND owner, const std::wstring& title, std::vector<Field>& fields,
     return st.ok;
 }
 
-// ---------------------------------------------------------------- janela de texto
+// ---------------------------------------------------------------- text window
 void ShowTextWindow(HWND owner, const std::wstring& title, const std::wstring& text) {
     std::vector<Field> dummy;
     static bool reg = false;

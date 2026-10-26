@@ -1,26 +1,26 @@
-# Como compilar
+# Building
 
-## Requisitos
+## Requirements
 
-- Windows 10 2004+ ou Windows 11, x64
-- Visual Studio 2022 ou mais novo com a carga **Desenvolvimento para desktop com C++**, que já traz:
-  MSVC, Windows SDK, **C++ CMake tools for Windows** (CMake + Ninja)
-- Para gerar o instalador: [Inno Setup 6.5+](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`).
-  Sem ele, o `build.bat` gera só a pasta e o zip.
+- Windows 10 2004+ or Windows 11, x64
+- Visual Studio 2022 or later with the **Desktop development with C++** workload, which already includes:
+  MSVC, the Windows SDK and **C++ CMake tools for Windows** (CMake + Ninja)
+- To build the installer: [Inno Setup 6.5+](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`).
+  Without it, `build.bat` produces only the folder and the zip.
 
-Não há dependências externas: tudo usa APIs do Windows (Win32, GDI+, WIC, Media Foundation, WASAPI, Windows.Media.Ocr).
+There are no external dependencies: everything uses Windows APIs (Win32, GDI+, WIC, Media Foundation, WASAPI, Windows.Media.Ocr).
 
-## Linha de comando
+## Command line
 
 ```bat
-build.bat            :: Release + pacote do produto em dist\
-build.bat test       :: Release + testes de integração
-build.bat debug      :: Debug em out\build\debug\bin
-build.bat clean      :: apaga out\ e dist\
+build.bat            :: Release + product package in dist\
+build.bat test       :: Release + integration tests
+build.bat debug      :: Debug in out\build\debug\bin
+build.bat clean      :: deletes out\ and dist\
 ```
 
-O `build.bat` encontra o Visual Studio sozinho (`vswhere`) e chama os presets do CMake. Num *Developer Command Prompt*
-dá para usar o CMake direto:
+`build.bat` finds Visual Studio by itself (`vswhere`) and calls the CMake presets. In a *Developer Command Prompt*
+you can use CMake directly:
 
 ```bat
 cmake --preset release
@@ -31,52 +31,52 @@ cpack --preset release
 
 ## Visual Studio / VS Code / CLion
 
-Abra a pasta do repositório (*Arquivo > Abrir > Pasta*). O `CMakePresets.json` é reconhecido e oferece as configurações
-**Release (x64)** e **Debug (x64)**. Para depurar, escolha `Snapnab.exe` ou `SnapnabEditor.exe` como item de inicialização.
+Open the repository folder (*File > Open > Folder*). `CMakePresets.json` is recognized and offers the
+**Release (x64)** and **Debug (x64)** configurations. To debug, pick `Snapnab.exe` or `SnapnabEditor.exe` as the startup item.
 
-## Onde fica cada coisa
+## Where things go
 
-| Pasta | O quê | Versionada? |
+| Folder | What | Committed? |
 |---|---|---|
-| `out/build/<preset>/` | árvore de build do CMake; executáveis em `bin/` | não |
-| `dist/Snapnab/` | o programa como o usuário recebe (`Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll`, `lang/`, `LEIA-ME.txt`) | não |
-| `dist/Snapnab-<versão>-win-x64.zip` | pacote portátil para distribuir (por exemplo, anexado a uma *release* do GitHub) | não |
-| `dist/Snapnab-<versão>-setup.exe` | instalador (gerado quando o Inno Setup está instalado) | não |
-| `dist/symbols/` | PDBs do Release, para analisar falhas; não vão no pacote | não |
+| `out/build/<preset>/` | CMake build tree; executables in `bin/` | no |
+| `dist/Snapnab/` | the program as the user gets it (`Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll`, `lang/`, `README.txt`) | no |
+| `dist/Snapnab-<version>-win-x64.zip` | portable package for distribution (for example, attached to a GitHub *release*) | no |
+| `dist/Snapnab-<version>-setup.exe` | installer (built when Inno Setup is installed) | no |
+| `dist/symbols/` | Release PDBs, to analyze crashes; not included in the package | no |
 
-## Instalador
+## Installer
 
-`packaging/installer/Snapnab.iss` é um script do [Inno Setup 6](https://jrsoftware.org/isinfo.php) que empacota
-`dist\Snapnab\` num instalador (`dist\Snapnab-<versão>-setup.exe`). O `build.bat` o compila sozinho quando acha o
-`ISCC.exe` (em `%LOCALAPPDATA%\Programs`, `Arquivos de Programas` ou no `PATH`), passando a versão do `CMakeLists.txt`.
-Para compilar à mão depois do `build.bat`:
+`packaging/installer/Snapnab.iss` is an [Inno Setup 6](https://jrsoftware.org/isinfo.php) script that packages
+`dist\Snapnab\` into an installer (`dist\Snapnab-<version>-setup.exe`). `build.bat` compiles it automatically when it
+finds `ISCC.exe` (in `%LOCALAPPDATA%\Programs`, `Program Files` or on the `PATH`), passing the version from `CMakeLists.txt`.
+To compile it by hand after `build.bat`:
 
 ```bat
-ISCC.exe /DAppVersion=0.2.0 packaging\installer\Snapnab.iss
+ISCC.exe /DAppVersion=0.3.0 packaging\installer\Snapnab.iss
 ```
 
-O que o instalador faz:
+What the installer does:
 
-- pergunta se instala **só para o usuário** (padrão, sem pedir administrador, em `%LOCALAPPDATA%\Programs\Snapnab`) ou
-  **para todos os usuários** (em *Arquivos de Programas*, pede administrador); se, no modo do usuário, a pessoa
-  escolher uma pasta em que não pode gravar (como *Arquivos de Programas*), oferece reiniciar como administrador com
-  essa pasta;
-- assistente nos mesmos 12 idiomas do programa, escolhido pelo idioma do Windows: 7 traduções oficiais do Inno Setup e
-  5 em `packaging/installer/Languages/` (chinês, hindi, bengali, indonésio e urdu); acompanha o tema claro/escuro
-  do Windows e usa o ícone do Snapnab (`WizardLarge.png`, `WizardSmall.png`);
-- atalhos no menu Iniciar (Snapnab e Snapnab Editor), atalho na área de trabalho opcional e "iniciar com o Windows"
-  (o mesmo valor que *Opções › Iniciar com o Windows* grava);
-- fecha o Snapnab se ele estiver aberto, e numa atualização instala por cima mantendo as configurações;
-- desinstala por *Configurações › Aplicativos*; capturas, presets e configurações ficam no perfil do usuário.
+- asks whether to install **just for the current user** (default, no administrator prompt, in
+  `%LOCALAPPDATA%\Programs\Snapnab`) or **for all users** (in *Program Files*, asks for administrator rights); if, in
+  per-user mode, the user picks a folder they cannot write to (such as *Program Files*), it offers to restart as
+  administrator with that folder;
+- the wizard comes in the same 12 languages as the program, chosen from the Windows language: 7 official Inno Setup
+  translations and 5 in `packaging/installer/Languages/` (Chinese, Hindi, Bengali, Indonesian and Urdu); it follows
+  the Windows light/dark theme and uses the Snapnab icon (`WizardLarge.png`, `WizardSmall.png`);
+- Start menu shortcuts (Snapnab and Snapnab Editor), an optional desktop shortcut and "start with Windows"
+  (the same value that *Options › Start with Windows* writes);
+- closes Snapnab if it is running, and on an update installs over the previous version keeping the settings;
+- uninstalls from *Settings › Apps*; captures, presets and settings stay in the user profile.
 
-O executável não é assinado digitalmente, então o SmartScreen pode avisar na primeira execução até o arquivo ganhar
-reputação; para assinar, use `SignTool` do Windows SDK com um certificado de assinatura de código.
+The executable is not digitally signed, so SmartScreen may warn on the first run until the file gains
+reputation; to sign it, use `SignTool` from the Windows SDK with a code signing certificate.
 
-## Versão
+## Version
 
-A versão fica só em `project(VERSION …)` no `CMakeLists.txt` (o `build.bat` a repassa ao instalador). Ao mudar,
-atualize também o `CHANGELOG.md`.
+The version lives only in `project(VERSION …)` in `CMakeLists.txt` (`build.bat` passes it on to the installer). When
+changing it, update `CHANGELOG.md` too.
 
-## Ícones
+## Icons
 
-Os ícones em `src/resources/` são gerados por `python scripts/make_icons.py` (sem dependências).
+The icons in `src/resources/` are generated by `python scripts/make_icons.py` (no dependencies).

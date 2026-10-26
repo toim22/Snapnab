@@ -22,7 +22,7 @@ bool Notify::Start(Channel self, Listener listener) {
     stopEvent_ = CreateEventW(nullptr, TRUE, FALSE, nullptr);
     mutex_ = CreateMutexW(nullptr, FALSE, kMutexName);
     map_ = OpenMap();
-    if (!event_ || !ack_ || !mutex_ || !map_) { Log(L"IPC: falha ao criar objetos (%u)", GetLastError()); return false; }
+    if (!event_ || !ack_ || !mutex_ || !map_) { Log(L"IPC: failed to create objects (%u)", GetLastError()); return false; }
     running_ = true;
     thread_ = std::thread([this] { ListenerThread(); });
     return true;
@@ -37,7 +37,7 @@ void Notify::Stop() {
 }
 
 void Notify::ListenerThread() {
-    // "thread receptora viva" — o emissor espera por este mutex nomeado antes de enviar
+    // "receiver thread alive" — the sender waits for this named mutex before sending
     aliveMutex_ = CreateMutexW(nullptr, TRUE, AliveName(self_).c_str());
     HANDLE waits[2] = { event_, stopEvent_ };
     while (running_) {
@@ -62,7 +62,7 @@ void Notify::ListenerThread() {
             UnmapViewOfFile(p);
         }
         ReleaseMutex(mutex_);
-        SetEvent(ack_);                         // libera o emissor
+        SetEvent(ack_);                         // releases the sender
         Log(L"IPC: recebido code=0x%02X kind=%u", m.code, m.kind);
         if (listener_) listener_(m);
     }
@@ -70,17 +70,17 @@ void Notify::ListenerThread() {
 }
 
 bool Notify::Send(Channel dest, uint32_t code, uint32_t kind, const void* payload, uint32_t len, bool waitForAck) {
-    if (dest == self_) return false;                                 // nunca envia para si mesmo
+    if (dest == self_) return false;                                 // never sends to itself
     const wchar_t* peerMutex = dest == kEditor ? kEditorMutex : kCaptureMutex;
-    if (!IsProcessRunning(peerMutex)) return false;                  // ninguém do outro lado
-    // espera a thread receptora do par: até 75 × 200 ms = 15 s
+    if (!IsProcessRunning(peerMutex)) return false;                  // nobody on the other side
+    // waits for the peer's receiver thread: up to 75 × 200 ms = 15 s
     bool ready = false;
     for (int i = 0; i < 75; i++) {
         HANDLE a = OpenMutexW(SYNCHRONIZE, FALSE, AliveName(dest).c_str());
         if (a) { CloseHandle(a); ready = true; break; }
         Sleep(200);
     }
-    if (!ready) { Log(L"IPC: par %u não respondeu", dest); return false; }
+    if (!ready) { Log(L"IPC: peer %u did not respond", dest); return false; }
     if (len > kMapSize - 8) len = kMapSize - 8;
 
     HANDLE ack = CreateEventW(nullptr, TRUE, FALSE, AckName(dest).c_str());
@@ -100,7 +100,7 @@ bool Notify::Send(Channel dest, uint32_t code, uint32_t kind, const void* payloa
     SetEvent(ev);
     if (waitForAck) {
         HWND w = FindWindowW(dest == kEditor ? kEditorWndClass : kCaptureWndClass, nullptr);
-        if (w && !IsHungAppWindow(w)) WaitForSingleObject(ack, 10000);   // não bloqueia se o par travou
+        if (w && !IsHungAppWindow(w)) WaitForSingleObject(ack, 10000);   // does not block if the peer is hung
         ResetEvent(ack);
     }
     CloseHandle(ev); CloseHandle(map); CloseHandle(m); CloseHandle(ack);

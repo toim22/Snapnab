@@ -1,4 +1,4 @@
-// Controles modernos da janela de captura (ver Widgets.h)
+// Modern controls of the capture window (see Widgets.h)
 #include "Widgets.h"
 #include <dwmapi.h>
 
@@ -20,7 +20,7 @@ struct Ctl {
     HWND h = nullptr;
     HFONT font = nullptr;
     bool hover = false, pressed = false, checked = false, tracking = false, dropped = false;
-    float knob = 0;                 // posição animada da chave (0 = desligada, 1 = ligada)
+    float knob = 0;                 // animated switch position (0 = off, 1 = on)
     int icon = 0;                   // icons::Id + 1
     UINT style = 0;
     HWND tip = nullptr;
@@ -31,7 +31,7 @@ struct Ctl {
     bool gearEnabled = true, gearHover = false;
 };
 
-struct List {                       // estado da lista suspensa aberta
+struct List {                       // state of the open drop-down list
     Ctl* owner = nullptr;
     HWND h = nullptr;
     int hot = -1, picked = -1, scroll = 0, contentH = 0, viewH = 0;
@@ -108,7 +108,7 @@ void Notify(Ctl* c, WORD code) {
 
 const COLORREF kText = RGB(28, 28, 32), kTextOff = RGB(158, 158, 164);
 
-// ---------------------------------------------------------------- desenho
+// ---------------------------------------------------------------- drawing
 void PaintToggle(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
     bool en = IsWindowEnabled(c->h) != FALSE;
     float tw = (float)Sc(40, dpi), th = (float)Sc(20, dpi);
@@ -153,11 +153,11 @@ void DrawChevronRight(Gdiplus::Graphics& g, float cx, float cy, float h, COLORRE
     g.DrawLines(&pen, p, 3);
 }
 
-// "Rótulo            Valor ›": o rótulo alinha com o das chaves, o valor fica na cor de destaque
+// "Label            Value ›": the label lines up with the switches' labels, the value is in the accent color
 void PaintLink(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
     bool en = IsWindowEnabled(c->h) != FALSE;
     std::wstring value = c->display;
-    int cw = Sc(14, dpi);                                 // área da seta
+    int cw = Sc(14, dpi);                                 // arrow area
     int vw = TextWidth(dc, value, c->font);
     RECT vr{ rc.right - cw - Sc(4, dpi) - vw, 0, rc.right - cw - Sc(4, dpi), rc.bottom };
     COLORREF vc = en ? (c->hover || c->pressed ? Mix(pal.accentText, 0, 0.25) : pal.accentText) : kTextOff;
@@ -211,7 +211,7 @@ void PaintButton(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
     }
     int is = Sc(16, dpi), gap = Sc(6, dpi);
     int tw = iconOnly || text.empty() ? 0 : TextWidth(dc, text, c->font);
-    int mw = (c->style & ButtonMenu) ? Sc(10, dpi) : 0;  // seta do menu
+    int mw = (c->style & ButtonMenu) ? Sc(10, dpi) : 0;  // menu arrow
     int total = (c->icon ? is : 0) + (c->icon && tw ? gap : 0) + tw + (mw ? Sc(3, dpi) + mw : 0);
     int x = (rc.right - total) / 2;
     COLORREF fg = en ? ((c->style & ButtonAccent) ? pal.accentText : kText) : kTextOff;
@@ -252,7 +252,7 @@ void PaintCombo(Ctl* c, HDC dc, RECT rc, COLORREF bg, int dpi) {
         COLORREF fill = en ? (c->hover && !c->dropped ? RGB(252, 252, 253) : RGB(255, 255, 255)) : Mix(bg, RGB(255, 255, 255), 0.45);
         FillRound(g, r, rad, fill);
         StrokeRound(g, r, rad, Mix(pal.line, 0, en && (c->hover || c->dropped) ? 0.18 : 0.07), 1.0f);
-        if (en && (c->dropped || ShowFocus(c->h))) {          // traço de destaque embaixo, como no Windows 11
+        if (en && (c->dropped || ShowFocus(c->h))) {          // accent underline at the bottom, as in Windows 11
             Gdiplus::GraphicsPath clip; RoundPath(clip, r, rad);
             g.SetClip(&clip);
             float t = (float)Sc(2, dpi);
@@ -300,7 +300,7 @@ void Paint(Ctl* c) {
     EndPaint(c->h, &ps);
 }
 
-// ---------------------------------------------------------------- lista suspensa
+// ---------------------------------------------------------------- drop-down list
 bool IsSep(const Ctl* c, int i) { return c->items[i].flags & ItemSeparator; }
 
 int ItemTop(const List& l, int i) {
@@ -381,7 +381,7 @@ void PaintList(List& l) {
                 float ih = (float)Sc(14, dpi);
                 FillRound(g, Gdiplus::RectF(r.X + Sc(2, dpi), r.Y + (r.Height - ih) / 2, (float)Sc(3, dpi), ih), (float)Sc(2, dpi), pal.accent);
             }
-            if (c->items[i].flags & ItemChecked) {     // marca de efeito ativo
+            if (c->items[i].flags & ItemChecked) {     // active effect mark
                 Gdiplus::Pen pen(GC(pal.accentText), std::max(1.5f, dpi / 60.0f));
                 pen.SetStartCap(Gdiplus::LineCapRound); pen.SetEndCap(Gdiplus::LineCapRound); pen.SetLineJoin(Gdiplus::LineJoinRound);
                 float cx = (float)Sc(17, dpi), cy = y + l.itemH / 2.0f, s = (float)Sc(4, dpi);
@@ -438,7 +438,7 @@ LRESULT CALLBACK ListProc(HWND h, UINT m, WPARAM w, LPARAM lp) {
 
 void DropDown(Ctl* c) {
     if (c->dropped || !IsWindowEnabled(c->h)) return;
-    Notify(c, CBN_DROPDOWN);                       // o pai pode refazer a lista agora
+    Notify(c, CBN_DROPDOWN);                       // the parent may rebuild the list now
     if (c->items.empty()) return;
     List l;
     l.owner = c;
@@ -466,13 +466,13 @@ void DropDown(Ctl* c) {
     HWND lh = CreateWindowExW(WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE | WS_EX_TOPMOST, kList, L"", WS_POPUP,
                               x, y, width, l.viewH, root, nullptr, hinst, &l);
     if (!lh) return;
-    DWORD corner = 3;   // DWMWCP_ROUNDSMALL (Windows 11: cantos arredondados + sombra)
+    DWORD corner = 3;   // DWMWCP_ROUNDSMALL (Windows 11: rounded corners + shadow)
     DwmSetWindowAttribute(lh, 33 /*DWMWA_WINDOW_CORNER_PREFERENCE*/, &corner, sizeof corner);
     c->dropped = true;
     InvalidateRect(c->h, nullptr, FALSE);
     ShowWindow(lh, SW_SHOWNOACTIVATE);
-    bool wasActive = GetForegroundWindow() == root;     // trocar de janela (Alt+Tab) fecha a lista
-    // laço modal como o de um menu: clique fora fecha, teclado navega
+    bool wasActive = GetForegroundWindow() == root;     // switching windows (Alt+Tab) closes the list
+    // modal loop like a menu's: a click outside closes it, the keyboard navigates
     MSG msg;
     while (!l.done && IsWindow(lh)) {
         if (!GetMessageW(&msg, nullptr, 0, 0)) { PostQuitMessage((int)msg.wParam); break; }
@@ -512,7 +512,7 @@ void StepSelection(Ctl* c, int dir) {
         if (!IsSep(c, i)) { c->sel = i; InvalidateRect(c->h, nullptr, FALSE); Notify(c, CBN_SELCHANGE); return; }
 }
 
-// ---------------------------------------------------------------- chave / botão: clique
+// ---------------------------------------------------------------- switch / button: click
 void Activate(Ctl* c) {
     if (c->kind == Ctl::Toggle) {
         c->checked = !c->checked;
@@ -608,7 +608,7 @@ LRESULT Handle(Ctl* c, UINT m, WPARAM w, LPARAM lp) {
         }
         return 0;
     case WM_MUI_DROP: DropDown(c); return 0;
-    // ---- chave / botão
+    // ---- switch / button
     case BM_GETCHECK: return c->checked ? BST_CHECKED : BST_UNCHECKED;
     case BM_SETCHECK:
         c->checked = w == BST_CHECKED;
@@ -617,11 +617,11 @@ LRESULT Handle(Ctl* c, UINT m, WPARAM w, LPARAM lp) {
         InvalidateRect(h, nullptr, FALSE);
         return 0;
     case BM_CLICK: Activate(c); return 0;
-    // ---- estilo / ícone
+    // ---- style / icon
     case MUI_SETICON: c->icon = (int)w; InvalidateRect(h, nullptr, FALSE); return 0;
     case MUI_SETSTYLE:
         c->style = (UINT)w;
-        if ((c->style & ButtonIconOnly) && !c->tip) {     // botão só com ícone: o texto vira dica
+        if ((c->style & ButtonIconOnly) && !c->tip) {     // icon-only button: the text becomes the tooltip
             c->tip = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, nullptr, WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
                                      0, 0, 0, 0, h, nullptr, hinst, nullptr);
             TOOLINFOW ti{ sizeof ti };

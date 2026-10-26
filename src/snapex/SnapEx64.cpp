@@ -1,7 +1,7 @@
 // SnapEx64.dll — "Snapnab Extended Window Capture" (≙ SnagEx64.dll, ds_pseudocode §6 / ds_arch §10.1)
-//   Snap5000(msgEnter, msgLeave): instala hook global WH_CALLWNDPROC; quando a janela-alvo recebe msgEnter,
-//   ela é sub-classificada e passa a responder WM_GETMINMAXINFO com 19500×19500 (pode crescer além da tela).
-//   Snap5001(): desfaz.
+//   Snap5000(msgEnter, msgLeave): installs a global WH_CALLWNDPROC hook; when the target window receives msgEnter,
+//   it is subclassed and starts answering WM_GETMINMAXINFO with 19500×19500 (it can grow beyond the screen).
+//   Snap5001(): undoes it.
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
@@ -14,7 +14,7 @@ static UINT     g_msgLeave = 0;
 #pragma data_seg()
 #pragma comment(linker, "/SECTION:.shared,RWS")
 
-// estado local de cada processo onde a DLL foi mapeada
+// local state of each process the DLL was mapped into
 static HMODULE  g_self = nullptr;
 static HWND     g_hwnd = nullptr;
 static WNDPROC  g_oldProc = nullptr;
@@ -27,7 +27,7 @@ static LRESULT CALLBACK SubclassProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
         mmi->ptMaxTrackSize.y = 19500;
         mmi->ptMaxSize.x = 19500;
         mmi->ptMaxSize.y = 19500;
-        return 1;                            // não chama o proc original
+        return 1;                            // does not call the original proc
     }
     return IsWindowUnicode(h) ? CallWindowProcW(g_oldProc, h, m, wp, lp) : CallWindowProcA(g_oldProc, h, m, wp, lp);
 }
@@ -53,7 +53,7 @@ static LRESULT CALLBACK HookProc(int nCode, WPARAM wp, LPARAM lp) {
 extern "C" BOOL Snap5000(UINT msgEnter, UINT msgLeave, DWORD threadId) {
     g_msgEnter = msgEnter;
     g_msgLeave = msgLeave;
-    // threadId = 0 → todos os threads do desktop (como o original); o capturador passa o thread da janela-alvo
+    // threadId = 0 → all threads of the desktop (like the original); the capturer passes the target window's thread
     g_hook = SetWindowsHookExW(WH_CALLWNDPROC, HookProc, g_self, threadId);
     return g_hook != nullptr;
 }
@@ -65,7 +65,7 @@ extern "C" void Snap5001() {
 BOOL APIENTRY DllMain(HMODULE h, DWORD reason, LPVOID) {
     if (reason == DLL_PROCESS_ATTACH) { g_self = h; DisableThreadLibraryCalls(h); }
     if (reason == DLL_PROCESS_DETACH && g_subclassed && g_hwnd && IsWindow(g_hwnd)) {
-        SetWindowLongPtrW(g_hwnd, GWLP_WNDPROC, (LONG_PTR)g_oldProc);   // nunca deixa a janela com proc pendurado
+        SetWindowLongPtrW(g_hwnd, GWLP_WNDPROC, (LONG_PTR)g_oldProc);   // never leaves the window with a dangling proc
     }
     return TRUE;
 }

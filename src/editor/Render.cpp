@@ -1,7 +1,7 @@
-// Pintores dos objetos (PainterDC/GDI+; comp_5 §3.5 "PaintTools::IPainter", ed_comp_4 §6.3)
-// Cada objeto vetorial é desenhado numa camada própria, com as cores cheias; a sombra (GetDropShadowImage: cor,
-// desfoque e deslocamento na direção escolhida) sai do alfa dessa camada e as duas são compostas com a opacidade
-// do objeto — assim partes que se sobrepõem (linha + ponta, corpo + ponta do balão) não ficam mais escuras.
+// Object painters (PainterDC/GDI+; comp_5 §3.5 "PaintTools::IPainter", ed_comp_4 §6.3)
+// Each vector object is drawn on its own layer with full colors; the shadow (GetDropShadowImage: color,
+// blur and offset in the chosen direction) comes from that layer's alpha, and both are composited with the
+// object's opacity — so overlapping parts (line + end, body + callout tip) do not get darker.
 #include "Document.h"
 #include "Effects.h"
 #include "Emoji.h"
@@ -46,7 +46,7 @@ void ApplyDash(Pen& p, int dash) {
     }
 }
 
-// ---------------------------------------------------------------- formas
+// ---------------------------------------------------------------- shapes
 void ShapePath(GraphicsPath& gp, int kind, RectF r) {
     float l = r.X, t = r.Y, w = r.Width, h = r.Height, rr = l + w, b = t + h, cx = l + w / 2, cy = t + h / 2;
     switch (kind) {
@@ -75,8 +75,86 @@ void ShapePath(GraphicsPath& gp, int kind, RectF r) {
     }
 }
 
-// ---------------------------------------------------------------- balões (CalloutObject / RemixCallouts)
-// 24 formatos, na ordem da galeria: fala, nuvens, caixa com seta, setas, retângulos, nota, explosão, pensamento, sussurro.
+// ---------------------------------------------------------------- gradients
+// color of the gradient at t (0..1), interpolated between the stops
+static uint32_t GradColorAt(const Gradient& g, float t) {
+    const auto& st = g.stops;
+    if (st.empty()) return 0;
+    if (t <= st.front().pos) return st.front().color;
+    if (t >= st.back().pos) return st.back().color;
+    for (size_t i = 1; i < st.size(); i++) {
+        if (t > st[i].pos) continue;
+        float span = std::max(1e-4f, st[i].pos - st[i - 1].pos), k = (t - st[i - 1].pos) / span;
+        uint32_t a = st[i - 1].color, b = st[i].color;
+        auto mix = [&](int sh) { return (uint32_t)std::lround(((a >> sh) & 255) + (((int)((b >> sh) & 255) - (int)((a >> sh) & 255)) * k)) << sh; };
+        return mix(24) | mix(16) | mix(8) | mix(0);
+    }
+    return st.back().color;
+}
+
+// stops as GDI+ wants them: from 0 to 1, with opacity applied
+static void GradArrays(const Gradient& g, int opacity, bool reverse, std::vector<Color>& cols, std::vector<REAL>& pos) {
+    std::vector<GradStop> st = g.stops;
+    if (st.front().pos > 0) st.insert(st.begin(), { 0, st.front().color });
+    if (st.back().pos < 1) st.push_back({ 1, st.back().color });
+    if (reverse) { std::reverse(st.begin(), st.end()); for (auto& x : st) x.pos = 1 - x.pos; }
+    for (auto& x : st) { cols.push_back(Gc(x.color, opacity)); pos.push_back(std::clamp(x.pos, 0.0f, 1.0f)); }
+    pos.front() = 0; pos.back() = 1;
+}
+
+// brush for a fill: solid color, or the linear (at an angle) / radial gradient spread over 'r'
+std::unique_ptr<Brush> FillBrush(uint32_t color, const Gradient& g, RectF r, int opacity) {
+    if (!g.Active() || r.Width < 1 || r.Height < 1) return std::make_unique<SolidBrush>(Gc(color, opacity));
+    std::vector<Color> cols; std::vector<REAL> pos;
+    if (g.type == 2) {                                      // radial: from the center (stop 0) to the corners (stop 1)
+        GradArrays(g, opacity, true, cols, pos);
+        RectF e = r; e.Inflate(r.Width * 0.2072f, r.Height * 0.2072f);    // ellipse through the corners (√2)
+        GraphicsPath gp; gp.AddEllipse(e);
+        auto b = std::make_unique<PathGradientBrush>(&gp);
+        b->SetCenterPoint(Center(r));
+        b->SetInterpolationColors(cols.data(), pos.data(), (INT)cols.size());
+        return b;
+    }
+    GradArrays(g, opacity, false, cols, pos);
+    RectF e = r; e.Inflate(1, 1);
+    auto b = std::make_unique<LinearGradientBrush>(e, cols.front(), cols.back(), (REAL)g.angle, TRUE);
+    b->SetInterpolationColors(cols.data(), pos.data(), (INT)cols.size());
+    b->SetWrapMode(WrapModeTileFlipXY);
+    return b;
+}
+
+// gradient painted (blended) on the pixels of the mask, spread over 'bounds' (Fill tool, canvas color)
+void FillGradientMask(Image& img, const std::vector<uint8_t>& mask, RECT b, const Gradient& g, int opacity) {
+    if (!g.Active() || b.right <= b.left || b.bottom <= b.top) return;
+    float w = (float)(b.right - b.left), h = (float)(b.bottom - b.top), cx = b.left + w / 2, cy = b.top + h / 2;
+    double a = g.angle * 3.14159265358979 / 180;
+    float ux = (float)std::cos(a), uy = (float)std::sin(a);
+    float half = (std::fabs(ux) * w + std::fabs(uy) * h) / 2, rad = std::sqrt(w * w + h * h) / 2;
+    for (int y = std::max(0L, b.top); y < std::min((LONG)img.h, b.bottom); y++)
+        for (int x = std::max(0L, b.left); x < std::min((LONG)img.w, b.right); x++) {
+            int m = mask.empty() ? 255 : mask[(size_t)y * img.w + x];
+            if (!m) continue;
+            float dx = x + 0.5f - cx, dy = y + 0.5f - cy;
+            float t = g.type == 2 ? std::sqrt(dx * dx + dy * dy) / std::max(1.0f, rad) : (dx * ux + dy * uy) / std::max(1.0f, 2 * half) + 0.5f;
+            uint32_t c = GradColorAt(g, std::clamp(t, 0.0f, 1.0f));
+            int al = (int)CA(c) * std::clamp(opacity, 0, 100) / 100 * m / 255;
+            if (al) img.at(x, y) = BlendOver(img.at(x, y), (c & 0x00FFFFFF) | ((uint32_t)al << 24));
+        }
+}
+
+// outline of a highlighter / spotlight / hide area: one of the shapes or the clicked polygon / freehand outline
+void AreaPath(GraphicsPath& gp, const DrawObj& o) {
+    if (o.IsPointShape()) {
+        if (o.style.areaShape == AreaFreehand && o.pts.size() >= 3) gp.AddClosedCurve(o.pts.data(), (INT)o.pts.size(), 0.3f);
+        else gp.AddPolygon(o.pts.data(), (INT)o.pts.size());
+        return;
+    }
+    // a polygon / freehand area without its points yet is drawn as a rectangle
+    ShapePath(gp, IsPointArea(o.style.areaShape) ? ShapeRect : std::clamp(o.style.areaShape, 0, ShapeCount - 1), o.Rect());
+}
+
+// ---------------------------------------------------------------- callouts (CalloutObject / RemixCallouts)
+// 24 shapes, in gallery order: speech, clouds, box with arrow, arrows, rectangles, note, explosion, thought, whisper.
 enum class Body { RoundSpeech, Rect, RoundRect, Ellipse, Cloud, Note, Burst, Tag, Block, Notch, Fat, Double, Chevron, ArrowBox };
 enum class Tail { None, Wedge, Bubbles, Leader, Direction };
 struct CalloutDef { Body body; Tail tail; bool dashed; };
@@ -94,7 +172,7 @@ static const CalloutDef& Def(int shape) { return kCallouts[std::clamp(shape, 0, 
 
 static bool IsArrowBody(Body b) { return b >= Body::Tag; }
 
-// direção das setas pela ponta arrastável: 0 direita, 1 baixo, 2 esquerda, 3 cima
+// arrow direction from the draggable tip: 0 right, 1 down, 2 left, 3 up
 static int ArrowDir(const DrawObj& o) {
     PointF c = Center(o.Rect()), d = Sub(o.tail, c);
     if (std::fabs(d.X) < 1 && std::fabs(d.Y) < 1) return 0;
@@ -175,7 +253,7 @@ void CalloutBodyPath(GraphicsPath& gp, int shape, RectF r) {
     }
 }
 
-// corpo + ponta (cunha ou bolhas) num único caminho de preenchimento "winding"
+// body + tip (wedge or bubbles) in a single "winding" fill path
 static void CalloutFullPath(GraphicsPath& gp, const DrawObj& o) {
     const CalloutDef& d = Def(o.style.calloutShape);
     RectF r = o.Rect();
@@ -230,7 +308,7 @@ RectF CalloutTextRect(const DrawObj& o) {
     return r;
 }
 
-// ponto da borda do retângulo na direção de 'to' (para a seta da caixa com linha)
+// point on the rectangle border in the direction of 'to' (for the arrow of the box with a line)
 static PointF RectEdge(RectF r, PointF to) {
     PointF c = Center(r), d = Sub(to, c);
     if (std::fabs(d.X) < 1e-3f && std::fabs(d.Y) < 1e-3f) return c;
@@ -239,7 +317,7 @@ static PointF RectEdge(RectF r, PointF to) {
     return Add(c, Mul(d, std::min(s, 1.0f)));
 }
 
-// ---------------------------------------------------------------- linhas e pontas
+// ---------------------------------------------------------------- lines and ends
 static float CapInset(int cap, float len, float w) {
     switch (cap) {
     case CapArrow: return len * 0.8f;
@@ -298,7 +376,7 @@ static void DrawCap(Graphics& g, int cap, PointF tip, PointF dir, float w, float
     }
 }
 
-// linha reta ou curva (quadrática por 'ctrl') com pontas e tracejado
+// straight or curved line (quadratic through 'ctrl') with ends and dash pattern
 static void StrokeLine(Graphics& g, PointF a, PointF b, bool curve, PointF ctrl, Color col, float w, int capA, int capB,
                        float sizeA, float sizeB, int dash) {
     w = std::max(0.5f, w);
@@ -330,18 +408,71 @@ void DrawCapGlyph(Graphics& g, int cap, RectF r, Color c, bool atStart) {
     else StrokeLine(g, a, b, false, a, c, w, CapFlat, cap, 2.4f, 2.4f, DashSolid);
 }
 
-// ---------------------------------------------------------------- texto
+// ---------------------------------------------------------------- text
+// wraps the text to the width (as AddString does: by words, breaking words longer than the line)
+static std::vector<std::wstring> WrapLines(const std::wstring& text, const Font& font, const StringFormat& sf, float width) {
+    Bitmap one(1, 1, PixelFormat32bppARGB);
+    Graphics mg(&one);
+    auto fits = [&](const std::wstring& t) {
+        RectF box;
+        mg.MeasureString(t.c_str(), (INT)t.size(), &font, PointF(0, 0), &sf, &box);
+        return box.Width <= width + 0.5f;
+    };
+    std::vector<std::wstring> lines;
+    size_t i = 0;
+    while (i <= text.size()) {
+        size_t nl = text.find(L'\n', i);
+        std::wstring para = text.substr(i, nl == std::wstring::npos ? std::wstring::npos : nl - i);
+        std::wstring cur;
+        size_t k = 0;
+        while (k < para.size()) {
+            size_t sp = para.find(L' ', k);
+            std::wstring word = para.substr(k, sp == std::wstring::npos ? std::wstring::npos : sp - k + 1);
+            k = sp == std::wstring::npos ? para.size() : sp + 1;
+            std::wstring cand = cur + word;
+            if (fits(cand) || cur.empty() && fits(word)) { cur = cand; continue; }
+            if (!cur.empty()) { lines.push_back(cur); cur.clear(); }
+            while (!word.empty() && !fits(word)) {          // a word wider than the line: broken by characters
+                size_t n = 1;
+                while (n < word.size() && fits(word.substr(0, n + 1))) n++;
+                lines.push_back(word.substr(0, n));
+                word = word.substr(n);
+            }
+            cur = word;
+        }
+        lines.push_back(cur);
+        if (nl == std::wstring::npos) break;
+        i = nl + 1;
+    }
+    return lines;
+}
+
 static void TextPath(GraphicsPath& gp, const DrawObj& o, RectF r) {
     const Style& s = o.style;
     FontFamily ff(s.font.c_str());
     FontFamily fallback(L"Segoe UI");
+    FontFamily* fam = ff.IsAvailable() ? &ff : &fallback;
     INT st = (s.bold ? FontStyleBold : 0) | (s.italic ? FontStyleItalic : 0) | (s.underline ? FontStyleUnderline : 0);
     StringFormat sf;
     static const StringAlignment al[] = { StringAlignmentNear, StringAlignmentCenter, StringAlignmentFar };
     sf.SetAlignment(al[std::clamp(s.alignH, 0, 2)]);
     sf.SetLineAlignment(al[std::clamp(s.alignV, 0, 2)]);
     sf.SetTrimming(StringTrimmingWord);
-    gp.AddString(o.text.c_str(), -1, ff.IsAvailable() ? &ff : &fallback, st, std::max(4.0f, s.fontSize), r, &sf);
+    float em = std::max(4.0f, s.fontSize), spacing = std::clamp(s.lineSpacing, 0.5f, 4.0f);
+    if (std::fabs(spacing - 1.0f) < 0.01f) { gp.AddString(o.text.c_str(), -1, fam, st, em, r, &sf); return; }
+    // line spacing (LineSpacing): the lines are wrapped here and placed 'spacing' line heights apart
+    StringFormat lf(&sf);
+    lf.SetFormatFlags(lf.GetFormatFlags() | StringFormatFlagsNoWrap);
+    lf.SetLineAlignment(StringAlignmentNear);
+    Font font(fam, em, st, UnitPixel);
+    auto lines = WrapLines(o.text, font, lf, r.Width);
+    float lineH = em * fam->GetLineSpacing(st) / std::max<UINT16>(1, fam->GetEmHeight(st)), step = lineH * spacing;
+    float total = lineH + step * (lines.size() - 1);
+    float y = s.alignV == 1 ? r.Y + (r.Height - total) / 2 : s.alignV == 2 ? r.GetBottom() - total : r.Y;
+    for (auto& line : lines) {
+        if (!line.empty()) gp.AddString(line.c_str(), -1, fam, st, em, RectF(r.X, y, r.Width, lineH * 1.2f), &lf);
+        y += step;
+    }
 }
 
 float TextBlockHeight(const DrawObj& o, float width) {
@@ -351,7 +482,32 @@ float TextBlockHeight(const DrawObj& o, float width) {
     GraphicsPath gp;
     TextPath(gp, t, RectF(0, 0, std::max(4.0f, width), 100000.0f));
     RectF b; gp.GetBounds(&b);
-    return std::max(o.style.fontSize * 1.35f, b.GetBottom() + o.style.fontSize * 0.3f);    // folga para os descendentes
+    float extra = 0;                                  // empty last lines (Enter at the end) take up height too
+    if (std::fabs(o.style.lineSpacing - 1.0f) >= 0.01f)
+        for (size_t i = o.text.size(); i > 0 && o.text[i - 1] == L'\n'; i--) extra += o.style.fontSize * 1.2f * o.style.lineSpacing;
+    return std::max(o.style.fontSize * 1.35f, b.GetBottom() + extra + o.style.fontSize * 0.3f);    // room for descenders
+}
+
+// arrow label (Skitch style): a text block beyond the tail, on the side opposite to the arrow head
+RectF ArrowLabelRect(const DrawObj& o) {
+    const Style& s = o.style;
+    FontFamily ff(s.font.c_str());
+    FontFamily fallback(L"Segoe UI");
+    INT st = (s.bold ? FontStyleBold : 0) | (s.italic ? FontStyleItalic : 0) | (s.underline ? FontStyleUnderline : 0);
+    Font font(ff.IsAvailable() ? &ff : &fallback, std::max(4.0f, s.fontSize), st, UnitPixel);
+    Bitmap one(1, 1, PixelFormat32bppARGB);
+    Graphics mg(&one);
+    StringFormat sf; sf.SetAlignment(StringAlignmentCenter);
+    std::wstring t = o.text.empty() ? std::wstring(L"Ag") : o.text;
+    if (!t.empty() && t.back() == L'\n') t += L"Ag";
+    SizeF sz;
+    mg.MeasureString(t.c_str(), -1, &font, SizeF(std::max(160.0f, s.fontSize * 14), 100000.0f), &sf, &sz);
+    float tw = sz.Width + 2, th = sz.Height + 2;
+    PointF from = s.bezier ? o.ctrl : o.p2;
+    PointF dir = Norm(Sub(o.p1, from));
+    float gap = s.width * 1.5f + CapLength(s.width, s.startSize) * (s.arrowStart != CapFlat && s.arrowStart != CapRound ? 0.5f : 0.0f) + 4;
+    PointF a = Add(o.p1, Mul(dir, gap));
+    return RectF(a.X + dir.X * tw / 2 - tw / 2, a.Y + dir.Y * th / 2 - th / 2, tw, th);
 }
 
 static void DrawTextObj(Graphics& g, const DrawObj& o, RectF r, uint32_t fillColor, uint32_t outline, float outlineW) {
@@ -367,7 +523,52 @@ static void DrawTextObj(Graphics& g, const DrawObj& o, RectF r, uint32_t fillCol
     g.FillPath(&b, &gp);
 }
 
-// ---------------------------------------------------------------- carimbos
+// ---------------------------------------------------------------- stamps
+// font with the characters of the text (GDI+ paths do not fall back to other fonts)
+static const wchar_t* FontForText(const std::wstring& t) {
+    for (wchar_t c : t) {
+        if ((c >= 0x2E80 && c <= 0x9FFF) || (c >= 0xAC00 && c <= 0xD7AF) || (c >= 0xF900 && c <= 0xFAFF) || (c >= 0xFF00 && c <= 0xFFEF)) return L"Microsoft YaHei UI";
+        if (c >= 0x0900 && c <= 0x0DFF) return L"Nirmala UI";
+    }
+    return L"Segoe UI";
+}
+
+// label stamp ("label:RRGGBB:Text", Before/After, Wrong/Right…): rounded badge in the color with the text in white;
+// the text is stored in the id, so the document looks the same in any language
+static Image RenderLabelStamp(const std::wstring& id, int px) {
+    size_t c2 = id.find(L':', 6);
+    if (c2 == std::wstring::npos) return {};
+    uint32_t col = 0xFF000000 | (uint32_t)wcstoul(id.substr(6, c2 - 6).c_str(), nullptr, 16);
+    std::wstring text = id.substr(c2 + 1);
+    float h = std::max(16.0f, px / 3.0f), em = h * 0.52f;
+    FontFamily ff(FontForText(text));
+    FontFamily fallback(L"Segoe UI");
+    FontFamily* fam = ff.IsAvailable() ? &ff : &fallback;
+    GraphicsPath tp;
+    StringFormat sf(StringFormat::GenericTypographic());
+    tp.AddString(text.c_str(), -1, fam, FontStyleBold, em, PointF(0, 0), &sf);
+    RectF tb; tp.GetBounds(&tb);
+    float padX = h * 0.42f;
+    int w = (int)std::ceil(std::max(h * 1.6f, tb.Width + 2 * padX)) + 2, ih = (int)std::ceil(h) + 2;
+    Image img(w, ih, 0);
+    auto bmp = img.WrapGdip();
+    Graphics g(bmp.get());
+    g.SetSmoothingMode(SmoothingModeAntiAlias);
+    g.SetPixelOffsetMode(PixelOffsetModeHalf);
+    RectF box(1, 1, (float)w - 2, h);
+    GraphicsPath bp; AddRoundRect(bp, box, h * 0.28f);
+    LinearGradientBrush lb(PointF(0, box.Y), PointF(0, box.GetBottom()), Gc(FromColorref(Lighter(ToColorref(col)), 255)), Gc(col));
+    g.FillPath(&lb, &bp);
+    Pen edge(Color(70, 0, 0, 0), std::max(1.0f, h * 0.04f));
+    g.DrawPath(&edge, &bp);
+    Matrix m; m.Translate(box.X + (box.Width - tb.Width) / 2 - tb.X, box.Y + (box.Height - tb.Height) / 2 - tb.Y);
+    tp.Transform(&m);
+    SolidBrush white(Color(255, 255, 255, 255));
+    g.FillPath(&white, &tp);
+    g.Flush(FlushIntentionSync);
+    return img;
+}
+
 static const Image& StampBitmap(const std::wstring& id, int px) {
     static std::map<std::wstring, Image> cache;
     int bucket = std::clamp((px + 31) / 32 * 32, 32, 1024);
@@ -377,21 +578,63 @@ static const Image& StampBitmap(const std::wstring& id, int px) {
     if (cache.size() > 160) cache.clear();
     Image img;
     if (id.rfind(L"file:", 0) == 0) LoadImageFile(id.substr(5), img);
+    else if (id.rfind(L"label:", 0) == 0) img = RenderLabelStamp(id, bucket);
     else img = RenderEmoji(id, bucket);
     return cache[key] = std::move(img);
 }
 
-// ---------------------------------------------------------------- corpo de cada objeto (camada)
+float StampAspect(const std::wstring& id) {
+    const Image& img = StampBitmap(id, 96);
+    return img.empty() || img.h == 0 ? 1.0f : (float)img.w / img.h;
+}
+
+Image StampImage(const std::wstring& id, int px) { return StampBitmap(id, px); }
+
+// magnifier outline for MagnifyShape
+static int MagShapeKind(int m) {
+    static const int k[MagnifyKindCount] = { ShapeEllipse, ShapeRect, ShapeRoundRect, ShapeHexagon, ShapeDiamond, ShapeStar };
+    return k[std::clamp(m, 0, MagnifyKindCount - 1)];
+}
+
+// loupe handle: from the lens border at 45° (bottom right) outward
+static void LoupeHandle(const DrawObj& o, PointF& a, PointF& b, float& w) {
+    RectF r = o.Rect();
+    float rad = std::min(r.Width, r.Height) / 2;
+    PointF c = Center(r), d(0.7071f, 0.7071f);
+    float edge = MagShapeKind(o.style.magnifyShape) == ShapeEllipse ? std::min(r.Width, r.Height) / 2 * 0.98f : std::min(r.Width, r.Height) / 2 * 1.3f;
+    a = Add(c, Mul(d, edge));
+    b = Add(a, Mul(d, rad * 0.85f));
+    w = std::max(6.0f, rad * 0.24f);
+}
+
+RectF MagnifierExtra(const DrawObj& o) {
+    RectF r = o.Rect();
+    if (!o.style.loupe || !o.style.loupeHandle) return r;
+    PointF a, b; float w;
+    LoupeHandle(o, a, b, w);
+    RectF hb(std::min(a.X, b.X) - w, std::min(a.Y, b.Y) - w, std::fabs(b.X - a.X) + 2 * w, std::fabs(b.Y - a.Y) + 2 * w);
+    RectF::Union(r, r, hb);
+    return r;
+}
+
+// ---------------------------------------------------------------- body of each object (layer)
 static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hideText) {
     const Style& s = o.style;
     switch (o.type) {
     case ObjType::Arrow: case ObjType::Line:
         StrokeLine(g, o.p1, o.p2, s.bezier, o.ctrl, Gc(s.stroke), s.width, s.arrowStart, s.arrowEnd, s.startSize, s.endSize, s.dash);
+        if (o.HasLabel() && !o.text.empty() && !hideText) {         // label at the tail, in the arrow color with a white outline
+            DrawObj t;
+            t.text = o.text;
+            t.style = s;
+            t.style.alignH = 1; t.style.alignV = 1; t.style.lineSpacing = 1;
+            DrawTextObj(g, t, ArrowLabelRect(o), s.stroke | 0xFF000000, 0xFFFFFFFF, std::max(2.0f, s.fontSize * 0.14f));
+        }
         break;
     case ObjType::Rect: case ObjType::RoundRect: case ObjType::Ellipse: case ObjType::Shape: {
         GraphicsPath gp;
         ShapePath(gp, o.Kind(), o.Rect());
-        if (s.fill >> 24) { SolidBrush b(Gc(s.fill)); g.FillPath(&b, &gp); }
+        if ((s.fill >> 24) || s.grad.Active()) { auto b = FillBrush(s.fill, s.grad, o.Rect()); g.FillPath(b.get(), &gp); }
         if (s.width > 0 && (s.stroke >> 24)) {
             Pen p(Gc(s.stroke), s.width); p.SetLineJoin(LineJoinMiter); ApplyDash(p, s.dash);
             g.DrawPath(&p, &gp);
@@ -409,16 +652,21 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
         break;
     }
     case ObjType::Highlighter: {
-        // marcador (CPaintOpHighlight): retângulo na cor escolhida; a opacidade vem na composição da camada
-        if (o.pts.empty()) { SolidBrush b(Gc(s.stroke)); g.FillRectangle(&b, o.Rect()); break; }
-        Pen p(Gc(s.stroke), std::max(1.0f, s.width));                  // marcadores antigos à mão livre
+        // highlighter (CPaintOpHighlight): rectangle in the chosen color; the opacity comes from the layer composition
+        if (o.pts.empty() && s.areaShape == ShapeRect) { SolidBrush b(Gc(s.stroke)); g.FillRectangle(&b, o.Rect()); break; }
+        if (o.pts.empty() || o.IsPointShape()) {                       // other shapes (F05): ellipse, rounded, polygon…
+            GraphicsPath gp; AreaPath(gp, o);
+            SolidBrush b(Gc(s.stroke)); g.FillPath(&b, &gp);
+            break;
+        }
+        Pen p(Gc(s.stroke), std::max(1.0f, s.width));                  // old freehand highlighters
         p.SetLineJoin(LineJoinRound); p.SetStartCap(LineCapSquare); p.SetEndCap(LineCapSquare);
         g.DrawLines(&p, o.pts.data(), (INT)o.pts.size());
         break;
     }
     case ObjType::Text: {
         RectF r = o.Rect();
-        if (s.fill >> 24) {                    // textos antigos com caixa de fundo
+        if (s.fill >> 24) {                    // old texts with a background box
             GraphicsPath gp; AddRoundRect(gp, r, 6);
             SolidBrush b(Gc(s.fill)); g.FillPath(&b, &gp);
         }
@@ -431,7 +679,7 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
         GraphicsPath gp;
         gp.SetFillMode(FillModeWinding);
         CalloutFullPath(gp, o);
-        if (d.tail == Tail::Leader && !o.Rect().Contains(o.tail))       // caixa com seta: a linha sai da borda
+        if (d.tail == Tail::Leader && !o.Rect().Contains(o.tail))       // box with arrow: the line leaves from the border
             StrokeLine(g, RectEdge(o.Rect(), o.tail), o.tail, false, o.tail, Gc(s.tailColor), s.tailWidth, CapFlat, s.arrowEnd,
                        s.startSize, s.endSize, s.dash);
         if (s.fill >> 24) {
@@ -448,7 +696,7 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
             Pen p(Gc(s.stroke), s.width); p.SetLineJoin(LineJoinRound);
             if (d.dashed) ApplyDash(p, DashDash);
             g.DrawPath(&p, &outline);
-            if (d.body == Body::Note) {        // dobra da nota
+            if (d.body == Body::Note) {        // note fold
                 RectF r = o.Rect(); float f = std::min(r.Width, r.Height) * 0.22f;
                 PointF fold[3] = { { r.X + f, r.Y }, { r.X + f, r.Y + f }, { r.X, r.Y + f } };
                 g.DrawLines(&p, fold, 3);
@@ -463,7 +711,7 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
         GraphicsPath gp;
         gp.SetFillMode(FillModeWinding);
         switch (s.stepShape) {
-        case 1: {                               // gota apontando para a direita
+        case 1: {                               // teardrop pointing right
             gp.AddEllipse(r);
             PointF tri[3] = { { r.X + d * 0.5f, r.Y + d * 0.06f }, { r.GetRight() + d * 0.42f, r.Y + d / 2 }, { r.X + d * 0.5f, r.GetBottom() - d * 0.06f } };
             gp.AddPolygon(tri, 3);
@@ -475,6 +723,13 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
         }
         SolidBrush b(Gc(s.stroke));
         g.FillPath(&b, &gp);
+        if (s.stepOutlineWidth > 0 && (s.stepOutline >> 24)) {           // outline for contrast on any background
+            GraphicsPath outline; outline.SetFillMode(FillModeWinding);
+            outline.AddPath(&gp, FALSE);
+            outline.Outline();
+            Pen p(Gc(s.stepOutline), s.stepOutlineWidth); p.SetLineJoin(LineJoinRound);
+            g.DrawPath(&p, &outline);
+        }
         std::wstring label = StepLabel(o.stepValue, s.stepType);
         DrawObj t;
         t.text = label;
@@ -505,9 +760,9 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
         PointF src = s.magnifyLink ? o.tail : Center(r);
         float sw = r.Width / k, sh = r.Height / k;
         RectF sr(src.X - sw / 2, src.Y - sh / 2, sw, sh);
-        int shape = s.magnifyShape == 1 ? ShapeRect : s.magnifyShape == 2 ? ShapeRoundRect : ShapeEllipse;
+        int shape = MagShapeKind(s.magnifyShape);
         Pen pen(Gc(s.stroke), std::max(1.0f, s.width));
-        if (s.magnifyLink) {                    // área ampliada marcada e ligada à lente
+        if (s.magnifyLink) {                    // magnified area marked and connected to the lens
             Pen thin(Gc(s.stroke), std::max(1.0f, s.width * 0.6f));
             GraphicsPath sp; ShapePath(sp, shape, sr);
             PointF a = Center(sr), b = Center(r), dv = Norm(Sub(b, a));
@@ -528,7 +783,42 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
             g.DrawImage(pb.get(), RectF(r.X + ox * k, r.Y + oy * k, piece.w * k, piece.h * k));
             g.Restore(gs);
         }
-        if (s.width > 0) g.DrawPath(&pen, &lens);
+        if (s.loupe) {                          // real lens: handle, thick shaded rim, inner shadow and reflection
+            float rad = std::min(r.Width, r.Height) / 2, rim = std::max(4.0f, rad * 0.11f + s.width * 0.5f);
+            COLORREF base = ToColorref(s.stroke);
+            Color light = Gc(FromColorref(Lighter(Lighter(base)), 255)), dark = Gc(FromColorref(RGB(GetRValue(base) * 3 / 5, GetGValue(base) * 3 / 5, GetBValue(base) * 3 / 5), 255));
+            if (s.loupeHandle) {
+                PointF a, b; float w;
+                LoupeHandle(o, a, b, w);
+                PointF n(-0.7071f, 0.7071f);
+                LinearGradientBrush hb(Add(a, Mul(n, w / 2)), Sub(a, Mul(n, w / 2)), dark, light);
+                Pen hp(&hb, w); hp.SetStartCap(LineCapFlat); hp.SetEndCap(LineCapRound);
+                g.DrawLine(&hp, a, b);
+                Pen collar(dark, w * 1.25f); collar.SetStartCap(LineCapFlat); collar.SetEndCap(LineCapFlat);
+                g.DrawLine(&collar, a, Add(a, Mul(PointF(0.7071f, 0.7071f), w * 0.9f)));
+            }
+            GraphicsState gs = g.Save();                    // inner shadow at the edge of the glass
+            g.SetClip(&lens);
+            Pen inner(Color(60, 0, 0, 0), rim * 1.6f);
+            g.DrawPath(&inner, &lens);
+            GraphicsPath glare;                             // reflection on the upper left
+            glare.AddEllipse(r.X + r.Width * 0.14f, r.Y + r.Height * 0.08f, r.Width * 0.52f, r.Height * 0.34f);
+            PathGradientBrush gb(&glare);
+            Color glareCols[2] = { Color(0, 255, 255, 255), Color(95, 255, 255, 255) };
+            REAL glarePos[2] = { 0, 1 };
+            gb.SetInterpolationColors(glareCols, glarePos, 2);
+            gb.SetCenterPoint(PointF(r.X + r.Width * 0.36f, r.Y + r.Height * 0.2f));
+            g.FillPath(&gb, &glare);
+            g.Restore(gs);
+            LinearGradientBrush rb(PointF(r.X, r.Y), PointF(r.GetRight(), r.GetBottom()), light, dark);
+            Pen rp(&rb, rim); rp.SetLineJoin(LineJoinRound);
+            g.DrawPath(&rp, &lens);
+            Pen edge(Color(150, 0, 0, 0), 1.0f);
+            GraphicsPath outer; ShapePath(outer, shape, RectF(r.X - rim / 2, r.Y - rim / 2, r.Width + rim, r.Height + rim));
+            g.DrawPath(&edge, &outer);
+            GraphicsPath innerEdge; ShapePath(innerEdge, shape, RectF(r.X + rim / 2, r.Y + rim / 2, r.Width - rim, r.Height - rim));
+            g.DrawPath(&edge, &innerEdge);
+        } else if (s.width > 0) g.DrawPath(&pen, &lens);
         break;
     }
     case ObjType::Picture: {
@@ -543,7 +833,7 @@ static void DrawBody(Graphics& g, const Image& canvas, const DrawObj& o, bool hi
     }
 }
 
-// desfoque só do alfa (três passadas de caixa ≈ gaussiano), para a sombra
+// blur of the alpha only (three box passes ≈ Gaussian), for the shadow
 static void BlurAlpha(std::vector<int>& a, int w, int h, int radius) {
     if (radius < 1) return;
     std::vector<int> tmp(a.size());
@@ -586,7 +876,7 @@ static void Composite(Image& dst, const Image& src, int ox, int oy, int opacity)
     }
 }
 
-// marcadores antigos à mão livre (documentos de versões anteriores): a cor é multiplicada pela imagem, como antes
+// old freehand highlighters (documents from earlier versions): the color is multiplied by the image, as before
 static void LegacyHighlight(Graphics& g, Image& canvas, const DrawObj& o) {
     g.Flush(FlushIntentionSync);
     RectF bf = o.Bounds();
@@ -616,13 +906,80 @@ static void LegacyHighlight(Graphics& g, Image& canvas, const DrawObj& o) {
         }
 }
 
+// anti-aliased coverage of a path inside 'b' (one byte per pixel)
+static std::vector<uint8_t> PathMask(GraphicsPath& gp, RECT b) {
+    int w = b.right - b.left, h = b.bottom - b.top;
+    Image m(w, h, 0);
+    {
+        auto mb = m.WrapGdip();
+        Graphics mg(mb.get());
+        mg.SetSmoothingMode(SmoothingModeAntiAlias);
+        mg.SetPixelOffsetMode(PixelOffsetModeHalf);
+        mg.TranslateTransform(-(REAL)b.left, -(REAL)b.top);
+        SolidBrush white(Color(255, 255, 255, 255));
+        mg.FillPath(&white, &gp);
+        mg.Flush(FlushIntentionSync);
+    }
+    std::vector<uint8_t> a(m.px.size());
+    for (size_t i = 0; i < a.size(); i++) a[i] = (uint8_t)CA(m.px[i]);
+    return a;
+}
+
+static RECT ClipRect(RectF rf, const Image& canvas) {
+    return { std::max(0L, (LONG)std::floor(rf.X)), std::max(0L, (LONG)std::floor(rf.Y)),
+             std::min((LONG)canvas.w, (LONG)std::ceil(rf.GetRight())), std::min((LONG)canvas.h, (LONG)std::ceil(rf.GetBottom())) };
+}
+
+// applies an effect (blur/pixelate) to the canvas only inside the path, with soft edges
+static void EffectInPath(Image& canvas, GraphicsPath& gp, const std::function<void(Image&, RECT)>& effect) {
+    RectF bf; gp.GetBounds(&bf);
+    RECT b = ClipRect(bf, canvas);
+    if (b.right <= b.left || b.bottom <= b.top) return;
+    auto mask = PathMask(gp, b);
+    Image piece = canvas.Crop(b);
+    effect(piece, { 0, 0, piece.w, piece.h });
+    for (int y = 0; y < piece.h; y++)
+        for (int x = 0; x < piece.w; x++) {
+            int a = mask[(size_t)y * piece.w + x];
+            if (!a) continue;
+            uint32_t& d = canvas.at(b.left + x, b.top + y);
+            uint32_t sp = piece.at(x, y);
+            if (a == 255) { d = sp; continue; }
+            auto mix = [&](int sh) { return (uint32_t)((((d >> sh) & 255) * (255 - a) + ((sp >> sh) & 255) * a) / 255) << sh; };
+            d = mix(24) | mix(16) | mix(8) | mix(0);
+        }
+}
+
 void RenderObject(Graphics& g, Image& canvas, const DrawObj& o, bool hideText) {
     const Style& s = o.style;
-    if (o.type == ObjType::Highlighter && !o.pts.empty()) { LegacyHighlight(g, canvas, o); return; }
-    if (o.type == ObjType::Group) { for (auto& c : o.children) RenderObject(g, canvas, c); return; }   // cada filho com a sua sombra
+    if (o.type == ObjType::Highlighter && o.IsPath()) { LegacyHighlight(g, canvas, o); return; }   // polygon / freehand areas are not legacy
+    if (o.type == ObjType::Group) { for (auto& c : o.children) RenderObject(g, canvas, c); return; }   // each child with its own shadow
     switch (o.type) {
     case ObjType::Blur: case ObjType::Pixelate: case ObjType::Spotlight: {
         g.Flush(FlushIntentionSync);
+        if (s.areaShape != ShapeRect || o.IsPointShape()) {            // round, polygon and freehand areas (F05, F18)
+            GraphicsPath gp; AreaPath(gp, o);
+            if (o.type == ObjType::Blur) EffectInPath(canvas, gp, [&](Image& im, RECT r) { fx::BoxBlur(im, r, std::max(2, s.amount)); });
+            else if (o.type == ObjType::Pixelate) EffectInPath(canvas, gp, [&](Image& im, RECT r) { fx::Pixelate(im, r, std::max(3, s.amount * 3 / 2)); });
+            else {
+                int dark = std::clamp(s.amount * 6, 20, 85);
+                RectF bf; gp.GetBounds(&bf);
+                RECT b = ClipRect(bf, canvas);
+                std::vector<uint8_t> mask = b.right > b.left && b.bottom > b.top ? PathMask(gp, b) : std::vector<uint8_t>{};
+                for (int y = 0; y < canvas.h; y++)
+                    for (int x = 0; x < canvas.w; x++) {
+                        int a = (x >= b.left && x < b.right && y >= b.top && y < b.bottom) ? mask[(size_t)(y - b.top) * (b.right - b.left) + x - b.left] : 0;
+                        if (a == 255) continue;
+                        int k = dark * (255 - a) / 255;
+                        uint32_t& p = canvas.at(x, y);
+                        p = ARGB(CA(p), CR(p) * (100 - k) / 100, CG(p) * (100 - k) / 100, CB(p) * (100 - k) / 100);
+                    }
+                Pen p(Color(200, 255, 255, 255), 2);
+                p.SetLineJoin(LineJoinRound);
+                g.DrawPath(&p, &gp);
+            }
+            return;
+        }
         RectF rf = o.Rect();
         RECT r{ (LONG)std::floor(rf.X), (LONG)std::floor(rf.Y), (LONG)std::ceil(rf.GetRight()), (LONG)std::ceil(rf.GetBottom()) };
         if (o.type == ObjType::Blur) fx::BoxBlur(canvas, r, std::max(2, s.amount));
@@ -643,6 +1000,12 @@ void RenderObject(Graphics& g, Image& canvas, const DrawObj& o, bool hideText) {
     default: break;
     }
     g.Flush(FlushIntentionSync);
+    if (o.type == ObjType::Callout && s.bgBlur) {          // frosted glass: blurs the composed image behind the callout
+        GraphicsPath gp; gp.SetFillMode(FillModeWinding);
+        CalloutFullPath(gp, o);
+        int radius = std::clamp(s.bgBlurAmount, 1, 40);
+        EffectInPath(canvas, gp, [&](Image& im, RECT r) { fx::BoxBlur(im, r, radius); });
+    }
     RectF bf = o.Bounds();
     RECT b{ std::max(0L, (LONG)std::floor(bf.X)), std::max(0L, (LONG)std::floor(bf.Y)),
             std::min((LONG)canvas.w, (LONG)std::ceil(bf.GetRight())), std::min((LONG)canvas.h, (LONG)std::ceil(bf.GetBottom())) };

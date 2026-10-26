@@ -1,14 +1,14 @@
-﻿; Instalador do Snapnab (Inno Setup 6.5 ou mais novo) — empacota dist\Snapnab\ gerado pelo build.bat.
-; O build.bat compila sozinho quando acha o Inno Setup e passa a versão do CMakeLists.txt:
-;   ISCC.exe /DAppVersion=0.2.0 packaging\installer\Snapnab.iss   →   dist\Snapnab-0.2.0-setup.exe
+﻿; Snapnab installer (Inno Setup 6.5 or later) — packages dist\Snapnab\ produced by build.bat.
+; build.bat compiles it automatically when it finds Inno Setup, passing the version from CMakeLists.txt:
+;   ISCC.exe /DAppVersion=0.3.0 packaging\installer\Snapnab.iss   →   dist\Snapnab-0.3.0-setup.exe
 ;
-; Instala só para o usuário atual (sem pedir administrador, em %LOCALAPPDATA%\Programs\Snapnab) ou, se a pessoa
-; escolher, para todos os usuários (em Arquivos de Programas). As capturas, presets e configurações ficam no perfil
-; do usuário e continuam lá depois de desinstalar.
+; Installs for the current user only (no administrator prompt, in %LOCALAPPDATA%\Programs\Snapnab) or, if the user
+; chooses, for all users (in Program Files). Captures, presets and settings live in the user profile
+; and stay there after uninstalling.
 
 #define AppName      "Snapnab"
 #ifndef AppVersion
-  #define AppVersion "0.2.0"
+  #define AppVersion "0.3.0"
 #endif
 #define AppPublisher "Antonio Rezende"
 #define AppURL       "https://github.com/toim22/Snapnab"
@@ -39,25 +39,25 @@ UninstallDisplayName={#AppName}
 LicenseFile=..\..\LICENSE
 Compression=lzma2/max
 SolidCompression=yes
-; assistente moderno que acompanha o tema claro/escuro do Windows, com o ícone do Snapnab
+; modern wizard that follows the Windows light/dark theme, with the Snapnab icon
 WizardStyle=modern dynamic
 WizardImageFile=WizardLarge.png
 WizardSmallImageFile=WizardSmall.png
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0.19041
-; instala só para o usuário atual (sem UAC); o diálogo deixa escolher "todos os usuários". Se a pessoa escolher
-; uma pasta protegida (como Arquivos de Programas) no modo do usuário, o [Code] oferece reiniciar como administrador
+; installs for the current user only (no UAC); the dialog lets the user choose "all users". If the user picks
+; a protected folder (such as Program Files) in per-user mode, [Code] offers to restart as administrator
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline dialog
-; o instalador/desinstalador fecha o Snapnab se ele estiver aberto (e o reabre depois de atualizar)
+; the installer/uninstaller closes Snapnab if it is running (and reopens it after updating)
 AppMutex=Snapnab-Capture-{{41F1BF9C-5A4E-4B6F-9C33-1D2E3F405A61},Snapnab-Editor-{{800F2EB3-7C1D-4E2A-A3B4-C5D6E7F80912}
 CloseApplications=yes
-; o idioma do assistente segue o do Windows; a lista só aparece se ele não estiver entre os 12
+; the wizard language follows Windows; the list only appears if it is not one of the 12
 ShowLanguageDialog=auto
 
 [Languages]
-; os mesmos 12 idiomas do programa: 7 com tradução oficial do Inno Setup e 5 em Languages\ (feitos para o Snapnab)
+; the same 12 languages as the program: 7 with official Inno Setup translations and 5 in Languages\ (made for Snapnab)
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "chinesesimplified"; MessagesFile: "Languages\ChineseSimplified.isl"
@@ -72,7 +72,7 @@ Name: "urdu"; MessagesFile: "Languages\Urdu.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 
 [CustomMessages]
-; pasta escolhida exige administrador (modo "só para mim") / pasta sem permissão de escrita mesmo como administrador
+; chosen folder requires administrator ("just for me" mode) / folder not writable even as administrator
 brazilianportuguese.DirNeedsAdmin=A pasta escolhida exige permissão de administrador:%n%n%1%n%nPara instalar nela, o Snapnab precisa ser instalado para todos os usuários. Deseja reiniciar a instalação como administrador?
 brazilianportuguese.DirNotWritable=Não é possível gravar na pasta escolhida:%n%n%1%n%nEscolha outra pasta.
 english.DirNeedsAdmin=The selected folder requires administrator permission:%n%n%1%n%nTo install there, Snapnab must be installed for all users. Restart Setup as administrator?
@@ -108,10 +108,11 @@ Source: "{#SrcDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 [Icons]
 Name: "{autoprograms}\Snapnab"; Filename: "{app}\Snapnab.exe"
 Name: "{autoprograms}\Snapnab Editor"; Filename: "{app}\SnapnabEditor.exe"
+Name: "{autoprograms}\Snapnab Manual"; Filename: "{app}\help\Snapnab-Manual.html"
 Name: "{autodesktop}\Snapnab"; Filename: "{app}\Snapnab.exe"; Tasks: desktopicon
 
 [Registry]
-; mesmo valor que Opções > "Iniciar com o Windows" grava; removido na desinstalação
+; same value that Options > "Start with Windows" writes; removed on uninstall
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "Snapnab"; \
     ValueData: """{app}\Snapnab.exe"" /hide"; Tasks: startup; Flags: uninsdeletevalue
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: none; ValueName: "Snapnab"; \
@@ -121,13 +122,13 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 Filename: "{app}\Snapnab.exe"; Description: "{cm:LaunchProgram,Snapnab}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-// No modo "só para mim" o Setup roda sem administrador; se a pessoa trocar a pasta para uma protegida (Arquivos de
-// Programas, raiz do C:\…), a cópia falharia com "acesso negado". Ao sair da página da pasta, o Setup testa se
-// consegue gravar nela e, se não, oferece reiniciar como administrador (/ALLUSERS) já com a pasta escolhida.
+// In "just for me" mode Setup runs without administrator rights; if the user switches to a protected folder (Program
+// Files, the root of C:\…), copying would fail with "access denied". When leaving the folder page, Setup checks
+// whether it can write there and, if not, offers to restart as administrator (/ALLUSERS) with the chosen folder.
 var
   Relaunching: Boolean;
 
-// verdadeiro na instância reiniciada como administrador (já aceitou a licença)
+// true in the instance restarted as administrator (the license was already accepted)
 function IsRelaunch: Boolean;
 var
   I: Integer;
@@ -138,7 +139,7 @@ begin
       Result := True;
 end;
 
-// pasta mais próxima que já existe (a de instalação ainda pode não existir)
+// nearest folder that already exists (the install folder may not exist yet)
 function ExistingAncestor(Dir: String): String;
 var
   Parent: String;
@@ -201,11 +202,11 @@ begin
     Relaunching := True;
     WizardForm.Close;
   end
-  else if ErrorCode <> 1223 then  // 1223: a pessoa recusou o UAC; continua nesta página
+  else if ErrorCode <> 1223 then  // 1223: the user declined UAC; stay on this page
     MsgBox(SysErrorMessage(ErrorCode), mbError, MB_OK);
 end;
 
-// fecha esta instância sem perguntar "Deseja sair da instalação?" quando a elevada já abriu
+// closes this instance without asking "Exit Setup?" once the elevated one has opened
 procedure CancelButtonClick(CurPageID: Integer; var Cancel, Confirm: Boolean);
 begin
   if Relaunching then

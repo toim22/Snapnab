@@ -1,4 +1,4 @@
-// SnapnabEditor.exe — editor de imagens e vídeos (≙ SnagitEditor.exe, ds_arch §19 / ed_comp_1..15)
+// SnapnabEditor.exe — image and video editor (≙ SnagitEditor.exe, ds_arch §19 / ed_comp_1..15)
 #include "Common.h"
 #include "Canvas.h"
 #include "Panels.h"
@@ -24,7 +24,7 @@ using namespace snap::ed;
 namespace {
 
 enum : int {
-    // barra
+    // bar
     T_CAPTURE = 1, T_RECORD, T_COPYALL, T_SAVE, T_SHARE, T_TOOL_BASE = 100,
     // menu
     M_NEW_CAPTURE = 1000, M_NEW_VIDEO, M_NEW_CLIPBOARD, M_NEW_IMAGE, M_OPEN, M_SAVE, M_SAVEAS, M_DUPLICATE, M_DELETE, M_PRINT,
@@ -34,25 +34,28 @@ enum : int {
     M_FX_BORDER, M_FX_SHADOW, M_FX_EDGE, M_FX_GRAY, M_FX_INVERT, M_FX_SEPIA, M_FX_BC, M_FX_HS, M_FX_REPLACE, M_FX_WATERMARK, M_FX_CAPTION,
     M_FX_MONO,
     M_ZOOM_IN, M_ZOOM_OUT, M_ZOOM_100, M_ZOOM_FIT, M_BG_COLOR, M_SHOW_TRAY, M_ABOUT, M_SHORTCUTS, M_SHOW_EFFECTS,
-    // efeitos do painel que não estão no menu (CEffectSettings* só do Editor, ed_comp_5 §4.3)
+    // panel effects that are not in the menu (Editor-only CEffectSettings*, ed_comp_5 §4.3)
     M_FX_PERSPECTIVE, M_FX_PAGECURL, M_FX_FILTER, M_FX_ADJUST, M_FX_SPOTLIGHT, M_SHOW_LIBRARY,
-    // menu Imagem como na referência: Organizar (ordem, alinhar, espelhar), agrupar, mesclar, modelo, encaixe, etiquetas
+    // Image menu as in the reference: Arrange (order, align, flip), group, flatten, template, snapping, tags
     M_BRING_FORWARD, M_SEND_BACKWARD, M_ALIGN_LEFT, M_ALIGN_CENTER, M_ALIGN_RIGHT, M_ALIGN_TOP, M_ALIGN_MIDDLE, M_ALIGN_BOTTOM,
     M_GROUP, M_UNGROUP, M_FLATTEN_SEL, M_APPLY_TEMPLATE, M_SNAPPING, M_TAG,
+    // distribute, paste in place, lock, lifted piece, rulers, edge snapping, plain-text paste, layers
+    M_DIST_H, M_DIST_V, M_PASTE_INPLACE, M_LOCK, M_UNLOCK, M_LIFT, M_DROP, M_RULERS, M_EDGESNAP, M_PLAINPASTE, M_RENAME_OBJ,
+    M_SHOW_LAYERS, M_CLEAR_GUIDES, M_OPEN_LINK, M_MANUAL,
     M_TB_CUSTOMIZE = 1500, M_TB_RESET, M_MORE_TOOL_BASE = 1600,
 };
 
-// efeito rápido (CInteropQuickEffect, ed_comp_5 §4.4): borda + borda especial + sombra + dobra de página num só passo
+// quick effect (CInteropQuickEffect, ed_comp_5 §4.4): border + edge effect + shadow + page curl in a single step
 struct QuickEffect {
     std::wstring name;
     bool border = false; int borderW = 4; COLORREF borderColor = RGB(45, 45, 48);
     bool edge = false; int edgeStyle = 0, edgeSize = 14, edgeSides = fx::Bottom | fx::Right;
     bool shadow = false; int shadowOffset = 6, shadowBlur = 6, shadowOpacity = 50;
-    bool curl = false; int curlSize = 18 /*% do lado menor*/, curlCorner = 2;
+    bool curl = false; int curlSize = 18 /*% of the shorter side*/, curlCorner = 2;
 };
 
 constexpr UINT WM_LIB_CHANGED = WM_APP + 0x60;
-constexpr UINT_PTR kFxPreviewTimer = 0x61;      // refaz as prévias dos efeitos depois de uma pausa nas edições
+constexpr UINT_PTR kFxPreviewTimer = 0x61;      // rebuilds the effect previews after a pause in the edits
 
 struct App {
     HINSTANCE hi = nullptr;
@@ -62,27 +65,29 @@ struct App {
     Toolbar toolbar;
     PropsPanel props;
     EffectsPanel effects;
+    LayersPanel layers;
     Canvas canvas;
     VideoView video;
-    LibraryTray tray;              // capturas recentes (embaixo)
-    LibraryTray library;           // vista da biblioteca inteira (no lugar da imagem)
+    LibraryTray tray;              // recent captures (at the bottom)
+    LibraryTray library;           // view of the whole library (in place of the image)
     bool libraryOpen = false;
-    ui::CaptionBar caption;        // barra de título própria (ícone + menus), a mesma da janela de captura
+    ui::CaptionBar caption;        // custom title bar (icon + menus), the same as the capture window's
     ui::ThemeColors th;
     HMENU menuBar = nullptr;
-    int rightTab = 0;              // painel da direita: 0 Propriedades, 1 Efeitos
-    // barra de ferramentas: automática (fixas + 4 usadas por último + Lupa) ou personalizada (qualquer item)
+    int rightTab = 0;              // right panel: 0 Properties, 1 Effects, 2 Layers
+    // toolbar: automatic (fixed + 4 most recently used + Magnifier) or custom (any item)
     bool tbCustom = false;
     std::vector<ToolbarEntry> tbCustomList;
     std::vector<Tool> tbRecent;
-    int tbToolCount = 10;          // ferramentas na barra automática (6 a 16): 5 fixas + recentes + Lupa
+    int tbToolCount = 10;          // tools on the automatic bar (6 to 16): 5 fixed + recent + Magnifier
     std::vector<QuickEffect> quick;
     std::vector<std::unique_ptr<Document>> docs;
     Document* cur = nullptr;
     std::wstring status;
+    std::wstring coords;           // cursor position in image pixels (with the rulers on)
     bool showTray = true;
     HACCEL accel = nullptr;
-    RECT footRecent{}, footSize{}, footZoom{};   // rodapé: capturas recentes, tamanho da imagem e zoom (clicáveis)
+    RECT footRecent{}, footSize{}, footZoom{};   // footer: recent captures, image size and zoom (clickable)
     HANDLE watchStop = nullptr;
     std::thread watcher;
     int dpi = 96;
@@ -90,12 +95,12 @@ struct App {
 
 int S(int v) { return ui::Scale(v, g.dpi); }
 
-// ---------------------------------------------------------------- título / status
+// ---------------------------------------------------------------- title / status
 void UpdateTitle() {
     std::wstring t = L"Snapnab Editor";
     if (g.cur) t = (g.cur->modified ? L"• " : L"") + g.cur->title + Tr(L" — Snapnab Editor");
-    SetWindowTextW(g.frame, t.c_str());                                          // barra de tarefas
-    g.caption.SetTitle(g.cur ? (g.cur->modified ? L"• " : L"") + g.cur->title : L"");   // na barra de título, só o documento
+    SetWindowTextW(g.frame, t.c_str());                                          // taskbar
+    g.caption.SetTitle(g.cur ? (g.cur->modified ? L"• " : L"") + g.cur->title : L"");   // on the title bar, only the document
 }
 
 void ScheduleEffectPreviews() { if (g.frame) SetTimer(g.frame, kFxPreviewTimer, 350, nullptr); }
@@ -120,7 +125,7 @@ void UpdateDocInfo() {
 }
 
 // ---------------------------------------------------------------- layout
-// coluna da direita: abas "Propriedades | Efeitos" em cima do painel escolhido
+// right column: "Properties | Effects" tabs above the chosen panel
 int PropW() { return S(296); }
 int TabsH() { return S(44); }
 
@@ -132,7 +137,7 @@ RECT TabsRect() {
 
 RECT TabRect(int i) {
     RECT t = TabsRect();
-    int pad = S(10), w = (t.right - t.left - 2 * pad) / 2;
+    int pad = S(10), w = (t.right - t.left - 2 * pad) / 3;
     return { t.left + pad + i * w, t.top + S(8), t.left + pad + (i + 1) * w, t.bottom - S(6) };
 }
 
@@ -148,14 +153,16 @@ void Layout() {
     int py = y0 + TabsH();
     MoveWindow(g.props.hwnd, cr.right - propW, py, propW, std::max(0, y1 - py), TRUE);
     MoveWindow(g.effects.hwnd, cr.right - propW, py, propW, std::max(0, y1 - py), TRUE);
+    MoveWindow(g.layers.hwnd, cr.right - propW, py, propW, std::max(0, y1 - py), TRUE);
     MoveWindow(g.canvas.hwnd, 0, y0, cr.right - (video ? 0 : propW), std::max(0, y1 - y0), TRUE);
     MoveWindow(g.video.hwnd, 0, y0, cr.right, std::max(0, y1 - y0), TRUE);
     MoveWindow(g.library.hwnd, 0, y0, cr.right, std::max(0, y1 - y0), TRUE);
-    bool lib = g.libraryOpen;        // a biblioteca ocupa o lugar da imagem e dos painéis
+    bool lib = g.libraryOpen;        // the library takes the place of the image and the panels
     ShowWindow(g.library.hwnd, lib ? SW_SHOW : SW_HIDE);
     ShowWindow(g.canvas.hwnd, video || lib ? SW_HIDE : SW_SHOW);
     ShowWindow(g.props.hwnd, video || lib || g.rightTab != 0 ? SW_HIDE : SW_SHOW);
     ShowWindow(g.effects.hwnd, video || lib || g.rightTab != 1 ? SW_HIDE : SW_SHOW);
+    ShowWindow(g.layers.hwnd, video || lib || g.rightTab != 2 ? SW_HIDE : SW_SHOW);
     ShowWindow(g.video.hwnd, video && !lib ? SW_SHOW : SW_HIDE);
     ShowWindow(g.tray.hwnd, g.showTray ? SW_SHOW : SW_HIDE);
     if (g.showTray) MoveWindow(g.tray.hwnd, 0, y1, cr.right, trayH, TRUE);
@@ -164,14 +171,15 @@ void Layout() {
 
 void SetRightTab(int t) {
     if (g.rightTab == t) return;
-    if (g.rightTab == 1 && g.effects.IsOpen()) g.effects.Collapse();     // sair dos efeitos cancela a prévia
+    if (g.rightTab == 1 && g.effects.IsOpen()) g.effects.Collapse();     // leaving the effects cancels the preview
     g.rightTab = t;
     RegSetDword(L"RightPanel", t, L"Editor");
     if (t == 1) ScheduleEffectPreviews();
+    if (t == 2) g.layers.Refresh();
     Layout();
 }
 
-// Exibir › Biblioteca (CLibraryView): todas as capturas no lugar da imagem
+// View › Library (CLibraryView): all captures in place of the image
 void ShowLibrary(bool on) {
     if (g.libraryOpen == on) return;
     g.libraryOpen = on;
@@ -179,7 +187,7 @@ void ShowLibrary(bool on) {
     Layout();
 }
 
-// ---------------------------------------------------------------- documentos
+// ---------------------------------------------------------------- documents
 void Autosave(Document* d) {
     if (!d || d->isVideo || !d->modified || d->path.empty()) return;
     if (d->Save()) {
@@ -198,7 +206,7 @@ static bool GuidFromLibraryPath(const std::wstring& path, GUID& out) {
 void Activate(Document* d) {
     if (g.cur == d) { if (d) ShowLibrary(false); return; }
     g.canvas.CommitText();
-    if (g.effects.IsOpen()) g.effects.Collapse();            // a prévia de efeito era do documento anterior
+    if (g.effects.IsOpen()) g.effects.Collapse();            // the effect preview belonged to the previous document
     if (g.cur) {
         Autosave(g.cur);
         GUID gd; if (GuidFromLibraryPath(g.cur->path, gd)) g.ipc.Send(ipc::kCapture, ipc::LibraryDocReleased, ipc::kBlob, &gd, 16);
@@ -210,12 +218,13 @@ void Activate(Document* d) {
         GUID gd; if (GuidFromLibraryPath(d->path, gd)) g.ipc.Send(ipc::kCapture, ipc::LibraryDocOpened, ipc::kBlob, &gd, 16);
         g.tray.SetCurrent(d->path);
         g.library.current = d->path;
-        g.libraryOpen = false;                               // abrir um documento volta da biblioteca para a imagem
+        g.libraryOpen = false;                               // opening a document goes back from the library to the image
     }
     Layout();
     UpdateTitle();
     UpdateDocInfo();
     g.props.Load();
+    g.layers.Refresh();
     ScheduleEffectPreviews();
 }
 
@@ -225,7 +234,7 @@ Document* FindDoc(const std::wstring& path) {
 }
 
 Document* AddDoc(std::unique_ptr<Document> d) {
-    // mantém até 12 documentos em memória (os outros ficam salvos na biblioteca)
+    // keeps up to 12 documents in memory (the others stay saved in the library)
     if (g.docs.size() >= 12) {
         for (auto it = g.docs.begin(); it != g.docs.end(); ++it)
             if (it->get() != g.cur) { Autosave(it->get()); g.docs.erase(it); break; }
@@ -234,7 +243,7 @@ Document* AddDoc(std::unique_ptr<Document> d) {
     return g.docs.back().get();
 }
 
-// imagem nova vira documento .snap na biblioteca (como o original importa para a DataStore)
+// a new image becomes a .snap document in the library (as the original imports into the DataStore)
 Document* NewDocFromImage(Image img, const std::wstring& title, const std::wstring& mode) {
     auto d = Document::FromImage(std::move(img), title);
     d->captureMode = mode;
@@ -257,7 +266,7 @@ bool OpenPath(const std::wstring& pathIn) {
     auto d = Document::Load(path);
     if (!d) { MessageBoxW(g.frame, (Tr(L"Não foi possível abrir:\n") + path).c_str(), L"Snapnab Editor", MB_ICONWARNING); return false; }
     if (ext != L".snap" && ext != L".mp4") {
-        // imagem comum: importada para a biblioteca
+        // regular image: imported into the library
         Image img = *d->st.base;
         NewDocFromImage(std::move(img), FileNameOf(path), Tr(L"Arquivo importado"));
         return true;
@@ -280,15 +289,16 @@ void DocChanged() {
     UpdateTitle();
     UpdateDocInfo();
     ScheduleEffectPreviews();
+    if (g.rightTab == 2) g.layers.Refresh();
     if (g.cur) SetStatus(Format(Tr(L"%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"), g.cur->w(), g.cur->h(),
                                 g.cur->st.objs.size(), g.cur->UndoDepth()));
 }
 
-// ---------------------------------------------------------------- operações de imagem
+// ---------------------------------------------------------------- image operations
 void TransformObjects(std::function<Gdiplus::PointF(Gdiplus::PointF)> map) {
     for (size_t i = 0; i < g.cur->st.objs.size(); i++) {
         DrawObj* o = g.cur->Mutable(i);
-        o->MapPoints(map);                         // inclui a curva das setas e os objetos dentro de grupos
+        o->MapPoints(map);                         // includes the arrows' curve and the objects inside groups
         o->UpdateGroupRect();
     }
 }
@@ -321,7 +331,7 @@ void FlattenIfNeeded() {
     if (!g.cur->st.objs.empty()) { g.cur->SetBase(g.cur->Render()); g.cur->st.objs.clear(); g.canvas.selected = -1; }
 }
 
-// Imagem › Efeitos e os itens de efeito da barra: abrem os ajustes do efeito no painel, com prévia ao vivo
+// Image › Effects and the toolbar effect items: open the effect settings in the panel, with live preview
 void OpenEffect(int cmd) {
     if (!RequireImageDoc()) return;
     int target = cmd, filter = -1;
@@ -388,19 +398,23 @@ void ImageCommand(int cmd) {
         TransformObjects([ox, oy](Gdiplus::PointF p) { return Gdiplus::PointF(p.X + ox, p.Y + oy); });
         break;
     }
-    case M_CANVAS_COLOR: {
-        COLORREF c = RGB(255, 255, 255);
-        if (!PickColor(g.frame, c)) return;
+    case M_CANVAS_COLOR: {                           // color or gradient behind the transparent areas of the image
+        static uint32_t col = 0xFFFFFFFF;
+        static Gradient grad;
+        POINT at; GetCursorPos(&at);
+        if (!ColorPopup(g.frame, at, col, false, QS().Theme().colors, &grad)) return;
         d->Checkpoint();
         Image& b = d->MutableBase();
-        Image out(b.w, b.h, FromColorref(c)); out.Blit(b, 0, 0, true);
+        Image out(b.w, b.h, grad.Active() ? 0u : (col | 0xFF000000));
+        if (grad.Active()) FillGradientMask(out, {}, { 0, 0, out.w, out.h }, grad, 100);
+        out.Blit(b, 0, 0, true);
         d->SetBase(std::move(out));
         break;
     }
     case M_TRIM: {
         Image t = fx::AutoTrim(*d->st.base);
         if (t.w == d->w() && t.h == d->h()) { SetStatus(Tr(L"Nada a cortar: as bordas não são uniformes.")); return; }
-        // localiza o deslocamento do recorte para mover os objetos
+        // finds the crop offset to move the objects
         int ox = 0, oy = 0;
         const Image& b = *d->st.base;
         uint32_t ref = b.at(0, 0);
@@ -427,7 +441,7 @@ void ImageCommand(int cmd) {
     g.props.Load();
 }
 
-// ---------------------------------------------------------------- arquivo
+// ---------------------------------------------------------------- file
 bool SaveAs() {
     if (!RequireImageDoc()) return false;
     std::wstring base = g.cur->title;
@@ -449,13 +463,22 @@ bool SaveAs() {
     }
     bool ok;
     if (FileExt(path) == L".snap") {
-        // cópia .snap fora da biblioteca: grava sem trocar o documento atual
+        // .snap copy outside the library: writes it without replacing the current document
         std::wstring old = g.cur->path; bool mod = g.cur->modified;
         g.cur->path = path; ok = g.cur->Save();
         g.cur->path = old; g.cur->modified = mod;
     } else ok = g.cur->SaveAs(path, q);
     if (!ok) { MessageBoxW(g.frame, (Tr(L"Não foi possível salvar:\n") + path).c_str(), L"Snapnab Editor", MB_ICONWARNING); return false; }
     SetStatus(Tr(L"Salvo em ") + path);
+    // a library capture without a name takes the name used in "Save as" (shown in the tray and library)
+    if (IsInLibrary(g.cur->path) && CaptureName(g.cur->path).empty()) {
+        std::wstring name = StripExt(FileNameOf(path));
+        SetCaptureName(g.cur->path, name);
+        g.cur->title = name;
+        UpdateTitle();
+        g.tray.Reload();
+        if (g.libraryOpen) g.library.Reload();
+    }
     return true;
 }
 
@@ -486,7 +509,7 @@ void NewBlankImage() {
 }
 
 void RequestCapture(int kind) {
-    // o Editor não captura: pede ao processo de captura (IPC 0x12, ed_comp_14 §3.3)
+    // the Editor does not capture: it asks the capture process (IPC 0x12, ed_comp_14 §3.3)
     if (IsProcessRunning(kCaptureMutex)) g.ipc.SendInt(ipc::kCapture, ipc::EditorStartCapture, kind);
     else LaunchSibling(kCaptureExe, kind ? L"/video" : L"/capture");
 }
@@ -504,7 +527,7 @@ void DuplicateCurrent() {
     Activate(p);
 }
 
-// exclui um ou vários itens da biblioteca (vão para a Lixeira), com uma confirmação só
+// deletes one or more library items (they go to the Recycle Bin), with a single confirmation
 void DeleteDocs(const std::vector<std::wstring>& paths) {
     if (paths.empty()) return;
     std::wstring q = paths.size() == 1 ? Tr(L"Enviar para a Lixeira?\n") + FileNameOf(paths[0])
@@ -545,7 +568,7 @@ bool PickFolder(std::wstring& out) {
     return ok;
 }
 
-// exporta itens da biblioteca para uma pasta: imagens no formato escolhido (com os objetos aplicados), vídeos em MP4
+// exports library items to a folder: images in the chosen format (with the objects applied), videos as MP4
 void ExportItems(const std::vector<std::wstring>& paths) {
     if (paths.empty()) return;
     static int fmt = 0;
@@ -590,7 +613,7 @@ void PrintCurrent() {
         int pw = GetDeviceCaps(pd.hDC, HORZRES), ph = GetDeviceCaps(pd.hDC, VERTRES);
         double s = std::min((double)pw / img.w, (double)ph / img.h);
         int dpiX = GetDeviceCaps(pd.hDC, LOGPIXELSX);
-        s = std::min(s, dpiX / 96.0);                    // não amplia além do tamanho real
+        s = std::min(s, dpiX / 96.0);                    // does not enlarge beyond the actual size
         int w = (int)(img.w * s), h = (int)(img.h * s);
         img.DrawTo(pd.hDC, (pw - w) / 2, (ph - h) / 2, w, h, true);
         EndPage(pd.hDC);
@@ -611,7 +634,7 @@ std::wstring TempExport() {
 }
 
 void SendEmail() {
-    // E-mail por MAPI simples (MAPI32, como o original): anexo PNG
+    // E-mail through Simple MAPI (MAPI32, like the original): PNG attachment
     if (!RequireImageDoc()) return;
     std::wstring file = TempExport();
     HMODULE mapi = LoadLibraryW(L"MAPI32.DLL");
@@ -653,10 +676,94 @@ void GrabText() {
     ui::ShowTextWindow(g.frame, Tr(L"Grab Text — texto reconhecido"), text);
 }
 
-void Paste() {
+// Editor clipboard formats: the copied objects (XML) and the origin of a copied area of the image (paste in place)
+UINT ObjectsFormat() { static UINT f = RegisterClipboardFormatW(L"Snapnab.Objects"); return f; }
+UINT OriginFormat() { static UINT f = RegisterClipboardFormatW(L"Snapnab.Origin"); return f; }
+
+void SetClipboardText(UINT fmt, const std::string& text) {
+    HGLOBAL hg = GlobalAlloc(GMEM_MOVEABLE, text.size() + 1);
+    if (!hg) return;
+    memcpy(GlobalLock(hg), text.c_str(), text.size() + 1);
+    GlobalUnlock(hg);
+    if (!SetClipboardData(fmt, hg)) GlobalFree(hg);
+}
+
+std::string GetClipboardText(UINT fmt) {
+    std::string out;
+    if (!IsClipboardFormatAvailable(fmt) || !OpenClipboard(g.frame)) return out;
+    if (HANDLE h = GetClipboardData(fmt)) {
+        if (const char* p = (const char*)GlobalLock(h)) { out.assign(p, strnlen(p, GlobalSize(h))); GlobalUnlock(h); }
+    }
+    CloseClipboard();
+    return out;
+}
+
+std::wstring GetClipboardUnicode() {
+    std::wstring out;
+    if (!IsClipboardFormatAvailable(CF_UNICODETEXT) || !OpenClipboard(g.frame)) return out;
+    if (HANDLE h = GetClipboardData(CF_UNICODETEXT)) {
+        if (const wchar_t* p = (const wchar_t*)GlobalLock(h)) { out.assign(p, wcsnlen(p, GlobalSize(h) / 2)); GlobalUnlock(h); }
+    }
+    CloseClipboard();
+    return out;
+}
+
+// copy: the image goes to the clipboard as before; the selected objects also go in the Editor format (to be pasted
+// in another image, in the same place with Paste in place) and a copied area of the image takes its position along
+bool CopyToClipboard(bool cut) {
+    if (!RequireImageDoc()) return false;
+    std::vector<DrawObj> objs = g.canvas.HasRasterSelection() ? std::vector<DrawObj>{} : g.canvas.SelectedObjects();
+    RECT sel = g.canvas.RasterSelectionBounds();
+    bool raster = g.canvas.HasRasterSelection();
+    if (cut && !objs.empty() && g.canvas.SelectionLocked()) { SetStatus(Tr(L"Objetos bloqueados não são recortados.")); return false; }
+    if (!g.canvas.CopySelection(false)) return false;
+    if (OpenClipboard(g.frame)) {
+        if (!objs.empty()) SetClipboardText(ObjectsFormat(), ObjectsToClip(objs, g.cur->path));
+        if (raster) SetClipboardText(OriginFormat(), FormatA("%d,%d", (int)sel.left, (int)sel.top));
+        CloseClipboard();
+    }
+    if (cut) g.canvas.DeleteSelected();
+    return true;
+}
+
+// source formatting of the clipboard text (when it is kept)
+bool ClipboardTextFormat(Style& out) {
+    static UINT rtf = RegisterClipboardFormatW(L"Rich Text Format"), html = RegisterClipboardFormatW(L"HTML Format");
+    out = g.canvas.styles[Tool::Text];
+    std::string r = GetClipboardText(rtf);
+    if (!r.empty() && ParseRtfFormat(r, out)) return true;
+    std::string h = GetClipboardText(html);
+    return !h.empty() && ParseHtmlFormat(h, out);
+}
+
+// text paste: without formatting by default (Edit › Paste text without formatting); the alternative paste
+// (Ctrl+Shift+V) does the opposite
+void PasteTextNow(bool alternative) {
+    std::wstring t = GetClipboardUnicode();
+    if (t.empty()) { SetStatus(Tr(L"Nada para colar.")); return; }
+    bool keep = g.canvas.plainPaste == alternative;
+    Style fmt;
+    bool has = keep && ClipboardTextFormat(fmt);
+    g.canvas.PasteText(t, has ? &fmt : nullptr);
+    if (has) g.props.Load();                  // the object took the copied font, size and color
+    if (keep && !has) SetStatus(Tr(L"O texto copiado não tem formatação; colado com o estilo do objeto."));
+}
+
+void Paste(bool inPlace = false) {
+    // objects copied in the Editor (also from another image)
+    if (g.cur && !g.cur->isVideo && IsClipboardFormatAvailable(ObjectsFormat())) {
+        std::wstring src;
+        auto objs = ObjectsFromClip(GetClipboardText(ObjectsFormat()), &src);
+        if (!objs.empty()) {
+            g.canvas.PasteObjects(objs, inPlace, !_wcsicmp(src.c_str(), g.cur->path.c_str()));
+            SetStatus(inPlace ? Tr(L"Colado no mesmo lugar.") : Tr(L"Colado."));
+            DocChanged();
+            return;
+        }
+    }
     Image img;
     if (!GetClipboardImage(img)) {
-        // arquivo copiado no Explorer
+        // file copied in Explorer
         if (OpenClipboard(g.frame)) {
             if (HDROP drop = (HDROP)GetClipboardData(CF_HDROP)) {
                 wchar_t f[MAX_PATH];
@@ -665,13 +772,23 @@ void Paste() {
             CloseClipboard();
         }
     }
-    if (img.empty()) { SetStatus(Tr(L"Nada para colar.")); return; }
+    if (img.empty()) {
+        if (g.cur && !g.cur->isVideo && IsClipboardFormatAvailable(CF_UNICODETEXT)) { PasteTextNow(inPlace); return; }   // text → Text object
+        SetStatus(Tr(L"Nada para colar."));
+        return;
+    }
     if (!g.cur || g.cur->isVideo) NewDocFromImage(std::move(img), Tr(L"Colado"), Tr(L"Área de transferência"));
-    else { g.canvas.PasteImage(img); DocChanged(); }
+    else if (inPlace) {                       // same position as the copied area (or the top left corner)
+        int x = 0, y = 0;
+        std::string o = GetClipboardText(OriginFormat());
+        if (!o.empty()) sscanf_s(o.c_str(), "%d,%d", &x, &y);
+        g.canvas.PasteImageAt(img, Gdiplus::PointF((float)x, (float)y));
+        DocChanged();
+    } else { g.canvas.PasteImage(img); DocChanged(); }
 }
 
 // ---------------------------------------------------------------- menus
-// ícone 32 bpp (alfa pré-multiplicado) para itens de menu, desenhado com os ícones vetoriais do programa
+// 32 bpp icon (premultiplied alpha) for menu items, drawn with the program's vector icons
 HBITMAP MenuIcon(icons::Id id) {
     int px = ui::Scale(16, (int)GetDpiForSystem());
     Image img(px, px, 0);
@@ -693,7 +810,7 @@ void SetItemIcon(HMENU m, UINT id, icons::Id icon) {
     SetMenuItemInfoW(m, id, FALSE, &mi);
 }
 
-HMENU ToolsMenu();               // Imagem › Ferramentas (lista das ferramentas, definida com a barra)
+HMENU ToolsMenu();               // Image › Tools (list of the tools, defined along with the toolbar)
 
 HMENU BuildMenu() {
     HMENU bar = CreateMenu();
@@ -710,10 +827,13 @@ HMENU BuildMenu() {
                        { M_LIBRARY, Tr(L"Abrir a pasta da &biblioteca") }, { M_CLOSE, Tr(L"&Fechar documento\tCtrl+W") }, { M_EXIT, Tr(L"Sai&r") } });
     HMENU edit = pop({ { M_UNDO, Tr(L"&Desfazer\tCtrl+Z") }, { M_REDO, Tr(L"&Refazer\tCtrl+Y") }, { M_UNDOALL, Tr(L"Desfazer &tudo") }, { 0, nullptr },
                        { M_CUT, Tr(L"Recor&tar\tCtrl+X") }, { M_COPY, Tr(L"&Copiar\tCtrl+C") }, { M_COPYALL, Tr(L"Copiar t&udo\tCtrl+Shift+C") },
-                       { M_PASTE, Tr(L"C&olar\tCtrl+V") }, { M_DELETE_SEL, Tr(L"E&xcluir\tDel") }, { M_SELECTALL, Tr(L"Selecionar tu&do\tCtrl+A") },
-                       { M_CROP_SEL, Tr(L"Cortar para a &seleção") }, { 0, nullptr },
+                       { M_PASTE, Tr(L"C&olar\tCtrl+V") }, { M_PASTE_INPLACE, Tr(L"Colar no &mesmo lugar\tCtrl+Shift+V") },
+                       { M_DELETE_SEL, Tr(L"E&xcluir\tDel") }, { M_SELECTALL, Tr(L"Selecionar tu&do\tCtrl+A") },
+                       { M_CROP_SEL, Tr(L"Cortar para a &seleção") }, { M_LIFT, Tr(L"&Levantar a seleção (peça solta)\tCtrl+Shift+L") },
+                       { M_DROP, Tr(L"Soltar a &peça na imagem\tEnter") }, { 0, nullptr },
+                       { M_PLAINPASTE, Tr(L"Colar texto sem &formatação") }, { M_EDGESNAP, Tr(L"Seleção encaixa nas &bordas da imagem") }, { 0, nullptr },
                        { M_OCR, Tr(L"&Grab Text (OCR)\tCtrl+Shift+O") } });
-    // Imagem › Efeitos, com a amostra de cada efeito (como na referência)
+    // Image › Effects, with a sample of each effect (as in the reference)
     HMENU fxm = pop({ { M_FX_BORDER, Tr(L"&Borda") }, { M_FX_EDGE, Tr(L"Bor&das") }, { M_FX_CAPTION, Tr(L"&Informações da captura") },
                       { M_FX_PERSPECTIVE, Tr(L"&Perspectiva") }, { M_FX_PAGECURL, Tr(L"D&obra de página") }, { M_FX_SHADOW, Tr(L"&Sombra") },
                       { M_FX_FILTER, Tr(L"&Filtros") }, { M_FX_ADJUST, Tr(L"&Ajuste de cores") }, { M_FX_REPLACE, Tr(L"Substituição de co&r") },
@@ -724,7 +844,12 @@ HMENU BuildMenu() {
         { M_FX_SPOTLIGHT, icons::FxSpotlight }, { M_FX_WATERMARK, icons::FxWatermark } };
     for (auto& [id, ic] : fxIcons) SetItemIcon(fxm, id, ic);
     HMENU align = pop({ { M_ALIGN_LEFT, Tr(L"À &esquerda") }, { M_ALIGN_CENTER, Tr(L"Ao &centro") }, { M_ALIGN_RIGHT, Tr(L"À &direita") }, { 0, nullptr },
-                        { M_ALIGN_TOP, Tr(L"Em &cima") }, { M_ALIGN_MIDDLE, Tr(L"No &meio") }, { M_ALIGN_BOTTOM, Tr(L"Em&baixo") } });
+                        { M_ALIGN_TOP, Tr(L"Em &cima") }, { M_ALIGN_MIDDLE, Tr(L"No &meio") }, { M_ALIGN_BOTTOM, Tr(L"Em&baixo") }, { 0, nullptr },
+                        { M_DIST_H, Tr(L"Distribuir na &horizontal") }, { M_DIST_V, Tr(L"Distribuir na &vertical") } });
+    const std::pair<int, icons::Id> alignIcons[] = { { M_ALIGN_LEFT, icons::AlignLeft }, { M_ALIGN_CENTER, icons::AlignCenter },
+        { M_ALIGN_RIGHT, icons::AlignRight }, { M_ALIGN_TOP, icons::AlignTop }, { M_ALIGN_MIDDLE, icons::AlignMiddle },
+        { M_ALIGN_BOTTOM, icons::AlignBottom }, { M_DIST_H, icons::DistributeH }, { M_DIST_V, icons::DistributeV } };
+    for (auto& [id, ic] : alignIcons) SetItemIcon(align, id, ic);
     HMENU arrange = pop({ { M_BRING_FORWARD, Tr(L"Trazer para a &frente\tCtrl+Shift+F") }, { M_FRONT, Tr(L"Trazer para o &primeiro plano") },
                           { M_SEND_BACKWARD, Tr(L"Enviar para &trás\tCtrl+Shift+B") }, { M_BACK, Tr(L"Enviar para o plano de &fundo") } });
     AppendMenuW(arrange, MF_SEPARATOR, 0, nullptr);
@@ -741,6 +866,10 @@ HMENU BuildMenu() {
     AppendMenuW(img, MF_POPUP, (UINT_PTR)arrange, Tr(L"&Organizar"));
     AppendMenuW(img, MF_STRING, M_GROUP, Tr(L"A&grupar\tCtrl+Shift+G"));
     AppendMenuW(img, MF_STRING, M_UNGROUP, Tr(L"Desagr&upar\tCtrl+Shift+U"));
+    AppendMenuW(img, MF_STRING, M_LOCK, Tr(L"&Bloquear objeto\tCtrl+L"));
+    AppendMenuW(img, MF_STRING, M_UNLOCK, Tr(L"Desblo&quear objeto\tCtrl+Shift+K"));
+    SetItemIcon(img, M_LOCK, icons::Lock);
+    SetItemIcon(img, M_UNLOCK, icons::Unlock);
     AppendMenuW(img, MF_SEPARATOR, 0, nullptr);
     AppendMenuW(img, MF_STRING, M_FLATTEN_SEL, Tr(L"&Mesclar\tCtrl+T"));
     AppendMenuW(img, MF_STRING, M_FLATTEN, Tr(L"Mesclar t&udo\tCtrl+Shift+T"));
@@ -757,10 +886,12 @@ HMENU BuildMenu() {
     AppendMenuW(img, MF_STRING, M_TAG, Tr(L"Etiquetar &imagem…"));
     HMENU view = pop({ { M_ZOOM_IN, Tr(L"&Ampliar\tCtrl++") }, { M_ZOOM_OUT, Tr(L"&Reduzir\tCtrl+-") }, { M_ZOOM_100, Tr(L"&Tamanho real\tCtrl+1") },
                        { M_ZOOM_FIT, Tr(L"A&justar à janela\tCtrl+0") }, { 0, nullptr }, { M_BG_COLOR, Tr(L"&Cor de fundo da área…") },
-                       { M_SHOW_EFFECTS, Tr(L"Painel de &efeitos") }, { M_SHOW_LIBRARY, Tr(L"&Biblioteca") },
+                       { M_RULERS, Tr(L"Ré&guas e guias\tCtrl+Shift+R") }, { M_CLEAR_GUIDES, Tr(L"Remover as gu&ias") }, { 0, nullptr },
+                       { M_SHOW_EFFECTS, Tr(L"Painel de &efeitos") }, { M_SHOW_LAYERS, Tr(L"Painel de ca&madas") }, { M_SHOW_LIBRARY, Tr(L"&Biblioteca") },
                        { M_SHOW_TRAY, Tr(L"Capturas &recentes (bandeja)") }, { 0, nullptr },
                        { M_TB_CUSTOMIZE, Tr(L"&Personalizar a barra de ferramentas…") } });
-    HMENU help = pop({ { M_SHORTCUTS, Tr(L"&Atalhos de teclado") }, { M_ABOUT, Tr(L"&Sobre o Snapnab Editor") } });
+    HMENU help = pop({ { M_MANUAL, Tr(L"&Manual do Snapnab\tF1") }, { M_SHORTCUTS, Tr(L"&Atalhos de teclado") },
+                       { M_ABOUT, Tr(L"&Sobre o Snapnab Editor") } });
     AppendMenuW(bar, MF_POPUP, (UINT_PTR)file, Tr(L"&Arquivo"));
     AppendMenuW(bar, MF_POPUP, (UINT_PTR)edit, Tr(L"&Editar"));
     AppendMenuW(bar, MF_POPUP, (UINT_PTR)img, Tr(L"&Imagem"));
@@ -775,22 +906,25 @@ HACCEL BuildAccel() {
         { FCONTROL | FSHIFT | FVIRTKEY, 'N', M_NEW_CAPTURE }, { FCONTROL | FVIRTKEY, 'P', M_PRINT }, { FCONTROL | FVIRTKEY, 'W', M_CLOSE },
         { FCONTROL | FVIRTKEY, 'Z', M_UNDO }, { FCONTROL | FVIRTKEY, 'Y', M_REDO }, { FCONTROL | FSHIFT | FVIRTKEY, 'Z', M_REDO },
         { FCONTROL | FVIRTKEY, 'X', M_CUT }, { FCONTROL | FVIRTKEY, 'C', M_COPY }, { FCONTROL | FSHIFT | FVIRTKEY, 'C', M_COPYALL },
-        { FCONTROL | FVIRTKEY, 'V', M_PASTE }, { FCONTROL | FVIRTKEY, 'A', M_SELECTALL }, { FCONTROL | FSHIFT | FVIRTKEY, 'O', M_OCR },
+        { FCONTROL | FVIRTKEY, 'V', M_PASTE }, { FCONTROL | FSHIFT | FVIRTKEY, 'V', M_PASTE_INPLACE },
+        { FCONTROL | FVIRTKEY, 'A', M_SELECTALL }, { FCONTROL | FSHIFT | FVIRTKEY, 'O', M_OCR },
+        { FCONTROL | FVIRTKEY, 'L', M_LOCK }, { FCONTROL | FSHIFT | FVIRTKEY, 'K', M_UNLOCK }, { FCONTROL | FSHIFT | FVIRTKEY, 'L', M_LIFT },
+        { FCONTROL | FSHIFT | FVIRTKEY, 'R', M_RULERS },
         { FCONTROL | FSHIFT | FVIRTKEY, 'F', M_BRING_FORWARD }, { FCONTROL | FSHIFT | FVIRTKEY, 'B', M_SEND_BACKWARD },
         { FCONTROL | FSHIFT | FVIRTKEY, 'G', M_GROUP }, { FCONTROL | FSHIFT | FVIRTKEY, 'U', M_UNGROUP },
         { FCONTROL | FVIRTKEY, 'T', M_FLATTEN_SEL }, { FCONTROL | FSHIFT | FVIRTKEY, 'T', M_FLATTEN },
         { FCONTROL | FALT | FVIRTKEY, 'C', M_APPLY_TEMPLATE }, { FCONTROL | FVIRTKEY, VK_OEM_1, M_SNAPPING },
         { FCONTROL | FVIRTKEY, 'R', M_ROT_CW }, { FCONTROL | FVIRTKEY, VK_OEM_PLUS, M_ZOOM_IN }, { FCONTROL | FVIRTKEY, VK_ADD, M_ZOOM_IN },
         { FCONTROL | FVIRTKEY, VK_OEM_MINUS, M_ZOOM_OUT }, { FCONTROL | FVIRTKEY, VK_SUBTRACT, M_ZOOM_OUT },
-        { FCONTROL | FVIRTKEY, '1', M_ZOOM_100 }, { FCONTROL | FVIRTKEY, '0', M_ZOOM_FIT },
+        { FCONTROL | FVIRTKEY, '1', M_ZOOM_100 }, { FCONTROL | FVIRTKEY, '0', M_ZOOM_FIT }, { FVIRTKEY, VK_F1, M_MANUAL },
     };
     return CreateAcceleratorTableW(a, (int)(sizeof a / sizeof *a));
 }
 
-// ---------------------------------------------------------------- barra de ferramentas (TopPanel.ToolBar)
+// ---------------------------------------------------------------- toolbar (TopPanel.ToolBar)
 // Itens de cinco tipos (ToolBarItemType: Tool, Effect, Output, Command, Spacer) e o "Mais/Editar" no fim.
-// Padrão (automática): Mover, Seleção, Texto, Marcador e Forma nas 5 primeiras; Lupa na última; as posições 6 a 9
-// mostram as ferramentas usadas por último. Personalizada: qualquer item, na ordem que o usuário escolher.
+// Default (automatic): Move, Selection, Text, Highlighter and Shape in the first 5; Magnifier last; positions 6 to 9
+// show the most recently used tools. Custom: any item, in the order the user chooses.
 struct ToolInfo { Tool t; icons::Id icon; const wchar_t* hint; };
 const ToolInfo kTools[] = {
     { Tool::Favorites, icons::Star, TR_NOOP(L"Favoritos: seus estilos favoritos de todas as ferramentas") },
@@ -799,13 +933,13 @@ const ToolInfo kTools[] = {
     { Tool::Fill, icons::Fill, TR_NOOP(L"Preencher (F)") }, { Tool::Selection, icons::Selection, TR_NOOP(L"Seleção e Smart Move (S)") },
     { Tool::MagicWand, icons::Wand, TR_NOOP(L"Varinha mágica: seleciona pela cor") }, { Tool::Crop, icons::Crop, TR_NOOP(L"Cortar (X)") },
     { Tool::Cutout, icons::Cutout, TR_NOOP(L"Recortar faixa (U)") }, { Tool::Pen, icons::Pen, TR_NOOP(L"Caneta (P)") }, { Tool::Line, icons::Line, TR_NOOP(L"Linha (L)") },
-    { Tool::Highlighter, icons::Highlighter, TR_NOOP(L"Marcador: arraste um retângulo na cor e opacidade escolhidas (H)") },
+    { Tool::Highlighter, icons::Highlighter, TR_NOOP(L"Marcador: retângulo, elipse, polígono ou mão livre (H)") },
     { Tool::Step, icons::Step, TR_NOOP(L"Passos numerados (N)") }, { Tool::Eraser, icons::Eraser, TR_NOOP(L"Borracha (E)") },
     { Tool::Blur, icons::Blur, TR_NOOP(L"Ocultar: desfoque/pixelado (B)") }, { Tool::Select, icons::Select, TR_NOOP(L"Mover e Smart Move (V)") },
     { Tool::Magnify, icons::Magnify, TR_NOOP(L"Lupa (Z)") }, { Tool::Spotlight, icons::Spotlight, TR_NOOP(L"Destaque/spotlight (G)") },
     { Tool::Eyedropper, icons::Eyedropper, TR_NOOP(L"Conta-gotas (I)") } };
 
-// saídas e comandos que podem ir para a barra (ToolBarCommandType: Undo, Redo, NewImage, NewFromClipboard, Open, Save,
+// outputs and commands that can go on the toolbar (ToolBarCommandType: Undo, Redo, NewImage, NewFromClipboard, Open, Save,
 // SaveAs, Duplicate, DeleteObject, DeleteImage, FlattenAll, RotateImage, AutoTrim, Print, Ocr)
 struct CmdInfo { int id; icons::Id icon; const wchar_t* label; const wchar_t* hint; };
 const CmdInfo kOutputs[] = {
@@ -820,12 +954,22 @@ const CmdInfo kCommands[] = {
     { M_DELETE_SEL, icons::DeleteObject, TR_NOOP(L"Excluir objeto"), TR_NOOP(L"Excluir o objeto selecionado (Del)") }, { M_OCR, icons::Ocr, TR_NOOP(L"Grab Text"), TR_NOOP(L"Reconhecer o texto da imagem (Ctrl+Shift+T)") },
     { M_DELETE, icons::Trash, TR_NOOP(L"Excluir imagem"), TR_NOOP(L"Enviar a imagem para a Lixeira") },
     { M_FLATTEN, icons::Layers, TR_NOOP(L"Mesclar tudo"), TR_NOOP(L"Mesclar todos os objetos na imagem") }, { M_ROT_CW, icons::Rotate, TR_NOOP(L"Girar"), TR_NOOP(L"Girar 90° no sentido horário (Ctrl+R)") },
-    { M_TRIM, icons::AutoTrim, TR_NOOP(L"Corte automático"), TR_NOOP(L"Cortar as bordas de cor uniforme") } };
+    { M_TRIM, icons::AutoTrim, TR_NOOP(L"Corte automático"), TR_NOOP(L"Cortar as bordas de cor uniforme") },
+    { M_ALIGN_LEFT, icons::AlignLeft, TR_NOOP(L"Alinhar à esquerda"), TR_NOOP(L"Alinhar os objetos à esquerda") },
+    { M_ALIGN_CENTER, icons::AlignCenter, TR_NOOP(L"Alinhar ao centro"), TR_NOOP(L"Alinhar os objetos ao centro") },
+    { M_ALIGN_RIGHT, icons::AlignRight, TR_NOOP(L"Alinhar à direita"), TR_NOOP(L"Alinhar os objetos à direita") },
+    { M_ALIGN_TOP, icons::AlignTop, TR_NOOP(L"Alinhar em cima"), TR_NOOP(L"Alinhar os objetos em cima") },
+    { M_ALIGN_MIDDLE, icons::AlignMiddle, TR_NOOP(L"Alinhar no meio"), TR_NOOP(L"Alinhar os objetos no meio") },
+    { M_ALIGN_BOTTOM, icons::AlignBottom, TR_NOOP(L"Alinhar embaixo"), TR_NOOP(L"Alinhar os objetos embaixo") },
+    { M_DIST_H, icons::DistributeH, TR_NOOP(L"Distribuir na horizontal"), TR_NOOP(L"Espaçar 3 ou mais objetos igualmente na horizontal") },
+    { M_DIST_V, icons::DistributeV, TR_NOOP(L"Distribuir na vertical"), TR_NOOP(L"Espaçar 3 ou mais objetos igualmente na vertical") },
+    { M_LOCK, icons::Lock, TR_NOOP(L"Bloquear"), TR_NOOP(L"Bloquear o objeto selecionado (Ctrl+L)") },
+    { M_RULERS, icons::Ruler, TR_NOOP(L"Réguas"), TR_NOOP(L"Mostrar réguas, guias e coordenadas (Ctrl+Shift+R)") } };
 
 const Tool kFixedTools[] = { Tool::Select, Tool::Selection, Tool::Text, Tool::Highlighter, Tool::Shape };
 int RecentSlots() { return std::clamp(g.tbToolCount, 6, 16) - 6; }
 
-// completa (ou corta) as recentes para o número de ferramentas escolhido
+// fills up (or trims) the recent ones to the chosen number of tools
 void FitRecentTools();
 
 bool IsFixedTool(Tool t) { return std::find(std::begin(kFixedTools), std::end(kFixedTools), t) != std::end(kFixedTools) || t == Tool::Magnify; }
@@ -874,7 +1018,7 @@ std::vector<ToolbarEntry> CenterEntries() {
     return v;
 }
 
-// texto no registro: "t:5,e:1039,o:6,c:1015,s:0" (tipo:id)
+// registry text: "t:5,e:1039,o:6,c:1015,s:0" (type:id)
 std::wstring EntriesToString(const std::vector<ToolbarEntry>& v) {
     static const wchar_t kType[] = { L't', L'e', L'o', L'c', L's' };
     std::wstring s;
@@ -911,7 +1055,7 @@ void LoadToolbarConfig() {
 void FitRecentTools() {
     if ((int)g.tbRecent.size() > RecentSlots()) g.tbRecent.resize(RecentSlots());
     for (Tool t : { Tool::Arrow, Tool::Callout, Tool::Step, Tool::Blur, Tool::Stamp, Tool::Pen, Tool::Line, Tool::Fill, Tool::Crop,
-                    Tool::Spotlight, Tool::Eraser })                          // completa com as mais comuns
+                    Tool::Spotlight, Tool::Eraser })                          // fills up with the most common ones
         if ((int)g.tbRecent.size() < RecentSlots() && std::find(g.tbRecent.begin(), g.tbRecent.end(), t) == g.tbRecent.end()) g.tbRecent.push_back(t);
 }
 
@@ -924,7 +1068,7 @@ void SaveToolbarConfig() {
     RegSetString(L"ToolbarRecentTools", EntriesToString(rec), L"Editor");
 }
 
-// ferramenta usada: no modo automático, entra numa das posições 6 a 9 no lugar da usada há mais tempo
+// tool used: in automatic mode, it takes one of positions 6 to 9, replacing the least recently used
 void NoteToolUsed(Tool t) {
     static std::map<Tool, ULONGLONG> lastUse;
     lastUse[t] = GetTickCount64();
@@ -940,7 +1084,7 @@ void ShowToolIntro(Tool t);
 
 void SetTool(Tool t) {
     if (t == Tool::Favorites) {
-        // a ferramenta de desenho fica a do favorito usado por último (ou a do primeiro favorito)
+        // the drawing tool becomes that of the last used favorite (or of the first favorite)
         Tool ct = g.canvas.tool;
         bool ok = false;
         for (auto& f : QS().favorites) if (f.tool == ct) ok = true;
@@ -952,13 +1096,13 @@ void SetTool(Tool t) {
     }
     g.toolbar.SetActive(t);
     NoteToolUsed(t);
-    if (g.rightTab != 0 && t != Tool::Select) SetRightTab(0);      // escolher uma ferramenta mostra as propriedades dela
+    if (g.rightTab != 0 && t != Tool::Select) SetRightTab(0);      // choosing a tool shows its properties
     g.props.SetBarTool(t);
     SetStatus(std::wstring(Tr(L"Ferramenta: ")) + ToolName(t));
     if (t == Tool::Magnify) ShowToolIntro(t);
 }
 
-// janela de apresentação da ferramenta (onboarding), mostrada uma vez: "Ampliar parte da imagem"
+// tool introduction window (onboarding), shown once: "Magnify part of the image"
 void ShowToolIntro(Tool t) {
     if (t != Tool::Magnify || RegGetDword(L"MagnifyIntroShown", 0, L"Editor")) return;
     RegSetDword(L"MagnifyIntroShown", 1, L"Editor");
@@ -1077,13 +1221,13 @@ HMENU ToolsMenu() {
     return m;
 }
 
-// Personalizar (CBCGPToolbarCustomize): grade para arrastar até a barra; Cancelar devolve a barra de antes
+// Customize (CBCGPToolbarCustomize): grid to drag onto the toolbar; Cancel restores the previous toolbar
 void CustomizeToolbar() {
     std::vector<std::pair<std::wstring, std::vector<ToolbarEntry>>> catalog(5);
     catalog[0].first = Tr(L"Ferramentas de desenho"); for (auto& t : kTools) catalog[0].second.push_back({ ToolbarEntry::Tool, (int)t.t });
     catalog[1].first = Tr(L"Itens de menu"); for (auto& c : kCommands) catalog[1].second.push_back({ ToolbarEntry::Command, c.id });
     catalog[2].first = Tr(L"Destinos de compartilhamento"); for (auto& c : kOutputs) catalog[2].second.push_back({ ToolbarEntry::Output, c.id });
-    catalog[3].first = Tr(L"Efeitos");                    // na ordem do menu Imagem › Efeitos
+    catalog[3].first = Tr(L"Efeitos");                    // in the order of the Image › Effects menu
     for (int cmd : { M_FX_BORDER, M_FX_EDGE, M_FX_CAPTION, M_FX_PERSPECTIVE, M_FX_PAGECURL, M_FX_SHADOW, M_FX_FILTER, M_FX_ADJUST,
                      M_FX_REPLACE, M_FX_SPOTLIGHT, M_FX_WATERMARK })
         catalog[3].second.push_back({ ToolbarEntry::Effect, cmd });
@@ -1093,7 +1237,7 @@ void CustomizeToolbar() {
     bool wasCustom = g.tbCustom;
     int beforeCount = g.tbToolCount;
     auto defaults = [] { bool c = g.tbCustom; g.tbCustom = false; auto v = CenterEntries(); g.tbCustom = c; return v; };
-    auto onCount = [](int n) {                       // número de ferramentas: volta para a barra automática com esse tamanho
+    auto onCount = [](int n) {                       // number of tools: back to the automatic toolbar with that size
         g.tbToolCount = n;
         FitRecentTools();
         g.tbCustom = false;
@@ -1113,7 +1257,7 @@ void CustomizeToolbar() {
     SetStatus(g.tbCustom ? Tr(L"Barra de ferramentas personalizada.") : Tr(L"Barra de ferramentas automática."));
 }
 
-// "Mais/Editar" (EditMore): as ferramentas que não estão na barra, com ícone, e a personalização
+// "More/Edit" (EditMore): the tools that are not on the toolbar, with icons, and the customization
 void MoreToolsMenu(POINT pt) {
     std::vector<PopupItem> items;
     std::vector<ToolbarEntry> vis = CenterEntries();
@@ -1123,7 +1267,7 @@ void MoreToolsMenu(POINT pt) {
         it.id = M_MORE_TOOL_BASE + (int)ti.t;
         it.icon = ti.icon;
         it.label = ToolName(ti.t);
-        std::wstring h = Tr(ti.hint);                   // atalho: a letra entre parênteses no fim da dica, ex. "(K)"
+        std::wstring h = Tr(ti.hint);                   // shortcut: the letter in parentheses at the end of the hint, e.g. "(K)"
         size_t o = h.rfind(L'('), c = h.rfind(L')');
         if (o != std::wstring::npos && c == o + 2) it.shortcut = h.substr(o + 1, 1);
         it.checked = ti.t == g.toolbar.active;
@@ -1137,6 +1281,20 @@ void MoreToolsMenu(POINT pt) {
     items.push_back(reset);
     int cmd = ListPopup(g.frame, pt, items, ui::Scale(220, g.dpi));
     if (cmd > 0) PostMessageW(g.frame, WM_COMMAND, cmd, 0);
+}
+
+// F1 / Help › Manual: the manual opens at the chapter of what is on screen (library, video or the current tool)
+void ShowManual() {
+    static const wchar_t* const kToolTopic[] = {
+        L"tool-move", L"tool-arrow", L"tool-line", L"tool-shape", L"tool-pen", L"tool-highlighter", L"tool-text", L"tool-callout",
+        L"tool-steps", L"tool-stamp", L"tool-blur", L"tool-spotlight", L"tool-magnify", L"tool-fill", L"tool-eraser", L"tool-crop",
+        L"tool-selection", L"tool-cutout", L"tool-eyedropper", L"tool-favorites", L"tool-magicwand" };
+    static_assert(std::size(kToolTopic) == (size_t)Tool::Count, "one manual topic per tool");
+    const wchar_t* topic = L"editor-tour";
+    if (g.libraryOpen) topic = L"tray-library";
+    else if (g.cur && g.cur->isVideo) topic = L"video-editing";
+    else if (g.cur) topic = kToolTopic[(int)g.canvas.tool];
+    OpenManual(g.frame, topic);
 }
 
 void ShowShortcuts() {
@@ -1162,6 +1320,7 @@ void OnCommand(int id) {
     case M_TB_CUSTOMIZE: CustomizeToolbar(); break;
     case M_TB_RESET: g.tbCustom = false; SaveToolbarConfig(); g.toolbar.SetCenter(CenterEntries()); break;
     case M_SHOW_EFFECTS: ShowLibrary(false); SetRightTab(g.rightTab == 1 ? 0 : 1); break;
+    case M_SHOW_LAYERS: ShowLibrary(false); SetRightTab(g.rightTab == 2 ? 0 : 2); break;
     case M_SHOW_LIBRARY: ShowLibrary(!g.libraryOpen); break;
     case T_CAPTURE: case M_NEW_CAPTURE: RequestCapture(0); break;
     case T_RECORD: case M_NEW_VIDEO: RequestCapture(1); break;
@@ -1197,15 +1356,71 @@ void OnCommand(int id) {
     case M_UNDO: if (g.cur && !g.cur->isVideo) { g.canvas.CommitText(); g.cur->Undo(); g.canvas.selected = -1; g.canvas.Refresh(); g.canvas.FitToWindow(); DocChanged(); g.props.Load(); } break;
     case M_REDO: if (g.cur && !g.cur->isVideo) { g.canvas.CommitText(); g.cur->Redo(); g.canvas.selected = -1; g.canvas.Refresh(); DocChanged(); g.props.Load(); } break;
     case M_UNDOALL: if (g.cur && !g.cur->isVideo) { g.cur->UndoAll(); g.canvas.selected = -1; g.canvas.FitToWindow(); g.canvas.Refresh(); DocChanged(); } break;
-    case M_CUT: if (RequireImageDoc()) g.canvas.CopySelection(true); break;
-    case M_COPY: if (RequireImageDoc() && g.canvas.CopySelection(false)) SetStatus(Tr(L"Copiado.")); break;
+    case M_CUT: CopyToClipboard(true); break;
+    case M_COPY: if (CopyToClipboard(false)) SetStatus(Tr(L"Copiado.")); break;
     case M_PASTE: Paste(); break;
+    case M_PASTE_INPLACE: Paste(true); break;
+    case M_DIST_H: case M_DIST_V: if (RequireImageDoc()) g.canvas.DistributeSelected(id == M_DIST_H); break;
+    case M_LOCK: case M_UNLOCK: {                    // Ctrl+L toggles; Unlock always unlocks
+        if (!RequireImageDoc()) break;
+        auto v = g.canvas.SelectedList();
+        if (v.empty()) { SetStatus(Tr(L"Selecione um objeto para bloquear ou desbloquear.")); break; }
+        bool allLocked = std::all_of(v.begin(), v.end(), [](int i) { return g.cur->st.objs[i]->locked; });
+        bool lock = id == M_LOCK && !allLocked;
+        g.canvas.SetLocked(v, lock);
+        SetStatus(lock ? Tr(L"Objeto bloqueado: não pode ser movido, redimensionado nem excluído.") : Tr(L"Objeto desbloqueado."));
+        break;
+    }
+    case M_LIFT:
+        if (!RequireImageDoc()) break;
+        if (!g.canvas.HasRasterSelection()) { SetStatus(Tr(L"Selecione uma área com a ferramenta Seleção para levantá-la.")); break; }
+        if (g.canvas.LiftSelection()) SetStatus(Tr(L"Peça solta: ajuste o resto da imagem (cortar, recortar faixa…), posicione a peça e tecle Enter para soltá-la."));
+        break;
+    case M_DROP: if (RequireImageDoc() && g.canvas.DropFloating()) SetStatus(Tr(L"Peça solta na imagem.")); break;
+    case M_RULERS:
+        g.canvas.rulers = !g.canvas.rulers;
+        RegSetDword(L"Rulers", g.canvas.rulers, L"Editor");
+        if (!g.canvas.rulers) g.coords.clear();
+        g.canvas.Refresh(false);
+        if (g.canvas.zoom > 0 && g.cur && !g.cur->isVideo) g.canvas.ZoomTo(g.canvas.zoom);
+        InvalidateStatus();
+        SetStatus(g.canvas.rulers ? Tr(L"Réguas ligadas: arraste de uma régua para criar uma guia; arraste a guia de volta para removê-la.") : Tr(L"Réguas desligadas."));
+        break;
+    case M_CLEAR_GUIDES:
+        if (g.cur && !g.cur->isVideo && (!g.cur->guidesX.empty() || !g.cur->guidesY.empty())) {
+            g.cur->guidesX.clear(); g.cur->guidesY.clear(); g.cur->modified = true;
+            g.canvas.Refresh(false);
+        }
+        break;
+    case M_EDGESNAP:
+        g.canvas.edgeSnap = !g.canvas.edgeSnap;
+        RegSetDword(L"EdgeSnap", g.canvas.edgeSnap, L"Editor");
+        SetStatus(g.canvas.edgeSnap ? Tr(L"A seleção e o corte encaixam nas bordas da imagem (Alt desliga na hora).") : Tr(L"Encaixe nas bordas desligado."));
+        break;
+    case M_PLAINPASTE:
+        g.canvas.plainPaste = !g.canvas.plainPaste;
+        RegSetDword(L"PlainTextPaste", g.canvas.plainPaste, L"Editor");
+        SetStatus(g.canvas.plainPaste ? Tr(L"Texto colado sem formatação (Ctrl+Shift+V mantém a formatação).") : Tr(L"Texto colado com a formatação de origem (Ctrl+Shift+V cola sem formatação)."));
+        break;
+    case M_RENAME_OBJ: {
+        if (!RequireImageDoc() || g.canvas.selected < 0) break;
+        int i = g.canvas.selected;
+        std::vector<ui::Field> f = { ui::Field::MakeText(Tr(L"Nome"), g.cur->st.objs[i]->name) };
+        if (ui::RunForm(g.frame, Tr(L"Renomear objeto"), f)) g.canvas.RenameObject(i, Trim(f[0].text));
+        break;
+    }
+    case M_OPEN_LINK:
+        if (g.cur && g.canvas.selected >= 0 && g.cur->st.objs[g.canvas.selected]->type == ObjType::Link) {
+            const std::wstring& u = g.cur->st.objs[g.canvas.selected]->text;
+            if (u.rfind(L"http://", 0) == 0 || u.rfind(L"https://", 0) == 0 || u.rfind(L"mailto:", 0) == 0) ShellExecuteW(nullptr, L"open", u.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        }
+        break;
     case M_DELETE_SEL: if (RequireImageDoc()) g.canvas.DeleteSelected(); break;
     case M_SELECTALL:
         if (GetFocus() == g.tray.hwnd) { g.tray.SelectAll(); break; }     // Ctrl+A na bandeja/biblioteca marca todas as capturas
         if (g.libraryOpen) { g.library.SelectAll(); break; }
         if (g.cur && !g.cur->isVideo && g.canvas.tool == Tool::Select && !g.canvas.smartMove && !g.cur->st.objs.empty()) {
-            g.canvas.SelectAllObjects();               // com o Mover, Ctrl+A seleciona todos os objetos
+            g.canvas.SelectAllObjects();               // with Move, Ctrl+A selects all objects
             break;
         }
         if (RequireImageDoc()) { g.toolbar.SetActive(Tool::Selection); g.canvas.SelectAll(); g.props.Load(); } break;
@@ -1218,7 +1433,7 @@ void OnCommand(int id) {
     case M_ALIGN_LEFT: case M_ALIGN_CENTER: case M_ALIGN_RIGHT: case M_ALIGN_TOP: case M_ALIGN_MIDDLE: case M_ALIGN_BOTTOM:
         if (RequireImageDoc()) g.canvas.AlignSelected(id - M_ALIGN_LEFT);
         break;
-    case M_FLIP_H: case M_FLIP_V:                    // com um objeto selecionado espelha o objeto; sem, a imagem inteira
+    case M_FLIP_H: case M_FLIP_V:                    // with an object selected, flips the object; without one, the whole image
         if (RequireImageDoc() && !g.canvas.FlipSelected(id == M_FLIP_H)) ImageCommand(id);
         break;
     case M_GROUP:
@@ -1262,6 +1477,7 @@ void OnCommand(int id) {
         Layout();
         break;
     case M_SHORTCUTS: ShowShortcuts(); break;
+    case M_MANUAL: ShowManual(); break;
     case M_ABOUT:
         MessageBoxW(g.frame, (L"Snapnab Editor " + std::wstring(kAppVersion) + L"\n" SNAPNAB_COPYRIGHT_W L"\n\n" +
                               Tr(L"Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
@@ -1291,14 +1507,14 @@ void OnIPCNotify(const ipc::Message& m) {
         break;
     case ipc::OpenFile: if (!m.text.empty()) { OpenPath(m.text); ShowEditor(); } break;
     case ipc::LibraryChanged: g.tray.Reload(); if (g.libraryOpen) g.library.Reload(); break;
-    case ipc::RestartEditor:            // idioma trocado: abre a instância nova (que espera esta fechar) e fecha
+    case ipc::RestartEditor:            // language changed: opens the new instance (which waits for this one to close) and closes
         if (LaunchSibling(kEditorExe, RestartArgs())) PostMessageW(g.frame, WM_CLOSE, 0, 0);
         break;
     default: break;
     }
 }
 
-// ---------------------------------------------------------------- linha de comando (ProcessUserCmdLineCommands)
+// ---------------------------------------------------------------- command line (ProcessUserCmdLineCommands)
 void ProcessCommandLine(const std::wstring& cmdLine, bool startup) {
     auto args = SplitCommandLine(cmdLine);
     bool opened = false;
@@ -1306,7 +1522,7 @@ void ProcessCommandLine(const std::wstring& cmdLine, bool startup) {
         std::wstring a = ToLower(args[i]);
         if (a == L"/open" && i + 1 < args.size()) { opened |= OpenPath(args[++i]); }
         else if (a == L"/newfromclipboard") { NewFromClipboard(); opened = true; }
-        else if (a == L"/restartwait") {         // a espera pela instância anterior foi no início (WaitForPreviousInstance)
+        else if (a == L"/restartwait") {         // the wait for the previous instance happened at startup (WaitForPreviousInstance)
             if (i + 1 < args.size() && iswdigit(args[i + 1][0])) i++;
         }
         else if (a == L"/help" || a == L"/?") {
@@ -1317,14 +1533,14 @@ void ProcessCommandLine(const std::wstring& cmdLine, bool startup) {
         else if (a[0] != L'/') opened |= OpenPath(args[i]);
     }
     if (startup && !opened) {
-        // abre a captura mais recente da biblioteca
+        // opens the most recent capture in the library
         auto items = ListLibrary(1);
         if (!items.empty()) OpenPath(items[0].path);
     }
     if (!startup) ShowEditor();
 }
 
-// ---------------------------------------------------------------- vigia da pasta da biblioteca (CDirectoryChangeWatcher)
+// ---------------------------------------------------------------- library folder watcher (CDirectoryChangeWatcher)
 void StartLibraryWatcher() {
     g.watchStop = CreateEventW(nullptr, TRUE, FALSE, nullptr);
     g.watcher = std::thread([] {
@@ -1339,8 +1555,8 @@ void StartLibraryWatcher() {
     });
 }
 
-// ---------------------------------------------------------------- janela principal
-// barra de status discreta (mesmos tons da barra inferior da janela de captura) e abas do painel da direita
+// ---------------------------------------------------------------- main window
+// subdued status bar (same tones as the capture window's bottom bar) and right panel tabs
 void PaintFrame(HDC dc) {
     const auto& th = g.th;
     RECT cr; GetClientRect(g.frame, &cr);
@@ -1351,7 +1567,7 @@ void PaintFrame(HDC dc) {
     HBRUSH lb = CreateSolidBrush(th.line); FillRect(dc, &sl, lb);
     HGDIOBJ of = SelectObject(dc, ui::UiFont(g.dpi, 8));
     SetBkMode(dc, TRANSPARENT); SetTextColor(dc, RGB(70, 70, 78));
-    // rodapé (BottomPanel.Footer): "Capturas recentes" à esquerda; tamanho da imagem e zoom, com menu, à direita
+    // footer (BottomPanel.Footer): "Recent captures" on the left; image size and zoom, with a menu, on the right
     auto textW = [&](const std::wstring& t) { RECT m{}; DrawTextW(dc, t.c_str(), -1, &m, DT_CALCRECT | DT_SINGLELINE); return (int)m.right; };
     {
         Gdiplus::Graphics fg(dc);
@@ -1378,9 +1594,14 @@ void PaintFrame(HDC dc) {
         DrawTextW(dc, st.c_str(), -1, &g.footSize, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
         rx = g.footSize.left;
     }
+    if (!g.coords.empty() && g.canvas.rulers && g.cur && !g.cur->isVideo) {      // cursor position (rulers on)
+        RECT cr2{ rx - S(16) - textW(L"X: 00000   Y: 00000"), sr.top, rx - S(6), sr.bottom };
+        DrawTextW(dc, g.coords.c_str(), -1, &cr2, DT_RIGHT | DT_VCENTER | DT_SINGLELINE);
+        rx = cr2.left;
+    }
     RECT l = sr; l.left = g.footRecent.right + S(14); l.right = rx - S(10);
     DrawTextW(dc, g.status.c_str(), -1, &l, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
-    // abas "Propriedades | Efeitos" (controle segmentado)
+    // "Properties | Effects" tabs (segmented control)
     if (!(g.cur && g.cur->isVideo) && !g.libraryOpen) {
         RECT t = TabsRect();
         HBRUSH tb = CreateSolidBrush(th.bgMain); FillRect(dc, &t, tb); DeleteObject(tb);
@@ -1389,7 +1610,7 @@ void PaintFrame(HDC dc) {
         Gdiplus::Graphics gr(dc);
         gr.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
         gr.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-        RECT a = TabRect(0), z = TabRect(1);
+        RECT a = TabRect(0), z = TabRect(2);
         RECT all{ a.left, a.top, z.right, z.bottom };
         auto round = [&](RECT rc, COLORREF c, int rad) {
             Gdiplus::GraphicsPath p;
@@ -1401,15 +1622,15 @@ void PaintFrame(HDC dc) {
             gr.FillPath(&br, &p);
         };
         round(all, th.bgSide, 7);
-        RECT on = g.rightTab == 0 ? a : z;
+        RECT on = TabRect(std::clamp(g.rightTab, 0, 2));
         InflateRect(&on, -S(3), -S(3));
         RECT sh = on; OffsetRect(&sh, 0, 1);
         round(sh, ui::Mix(th.bgSide, 0, 0.08), 5);
         round(on, RGB(255, 255, 255), 5);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             RECT tr = TabRect(i);
-            ui::DrawTextCentered(dc, i == 0 ? Tr(L"Propriedades") : Tr(L"Efeitos"), tr, g.rightTab == i ? th.accentText : RGB(80, 80, 88),
-                                 ui::UiFont(g.dpi, 9, g.rightTab == i));
+            ui::DrawTextCentered(dc, i == 0 ? Tr(L"Propriedades") : i == 1 ? Tr(L"Efeitos") : Tr(L"Camadas"), tr,
+                                 g.rightTab == i ? th.accentText : RGB(80, 80, 88), ui::UiFont(g.dpi, 9, g.rightTab == i));
         }
     }
     DeleteObject(lb);
@@ -1427,9 +1648,9 @@ void LoadTheme() {
     RedrawWindow(g.frame, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN);
 }
 
-// ---------------------------------------------------------------- painel de efeitos (CImageEffectHandler, ed_comp_5 §4)
-// Cada efeito tem seus ajustes (CEffectSettings*); a mesma função gera a miniatura do painel, a prévia ao vivo na
-// imagem e o resultado aplicado. Valores em pixels são escalados por k (a miniatura é menor que o documento).
+// ---------------------------------------------------------------- effects panel (CImageEffectHandler, ed_comp_5 §4)
+// Each effect has its settings (CEffectSettings*); the same function produces the panel thumbnail, the live preview on
+// the image and the applied result. Pixel values are scaled by k (the thumbnail is smaller than the document).
 std::vector<EffectsPanel::Effect> MakeEffects() {
     using F = FxParam;
     auto choice = [](std::initializer_list<int> v, const wchar_t* suffix) {
@@ -1491,13 +1712,13 @@ int PV(const std::vector<FxParam>& p, size_t i) { return i < p.size() ? p[i].val
 COLORREF PCol(const std::vector<FxParam>& p, size_t i) { return i < p.size() ? p[i].color : 0; }
 std::wstring PTxt(const std::vector<FxParam>& p, size_t i) { return i < p.size() ? p[i].text : L""; }
 
-// área em foco do Spotlight: a seleção (ferramenta Seleção) ou, sem seleção, o meio da imagem
+// Spotlight focus area: the selection (Selection tool) or, without a selection, the middle of the image
 RECT SpotlightFocus(int w, int h) {
     if (g.canvas.HasRasterSelection()) return g.canvas.RasterSelectionBounds();
     return { w / 4, h / 4, w * 3 / 4, h * 3 / 4 };
 }
 
-// aplica um efeito do painel; off devolve quanto os objetos devem andar (efeitos que aumentam a imagem)
+// applies a panel effect; off returns how far the objects must move (effects that enlarge the image)
 Image ApplyFx(int cmd, const std::vector<FxParam>& p, const Image& src, double k, POINT* off, int docW, int docH) {
     auto px = [k](int v) { return std::max(v > 0 ? 1 : 0, (int)std::lround(v * k)); };
     if (off) *off = { 0, 0 };
@@ -1552,7 +1773,7 @@ Image ApplyFx(int cmd, const std::vector<FxParam>& p, const Image& src, double k
     return img;
 }
 
-// efeito rápido: borda → borda especial → dobra de página → sombra (um "pacote", como CInteropQuickEffect)
+// quick effect: border → edge effect → page curl → shadow (a "bundle", like CInteropQuickEffect)
 Image ApplyQuick(const QuickEffect& q, const Image& src, double k, POINT* off) {
     auto px = [k](int v) { return std::max(v > 0 ? 1 : 0, (int)std::lround(v * k)); };
     Image img = src;
@@ -1565,7 +1786,7 @@ Image ApplyQuick(const QuickEffect& q, const Image& src, double k, POINT* off) {
     return img;
 }
 
-// QuickEffects.xml na pasta de dados (AddToQuickEffects grava o estado atual do painel como um preset novo)
+// QuickEffects.xml in the data folder (AddToQuickEffects saves the current panel state as a new preset)
 std::wstring QuickFile() { return AppDataDir() + L"\\QuickEffects.xml"; }
 
 std::vector<QuickEffect> DefaultQuickEffects() {
@@ -1615,12 +1836,12 @@ void SaveQuickEffects() {
 
 void RefreshQuickGallery() {
     std::vector<std::wstring> names;
-    for (auto& q : g.quick) names.push_back(Tr(q.name));      // os de fábrica traduzidos
+    for (auto& q : g.quick) names.push_back(Tr(q.name));      // the built-in ones, translated
     g.effects.SetQuick(names);
 }
 
-// grava o resultado de um efeito no documento: efeitos que só aumentam a imagem mantêm os objetos editáveis
-// (andando junto); os demais mesclam os objetos antes, para a prévia e o resultado serem iguais
+// writes an effect's result to the document: effects that only enlarge the image keep the objects editable
+// (moving along); the others flatten the objects first, so the preview and the result are the same
 void CommitEffect(const std::wstring& name, bool keepObjects, std::function<Image(const Image&, POINT*)> run) {
     if (!RequireImageDoc()) return;
     Document* d = g.cur;
@@ -1659,7 +1880,7 @@ void ApplyQuickEffect(int i) {
     CommitEffect(Tr(q.name), !q.edge && !q.curl, [&](const Image& base, POINT* off) { return ApplyQuick(q, base, 1.0, off); });
 }
 
-// "Adicionar aos efeitos rápidos": junta os ajustes atuais de Borda, Bordas especiais, Sombra e Dobra de página
+// "Add to quick effects": combines the current Border, Edge effects, Shadow and Page curl settings
 void AddQuickEffect() {
     auto par = [](int cmd) { const auto* e = g.effects.Find(cmd); return e ? e->params : std::vector<FxParam>{}; };
     auto b = par(M_FX_BORDER), ed = par(M_FX_EDGE), sh = par(M_FX_SHADOW), cu = par(M_FX_PAGECURL);
@@ -1684,7 +1905,7 @@ void AddQuickEffect() {
     SetStatus(Tr(L"Efeito rápido adicionado: ") + q.name);
 }
 
-// itens da biblioteca → arquivos para arrastar: imagens em PNG temporário (com os objetos), vídeos como estão
+// library items → files to drag: images as temporary PNGs (with the objects), videos as they are
 std::vector<std::wstring> FilesForDrag(const std::vector<std::wstring>& paths) {
     std::vector<std::wstring> out;
     wchar_t tmp[MAX_PATH]; GetTempPathW(MAX_PATH, tmp);
@@ -1707,6 +1928,54 @@ std::vector<std::wstring> FilesForDrag(const std::vector<std::wstring>& paths) {
     return out;
 }
 
+// canvas context menu (right click): commands for the selected objects, or paste/selection with none
+void CanvasContextMenu(POINT pt) {
+    if (!g.cur || g.cur->isVideo) return;
+    HMENU m = CreatePopupMenu();
+    auto add = [&](int id, const std::wstring& t, bool on = true) { AppendMenuW(m, MF_STRING | (on ? 0 : MF_GRAYED), id, t.c_str()); };
+    bool canPaste = ClipboardHasImage() || IsClipboardFormatAvailable(ObjectsFormat()) || IsClipboardFormatAvailable(CF_UNICODETEXT) ||
+                    IsClipboardFormatAvailable(CF_HDROP);
+    auto v = g.canvas.SelectedList();
+    if (!v.empty()) {
+        const DrawObj& o = *g.cur->st.objs[g.canvas.selected];
+        bool locked = g.canvas.SelectionLocked();
+        if (o.type == ObjType::Link) { add(M_OPEN_LINK, Tr(L"Abrir o link")); AppendMenuW(m, MF_SEPARATOR, 0, nullptr); }
+        if (o.floating) { add(M_DROP, Tr(L"Soltar a peça na imagem\tEnter")); AppendMenuW(m, MF_SEPARATOR, 0, nullptr); }
+        add(M_CUT, Tr(L"Recor&tar\tCtrl+X"), !locked); add(M_COPY, Tr(L"&Copiar\tCtrl+C"));
+        add(M_PASTE, Tr(L"C&olar\tCtrl+V"), canPaste); add(M_PASTE_INPLACE, Tr(L"Colar no &mesmo lugar\tCtrl+Shift+V"), canPaste);
+        add(M_DELETE_SEL, Tr(L"E&xcluir\tDel"), !locked);
+        AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+        if (locked) add(M_UNLOCK, Tr(L"Desblo&quear\tCtrl+Shift+K")); else add(M_LOCK, Tr(L"&Bloquear\tCtrl+L"));
+        SetItemIcon(m, locked ? M_UNLOCK : M_LOCK, locked ? icons::Unlock : icons::Lock);
+        if (v.size() == 1) add(M_RENAME_OBJ, Tr(L"Re&nomear…"));
+        AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+        add(M_FRONT, Tr(L"Trazer para o &primeiro plano")); add(M_BRING_FORWARD, Tr(L"Trazer para a &frente\tCtrl+Shift+F"));
+        add(M_SEND_BACKWARD, Tr(L"Enviar para &trás\tCtrl+Shift+B")); add(M_BACK, Tr(L"Enviar para o plano de &fundo"));
+        if (v.size() >= 2) {
+            AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+            add(M_ALIGN_LEFT, Tr(L"Alinhar à esquerda")); add(M_ALIGN_CENTER, Tr(L"Alinhar ao centro")); add(M_ALIGN_RIGHT, Tr(L"Alinhar à direita"));
+            add(M_ALIGN_TOP, Tr(L"Alinhar em cima")); add(M_ALIGN_MIDDLE, Tr(L"Alinhar no meio")); add(M_ALIGN_BOTTOM, Tr(L"Alinhar embaixo"));
+            add(M_DIST_H, Tr(L"Distribuir na horizontal"), v.size() >= 3); add(M_DIST_V, Tr(L"Distribuir na vertical"), v.size() >= 3);
+            AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+            add(M_GROUP, Tr(L"A&grupar\tCtrl+Shift+G"));
+        }
+        if (g.canvas.CanUngroup()) add(M_UNGROUP, Tr(L"Desagr&upar\tCtrl+Shift+U"));
+    } else {
+        add(M_PASTE, Tr(L"C&olar\tCtrl+V"), canPaste); add(M_PASTE_INPLACE, Tr(L"Colar no &mesmo lugar\tCtrl+Shift+V"), canPaste);
+        if (g.canvas.HasRasterSelection()) {
+            AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+            add(M_COPY, Tr(L"&Copiar\tCtrl+C")); add(M_CROP_SEL, Tr(L"Cortar para a &seleção"));
+            add(M_LIFT, Tr(L"&Levantar a seleção (peça solta)\tCtrl+Shift+L"));
+        }
+        if (g.canvas.HasFloating()) add(M_DROP, Tr(L"Soltar a peça na imagem\tEnter"));
+        AppendMenuW(m, MF_SEPARATOR, 0, nullptr);
+        add(M_SELECTALL, Tr(L"Selecionar tu&do\tCtrl+A"));
+    }
+    int cmd = TrackPopupMenu(m, TPM_RETURNCMD | TPM_RIGHTBUTTON, pt.x, pt.y, 0, g.frame, nullptr);
+    DestroyMenu(m);
+    if (cmd) OnCommand(cmd);
+}
+
 void CreateChildren() {
     g.toolbar.Create(g.frame);
     using I = icons::Id;
@@ -1716,7 +1985,7 @@ void CreateChildren() {
     it.push_back({ T_COPYALL, I::Copy, Tr(L"Copiar tudo"), Tr(L"Copiar a imagem inteira (Ctrl+Shift+C)"), true, false });
     it.push_back({ T_SAVE, I::Save, Tr(L"Salvar como"), Tr(L"Salvar como arquivo (Ctrl+Shift+S)"), true, false });
     it.push_back({ T_SHARE, I::Share, Tr(L"Compartilhar"), Tr(L"Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"), true, false });
-    // painel de efeitos antes da barra: os itens de efeito da barra usam os nomes dele
+    // effects panel before the toolbar: the toolbar's effect items use its names
     g.effects.Create(g.frame);
     g.effects.effects = MakeEffects();
     g.effects.makePreview = [](int cmd, const std::vector<FxParam>& p, const Image& src) {
@@ -1749,42 +2018,56 @@ void CreateChildren() {
     g.toolbar.onEntry = [](const ToolbarEntry& e) {
         switch (e.type) {
         case ToolbarEntry::Tool: SetTool((Tool)e.id); break;
-        case ToolbarEntry::Effect: OpenEffect(e.id); break;    // item de efeito: abre os ajustes dele no painel
+        case ToolbarEntry::Effect: OpenEffect(e.id); break;    // effect item: opens its settings in the panel
         default: OnCommand(e.id); break;
         }
     };
     g.toolbar.onMore = [](POINT p) { MoreToolsMenu(p); };
-    g.toolbar.onReorder = [](std::vector<ToolbarEntry> v) {   // arrastou um item: a barra passa a ser personalizada
+    g.toolbar.onReorder = [](std::vector<ToolbarEntry> v) {   // an item was dragged: the bar becomes custom
         g.tbCustom = true; g.tbCustomList = std::move(v);
         SaveToolbarConfig();
         SetStatus(Tr(L"Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."));
     };
     g.toolbar.onHint = [](const std::wstring& h) { if (!h.empty()) SetStatus(h); };
 
-    QS().Load();                                   // temas de ferramentas e favoritos
+    QS().Load();                                   // tool themes and favorites
     g.canvas.Create(g.frame);
-    for (int t = 0; t < (int)Tool::Count; t++) {   // de fábrica: o primeiro estilo rápido do tema
+    for (int t = 0; t < (int)Tool::Count; t++) {   // built-in: the theme's first quick style
         auto qs = QS().StylesFor((Tool)t);
         if (!qs.empty()) g.canvas.styles[(Tool)t] = qs[0];
     }
-    LoadToolStyles(g.canvas.styles);               // estilos de cada ferramenta da sessão anterior
+    LoadToolStyles(g.canvas.styles);               // each tool's styles from the previous session
     g.canvas.smartMove = RegGetDword(L"SmartMove", 0, L"Editor") != 0;
     g.canvas.snapping = RegGetDword(L"CanvasSnapping", 1, L"Editor") != 0;
+    g.canvas.rulers = RegGetDword(L"Rulers", 0, L"Editor") != 0;               // off by default
+    g.canvas.edgeSnap = RegGetDword(L"EdgeSnap", 1, L"Editor") != 0;
+    g.canvas.plainPaste = RegGetDword(L"PlainTextPaste", 1, L"Editor") != 0;
+    g.canvas.onCursorMoved = [](bool inside, Gdiplus::PointF p) {
+        std::wstring c = inside ? Format(L"X: %d   Y: %d", (int)std::floor(p.X), (int)std::floor(p.Y)) : L"";
+        if (c != g.coords) { g.coords = c; InvalidateStatus(); }
+    };
+    g.canvas.onHint = [](const std::wstring& h) { SetStatus(h); };
+    g.canvas.onContextMenu = [](POINT pt) { CanvasContextMenu(pt); };
     g.canvas.background = RegGetDword(L"CanvasBackground", RGB(222, 224, 228), L"Editor");
     g.canvas.onDocChanged = [] { DocChanged(); };
     g.canvas.onSelectionChanged = [] {
         g.props.Load();
+        if (g.rightTab == 2) g.layers.Refresh();
         int n = g.canvas.SelectionCount();
         if (n > 1) SetStatus(Format(Tr(L"%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"), n));
     };
+    g.canvas.onAreaChanged = [] { g.props.AreaChanged(); };
     g.canvas.onZoomChanged = [] { InvalidateStatus(); };
     g.canvas.onColorPicked = [](uint32_t c) {
-        // conta-gotas: aplica a cor à ferramenta anterior mais comum (seta) e a todas as ferramentas de traço
+        // eyedropper: applies the color to the most common previous tool (arrow) and to all stroke tools
         for (Tool t : { Tool::Arrow, Tool::Line, Tool::Shape, Tool::Pen, Tool::Step, Tool::Stamp, Tool::Fill, Tool::Eyedropper }) g.canvas.styles[t].stroke = c;
         g.canvas.styles[Tool::Text].textColor = c;
         SetStatus(Tr(L"Cor capturada: ") + ColorToHex(ToColorref(c)) + Tr(L" (aplicada às ferramentas de desenho)"));
         g.props.Load();
     };
+    g.layers.Create(g.frame, &g.canvas);
+    g.layers.onHint = [](const std::wstring& h) { SetStatus(h); };
+    g.layers.onContextMenu = [](POINT pt) { CanvasContextMenu(pt); };
     g.props.Create(g.frame, &g.canvas);
     g.props.onCommand = [](int id) {
         switch (id) {
@@ -1798,16 +2081,23 @@ void CreateChildren() {
         case 331: OnCommand(M_UNGROUP); break;
         }
     };
-    g.props.onPickTool = [](Tool t) { g.canvas.SetTool(t); };      // favorito: troca a ferramenta de desenho (a barra fica em Favoritos)
+    g.props.onPickTool = [](Tool t) { g.canvas.SetTool(t); };      // favorite: changes the drawing tool (the bar stays on Favorites)
     g.props.onStylesChanged = [] {};
     g.props.onHint = [](const std::wstring& h) { SetStatus(h); };
     g.video.Create(g.frame);
     g.video.onSaveFrame = [](const Image& img) { NewDocFromImage(img, Tr(L"Quadro do vídeo"), Tr(L"Quadro de vídeo")); };
     g.video.onNewVideo = [](const std::wstring& p) { g.tray.Reload(); SetStatus(Tr(L"Vídeo salvo: ") + p); };
-    // bandeja de capturas recentes (embaixo) e biblioteca inteira (no lugar da imagem), com os mesmos comandos
+    // recent captures tray (at the bottom) and whole library (in place of the image), with the same commands
     for (LibraryTray* lt : { &g.tray, &g.library }) {
         lt->Create(g.frame, lt == &g.tray ? LibraryTray::Tray : LibraryTray::Library);
         lt->onOpen = [](const std::wstring& p) { OpenPath(p); };
+        lt->onRenamed = [lt](const std::wstring& p, const std::wstring& name) {
+            if (Document* d = FindDoc(p)) {
+                d->title = !name.empty() ? name : !d->windowTitle.empty() ? d->windowTitle : !d->captureMode.empty() ? d->captureMode : FileNameOf(p);
+                UpdateTitle();
+            }
+            (lt == &g.tray ? g.library : g.tray).Reload();          // the other view shows the new name too
+        };
         lt->onDelete = [](const std::vector<std::wstring>& p) { DeleteDocs(p); };
         lt->onExport = [](const std::vector<std::wstring>& p) { ExportItems(p); };
         lt->onDropFiles = [](const std::vector<std::wstring>& files) { for (auto& f : files) OpenPath(f); };
@@ -1817,7 +2107,7 @@ void CreateChildren() {
     g.library.onShowLibrary = [] { ShowLibrary(false); };
     g.tray.Reload();
     SetTool(Tool::Arrow);
-    g.rightTab = RegGetDword(L"RightPanel", 0, L"Editor") == 1 ? 1 : 0;
+    g.rightTab = std::min(2, (int)RegGetDword(L"RightPanel", 0, L"Editor"));
     g.effects.SetSource(Image());
 }
 
@@ -1847,7 +2137,7 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         CreateChildren();
         DragAcceptFiles(h, TRUE);
         return 0;
-    // barra de título própria (a mesma da janela de captura): sem moldura do sistema em cima
+    // custom title bar (the same as the capture window's): no system frame at the top
     case WM_NCCALCSIZE: { LRESULT r; if (g.caption.NcCalcSize(w, l, r)) return r; break; }
     case WM_NCHITTEST: { LRESULT r; if (g.caption.NcHitTest(l, r)) return r; break; }
     case WM_NCRBUTTONUP: if (g.caption.RButtonUp(w, l)) return 0; break;
@@ -1856,10 +2146,10 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
     case WM_LBUTTONDOWN: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         if (g.caption.LButtonDown(p)) return 0;
-        for (int i = 0; i < 2; i++) { RECT t = TabRect(i); if (PtInRect(&t, p) && !(g.cur && g.cur->isVideo) && !g.libraryOpen) SetRightTab(i); }
+        for (int i = 0; i < 3; i++) { RECT t = TabRect(i); if (PtInRect(&t, p) && !(g.cur && g.cur->isVideo) && !g.libraryOpen) SetRightTab(i); }
         if (PtInRect(&g.footRecent, p)) { OnCommand(M_SHOW_TRAY); return 0; }
         if (PtInRect(&g.footSize, p)) { OnCommand(M_RESIZE); return 0; }
-        if (PtInRect(&g.footZoom, p)) {                // níveis de zoom (IZoomLevels)
+        if (PtInRect(&g.footZoom, p)) {                // zoom levels (IZoomLevels)
             HMENU m = CreatePopupMenu();
             int levels[] = { 25, 50, 75, 100, 150, 200, 300, 400, 800 };
             for (int z : levels) AppendMenuW(m, MF_STRING | (std::lround(g.canvas.zoom * 100) == z ? MF_CHECKED : 0), 10 + z, (std::to_wstring(z) + L"%").c_str());
@@ -1898,20 +2188,31 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         en(M_UNDO, img && g.cur->CanUndo()); en(M_REDO, img && g.cur->CanRedo()); en(M_UNDOALL, img && g.cur->CanUndo());
         for (int id : { M_SAVE, M_SAVEAS, M_DUPLICATE, M_PRINT, M_EMAIL, M_OPEN_PROGRAM, M_COPYALL, M_SELECTALL, M_OCR, M_CUT, M_COPY })
             en(id, img);
+        en(M_CUT, img && !g.canvas.SelectionLocked());           // locked objects are not cut
         bool obj = img && g.canvas.selected >= 0;
         for (int id : { M_FRONT, M_BACK, M_BRING_FORWARD, M_SEND_BACKWARD, M_FLATTEN_SEL, M_ALIGN_LEFT, M_ALIGN_CENTER, M_ALIGN_RIGHT,
-                        M_ALIGN_TOP, M_ALIGN_MIDDLE, M_ALIGN_BOTTOM })
+                        M_ALIGN_TOP, M_ALIGN_MIDDLE, M_ALIGN_BOTTOM, M_LOCK, M_RENAME_OBJ })
             en(id, obj);
+        en(M_UNLOCK, obj && g.canvas.SelectionLocked());
+        en(M_DIST_H, img && g.canvas.SelectionCount() >= 3); en(M_DIST_V, img && g.canvas.SelectionCount() >= 3);
+        en(M_LIFT, img && g.canvas.HasRasterSelection()); en(M_DROP, img && g.canvas.HasFloating());
+        en(M_PASTE_INPLACE, img && (IsClipboardFormatAvailable(ObjectsFormat()) || ClipboardHasImage() || IsClipboardFormatAvailable(CF_UNICODETEXT)));
+        en(M_CLEAR_GUIDES, img && (!g.cur->guidesX.empty() || !g.cur->guidesY.empty()));
+        CheckMenuItem(mm, M_RULERS, g.canvas.rulers ? MF_CHECKED : MF_UNCHECKED);
+        CheckMenuItem(mm, M_EDGESNAP, g.canvas.edgeSnap ? MF_CHECKED : MF_UNCHECKED);
+        CheckMenuItem(mm, M_PLAINPASTE, g.canvas.plainPaste ? MF_CHECKED : MF_UNCHECKED);
         en(M_FLATTEN, img && !g.cur->st.objs.empty());
         en(M_GROUP, img && g.canvas.SelectionCount() >= 2); en(M_UNGROUP, img && g.canvas.CanUngroup()); en(M_APPLY_TEMPLATE, false);
         for (int id : { M_TRIM, M_RESIZE, M_CANVAS, M_CANVAS_COLOR, M_TAG, M_FLIP_H, M_FLIP_V, M_ROT_CW, M_ROT_CCW, M_ROT_180, M_ROT_FREE, M_CROP_SEL })
             en(id, img);
         CheckMenuItem(mm, M_SNAPPING, g.canvas.snapping ? MF_CHECKED : MF_UNCHECKED);
         for (auto& t : kTools) CheckMenuItem(mm, M_MORE_TOOL_BASE + (int)t.t, t.t == g.toolbar.active ? MF_CHECKED : MF_UNCHECKED);
-        en(M_PASTE, ClipboardHasImage() || IsClipboardFormatAvailable(CF_HDROP));
+        en(M_PASTE, ClipboardHasImage() || IsClipboardFormatAvailable(CF_HDROP) || IsClipboardFormatAvailable(ObjectsFormat()) ||
+                    (img && IsClipboardFormatAvailable(CF_UNICODETEXT)));
         en(M_DELETE, g.cur != nullptr); en(M_CLOSE, g.cur != nullptr);
         CheckMenuItem(mm, M_SHOW_TRAY, g.showTray ? MF_CHECKED : MF_UNCHECKED);
         CheckMenuItem(mm, M_SHOW_EFFECTS, g.rightTab == 1 && !g.libraryOpen ? MF_CHECKED : MF_UNCHECKED);
+        CheckMenuItem(mm, M_SHOW_LAYERS, g.rightTab == 2 && !g.libraryOpen ? MF_CHECKED : MF_UNCHECKED);
         CheckMenuItem(mm, M_SHOW_LIBRARY, g.libraryOpen ? MF_CHECKED : MF_UNCHECKED);
         for (int id : { M_FX_BORDER, M_FX_SHADOW, M_FX_PERSPECTIVE, M_FX_PAGECURL, M_FX_EDGE, M_FX_FILTER, M_FX_ADJUST, M_FX_REPLACE,
                         M_FX_SPOTLIGHT, M_FX_WATERMARK, M_FX_CAPTION })
@@ -1921,13 +2222,13 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
     case WM_DROPFILES: {
         HDROP d = (HDROP)w;
         UINT n = DragQueryFileW(d, 0xFFFFFFFF, nullptr, 0);
-        if (!LibraryTray::DraggingOut())       // item da bandeja solto de volta no Editor: não importa uma cópia
+        if (!LibraryTray::DraggingOut())       // a tray item dropped back on the Editor: does not import a copy
             for (UINT i = 0; i < n; i++) { wchar_t f[MAX_PATH]; DragQueryFileW(d, i, f, MAX_PATH); OpenPath(f); }
         DragFinish(d);
         return 0;
     }
     case WM_TIMER:
-        if (w == 0x1E) {        // caso 0x1E do OnIPCNotify: comando "nova imagem do clipboard" e depois mostrar
+        if (w == 0x1E) {        // OnIPCNotify case 0x1E: "new image from clipboard" command and then show
             KillTimer(h, w);
             NewFromClipboard();
             ShowEditor();
@@ -1937,7 +2238,7 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
             g.effects.SetSource(g.cur && !g.cur->isVideo ? g.cur->Render() : Image());
         }
         return 0;
-    case WM_LIB_CHANGED: SetTimer(h, 0x60, 400, nullptr); return 0;      // agrupa rajadas de mudanças
+    case WM_LIB_CHANGED: SetTimer(h, 0x60, 400, nullptr); return 0;      // groups bursts of changes
     case WM_SNAP_IPC: { std::unique_ptr<ipc::Message> msg((ipc::Message*)l); OnIPCNotify(*msg); return 0; }
     case WM_COPYDATA: {
         std::wstring cmd;
@@ -1971,11 +2272,11 @@ LRESULT CALLBACK FrameProc(HWND h, UINT m, WPARAM w, LPARAM l) {
 
 int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int nShow) {
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-    // instância única: mutex + janela "SnapnabEditor"; a segunda instância repassa a linha de comando (WM_COPYDATA 0x8010)
+    // single instance: mutex + "SnapnabEditor" window; the second instance forwards the command line (WM_COPYDATA 0x8010)
     WaitForPreviousInstance(kEditorWndClass);
     if (ForwardToExistingInstance(kEditorMutex, kEditorWndClass, &g.mutex)) return 0;
     SetCurrentDirectoryW(ExeDir().c_str());
-    OleInitialize(nullptr);          // COM em STA + arrastar e soltar OLE (bandeja → outros programas)
+    OleInitialize(nullptr);          // COM in STA + OLE drag and drop (tray → other programs)
     INITCOMMONCONTROLSEX icc{ sizeof(icc), ICC_STANDARD_CLASSES | ICC_UPDOWN_CLASS | ICC_HOTKEY_CLASS | ICC_PROGRESS_CLASS | ICC_BAR_CLASSES };
     InitCommonControlsEx(&icc);
     GdiplusSession gdip;
@@ -1985,7 +2286,7 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int nShow) {
     g.hi = hi;
     g.showTray = RegGetDword(L"ShowTray", 1, L"Editor") != 0;
 
-    // partida condicionada ao processo de captura (mutex + janela "SnapnabUI")
+    // startup conditioned on the capture process (mutex + "SnapnabUI" window)
     if (!IsProcessRunning(kCaptureMutex)) LaunchSibling(kCaptureExe, L"/hide", true);
 
     WNDCLASSEXW wc{ sizeof(wc) };
@@ -2004,7 +2305,7 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int nShow) {
         RECT test{ l, t, r, b };
         if (MonitorFromRect(&test, MONITOR_DEFAULTTONULL)) { x = l; y = t; W = r - l; H = b - t; maximize = mx != 0; }
     }
-    g.menuBar = BuildMenu();       // menus mostrados pela barra de título própria (não há barra de menus do sistema)
+    g.menuBar = BuildMenu();       // menus shown by the custom title bar (there is no system menu bar)
     HWND frame = CreateWindowExW(0, kEditorWndClass, L"Snapnab Editor", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, x, y, W, H,
                                  nullptr, nullptr, hi, nullptr);
     DWORD corner = 2;   // DWMWCP_ROUND
@@ -2020,9 +2321,14 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int nShow) {
 
     MSG msg;
     while (GetMessageW(&msg, nullptr, 0, 0)) {
-        // edição de texto no lugar: Esc confirma; não intercepta atalhos de edição de texto
+        // in-place text editing: Esc commits; text editing shortcuts are not intercepted
         if (g.canvas.EditingText()) {
             if (msg.message == WM_KEYDOWN && msg.wParam == VK_ESCAPE) { g.canvas.CommitText(); continue; }
+            // paste into the text: without formatting by default; Ctrl+Shift+V does the opposite
+            if (msg.message == WM_KEYDOWN && msg.wParam == 'V' && GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_MENU) >= 0) {
+                PasteTextNow(GetKeyState(VK_SHIFT) < 0);
+                continue;
+            }
             TranslateMessage(&msg); DispatchMessageW(&msg);
             continue;
         }
@@ -2031,14 +2337,15 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE, LPWSTR, int nShow) {
         GetClassNameW(GetFocus(), cls, 32);
         bool inEdit = !_wcsicmp(cls, L"Edit") || !_wcsicmp(cls, L"ComboBox") || !_wcsicmp(cls, L"msctls_hotkey32");
         if (!inEdit && TranslateAcceleratorW(g.frame, g.accel, &msg)) continue;
+        // tool letters (an arrow just drawn takes the typed letters as its label instead)
         if (msg.message == WM_KEYDOWN && GetFocus() == g.canvas.hwnd && GetKeyState(VK_CONTROL) >= 0 && GetKeyState(VK_MENU) >= 0 &&
-            HandleToolKey(msg.wParam)) continue;
+            !g.canvas.WantsTyping() && HandleToolKey(msg.wParam)) continue;
         TranslateMessage(&msg);
         DispatchMessageW(&msg);
     }
     g.ipc.Stop();
     if (g.watcher.joinable()) g.watcher.join();
-    Log(L"SnapnabEditor encerrado");
+    Log(L"SnapnabEditor exited");
     if (g.mutex) { ReleaseMutex(g.mutex); CloseHandle(g.mutex); }
     OleUninitialize();
     return 0;

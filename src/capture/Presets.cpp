@@ -23,7 +23,7 @@ const wchar_t* SelectionName(Selection s) {
 }
 
 std::vector<Selection> SelectionsFor(CaptureKind k) {
-    // a região fixa é uma opção da própria Região (engrenagem), não um item da lista
+    // the fixed region is an option of Region itself (gear), not an item of the list
     if (k == CaptureKind::Video) return { Selection::Region, Selection::Window, Selection::FullScreen, Selection::Monitor };
     using S = Selection;
     return { S::Region, S::Window, S::FullScreen, S::Monitor, S::Freehand, S::MultiArea, S::Object,
@@ -49,6 +49,7 @@ XmlNode Preset::ToXml() const {
     n.add("SelectionSettingsRegion").seti("RegionSelectionType", regionFixed).seti("RegionLeft", regionX).seti("RegionTop", regionY)
      .seti("SetPosition", regionUsePos);
     n.seti("CaptureCursor", captureCursor).seti("DelayDuration", delaySeconds);
+    n.seti("WindowsAsObjects", windowObjects).seti("CaptureLinks", captureLinks);
     n.seti("PreviewInEditor", previewInEditor).seti("CopyToClipboard", copyToClipboard);
     XmlNode& sh = n.add("ShareSettingsFile");
     sh.seti("Enabled", saveToFile).seti("OutputFileType", (int)fileFormat).setW("Prefix", filePrefix).setW("FolderName", folder);
@@ -74,6 +75,7 @@ XmlNode Preset::ToXml() const {
     e.seti("Resolution", f.resolution).seti("Dpi", f.dpi);
     XmlNode& v = n.add("Video");
     v.seti("EnableMicrophone", microphone).seti("EnableSystemAudio", systemAudio).seti("FrameRate", fps)
+     .seti("MicrophoneVolume", micVolume).seti("SystemAudioVolume", sysVolume).seti("AutomaticGain", autoGain)
      .seti("Quality", quality).seti("Downscale1080", downscale1080).seti("HardwareEncoding", hardwareEncode)
      .seti("EnableWebcam", webcam).setW("SelectedWebcam", webcamDevice).setW("SelectedWebcamName", webcamName)
      .seti("WebcamShape", webcamShape).seti("ChromaKey", chromaKey).setW("ChromaColor", ColorToHex(chromaColor))
@@ -92,8 +94,9 @@ Preset Preset::FromXml(const XmlNode& n) {
         p.regionFixed = rs->getb("RegionSelectionType"); p.regionUsePos = rs->getb("SetPosition");
         p.regionX = rs->geti("RegionLeft"); p.regionY = rs->geti("RegionTop");
     }
-    if (p.selection == Selection::FixedRegion) { p.selection = Selection::Region; p.regionFixed = true; }   // presets antigos
+    if (p.selection == Selection::FixedRegion) { p.selection = Selection::Region; p.regionFixed = true; }   // old presets
     p.captureCursor = n.getb("CaptureCursor"); p.delaySeconds = n.geti("DelayDuration");
+    p.windowObjects = n.getb("WindowsAsObjects"); p.captureLinks = n.getb("CaptureLinks", true);
     p.previewInEditor = n.getb("PreviewInEditor", true); p.copyToClipboard = n.getb("CopyToClipboard");
     if (auto* sh = n.child("ShareSettingsFile")) {
         p.saveToFile = sh->getb("Enabled"); p.fileFormat = (FileFormat)std::clamp(sh->geti("OutputFileType"), 0, 4);
@@ -106,7 +109,7 @@ Preset Preset::FromXml(const XmlNode& n) {
         auto& f = p.effects;
         f.border = e->getb("Border"); f.borderWidth = e->geti("BorderWidth", 4);
         f.borderColor = HexToColor(e->getW("BorderColor"), f.borderColor);
-        f.filter = e->getb("Filter", e->getb("Grayscale"));     // "Grayscale" = presets antigos
+        f.filter = e->getb("Filter", e->getb("Grayscale"));     // "Grayscale" = old presets
         f.filterKind = std::clamp(e->geti("FilterKind", 0), 0, 3);
         f.shadow = e->getb("Shadow");
         f.shadowOffset = std::clamp(e->geti("ShadowOffset", 6), 0, 50);
@@ -132,6 +135,8 @@ Preset Preset::FromXml(const XmlNode& n) {
     }
     if (auto* v = n.child("Video")) {
         p.microphone = v->getb("EnableMicrophone", true); p.systemAudio = v->getb("EnableSystemAudio", true);
+        p.micVolume = std::clamp(v->geti("MicrophoneVolume", 100), 0, 200); p.sysVolume = std::clamp(v->geti("SystemAudioVolume", 100), 0, 200);
+        p.autoGain = v->getb("AutomaticGain", true);
         p.fps = std::clamp(v->geti("FrameRate", 30), 5, 60); p.quality = std::clamp(v->geti("Quality", 2), 0, 3);
         p.downscale1080 = v->getb("Downscale1080", true); p.hardwareEncode = v->getb("HardwareEncoding", true);
         p.webcam = v->getb("EnableWebcam"); p.webcamDevice = v->getW("SelectedWebcam"); p.webcamName = v->getW("SelectedWebcamName");
@@ -160,7 +165,7 @@ void PresetStore::CreateDefaults() {
 }
 
 void PresetStore::AddBuiltins() {
-    if (RegGetDword(L"BuiltinPresets", 0) >= 1) return;      // o usuário pode excluí-los depois sem que voltem
+    if (RegGetDword(L"BuiltinPresets", 0) >= 1) return;      // the user can delete them later without them coming back
     Preset pano; pano.name = TR_NOOP(L"Captura com rolagem panorâmica"); pano.builtin = L"panoramic";
     pano.selection = Selection::Panoramic;
     Preset text; text.name = TR_NOOP(L"Capturar texto"); text.builtin = L"grabtext";
@@ -201,7 +206,7 @@ bool PresetStore::Export(const std::wstring& path) const { return XmlSaveFile(pa
 bool PresetStore::Import(const std::wstring& path) {
     std::vector<Preset> in;
     if (!LoadFrom(path, in, nullptr) || in.empty()) return false;
-    for (auto& p : in) { p.hotkeyMods = p.hotkeyVk = 0; presets.push_back(p); }   // atalhos não são importados (evita conflito)
+    for (auto& p : in) { p.hotkeyMods = p.hotkeyVk = 0; presets.push_back(p); }   // hotkeys are not imported (avoids conflicts)
     return Save();
 }
 

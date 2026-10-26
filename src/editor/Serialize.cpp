@@ -1,4 +1,4 @@
-// Serialização XML dos objetos (comp_5 §6: um objeto = um elemento; dados binários em fluxos por StreamName)
+// XML serialization of the objects (comp_5 §6: one object = one element; binary data in streams by StreamName)
 #include "Document.h"
 
 namespace snap::ed {
@@ -41,13 +41,48 @@ static uint32_t FromHex(const std::string& s, uint32_t def) {
     return s.size() == 7 ? (0xFF000000u | (uint32_t)v) : (uint32_t)v;
 }
 
+std::string GradStopsToString(const Gradient& g) {
+    std::string out;
+    for (auto& st : g.stops) out += FormatA("%s%.3f:%s", out.empty() ? "" : ";", st.pos, Hex(st.color).c_str());
+    return out;
+}
+
+void GradToXml(XmlNode& n, const Gradient& g) {
+    if (!g.Active()) return;
+    n.seti("FillGradient", g.type).setd("GradientAngle", g.angle).set("GradientStops", GradStopsToString(g));
+}
+
+Gradient GradFromXml(const XmlNode& n) {
+    Gradient g;
+    g.type = std::clamp(n.geti("FillGradient", 0), 0, 2);
+    g.angle = (float)n.getd("GradientAngle", 90);
+    std::string st = n.get("GradientStops");
+    for (size_t i = 0; i < st.size();) {
+        size_t j = st.find(';', i);
+        std::string item = st.substr(i, j == std::string::npos ? std::string::npos : j - i);
+        size_t c = item.find(':');
+        if (c != std::string::npos) g.stops.push_back({ std::clamp((float)atof(item.substr(0, c).c_str()), 0.0f, 1.0f), FromHex(item.substr(c + 1), 0xFF000000) });
+        if (j == std::string::npos) break;
+        i = j + 1;
+    }
+    std::sort(g.stops.begin(), g.stops.end(), [](const GradStop& a, const GradStop& b) { return a.pos < b.pos; });
+    if (g.stops.size() < 2) g.type = 0;
+    return g;
+}
+
 XmlNode ObjToXml(const DrawObj& o, SnapFrame& frame, int& counter) {
     XmlNode n(TypeName(o.type));
     n.setd("X1", o.p1.X).setd("Y1", o.p1.Y).setd("X2", o.p2.X).setd("Y2", o.p2.Y);
-    if (o.type == ObjType::Group) {            // <Group …> com os objetos filhos dentro
+    // layers panel (F03, F22): name, visibility and lock; lifted piece (F25) — written only when set
+    if (!o.name.empty()) n.setW("Name", o.name);
+    if (o.hidden) n.seti("Hidden", 1);
+    if (o.locked) n.seti("Locked", 1);
+    if (o.floating) n.seti("Floating", 1);
+    if (o.type == ObjType::Group) {            // <Group …> with the child objects inside
         for (auto& c : o.children) n.children.push_back(ObjToXml(c, frame, counter));
         return n;
     }
+    if (o.type == ObjType::Link) { n.setW("Url", o.text); return n; }   // clickable link area (F32)
     const Style& s = o.style;
     n.set("PenColor", Hex(s.stroke)).set("FillColor", Hex(s.fill)).set("TextColor", Hex(s.textColor));
     n.setd("PenWidth", s.width).seti("Opacity", s.opacity).seti("Shadow", s.shadow);
@@ -57,22 +92,32 @@ XmlNode ObjToXml(const DrawObj& o, SnapFrame& frame, int& counter) {
         n.seti("ArrowStartCap", s.arrowStart).seti("ArrowEndCap", s.arrowEnd).setd("StartSize", s.startSize)
          .setd("EndSize", s.endSize).seti("DashType", s.dash);
     if (o.IsLine()) n.seti("Bezier", s.bezier).setd("CtrlX", o.ctrl.X).setd("CtrlY", o.ctrl.Y);
-    if (o.HasText() || o.type == ObjType::Step) {
+    bool label = o.HasLabel() && !o.text.empty();
+    if (o.HasText() || o.type == ObjType::Step || label) {
         n.setW("FaceName", s.font).setd("FontSize", s.fontSize).seti("Bold", s.bold).seti("Italic", s.italic)
          .seti("Underline", s.underline).seti("AlignH", s.alignH).seti("AlignV", s.alignV).setd("TextPadding", s.padding);
     }
-    if (o.HasText() || o.type == ObjType::Stamp) n.setW("Text", o.text);
+    if (o.HasText() || o.type == ObjType::Stamp || label) n.setW("Text", o.text);
+    if (o.HasText()) n.setd("LineSpacing", s.lineSpacing);
+    if (o.type == ObjType::Callout && s.bgBlur) n.seti("BackgroundBlur", 1).seti("BackgroundBlurAmount", s.bgBlurAmount);
+    if (o.IsAreaTool()) n.seti("AreaShape", s.areaShape);
+    if (o.IsShape()) GradToXml(n, s.grad);
     if (o.type == ObjType::Callout)
         n.seti("CalloutKind", s.calloutShape).setd("TailX", o.tail.X).setd("TailY", o.tail.Y).seti("Shaded", s.shaded)
          .set("TailColor", Hex(s.tailColor)).setd("TailWidth", s.tailWidth);
     if (o.IsShape()) n.seti("ToolShape", o.Kind());
-    if (o.type == ObjType::Step) n.seti("StepValue", o.stepValue).seti("StepStyle", s.stepShape).seti("StepSequenceType", s.stepType);
-    if (o.type == ObjType::Magnify)
+    if (o.type == ObjType::Step) {
+        n.seti("StepValue", o.stepValue).seti("StepStyle", s.stepShape).seti("StepSequenceType", s.stepType);
+        if (s.stepOutlineWidth > 0) n.set("StepOutlineColor", Hex(s.stepOutline)).setd("StepOutlineWidth", s.stepOutlineWidth);
+    }
+    if (o.type == ObjType::Magnify) {
         n.seti("MagnifyShape", s.magnifyShape).seti("MagnifyScale", s.magnifyScale).seti("MagnifyLink", s.magnifyLink)
          .setd("TailX", o.tail.X).setd("TailY", o.tail.Y);
+        if (s.loupe) n.seti("Loupe", 1).seti("LoupeHandle", s.loupeHandle);
+    }
     if (o.type == ObjType::Blur || o.type == ObjType::Pixelate || o.type == ObjType::Spotlight || o.type == ObjType::Magnify)
         n.seti("Amount", s.amount);
-    if (o.IsPath()) {
+    if (o.IsPath() || o.IsPointShape()) {
         std::string pts;
         for (auto& p : o.pts) pts += FormatA("%.1f,%.1f ", p.X, p.Y);
         n.set("Points", pts);
@@ -87,11 +132,16 @@ XmlNode ObjToXml(const DrawObj& o, SnapFrame& frame, int& counter) {
 
 ObjPtr ObjFromXml(const XmlNode& n, const SnapFrame& frame) {
     ObjType t;
-    if (!TypeFromName(n.name, t)) return nullptr;     // elemento desconhecido: ignorado (CPaintOpUnknown no original)
+    if (!TypeFromName(n.name, t)) return nullptr;     // unknown element: ignored (CPaintOpUnknown in the original)
     auto o = std::make_shared<DrawObj>();
     o->type = t;
     o->p1 = { (float)n.getd("X1"), (float)n.getd("Y1") };
     o->p2 = { (float)n.getd("X2"), (float)n.getd("Y2") };
+    o->name = n.getW("Name");
+    o->hidden = n.getb("Hidden");
+    o->locked = n.getb("Locked");
+    o->floating = n.getb("Floating");
+    if (t == ObjType::Link) { o->text = n.getW("Url"); return o->text.empty() ? nullptr : o; }
     if (t == ObjType::Group) {
         for (auto& c : n.children) if (auto child = ObjFromXml(c, frame)) o->children.push_back(*child);
         if (o->children.empty()) return nullptr;
@@ -134,9 +184,18 @@ ObjPtr ObjFromXml(const XmlNode& n, const SnapFrame& frame) {
     s.stepShape = std::clamp(n.geti("StepStyle", 0), 0, 3);
     s.stepType = std::clamp(n.geti("StepSequenceType", 0), 0, StepTypeCount - 1);
     s.amount = n.geti("Amount", 10);
-    s.magnifyShape = std::clamp(n.geti("MagnifyShape", 0), 0, 2);
+    s.magnifyShape = std::clamp(n.geti("MagnifyShape", 0), 0, MagnifyKindCount - 1);
     s.magnifyScale = std::clamp(n.geti("MagnifyScale", std::max(150, s.amount * 20)), 110, 1000);
     s.magnifyLink = n.getb("MagnifyLink");
+    s.loupe = n.getb("Loupe");
+    s.loupeHandle = n.getb("LoupeHandle", true);
+    s.lineSpacing = std::clamp((float)n.getd("LineSpacing", 1.0), 0.8f, 3.0f);
+    s.stepOutline = FromHex(n.get("StepOutlineColor"), s.stepOutline);
+    s.stepOutlineWidth = std::clamp((float)n.getd("StepOutlineWidth", 0), 0.0f, 40.0f);
+    s.areaShape = std::clamp(n.geti("AreaShape", ShapeRect), 0, AreaShapeCount - 1);
+    s.bgBlur = n.getb("BackgroundBlur");
+    s.bgBlurAmount = std::clamp(n.geti("BackgroundBlurAmount", 8), 1, 40);
+    s.grad = GradFromXml(n);
     o->text = n.getW("Text");
     o->tail = { (float)n.getd("TailX"), (float)n.getd("TailY") };
     o->stepValue = n.geti("StepValue", 1);
@@ -147,7 +206,7 @@ ObjPtr ObjFromXml(const XmlNode& n, const SnapFrame& frame) {
         o->pts.push_back({ x, y });
         i += used;
     }
-    if (o->IsShape() && t != ObjType::Shape) { s.shapeKind = o->Kind(); o->type = ObjType::Shape; }    // retângulo/elipse antigos
+    if (o->IsShape() && t != ObjType::Shape) { s.shapeKind = o->Kind(); o->type = ObjType::Shape; }    // old rectangle/ellipse
     if (t == ObjType::Pixelate) s.hideKind = 1;
     if (t == ObjType::Picture) {
         auto it = frame.embedded.find(n.get("StreamName"));
@@ -155,6 +214,39 @@ ObjPtr ObjFromXml(const XmlNode& n, const SnapFrame& frame) {
         o->picture = std::make_shared<Image>(it->second);
     }
     return o;
+}
+
+// ---------------------------------------------------------------- objects on the clipboard (copy / paste in place)
+// the objects as XML (as in the .snap), with the embedded images in base64 PNG; 'source' identifies the document
+std::string ObjectsToClip(const std::vector<DrawObj>& objs, const std::wstring& source) {
+    SnapFrame f;
+    XmlNode root("SnapnabObjects");
+    root.setW("Source", source);
+    XmlNode& list = root.add("Objects");
+    int counter = 1;
+    for (auto& o : objs) list.children.push_back(ObjToXml(o, f, counter));
+    for (auto& [name, img] : f.embedded) {
+        std::vector<BYTE> png;
+        if (EncodeToMemory(img, ImageFormat::PNG, png)) root.add("Embedded").set("Name", name).set("Data", Base64Encode(png));
+    }
+    return XmlSerialize(root, false);
+}
+
+std::vector<DrawObj> ObjectsFromClip(const std::string& xml, std::wstring* source) {
+    std::vector<DrawObj> out;
+    XmlNode root;
+    if (!XmlParse(xml, root) || root.name != "SnapnabObjects") return out;
+    if (source) *source = root.getW("Source");
+    SnapFrame f;
+    for (auto& c : root.children) {
+        if (c.name != "Embedded") continue;
+        auto png = Base64Decode(c.get("Data"));
+        Image img;
+        if (!png.empty() && DecodeFromMemory(png.data(), png.size(), img)) f.embedded[c.get("Name")] = std::move(img);
+    }
+    if (const XmlNode* list = root.child("Objects"))
+        for (auto& n : list->children) if (auto o = ObjFromXml(n, f)) out.push_back(*o);
+    return out;
 }
 
 } // namespace snap::ed

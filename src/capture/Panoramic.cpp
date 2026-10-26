@@ -7,10 +7,10 @@
 
 namespace snap {
 
-// ---------------------------------------------------------------- junção dos quadros
+// ---------------------------------------------------------------- stitching the frames
 namespace {
 
-// assinatura de cada linha (ou coluna); linhas de cor única recebem 0 e não contam na comparação
+// signature of each row (or column); single-color rows get 0 and do not count in the comparison
 std::vector<uint64_t> Signatures(const Image& img, bool rows) {
     int n = rows ? img.h : img.w, len = rows ? img.w : img.h;
     std::vector<uint64_t> sig(n);
@@ -30,7 +30,7 @@ std::vector<uint64_t> Signatures(const Image& img, bool rows) {
 
 } // namespace
 
-// deslocamento d tal que a linha y do quadro novo = linha y + d do anterior (d > 0: o conteúdo subiu)
+// offset d such that row y of the new frame = row y + d of the previous one (d > 0: the content moved up)
 bool PanoramaStitcher::Offset(const Image& a, const Image& b, bool vertical, int& d) const {
     auto sa = Signatures(a, vertical), sb = Signatures(b, vertical);
     int n = (int)sa.size();
@@ -45,13 +45,13 @@ bool PanoramaStitcher::Offset(const Image& a, const Image& b, bool vertical, int
         return used ? (double)match / used : 0.0;
     };
     int used0 = 0;
-    if (score(0, used0) > 0.97 && used0 >= 4) return false;          // nada se moveu
+    if (score(0, used0) > 0.97 && used0 >= 4) return false;          // nothing moved
     double best = 0; int bestD = 0, bestUsed = 0;
     for (int dd = -(n - minOverlap); dd <= n - minOverlap; dd++) {
         if (!dd) continue;
         int used = 0;
         double s = score(dd, used);
-        // em empate, o menor deslocamento (rolagens são curtas entre dois quadros)
+        // on a tie, the smallest offset (scrolls between two frames are short)
         if (used >= 8 && (s > best + 1e-9 || (std::abs(s - best) < 1e-9 && std::abs(dd) < std::abs(bestD)))) {
             best = s; bestD = dd; bestUsed = used;
         }
@@ -73,7 +73,7 @@ bool PanoramaStitcher::Add(const Image& f) {
     if (!found) return false;
     if (!axis_) axis_ = vertical ? 1 : 2;
     int nx = posX_ + (vertical ? 0 : d), ny = posY_ + (vertical ? d : 0);
-    // aumenta o resultado para caber o quadro na nova posição
+    // grows the result to fit the frame at its new position
     int left = std::min(0, nx), top = std::min(0, ny);
     int right = std::max(canvas_.w, nx + f.w), bottom = std::max(canvas_.h, ny + f.h);
     if (right - left > kMaxSize || bottom - top > kMaxSize) return false;
@@ -83,7 +83,7 @@ bool PanoramaStitcher::Add(const Image& f) {
         canvas_ = std::move(big);
         nx -= left; ny -= top;
     }
-    // só a faixa que apareceu agora (conteúdo fixo, como cabeçalhos, não se repete)
+    // only the strip that just appeared (fixed content, such as headers, is not repeated)
     RECT strip{ 0, 0, f.w, f.h };
     if (vertical) { if (d > 0) strip.top = f.h - d; else strip.bottom = -d; }
     else { if (d > 0) strip.left = f.w - d; else strip.right = -d; }
@@ -93,7 +93,7 @@ bool PanoramaStitcher::Add(const Image& f) {
     return true;
 }
 
-// ---------------------------------------------------------------- sessão (moldura + barra de controle)
+// ---------------------------------------------------------------- session (frame + control bar)
 namespace {
 PanoramicSession* g_pano = nullptr;
 constexpr UINT_PTR kGrabTimer = 1;
@@ -114,7 +114,7 @@ void PanoramicSession::Start(RECT area, std::function<void(Image)> done) {
         RegisterClassW(&bc);
         reg = true;
     }
-    // moldura laranja em volta da região (não sai na captura e não intercepta o mouse)
+    // orange frame around the region (not captured and does not intercept the mouse)
     int t = 3;
     RECT o{ area.left - t, area.top - t, area.right + t, area.bottom + t };
     border_ = CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE,
@@ -150,7 +150,7 @@ void PanoramicSession::Start(RECT area, std::function<void(Image)> done) {
     ShowWindow(bar_, SW_SHOWNOACTIVATE);
     Grab();
     SetTimer(bar_, kGrabTimer, 90, nullptr);
-    Log(L"Panorâmica: iniciada (%dx%d)", area.right - area.left, area.bottom - area.top);
+    Log(L"Panoramic: started (%dx%d)", area.right - area.left, area.bottom - area.top);
 }
 
 void PanoramicSession::Grab() {
@@ -169,7 +169,7 @@ void PanoramicSession::Finish(bool ok) {
     DestroyWindow(bar_); bar_ = nullptr;
     if (border_) { DestroyWindow(border_); border_ = nullptr; }
     Image img = ok ? stitch_.result() : Image();
-    Log(L"Panorâmica: %s (%dx%d)", ok ? L"concluída" : L"cancelada", img.w, img.h);
+    Log(L"Panoramic: %s (%dx%d)", ok ? L"done" : L"canceled", img.w, img.h);
     stitch_ = PanoramaStitcher();
     auto done = std::move(done_);
     if (done) done(std::move(img));

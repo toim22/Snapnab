@@ -28,7 +28,7 @@ std::string WToUtf8(const std::wstring& w) {
 std::wstring Format(const wchar_t* fmt, ...) {
     va_list ap; va_start(ap, fmt);
     va_list ap2; va_copy(ap2, ap);
-    int n = _vscwprintf_p(fmt, ap);         // _p: aceita %1$s, para as traduções mudarem a ordem dos valores
+    int n = _vscwprintf_p(fmt, ap);         // _p: accepts %1$s, so translations can change the order of the values
     va_end(ap);
     std::wstring s(n > 0 ? n : 0, L'\0');
     if (n > 0) _vswprintf_p(s.data(), n + 1, fmt, ap2);
@@ -144,7 +144,7 @@ void LogInit(const wchar_t* component) {
     if (FileSize(g_logFile) > 2 * 1024 * 1024) {
         MoveFileExW(g_logFile.c_str(), (g_logFile + L".old").c_str(), MOVEFILE_REPLACE_EXISTING);
     }
-    Log(L"==== %s %s iniciado (pid %u) ====", component, kAppVersion, GetCurrentProcessId());
+    Log(L"==== %s %s started (pid %u) ====", component, kAppVersion, GetCurrentProcessId());
 }
 
 void Log(const wchar_t* fmt, ...) {
@@ -162,13 +162,40 @@ void Log(const wchar_t* fmt, ...) {
                            OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (h == INVALID_HANDLE_VALUE) return;
     DWORD wr0;
-    if (GetLastError() != ERROR_ALREADY_EXISTS) WriteFile(h, "\xEF\xBB\xBF", 3, &wr0, nullptr);   // BOM UTF-8 (Bloco de Notas)
+    if (GetLastError() != ERROR_ALREADY_EXISTS) WriteFile(h, "\xEF\xBB\xBF", 3, &wr0, nullptr);   // UTF-8 BOM (Notepad)
     std::string u = WToUtf8(line);
     DWORD wr; WriteFile(h, u.data(), (DWORD)u.size(), &wr, nullptr);
     CloseHandle(h);
 }
 
-// ---------------------------------------------------------------- registro
+// ---------------------------------------------------------------- base64 (embedded images on the clipboard, settings backup)
+static const char kB64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+std::string Base64Encode(const std::vector<BYTE>& d) {
+    std::string out;
+    out.reserve((d.size() + 2) / 3 * 4);
+    for (size_t i = 0; i < d.size(); i += 3) {
+        uint32_t v = d[i] << 16 | (i + 1 < d.size() ? d[i + 1] << 8 : 0) | (i + 2 < d.size() ? d[i + 2] : 0);
+        out += kB64[v >> 18 & 63]; out += kB64[v >> 12 & 63];
+        out += i + 1 < d.size() ? kB64[v >> 6 & 63] : '=';
+        out += i + 2 < d.size() ? kB64[v & 63] : '=';
+    }
+    return out;
+}
+
+std::vector<BYTE> Base64Decode(const std::string& s) {
+    std::vector<BYTE> out;
+    uint32_t v = 0; int bits = 0;
+    for (char c : s) {
+        const char* p = c ? strchr(kB64, c) : nullptr;
+        if (!p) continue;
+        v = v << 6 | (uint32_t)(p - kB64); bits += 6;
+        if (bits >= 8) { bits -= 8; out.push_back((BYTE)(v >> bits & 255)); }
+    }
+    return out;
+}
+
+// ---------------------------------------------------------------- registry
 static std::wstring RegPath(const wchar_t* sub) {
     std::wstring p = kRegRoot;
     if (sub && *sub) { p += L"\\"; p += sub; }
@@ -202,11 +229,11 @@ void RegSetString(const wchar_t* name, const std::wstring& v, const wchar_t* sub
                     (DWORD)((v.size() + 1) * sizeof(wchar_t)));
 }
 
-// ---------------------------------------------------------------- instância única
+// ---------------------------------------------------------------- single instance
 struct CopyDataHeader { GUID guid; DWORD cb; };
 
 bool SendCommandLine(HWND target, const std::wstring& cmdLine) {
-    std::wstring text = cmdLine.substr(0, 4999);         // até 10 000 bytes de texto
+    std::wstring text = cmdLine.substr(0, 4999);         // up to 10 000 bytes of text
     std::vector<BYTE> buf(sizeof(CopyDataHeader) + (text.size() + 1) * sizeof(wchar_t));
     auto* h = reinterpret_cast<CopyDataHeader*>(buf.data());
     h->guid = kCopyDataGuid;
@@ -246,7 +273,7 @@ std::vector<std::wstring> SplitCommandLine(const std::wstring& cmdLine) {
     std::vector<std::wstring> r;
     int argc = 0;
     LPWSTR* argv = CommandLineToArgvW(cmdLine.c_str(), &argc);
-    for (int i = 1; i < argc; i++) r.push_back(argv[i]);       // ignora o executável
+    for (int i = 1; i < argc; i++) r.push_back(argv[i]);       // skips the executable
     LocalFree(argv);
     return r;
 }
@@ -262,7 +289,7 @@ void WaitForPreviousInstance(const wchar_t* wndClass) {
     for (size_t i = 0; i < args.size(); i++) {
         if (_wcsicmp(args[i].c_str(), L"/restartwait") != 0) continue;
         DWORD pid = i + 1 < args.size() ? (DWORD)wcstoul(args[i + 1].c_str(), nullptr, 10) : 0;
-        // a janela some antes de o processo soltar o mutex: com o pid, espera o processo inteiro
+        // the window goes away before the process releases the mutex: with the pid, wait for the whole process
         if (HANDLE p = pid ? OpenProcess(SYNCHRONIZE, FALSE, pid) : nullptr) { WaitForSingleObject(p, 15000); CloseHandle(p); }
         else for (int k = 0; k < 75 && FindWindowW(wndClass, nullptr); k++) Sleep(200);
         return;
@@ -278,12 +305,38 @@ bool LaunchSibling(const wchar_t* exeName, const std::wstring& args, bool lowPri
     PROCESS_INFORMATION pi{};
     if (!CreateProcessW(exe.c_str(), cmd.data(), nullptr, nullptr, FALSE,
                         lowPriority ? BELOW_NORMAL_PRIORITY_CLASS : 0, nullptr, ExeDir().c_str(), &si, &pi)) {
-        Log(L"LaunchSibling falhou: %s (%u)", exe.c_str(), GetLastError());
+        Log(L"LaunchSibling failed: %s (%u)", exe.c_str(), GetLastError());
         return false;
     }
     AllowSetForegroundWindow(pi.dwProcessId);
     CloseHandle(pi.hThread); CloseHandle(pi.hProcess);
     return true;
+}
+
+// The reference opens its help online (IRedirect.LaunchHelpRedirect); Snapnab ships the manual as a local HTML page.
+// Opening an .html file through its association drops the #fragment, so with a topic the default browser is started
+// with the file:// URL as its argument; without a browser it falls back to opening the file.
+void OpenManual(HWND owner, const wchar_t* topic) {
+    std::wstring path = ExeDir() + L"\\help\\Snapnab-Manual.html";
+    if (!FileExists(path)) {
+        MessageBoxW(owner, (Tr(L"O manual não foi encontrado:\n") + path).c_str(), L"Snapnab", MB_ICONWARNING);
+        return;
+    }
+    if (topic && *topic) {
+        wchar_t url[2 * MAX_PATH + 64]; DWORD n = (DWORD)std::size(url);
+        wchar_t browser[MAX_PATH]; DWORD bn = MAX_PATH;
+        if (SUCCEEDED(UrlCreateFromPathW(path.c_str(), url, &n, 0)) &&
+            SUCCEEDED(AssocQueryStringW(ASSOCF_IS_PROTOCOL, ASSOCSTR_EXECUTABLE, L"http", L"open", browser, &bn))) {
+            std::wstring arg = L"\"" + std::wstring(url) + L"#" + topic + L"\"";
+            if ((INT_PTR)ShellExecuteW(owner, nullptr, browser, arg.c_str(), nullptr, SW_SHOWNORMAL) > 32) {
+                Log(L"Manual: opened #%s in %s", topic, browser);
+                return;
+            }
+        }
+        Log(L"Manual: could not open the browser at #%s; opening the file", topic);
+    }
+    if ((INT_PTR)ShellExecuteW(owner, L"open", path.c_str(), nullptr, nullptr, SW_SHOWNORMAL) <= 32)
+        Log(L"Manual: could not open %s (%u)", path.c_str(), GetLastError());
 }
 
 // ---------------------------------------------------------------- GDI+
@@ -293,7 +346,7 @@ GdiplusSession::GdiplusSession() {
 }
 GdiplusSession::~GdiplusSession() { Gdiplus::GdiplusShutdown(token_); }
 
-// ---------------------------------------------------------------- diversos
+// ---------------------------------------------------------------- miscellaneous
 std::wstring ComputerName() {
     wchar_t b[MAX_COMPUTERNAME_LENGTH + 1]; DWORD n = MAX_COMPUTERNAME_LENGTH + 1;
     return GetComputerNameW(b, &n) ? b : L"";

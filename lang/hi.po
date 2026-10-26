@@ -1,6 +1,6 @@
-# Snapnab — traduções da interface.
+# Snapnab — interface translations.
 # Copyright © 2026 Antonio Rezende. GPL-3.0.
-# Idioma: हिन्दी.
+# Language: हिन्दी.
 #
 msgid ""
 msgstr ""
@@ -19,31 +19,35 @@ msgstr "%d सेकंड में कैप्चर…"
 msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
 msgstr "स्थिर क्षेत्र स्क्रीन से बाहर है। चयन के गियर मेनू में उसकी स्थिति ठीक करें।"
 
-#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:373 src/capture/main.cpp:470
 msgid "Região fixa"
 msgstr "स्थिर क्षेत्र"
 
-#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+#: src/capture/CaptureEngine.cpp:163
+msgid "Janelas como objetos"
+msgstr "विंडो ऑब्जेक्ट के रूप में"
+
+#: src/capture/CaptureEngine.cpp:176 src/editor/main.cpp:499
 msgid "A área de transferência não contém imagem."
 msgstr "क्लिपबोर्ड में कोई छवि नहीं है।"
 
-#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669
+#: src/capture/CaptureEngine.cpp:179 src/capture/Presets.cpp:19 src/editor/main.cpp:500 src/editor/main.cpp:780
 msgid "Área de transferência"
 msgstr "क्लिपबोर्ड"
 
-#: src/capture/CaptureEngine.cpp:170
+#: src/capture/CaptureEngine.cpp:185
 msgid "Capturar de arquivo gráfico"
 msgstr "ग्राफ़िक फ़ाइल से कैप्चर करें"
 
-#: src/capture/CaptureEngine.cpp:172
+#: src/capture/CaptureEngine.cpp:187
 msgid "Não foi possível abrir a imagem."
 msgstr "छवि नहीं खोली जा सकी।"
 
-#: src/capture/CaptureEngine.cpp:181
+#: src/capture/CaptureEngine.cpp:196
 msgid "Nenhum menu aberto encontrado; selecione a região."
 msgstr "कोई खुला मेनू नहीं मिला; क्षेत्र चुनें।"
 
-#: src/capture/CaptureEngine.cpp:281
+#: src/capture/CaptureEngine.cpp:443
 msgid ""
 "Não foi possível reconhecer o texto.\n"
 "\n"
@@ -51,59 +55,59 @@ msgstr ""
 "पाठ पहचाना नहीं जा सका।\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+#: src/capture/CaptureEngine.cpp:443 src/capture/CaptureEngine.cpp:444
 msgid "Snapnab — Capturar texto"
 msgstr "Snapnab — पाठ निकालें"
 
-#: src/capture/CaptureEngine.cpp:282
+#: src/capture/CaptureEngine.cpp:444
 msgid "Nenhum texto encontrado na captura."
 msgstr "कैप्चर में कोई पाठ नहीं मिला।"
 
-#: src/capture/CaptureEngine.cpp:293
+#: src/capture/CaptureEngine.cpp:455
 msgid "Capturar texto — copiado para a área de transferência"
 msgstr "पाठ निकालें — क्लिपबोर्ड पर कॉपी किया गया"
 
-#: src/capture/CaptureEngine.cpp:300
+#: src/capture/CaptureEngine.cpp:463
 msgid "copiada para a área de transferência"
 msgstr "क्लिपबोर्ड पर कॉपी की गई"
 
-#: src/capture/CaptureEngine.cpp:306
+#: src/capture/CaptureEngine.cpp:469
 msgid "salva em "
 msgstr "यहाँ सहेजी गई: "
 
-#: src/capture/CaptureEngine.cpp:322
+#: src/capture/CaptureEngine.cpp:485
 msgid "Captura adicionada à biblioteca"
 msgstr "कैप्चर लाइब्रेरी में जोड़ा गया"
 
-#: src/capture/CaptureEngine.cpp:447
+#: src/capture/CaptureEngine.cpp:610
 msgid "A janela será ampliada além da tela, capturada e restaurada."
 msgstr "विंडो को स्क्रीन से बड़ा किया जाएगा, कैप्चर किया जाएगा और फिर पहले जैसा कर दिया जाएगा।"
 
-#: src/capture/CaptureEngine.cpp:448
+#: src/capture/CaptureEngine.cpp:611
 msgid "Nova largura (px)"
 msgstr "नई चौड़ाई (px)"
 
-#: src/capture/CaptureEngine.cpp:449
+#: src/capture/CaptureEngine.cpp:612
 msgid "Nova altura (px)"
 msgstr "नई ऊँचाई (px)"
 
-#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+#: src/capture/CaptureEngine.cpp:614 src/capture/Presets.cpp:17
 msgid "Janela estendida"
 msgstr "विस्तारित विंडो"
 
-#: src/capture/CaptureEngine.cpp:523
+#: src/capture/CaptureEngine.cpp:686
 msgid "Imagem durante gravação"
 msgstr "रिकॉर्डिंग के दौरान छवि"
 
-#: src/capture/CaptureEngine.cpp:526
+#: src/capture/CaptureEngine.cpp:689
 msgid "Imagem capturada sem parar a gravação."
 msgstr "रिकॉर्डिंग रोके बिना छवि कैप्चर की गई।"
 
-#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+#: src/capture/CaptureEngine.cpp:703 src/capture/Webcam.cpp:91
 msgid "Snapnab — webcam"
 msgstr "Snapnab — वेबकैम"
 
-#: src/capture/CaptureEngine.cpp:553
+#: src/capture/CaptureEngine.cpp:725
 msgid ""
 "Não foi possível iniciar a gravação.\n"
 "\n"
@@ -111,11 +115,11 @@ msgstr ""
 "रिकॉर्डिंग शुरू नहीं हो सकी।\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:596
+#: src/capture/CaptureEngine.cpp:771
 msgid "Vídeo salvo na biblioteca: "
 msgstr "वीडियो लाइब्रेरी में सहेजा गया: "
 
-#: src/capture/CaptureEngine.cpp:598
+#: src/capture/CaptureEngine.cpp:773
 msgid ""
 "A gravação falhou.\n"
 "\n"
@@ -123,15 +127,15 @@ msgstr ""
 "रिकॉर्डिंग विफल रही।\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:606
+#: src/capture/CaptureEngine.cpp:781
 msgid "Snapnab — pouco espaço em disco"
 msgstr "Snapnab — डिस्क में कम जगह"
 
-#: src/capture/CaptureEngine.cpp:606
+#: src/capture/CaptureEngine.cpp:781
 msgid "Restam menos de 1 GB livres na unidade da biblioteca."
 msgstr "लाइब्रेरी ड्राइव पर 1 GB से कम जगह बची है।"
 
-#: src/capture/CaptureEngine.cpp:609
+#: src/capture/CaptureEngine.cpp:784
 msgid "Gravação interrompida: espaço em disco insuficiente."
 msgstr "रिकॉर्डिंग रुकी: डिस्क में पर्याप्त जगह नहीं है।"
 
@@ -156,7 +160,7 @@ msgstr "कैप्चर हो रहा है: %d × %d px"
 msgid "Concluir"
 msgstr "पूरा करें"
 
-#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:262 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
 msgid "Cancelar"
 msgstr "रद्द करें"
 
@@ -208,71 +212,87 @@ msgstr "मेनू"
 msgid "Arquivo gráfico"
 msgstr "ग्राफ़िक फ़ाइल"
 
-#: src/capture/Presets.cpp:150
+#: src/capture/Presets.cpp:155
 msgid "Imagem — Região"
 msgstr "छवि — क्षेत्र"
 
-#: src/capture/Presets.cpp:151
+#: src/capture/Presets.cpp:156
 msgid "Imagem — Janela"
 msgstr "छवि — विंडो"
 
-#: src/capture/Presets.cpp:152
+#: src/capture/Presets.cpp:157
 msgid "Tela inteira → Área de transferência"
 msgstr "पूरी स्क्रीन → क्लिपबोर्ड"
 
-#: src/capture/Presets.cpp:154
+#: src/capture/Presets.cpp:159
 msgid "Rolagem (página inteira)"
 msgstr "स्क्रॉल (पूरा पेज)"
 
-#: src/capture/Presets.cpp:155
+#: src/capture/Presets.cpp:160
 msgid "Vídeo — Região"
 msgstr "वीडियो — क्षेत्र"
 
-#: src/capture/Presets.cpp:156
+#: src/capture/Presets.cpp:161
 msgid "Vídeo — Tela inteira"
 msgstr "वीडियो — पूरी स्क्रीन"
 
-#: src/capture/Presets.cpp:164
+#: src/capture/Presets.cpp:169
 msgid "Captura com rolagem panorâmica"
 msgstr "पैनोरमा स्क्रॉल के साथ कैप्चर"
 
-#: src/capture/Presets.cpp:166
+#: src/capture/Presets.cpp:171
 msgid "Capturar texto"
 msgstr "पाठ निकालें"
 
-#: src/capture/Recorder.cpp:252
+#: src/capture/Recorder.cpp:286
 msgid "Área de gravação muito pequena."
 msgstr "रिकॉर्डिंग क्षेत्र बहुत छोटा है।"
 
-#: src/capture/Recorder.cpp:259
+#: src/capture/Recorder.cpp:293
 msgid "Media Foundation indisponível."
 msgstr "Media Foundation उपलब्ध नहीं है।"
 
-#: src/capture/Recorder.cpp:274
+#: src/capture/Recorder.cpp:308
 #, c-format
 msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
 msgstr "MP4 एनकोडर शुरू नहीं हो सका (0x%08X)।"
 
-#: src/capture/Recorder.cpp:386
+#: src/capture/Recorder.cpp:420
 msgid "Falha ao gravar quadro de vídeo."
 msgstr "वीडियो फ़्रेम रिकॉर्ड करने में विफल।"
 
-#: src/capture/Recorder.cpp:478
+#: src/capture/Recorder.cpp:517
 #, c-format
 msgid "Falha ao finalizar o MP4 (0x%08X)."
 msgstr "MP4 को पूरा करने में विफल (0x%08X)।"
 
-#: src/capture/RecorderHud.cpp:60
+#: src/capture/RecorderHud.cpp:62
 msgid "Snapnab — gravação"
 msgstr "Snapnab — रिकॉर्डिंग"
 
-#: src/capture/RecorderHud.cpp:153
+#: src/capture/RecorderHud.cpp:159
 msgid "Pronto"
 msgstr "तैयार"
 
-#: src/capture/RecorderHud.cpp:273
+#: src/capture/RecorderHud.cpp:283
 msgid "Pular"
 msgstr "छोड़ें"
+
+#: src/capture/RecorderHud.cpp:392
+msgid "Volume"
+msgstr "वॉल्यूम"
+
+#: src/capture/RecorderHud.cpp:429
+msgid "Microfone"
+msgstr "माइक्रोफ़ोन"
+
+#: src/capture/RecorderHud.cpp:429
+msgid "Áudio do sistema"
+msgstr "सिस्टम ऑडियो"
+
+#: src/capture/RecorderHud.cpp:459 src/capture/main.cpp:520
+msgid "Ganho automático do microfone"
+msgstr "माइक्रोफ़ोन का स्वचालित गेन"
 
 #: src/capture/SelectOverlay.cpp:244
 msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
@@ -349,377 +369,401 @@ msgstr "वेबकैम नहीं खोला जा सका (0x%08X)�
 msgid "A webcam não oferece um formato compatível (0x%08X)."
 msgstr "वेबकैम कोई संगत फ़ॉर्मेट नहीं देता (0x%08X)।"
 
-#: src/capture/main.cpp:120
+#: src/capture/main.cpp:122
 msgid "Snapnab — clique para capturar"
 msgstr "Snapnab — कैप्चर करने के लिए क्लिक करें"
 
-#: src/capture/main.cpp:147 src/capture/main.cpp:511
+#: src/capture/main.cpp:149 src/capture/main.cpp:541
 msgid "Conflito de atalho"
 msgstr "शॉर्टकट का टकराव"
 
-#: src/capture/main.cpp:147
+#: src/capture/main.cpp:149
 #, c-format
 msgid "O atalho do preset \"%s\" já está em uso por outra ação."
 msgstr "प्रीसेट \"%s\" का शॉर्टकट पहले से किसी दूसरी क्रिया में उपयोग हो रहा है।"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+#: src/capture/main.cpp:191 src/editor/main.cpp:1663 src/editor/main.cpp:1890
 msgid "Borda"
 msgstr "बॉर्डर"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+#: src/capture/main.cpp:191 src/editor/main.cpp:1682
 msgid "Filtros"
 msgstr "फ़िल्टर"
 
-#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498
+#: src/capture/main.cpp:191 src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:556 src/editor/PropsPanel.cpp:566
 msgid "Sombra"
 msgstr "छाया"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+#: src/capture/main.cpp:191 src/editor/main.cpp:1703
 msgid "Informações da captura"
 msgstr "कैप्चर जानकारी"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+#: src/capture/main.cpp:191 src/editor/main.cpp:1692
 msgid "Substituição de cor"
 msgstr "रंग बदलें"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:362
+#: src/capture/main.cpp:191 src/editor/main.cpp:372
 msgid "Redimensionar imagem"
 msgstr "छवि का आकार बदलें"
 
-#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+#: src/capture/main.cpp:192 src/editor/main.cpp:1890
 msgid "Bordas especiais"
 msgstr "विशेष किनारे"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Cortar bordas"
 msgstr "किनारे काटें"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Ajuste de cor"
 msgstr "रंग समायोजन"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Girar imagem"
 msgstr "छवि घुमाएँ"
 
-#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+#: src/capture/main.cpp:192 src/editor/main.cpp:1700
 msgid "Marca d'água"
 msgstr "वॉटरमार्क"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Resolução da imagem"
 msgstr "छवि रिज़ॉल्यूशन"
 
-#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360
+#: src/capture/main.cpp:211 src/capture/main.cpp:463 src/editor/Video.cpp:643 src/editor/main.cpp:370
 msgid "Largura (px)"
 msgstr "चौड़ाई (px)"
 
-#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494
+#: src/capture/main.cpp:211 src/editor/Popups.cpp:236 src/editor/Popups.cpp:239 src/editor/PropsPanel.cpp:542
 msgid "Cor"
 msgstr "रंग"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Filtro"
 msgstr "फ़िल्टर"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Tons de cinza"
 msgstr "ग्रेस्केल"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Sépia"
 msgstr "सीपिया"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Inverter cores"
 msgstr "रंग उलटें"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Preto e branco"
 msgstr "श्वेत-श्याम"
 
-#: src/capture/main.cpp:211
+#: src/capture/main.cpp:214
 msgid "Deslocamento (px)"
 msgstr "खिसकाव (px)"
 
-#: src/capture/main.cpp:211
+#: src/capture/main.cpp:214
 msgid "Desfoque (px)"
 msgstr "धुंधलापन (px)"
 
-#: src/capture/main.cpp:212 src/capture/main.cpp:241
+#: src/capture/main.cpp:215 src/capture/main.cpp:244
 msgid "Opacidade (%)"
 msgstr "अपारदर्शिता (%)"
 
-#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477
+#: src/capture/main.cpp:218 src/capture/main.cpp:244 src/editor/Canvas.cpp:20 src/editor/LayersPanel.cpp:48
 msgid "Texto"
 msgstr "पाठ"
 
-#: src/capture/main.cpp:215
+#: src/capture/main.cpp:218
 msgid "Campos: {date} {time} {computer} {user}"
 msgstr "फ़ील्ड: {date} {time} {computer} {user}"
 
-#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/editor/main.cpp:1704
 msgid "Posição"
 msgstr "स्थिति"
 
-#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/capture/main.cpp:230 src/editor/main.cpp:1680 src/editor/main.cpp:1704
 msgid "Embaixo"
 msgstr "नीचे"
 
-#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/capture/main.cpp:229 src/editor/main.cpp:1680 src/editor/main.cpp:1704
 msgid "Em cima"
 msgstr "ऊपर"
 
-#: src/capture/main.cpp:219
+#: src/capture/main.cpp:222
 msgid "Cor a substituir"
 msgstr "बदला जाने वाला रंग"
 
-#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+#: src/capture/main.cpp:222 src/editor/main.cpp:1693
 msgid "Nova cor"
 msgstr "नया रंग"
 
-#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576
+#: src/capture/main.cpp:223 src/capture/main.cpp:233 src/editor/PropsPanel.cpp:607 src/editor/PropsPanel.cpp:656
 msgid "Tolerância"
 msgstr "सहनशीलता"
 
-#: src/capture/main.cpp:222
+#: src/capture/main.cpp:225
 msgid "Escala (%)"
 msgstr "पैमाना (%)"
 
-#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/PropsPanel.cpp:521 src/editor/main.cpp:1678
 msgid "Estilo"
 msgstr "शैली"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Rasgada"
 msgstr "फटा हुआ"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678 src/editor/main.cpp:1798
 msgid "Onda"
 msgstr "लहर"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Dente de serra"
 msgstr "आरी के दाँत"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Dente de tubarão"
 msgstr "शार्क के दाँत"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678 src/editor/main.cpp:1800
 msgid "Esmaecer"
 msgstr "धुँधला होना"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Chanfrada"
 msgstr "ढलान"
 
-#: src/capture/main.cpp:225
+#: src/capture/main.cpp:228
 msgid "Tamanho (px)"
 msgstr "आकार (px)"
 
-#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+#: src/capture/main.cpp:229 src/editor/main.cpp:390 src/editor/main.cpp:1680
 msgid "Direita"
 msgstr "दाएँ"
 
-#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+#: src/capture/main.cpp:230 src/editor/main.cpp:389 src/editor/main.cpp:1680
 msgid "Esquerda"
 msgstr "बाएँ"
 
-#: src/capture/main.cpp:230
+#: src/capture/main.cpp:233
 msgid "Remove as faixas de cor uniforme em volta da captura."
 msgstr "कैप्चर के चारों ओर एक जैसे रंग की पट्टियाँ हटाता है।"
 
-#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+#: src/capture/main.cpp:236 src/editor/main.cpp:1687
 msgid "Brilho"
 msgstr "चमक"
 
-#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+#: src/capture/main.cpp:236 src/editor/main.cpp:1688
 msgid "Contraste"
 msgstr "कंट्रास्ट"
 
-#: src/capture/main.cpp:234
+#: src/capture/main.cpp:237
 msgid "Matiz (graus)"
 msgstr "ह्यू (डिग्री)"
 
-#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+#: src/capture/main.cpp:237 src/editor/main.cpp:1691
 msgid "Saturação"
 msgstr "संतृप्ति"
 
-#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+#: src/capture/main.cpp:240 src/editor/main.cpp:364 src/editor/main.cpp:956
 msgid "Girar"
 msgstr "घुमाएँ"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "90° à direita"
 msgstr "90° दाएँ"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "90° à esquerda"
 msgstr "90° बाएँ"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "Espelhar na horizontal"
 msgstr "क्षैतिज पलटें"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "Espelhar na vertical"
 msgstr "लंबवत पलटें"
 
-#: src/capture/main.cpp:242
+#: src/capture/main.cpp:245
 msgid "Repetir por toda a imagem"
 msgstr "पूरी छवि पर दोहराएँ"
 
-#: src/capture/main.cpp:245
+#: src/capture/main.cpp:248
 msgid "Resolução (DPI)"
 msgstr "रिज़ॉल्यूशन (DPI)"
 
-#: src/capture/main.cpp:245
+#: src/capture/main.cpp:248
 msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
 msgstr "सहेजी गई फ़ाइलों में लिखा जाता है (PNG, JPEG, TIFF, BMP)।"
 
-#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+#: src/capture/main.cpp:281 src/capture/main.cpp:303 src/capture/main.cpp:864
 msgid "Nenhum"
 msgstr "कोई नहीं"
 
-#: src/capture/main.cpp:303
+#: src/capture/main.cpp:306
 msgid "Adicionar outro efeito"
 msgstr "दूसरा प्रभाव जोड़ें"
 
-#: src/capture/main.cpp:304
+#: src/capture/main.cpp:307
 msgid "Remover este efeito"
 msgstr "यह प्रभाव हटाएँ"
 
-#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+#: src/capture/main.cpp:342 src/capture/main.cpp:683 src/capture/main.cpp:929 src/capture/main.cpp:1087
 msgid "Desligado"
 msgstr "बंद"
 
-#: src/capture/main.cpp:339
+#: src/capture/main.cpp:342
 #, c-format
 msgid "%d s"
 msgstr "%d से."
 
-#: src/capture/main.cpp:384 src/capture/main.cpp:890
+#: src/capture/main.cpp:398 src/capture/main.cpp:973
 msgid "Ligada"
 msgstr "चालू"
 
-#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+#: src/capture/main.cpp:398 src/capture/main.cpp:973 src/capture/main.cpp:1121
 msgid "Desligada"
 msgstr "बंद"
 
-#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+#: src/capture/main.cpp:434 src/capture/main.cpp:1134
 msgid "Formato"
 msgstr "फ़ॉर्मेट"
 
-#: src/capture/main.cpp:421
+#: src/capture/main.cpp:435
 msgid "Prefixo do nome"
 msgstr "नाम उपसर्ग"
 
-#: src/capture/main.cpp:422
+#: src/capture/main.cpp:436
 msgid "Pasta"
 msgstr "फ़ोल्डर"
 
-#: src/capture/main.cpp:423
+#: src/capture/main.cpp:437
 msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
 msgstr "स्वचालित नाम: <उपसर्ग><संख्या>, जैसे: Capture001.png"
 
-#: src/capture/main.cpp:427
+#: src/capture/main.cpp:441
 msgid "O prefixo contém caracteres inválidos."
 msgstr "उपसर्ग में अमान्य वर्ण हैं।"
 
-#: src/capture/main.cpp:430
+#: src/capture/main.cpp:444
 msgid "Salvar em arquivo"
 msgstr "फ़ाइल में सहेजें"
 
-#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+#: src/capture/main.cpp:451 src/editor/main.cpp:660 src/editor/main.cpp:947
 msgid "Programa"
 msgstr "प्रोग्राम"
 
-#: src/capture/main.cpp:438
+#: src/capture/main.cpp:452
 msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
 msgstr "कैप्चर इस प्रोग्राम में खुलता है (जैसे: mspaint.exe)।"
 
-#: src/capture/main.cpp:439 src/editor/main.cpp:813
+#: src/capture/main.cpp:453 src/editor/main.cpp:947
 msgid "Abrir em um programa externo"
 msgstr "बाहरी प्रोग्राम में खोलें"
 
-#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+#: src/capture/main.cpp:464 src/editor/main.cpp:370 src/editor/main.cpp:388 src/editor/main.cpp:505
 msgid "Altura (px)"
 msgstr "ऊँचाई (px)"
 
-#: src/capture/main.cpp:451
+#: src/capture/main.cpp:465
 msgid "Capturar sempre na mesma posição"
 msgstr "हमेशा उसी स्थिति पर कैप्चर करें"
 
-#: src/capture/main.cpp:452
+#: src/capture/main.cpp:466
 msgid "Esquerda (X)"
 msgstr "बाएँ (X)"
 
-#: src/capture/main.cpp:453
+#: src/capture/main.cpp:467
 msgid "Topo (Y)"
 msgstr "ऊपर (Y)"
 
-#: src/capture/main.cpp:454
+#: src/capture/main.cpp:468
 msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
 msgstr "स्थिर स्थिति के बिना, कैप्चर के समय आप आयत को उसकी जगह पर खींचते हैं।"
 
-#: src/capture/main.cpp:468
+#: src/capture/main.cpp:483
 msgid "Selecionar a região na captura"
 msgstr "कैप्चर के समय क्षेत्र चुनें"
 
-#: src/capture/main.cpp:469
+#: src/capture/main.cpp:484
 msgid "Região fixa…"
 msgstr "स्थिर क्षेत्र…"
 
-#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+#: src/capture/main.cpp:490
+msgid "Cada janela como um objeto separado"
+msgstr "हर विंडो एक अलग ऑब्जेक्ट के रूप में"
+
+#: src/capture/main.cpp:491
+msgid "Guardar os links da página (clicáveis, também no PDF)"
+msgstr "पेज के लिंक रखें (क्लिक करने योग्य, PDF में भी)"
+
+#: src/capture/main.cpp:514 src/editor/Video.cpp:642
 msgid "Quadros por segundo"
 msgstr "फ़्रेम प्रति सेकंड"
 
-#: src/capture/main.cpp:491
+#: src/capture/main.cpp:515
 msgid "Reduzir para 1080p"
 msgstr "1080p तक छोटा करें"
 
-#: src/capture/main.cpp:492
+#: src/capture/main.cpp:516
 msgid "Codificação por hardware"
 msgstr "हार्डवेयर एनकोडिंग"
 
-#: src/capture/main.cpp:494
+#: src/capture/main.cpp:517
+msgid "Áudio"
+msgstr "ऑडियो"
+
+#: src/capture/main.cpp:518
+msgid "Volume do microfone (%)"
+msgstr "माइक्रोफ़ोन वॉल्यूम (%)"
+
+#: src/capture/main.cpp:519
+msgid "Volume do áudio do sistema (%)"
+msgstr "सिस्टम ऑडियो वॉल्यूम (%)"
+
+#: src/capture/main.cpp:521
+msgid "Também ajustáveis no painel da gravação."
+msgstr "रिकॉर्डिंग पैनल में भी समायोज्य।"
+
+#: src/capture/main.cpp:523
 msgid "Opções de vídeo"
 msgstr "वीडियो विकल्प"
 
-#: src/capture/main.cpp:503
+#: src/capture/main.cpp:533
 msgid "Atalho do preset"
 msgstr "प्रीसेट शॉर्टकट"
 
-#: src/capture/main.cpp:504
+#: src/capture/main.cpp:534
 msgid "Deixe vazio (Backspace) para remover."
 msgstr "हटाने के लिए खाली छोड़ें (Backspace)।"
 
-#: src/capture/main.cpp:505
+#: src/capture/main.cpp:535
 msgid "Atalho — "
 msgstr "शॉर्टकट — "
 
-#: src/capture/main.cpp:511
+#: src/capture/main.cpp:541
 msgid "Esse atalho já está em uso por outra ação do Snapnab."
 msgstr "यह शॉर्टकट पहले से Snapnab की किसी दूसरी क्रिया में उपयोग हो रहा है।"
 
-#: src/capture/main.cpp:516
+#: src/capture/main.cpp:546
 msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
 msgstr "कोई दूसरा प्रोग्राम यह शॉर्टकट उपयोग कर रहा है। Snapnab इसे कीबोर्ड हुक से पकड़ेगा।"
 
-#: src/capture/main.cpp:517
+#: src/capture/main.cpp:547
 msgid "Atalho"
 msgstr "शॉर्टकट"
 
-#: src/capture/main.cpp:523
+#: src/capture/main.cpp:553
 msgid "Nome do preset"
 msgstr "प्रीसेट का नाम"
 
-#: src/capture/main.cpp:531
+#: src/capture/main.cpp:561
 msgid "Renomear preset"
 msgstr "प्रीसेट का नाम बदलें"
 
-#: src/capture/main.cpp:551
+#: src/capture/main.cpp:581
 msgid ""
 "Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
 "\n"
@@ -735,91 +779,131 @@ msgstr ""
 "•  पंक्ति का गियर प्रीसेट का नाम बदलता है, उसकी प्रति बनाता है या उसे हटाता है।\n"
 "•  \"वर्तमान सेटिंग्स से नया प्रीसेट\" अभी विंडो में जो है उसे सहेजता है।"
 
-#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+#: src/capture/main.cpp:587 src/capture/main.cpp:762 src/capture/main.cpp:881 src/capture/main.cpp:1058
 msgid "Presets"
 msgstr "प्रीसेट"
 
-#: src/capture/main.cpp:588
+#: src/capture/main.cpp:609 src/capture/main.cpp:620
+msgid "Configurações do Snapnab (*.snapsettings)|*.snapsettings|"
+msgstr "Snapnab सेटिंग्स (*.snapsettings)|*.snapsettings|"
+
+#: src/capture/main.cpp:612
+msgid "Exportar configurações"
+msgstr "सेटिंग्स निर्यात करें"
+
+#: src/capture/main.cpp:615
+msgid "Configurações exportadas: presets, temas, estilos rápidos, favoritos, efeitos rápidos, ordem dos carimbos e barra de ferramentas."
+msgstr "सेटिंग्स निर्यात हुईं: प्रीसेट, थीम, त्वरित शैलियाँ, पसंदीदा, त्वरित प्रभाव, मुहरों का क्रम और टूलबार।"
+
+#: src/capture/main.cpp:623 src/capture/main.cpp:632
+msgid "Importar configurações"
+msgstr "सेटिंग्स आयात करें"
+
+#: src/capture/main.cpp:624 src/common/Settings.cpp:142
+msgid "Arquivo de configurações inválido."
+msgstr "अमान्य सेटिंग्स फ़ाइल।"
+
+#: src/capture/main.cpp:625
+msgid ""
+"Substituir\n"
+"As configurações atuais dão lugar às do arquivo."
+msgstr ""
+"बदलें\n"
+"वर्तमान सेटिंग्स की जगह फ़ाइल की सेटिंग्स आ जाएँगी।"
+
+#: src/capture/main.cpp:626
+msgid ""
+"Mesclar\n"
+"Mantém as configurações atuais e acrescenta o que faltar (presets, temas, favoritos, efeitos rápidos…)."
+msgstr ""
+"मिलाएँ\n"
+"वर्तमान सेटिंग्स रखता है और जो कमी है उसे जोड़ता है (प्रीसेट, थीम, पसंदीदा, त्वरित प्रभाव…)।"
+
+#: src/capture/main.cpp:633
+msgid "O Snapnab e o Editor reiniciam com as configurações importadas. Uma cópia das configurações atuais fica na pasta de backups."
+msgstr "Snapnab और एडिटर आयात की गई सेटिंग्स के साथ फिर से शुरू होंगे। वर्तमान सेटिंग्स की एक प्रति बैकअप फ़ोल्डर में रहेगी।"
+
+#: src/capture/main.cpp:671
 msgid "Automático (idioma do Windows)"
 msgstr "स्वचालित (Windows की भाषा)"
 
-#: src/capture/main.cpp:593
+#: src/capture/main.cpp:676
 msgid "Atalhos globais"
 msgstr "वैश्विक शॉर्टकट"
 
-#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+#: src/capture/main.cpp:677 src/capture/main.cpp:758 src/capture/main.cpp:1054
 msgid "Capturar imagem"
 msgstr "छवि कैप्चर करें"
 
-#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+#: src/capture/main.cpp:678 src/capture/main.cpp:759 src/capture/main.cpp:1055
 msgid "Gravar vídeo"
 msgstr "वीडियो रिकॉर्ड करें"
 
-#: src/capture/main.cpp:596
+#: src/capture/main.cpp:679
 msgid "Pausar/retomar vídeo"
 msgstr "वीडियो रोकें/जारी रखें"
 
-#: src/capture/main.cpp:597
+#: src/capture/main.cpp:680
 msgid "Parar vídeo"
 msgstr "वीडियो बंद करें"
 
-#: src/capture/main.cpp:598
+#: src/capture/main.cpp:681
 msgid "Geral"
 msgstr "सामान्य"
 
-#: src/capture/main.cpp:599
+#: src/capture/main.cpp:682
 msgid "Pasta de saída"
 msgstr "आउटपुट फ़ोल्डर"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Monitorar área de transferência"
 msgstr "क्लिपबोर्ड पर नज़र रखें"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Só a Ferramenta de Captura do Windows"
 msgstr "केवल Windows स्निपिंग टूल"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Qualquer aplicativo"
 msgstr "कोई भी ऐप्लिकेशन"
 
-#: src/capture/main.cpp:602
+#: src/capture/main.cpp:685
 msgid "Iniciar com o Windows"
 msgstr "Windows के साथ शुरू करें"
 
-#: src/capture/main.cpp:603
+#: src/capture/main.cpp:686
 msgid "Mostrar a janela de captura ao iniciar"
 msgstr "शुरू होने पर कैप्चर विंडो दिखाएँ"
 
-#: src/capture/main.cpp:604
+#: src/capture/main.cpp:687
 msgid "Idioma"
 msgstr "भाषा"
 
-#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+#: src/capture/main.cpp:688 src/editor/main.cpp:1485
 msgid "Biblioteca: "
 msgstr "लाइब्रेरी: "
 
-#: src/capture/main.cpp:611
+#: src/capture/main.cpp:694
 msgid "Dois atalhos iguais: "
 msgstr "दो एक जैसे शॉर्टकट: "
 
-#: src/capture/main.cpp:616
+#: src/capture/main.cpp:699
 msgid "Opções do Snapnab"
 msgstr "Snapnab विकल्प"
 
-#: src/capture/main.cpp:632
+#: src/capture/main.cpp:715
 msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
 msgstr "नई भाषा Snapnab और एडिटर के फिर से शुरू होने के बाद लागू होगी। अभी फिर से शुरू करें?"
 
-#: src/capture/main.cpp:655
+#: src/capture/main.cpp:738
 msgid " — captura de tela e gravação de vídeo"
 msgstr " — स्क्रीन कैप्चर और वीडियो रिकॉर्डिंग"
 
-#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+#: src/capture/main.cpp:739 src/editor/main.cpp:1485
 msgid "Software livre sob a GNU General Public License versão 3."
 msgstr "GNU General Public License संस्करण 3 के अंतर्गत मुक्त सॉफ़्टवेयर।"
 
-#: src/capture/main.cpp:657
+#: src/capture/main.cpp:740
 msgid ""
 "Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
 "compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
@@ -827,19 +911,19 @@ msgstr ""
 "कैप्चर प्रक्रिया (Snapnab.exe) + एडिटर (SnapnabEditor.exe), साझा मेमोरी\n"
 "(IPC चैनल) और WM_COPYDATA के ज़रिए संवाद करते हैं। कैप्चर लाइब्रेरी में रखे जाते हैं:\n"
 
-#: src/capture/main.cpp:659
+#: src/capture/main.cpp:742
 msgid "Sobre o Snapnab"
 msgstr "Snapnab के बारे में"
 
-#: src/capture/main.cpp:681 src/capture/main.cpp:972
+#: src/capture/main.cpp:764 src/capture/main.cpp:1060
 msgid "Abrir a janela de captura"
 msgstr "कैप्चर विंडो खोलें"
 
-#: src/capture/main.cpp:682
+#: src/capture/main.cpp:765
 msgid "Ocultar o One Click"
 msgstr "One Click छिपाएँ"
 
-#: src/capture/main.cpp:735
+#: src/capture/main.cpp:818
 msgid ""
 "Snapnab.exe [opções]\n"
 "\n"
@@ -859,318 +943,334 @@ msgstr ""
 "/clipboard       क्लिपबोर्ड की छवि कैप्चर करें\n"
 "/exit            चल रहे Snapnab को बंद करें"
 
-#: src/capture/main.cpp:741
+#: src/capture/main.cpp:824
 msgid "Snapnab — linha de comando"
 msgstr "Snapnab — कमांड लाइन"
 
-#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+#: src/capture/main.cpp:853 src/capture/main.cpp:1310 src/editor/LayersPanel.cpp:56 src/editor/main.cpp:2133
 msgid "Imagem"
 msgstr "छवि"
 
-#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+#: src/capture/main.cpp:854 src/capture/main.cpp:1310
 msgid "Vídeo"
 msgstr "वीडियो"
 
-#: src/capture/main.cpp:772
+#: src/capture/main.cpp:855
 msgid "Seleção:"
 msgstr "चयन:"
 
-#: src/capture/main.cpp:775
+#: src/capture/main.cpp:858
 msgid "Efeitos:"
 msgstr "प्रभाव:"
 
-#: src/capture/main.cpp:778
+#: src/capture/main.cpp:861
 msgid "Compartilhar:"
 msgstr "साझा करें:"
 
-#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839
+#: src/capture/main.cpp:864 src/capture/main.cpp:914 src/editor/main.cpp:946 src/editor/main.cpp:2131
 msgid "Arquivo"
 msgstr "फ़ाइल"
 
-#: src/capture/main.cpp:781
+#: src/capture/main.cpp:864
 msgid "Programa externo"
 msgstr "बाहरी प्रोग्राम"
 
-#: src/capture/main.cpp:781
+#: src/capture/main.cpp:864
 msgid "Texto (OCR)"
 msgstr "पाठ (OCR)"
 
-#: src/capture/main.cpp:782
+#: src/capture/main.cpp:865
 msgid "Qualidade:"
 msgstr "गुणवत्ता:"
 
-#: src/capture/main.cpp:785
+#: src/capture/main.cpp:868
 msgid "Muito baixa"
 msgstr "बहुत कम"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1685
 msgid "Baixa"
 msgstr "कम"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1675 src/editor/main.cpp:1685
 msgid "Média"
 msgstr "मध्यम"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1685
 msgid "Alta"
 msgstr "उच्च"
 
-#: src/capture/main.cpp:786
+#: src/capture/main.cpp:869
 msgid "Webcam:"
 msgstr "वेबकैम:"
 
-#: src/capture/main.cpp:789
+#: src/capture/main.cpp:872
 msgid "Visualizar no Editor"
 msgstr "एडिटर में पूर्वावलोकन"
 
-#: src/capture/main.cpp:790
+#: src/capture/main.cpp:873
 msgid "Copiar para a área de transferência"
 msgstr "क्लिपबोर्ड पर कॉपी करें"
 
-#: src/capture/main.cpp:791
+#: src/capture/main.cpp:874
 msgid "Capturar o cursor"
 msgstr "कर्सर कैप्चर करें"
 
-#: src/capture/main.cpp:792 src/capture/main.cpp:846
+#: src/capture/main.cpp:875 src/capture/main.cpp:929
 msgid "Atraso"
 msgstr "विलंब"
 
-#: src/capture/main.cpp:794
+#: src/capture/main.cpp:877
 msgid "Gravar microfone"
 msgstr "माइक्रोफ़ोन रिकॉर्ड करें"
 
-#: src/capture/main.cpp:795
+#: src/capture/main.cpp:878
 msgid "Gravar áudio do sistema"
 msgstr "सिस्टम ऑडियो रिकॉर्ड करें"
 
-#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+#: src/capture/main.cpp:879 src/capture/main.cpp:1333 src/editor/main.cpp:1983
 msgid "Capturar"
 msgstr "कैप्चर"
 
-#: src/capture/main.cpp:802
+#: src/capture/main.cpp:885
 msgid "Abrir Editor"
 msgstr "एडिटर खोलें"
 
-#: src/capture/main.cpp:831 src/editor/main.cpp:436
+#: src/capture/main.cpp:914 src/editor/main.cpp:450
 msgid "Captura"
 msgstr "कैप्चर"
 
-#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+#: src/capture/main.cpp:914 src/editor/main.cpp:2134
 msgid "Exibir"
 msgstr "दृश्य"
 
-#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+#: src/capture/main.cpp:914 src/capture/main.cpp:1159 src/editor/main.cpp:2135 src/editor/main.cpp:2135
 msgid "Ajuda"
 msgstr "सहायता"
 
-#: src/capture/main.cpp:933
+#: src/capture/main.cpp:1016
 msgid "Abrir o &Editor"
 msgstr "एडिटर खोलें(&E)"
 
-#: src/capture/main.cpp:934 src/editor/main.cpp:710
+#: src/capture/main.cpp:1017 src/editor/main.cpp:827
 msgid "Abrir a pasta da &biblioteca"
 msgstr "लाइब्रेरी फ़ोल्डर खोलें(&L)"
 
-#: src/capture/main.cpp:935
+#: src/capture/main.cpp:1018
 msgid "Abrir a pasta de &logs"
 msgstr "लॉग फ़ोल्डर खोलें(&G)"
 
-#: src/capture/main.cpp:937
+#: src/capture/main.cpp:1020
 msgid "&Importar presets…"
 msgstr "प्रीसेट आयात करें(&I)…"
 
-#: src/capture/main.cpp:938
+#: src/capture/main.cpp:1021
 msgid "E&xportar presets…"
 msgstr "प्रीसेट निर्यात करें(&X)…"
 
-#: src/capture/main.cpp:940
+#: src/capture/main.cpp:1023
+msgid "Exportar &todas as configurações…"
+msgstr "सभी सेटिंग्स निर्यात करें(&A)…"
+
+#: src/capture/main.cpp:1024
+msgid "Importar t&odas as configurações…"
+msgstr "सभी सेटिंग्स आयात करें(&L)…"
+
+#: src/capture/main.cpp:1025
+msgid "Abrir a pasta de &backups"
+msgstr "बैकअप फ़ोल्डर खोलें(&B)"
+
+#: src/capture/main.cpp:1027
 msgid "&Opções…"
 msgstr "विकल्प(&O)…"
 
-#: src/capture/main.cpp:942
+#: src/capture/main.cpp:1029
 msgid "&Sair do Snapnab"
 msgstr "Snapnab से बाहर निकलें(&Q)"
 
-#: src/capture/main.cpp:944
+#: src/capture/main.cpp:1031
 msgid "Capturar &imagem"
 msgstr "छवि कैप्चर करें(&I)"
 
-#: src/capture/main.cpp:945
+#: src/capture/main.cpp:1032
 msgid "Gravar &vídeo"
 msgstr "वीडियो रिकॉर्ड करें(&V)"
 
-#: src/capture/main.cpp:946
+#: src/capture/main.cpp:1033
 msgid "&Repetir a última captura"
 msgstr "पिछला कैप्चर दोहराएँ(&R)"
 
-#: src/capture/main.cpp:948
+#: src/capture/main.cpp:1035
 msgid "Da área de &transferência"
 msgstr "क्लिपबोर्ड से(&C)"
 
-#: src/capture/main.cpp:949
+#: src/capture/main.cpp:1036
 msgid "De um &arquivo gráfico…"
 msgstr "ग्राफ़िक फ़ाइल से(&F)…"
 
-#: src/capture/main.cpp:951
+#: src/capture/main.cpp:1038
 msgid "Mostrar o &One Click"
 msgstr "One Click दिखाएँ(&O)"
 
-#: src/capture/main.cpp:952
+#: src/capture/main.cpp:1039
 msgid "Lista de &presets"
 msgstr "प्रीसेट सूची(&P)"
 
-#: src/capture/main.cpp:954
+#: src/capture/main.cpp:1041 src/editor/main.cpp:893
+msgid "&Manual do Snapnab\tF1"
+msgstr "Snapnab &मैनुअल\tF1"
+
+#: src/capture/main.cpp:1042
 msgid "Como usar os &presets"
 msgstr "प्रीसेट का उपयोग कैसे करें(&H)"
 
-#: src/capture/main.cpp:956
+#: src/capture/main.cpp:1044
 msgid "&Sobre o Snapnab"
 msgstr "Snapnab के बारे में(&A)"
 
-#: src/capture/main.cpp:973
+#: src/capture/main.cpp:1061
 msgid "Mostrar o One Click"
 msgstr "One Click दिखाएँ"
 
-#: src/capture/main.cpp:974
+#: src/capture/main.cpp:1062
 msgid "Abrir o Editor"
 msgstr "एडिटर खोलें"
 
-#: src/capture/main.cpp:975
+#: src/capture/main.cpp:1063
 msgid "Opções…"
 msgstr "विकल्प…"
 
-#: src/capture/main.cpp:977
+#: src/capture/main.cpp:1065
 msgid "Sair"
 msgstr "बाहर निकलें"
 
-#: src/capture/main.cpp:999
+#: src/capture/main.cpp:1087
 msgid "1 segundo"
 msgstr "1 सेकंड"
 
-#: src/capture/main.cpp:999
+#: src/capture/main.cpp:1087
 #, c-format
 msgid "%d segundos"
 msgstr "%d सेकंड"
 
-#: src/capture/main.cpp:1011
+#: src/capture/main.cpp:1099
 msgid "Remover o fundo da webcam"
 msgstr "वेबकैम की पृष्ठभूमि हटाएँ"
 
-#: src/capture/main.cpp:1012
+#: src/capture/main.cpp:1100
 msgid "Cor do fundo"
 msgstr "पृष्ठभूमि का रंग"
 
-#: src/capture/main.cpp:1013
+#: src/capture/main.cpp:1101
 msgid "Tolerância (0–100)"
 msgstr "सहनशीलता (0–100)"
 
-#: src/capture/main.cpp:1014
+#: src/capture/main.cpp:1102
 msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
 msgstr "सादी और अच्छी रोशनी वाली पृष्ठभूमि का उपयोग करें (ग्रीन स्क्रीन सबसे अच्छी है)।"
 
-#: src/capture/main.cpp:1015
+#: src/capture/main.cpp:1103
 msgid "Com o fundo removido, a webcam aparece sem moldura."
 msgstr "पृष्ठभूमि हटने पर वेबकैम बिना फ़्रेम के दिखता है।"
 
-#: src/capture/main.cpp:1017
+#: src/capture/main.cpp:1105
 msgid "Remover o fundo (chroma key)"
 msgstr "पृष्ठभूमि हटाएँ (क्रोमा की)"
 
-#: src/capture/main.cpp:1035
+#: src/capture/main.cpp:1123
 msgid "Nenhuma webcam encontrada"
 msgstr "कोई वेबकैम नहीं मिला"
 
-#: src/capture/main.cpp:1047
+#: src/capture/main.cpp:1135
 msgid "Remover o fundo (chroma key)…"
 msgstr "पृष्ठभूमि हटाएँ (क्रोमा की)…"
 
-#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+#: src/capture/main.cpp:1156 src/capture/main.cpp:1348
 msgid "Novo preset com as configurações atuais"
 msgstr "वर्तमान सेटिंग्स से नया प्रीसेट"
 
-#: src/capture/main.cpp:1069
+#: src/capture/main.cpp:1157
 msgid "Novo preset…"
 msgstr "नया प्रीसेट…"
 
-#: src/capture/main.cpp:1080
+#: src/capture/main.cpp:1168
 msgid "Capturar com este preset"
 msgstr "इस प्रीसेट से कैप्चर करें"
 
-#: src/capture/main.cpp:1082
+#: src/capture/main.cpp:1170
 msgid "Renomear…"
 msgstr "नाम बदलें…"
 
-#: src/capture/main.cpp:1083
+#: src/capture/main.cpp:1171
 msgid "Atalho…"
 msgstr "शॉर्टकट…"
 
-#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+#: src/capture/main.cpp:1172 src/editor/PropsPanel.cpp:1207 src/editor/main.cpp:953
 msgid "Duplicar"
 msgstr "प्रति बनाएँ"
 
-#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+#: src/capture/main.cpp:1174 src/editor/PropsPanel.cpp:1210
 msgid "Excluir"
 msgstr "हटाएँ"
 
-#: src/capture/main.cpp:1094
+#: src/capture/main.cpp:1182
 msgid "Adicionar atalho"
 msgstr "शॉर्टकट जोड़ें"
 
-#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+#: src/capture/main.cpp:1333 src/editor/main.cpp:1984
 msgid "Gravar"
 msgstr "रिकॉर्ड करें"
 
-#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047
+#: src/capture/main.cpp:1348 src/capture/main.cpp:1358 src/editor/PropsPanel.cpp:1215 src/editor/PropsPanel.cpp:1226
 msgid " (cópia)"
 msgstr " (प्रति)"
 
-#: src/capture/main.cpp:1262
+#: src/capture/main.cpp:1350
 #, c-format
 msgid "Preset %zu"
 msgstr "प्रीसेट %zu"
 
-#: src/capture/main.cpp:1264
+#: src/capture/main.cpp:1352
 msgid "Novo preset"
 msgstr "नया प्रीसेट"
 
-#: src/capture/main.cpp:1277
+#: src/capture/main.cpp:1365
 msgid "É preciso manter pelo menos um preset."
 msgstr "कम से कम एक प्रीसेट रखना ज़रूरी है।"
 
-#: src/capture/main.cpp:1278
+#: src/capture/main.cpp:1366
 #, c-format
 msgid "Excluir o preset \"%s\"?"
 msgstr "प्रीसेट \"%s\" हटाएँ?"
 
-#: src/capture/main.cpp:1337
+#: src/capture/main.cpp:1425
 msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
 msgstr "Snapnab प्रीसेट (*.snappresets;*.xml)|*.snappresets;*.xml|"
 
-#: src/capture/main.cpp:1341
+#: src/capture/main.cpp:1429
 msgid "Presets importados."
 msgstr "प्रीसेट आयात किए गए।"
 
-#: src/capture/main.cpp:1342
+#: src/capture/main.cpp:1430
 msgid "Arquivo de presets inválido."
 msgstr "अमान्य प्रीसेट फ़ाइल।"
 
-#: src/capture/main.cpp:1347
+#: src/capture/main.cpp:1435
 msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
 msgstr "Snapnab प्रीसेट (*.snappresets)|*.snappresets|"
 
-#: src/capture/main.cpp:1351
+#: src/capture/main.cpp:1439
 msgid "Não foi possível exportar."
 msgstr "निर्यात नहीं किया जा सका।"
 
-#: src/capture/main.cpp:1360
+#: src/capture/main.cpp:1452
 msgid "Há uma gravação em andamento. Parar e sair?"
 msgstr "रिकॉर्डिंग चल रही है। रोकें और बाहर निकलें?"
 
-#: src/capture/main.cpp:1461
+#: src/capture/main.cpp:1553
 msgid "Gravar vídeo  ("
 msgstr "वीडियो रिकॉर्ड करें  ("
 
-#: src/capture/main.cpp:1461
+#: src/capture/main.cpp:1553
 msgid "Capturar imagem  ("
 msgstr "छवि कैप्चर करें  ("
 
@@ -1182,7 +1282,7 @@ msgstr "छवियाँ और दस्तावेज़ (*.snap;*.png;*.jp
 msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
 msgstr "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Snapnab दस्तावेज़ (*.snap)|*.snap|"
 
-#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:21
 msgid "Imagem vazia."
 msgstr "खाली छवि।"
 
@@ -1194,114 +1294,228 @@ msgstr "Windows में कोई OCR भाषा स्थापित न�
 msgid "Falha desconhecida no OCR."
 msgstr "अज्ञात OCR त्रुटि।"
 
-#: src/common/Ui.cpp:247
+#: src/common/Settings.cpp:130
+msgid "Não foi possível gravar o arquivo."
+msgstr "फ़ाइल नहीं लिखी जा सकी।"
+
+#: src/common/Settings.cpp:168
+msgid "Não foi possível gravar "
+msgstr "नहीं लिखा जा सका: "
+
+#: src/common/Ui.cpp:260
 msgid "OK"
 msgstr "ठीक है"
 
-#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+#: src/common/Ui.cpp:325 src/editor/main.cpp:1985
 msgid "Copiar tudo"
 msgstr "सब कॉपी करें"
 
-#: src/common/Util.cpp:340
+#: src/common/Util.cpp:322
+msgid "O manual não foi encontrado:\n"
+msgstr "मैनुअल नहीं मिला:\n"
+
+#: src/common/Util.cpp:398
 msgid "(nenhum)"
 msgstr "(कोई नहीं)"
 
-#: src/common/Util.cpp:349
+#: src/common/Util.cpp:407
 msgid "Print Screen"
 msgstr "Print Screen"
 
-#: src/editor/Canvas.cpp:13
+#: src/editor/Canvas.cpp:14
 msgid "Mover"
 msgstr "खिसकाएँ"
 
-#: src/editor/Canvas.cpp:14
+#: src/editor/Canvas.cpp:15 src/editor/LayersPanel.cpp:44 src/editor/LayersPanel.cpp:44
 msgid "Seta"
 msgstr "तीर"
 
-#: src/editor/Canvas.cpp:15
+#: src/editor/Canvas.cpp:16 src/editor/LayersPanel.cpp:45
 msgid "Linha"
 msgstr "रेखा"
 
-#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540
+#: src/editor/Canvas.cpp:17 src/editor/PropsPanel.cpp:562 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596
 msgid "Forma"
 msgstr "आकृति"
 
-#: src/editor/Canvas.cpp:17
+#: src/editor/Canvas.cpp:18 src/editor/LayersPanel.cpp:46
 msgid "Caneta"
 msgstr "पेन"
 
-#: src/editor/Canvas.cpp:18
+#: src/editor/Canvas.cpp:19 src/editor/LayersPanel.cpp:47
 msgid "Marcador"
 msgstr "हाइलाइटर"
 
-#: src/editor/Canvas.cpp:20
+#: src/editor/Canvas.cpp:21 src/editor/LayersPanel.cpp:49
 msgid "Balão"
 msgstr "कॉलआउट"
 
-#: src/editor/Canvas.cpp:21
+#: src/editor/Canvas.cpp:22
 msgid "Passos"
 msgstr "चरण"
 
-#: src/editor/Canvas.cpp:22
+#: src/editor/Canvas.cpp:23 src/editor/LayersPanel.cpp:51
 msgid "Carimbo"
 msgstr "मुहर"
 
-#: src/editor/Canvas.cpp:23
+#: src/editor/Canvas.cpp:24
 msgid "Ocultar"
 msgstr "छिपाएँ"
 
-#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+#: src/editor/Canvas.cpp:25 src/editor/LayersPanel.cpp:54 src/editor/main.cpp:1695
 msgid "Destaque"
 msgstr "स्पॉटलाइट"
 
-#: src/editor/Canvas.cpp:25
+#: src/editor/Canvas.cpp:26 src/editor/LayersPanel.cpp:55
 msgid "Lupa"
 msgstr "आवर्धक"
 
-#: src/editor/Canvas.cpp:26
+#: src/editor/Canvas.cpp:27
 msgid "Preencher"
 msgstr "भरें"
 
-#: src/editor/Canvas.cpp:27
+#: src/editor/Canvas.cpp:28
 msgid "Borracha"
 msgstr "इरेज़र"
 
-#: src/editor/Canvas.cpp:28
+#: src/editor/Canvas.cpp:29
 msgid "Cortar"
 msgstr "क्रॉप"
 
-#: src/editor/Canvas.cpp:29
+#: src/editor/Canvas.cpp:30
 msgid "Seleção"
 msgstr "चयन"
 
-#: src/editor/Canvas.cpp:30
+#: src/editor/Canvas.cpp:31
 msgid "Recortar faixa"
 msgstr "पट्टी काटें"
 
-#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:605
 msgid "Conta-gotas"
 msgstr "रंग पिकर"
 
-#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:1017
 msgid "Favoritos"
 msgstr "पसंदीदा"
 
-#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+#: src/editor/Canvas.cpp:34 src/editor/PropsPanel.cpp:294
 msgid "Varinha mágica"
 msgstr "जादू की छड़ी"
 
-#: src/editor/Canvas.cpp:325
+#: src/editor/Canvas.cpp:684
 msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
 msgstr "कोई कैप्चर खुला नहीं है — “कैप्चर” का उपयोग करें या कोई फ़ाइल खोलें (Ctrl+O)।"
 
-#: src/editor/Canvas.cpp:350
+#: src/editor/Canvas.cpp:709
 msgid "Prévia — Aplicar ou Cancelar no painel"
 msgstr "पूर्वावलोकन — पैनल में लागू करें या रद्द करें"
 
-#: src/editor/Canvas.cpp:452
+#: src/editor/Canvas.cpp:758
+msgid "(duplo clique abre)"
+msgstr "(डबल क्लिक से खुलता है)"
+
+#: src/editor/Canvas.cpp:845
 #, c-format
 msgid "%d × %d  — Enter aplica, Esc cancela"
 msgstr "%d × %d  — Enter लागू करता है, Esc रद्द करता है"
+
+#: src/editor/Canvas.cpp:1054
+msgid "Objetos bloqueados não são excluídos (desbloqueie pelo menu de contexto ou pelo painel Camadas)."
+msgstr "लॉक किए गए ऑब्जेक्ट हटाए नहीं जाते (संदर्भ मेनू या लेयर पैनल से अनलॉक करें)।"
+
+#: src/editor/Canvas.cpp:1197
+msgid "Selecione 3 ou mais objetos para distribuir."
+msgstr "वितरित करने के लिए 3 या अधिक ऑब्जेक्ट चुनें।"
+
+#: src/editor/Canvas.cpp:1855
+msgid "Clique nos cantos do polígono; clique no primeiro ponto, dê um duplo clique ou tecle Enter para fechar (Esc cancela)."
+msgstr "बहुभुज के कोनों पर क्लिक करें; बंद करने के लिए पहले बिंदु पर क्लिक करें, डबल क्लिक करें या Enter दबाएँ (Esc रद्द करता है)।"
+
+#: src/editor/Canvas.cpp:1941
+msgid "Objeto bloqueado: desbloqueie para mover."
+msgstr "लॉक किया गया ऑब्जेक्ट: खिसकाने के लिए अनलॉक करें।"
+
+#: src/editor/Canvas.cpp:2096
+msgid "Digite para escrever um texto na ponta inicial da seta."
+msgstr "तीर के आरंभ पर पाठ लिखने के लिए टाइप करें।"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53 src/editor/PropsPanel.cpp:294
+msgid "Retângulo"
+msgstr "आयत"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53
+msgid "Retângulo arredondado"
+msgstr "गोल कोनों वाला आयत"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53 src/editor/PropsPanel.cpp:294
+msgid "Elipse"
+msgstr "दीर्घवृत्त"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53
+msgid "Triângulo"
+msgstr "त्रिभुज"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:53
+msgid "Losango"
+msgstr "समचतुर्भुज"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Paralelogramo"
+msgstr "समांतर चतुर्भुज"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Hexágono"
+msgstr "षट्भुज"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Estrela"
+msgstr "तारा"
+
+#: src/editor/LayersPanel.cpp:50
+#, c-format
+msgid "Passo %s"
+msgstr "चरण %s"
+
+#: src/editor/LayersPanel.cpp:52 src/editor/PropsPanel.cpp:300 src/editor/PropsPanel.cpp:590 src/editor/PropsPanel.cpp:1285
+msgid "Desfoque"
+msgstr "धुंधला"
+
+#: src/editor/LayersPanel.cpp:53 src/editor/PropsPanel.cpp:300
+msgid "Pixelado"
+msgstr "पिक्सेलेट"
+
+#: src/editor/LayersPanel.cpp:56
+msgid "Peça solta"
+msgstr "अलग किया टुकड़ा"
+
+#: src/editor/LayersPanel.cpp:57
+#, c-format
+msgid "Grupo (%zu)"
+msgstr "समूह (%zu)"
+
+#: src/editor/LayersPanel.cpp:58
+msgid "Link: "
+msgstr "लिंक: "
+
+#: src/editor/LayersPanel.cpp:222
+msgid "Fundo (imagem)"
+msgstr "पृष्ठभूमि (छवि)"
+
+#: src/editor/LayersPanel.cpp:248 src/editor/main.cpp:1632
+msgid "Camadas"
+msgstr "लेयर"
+
+#: src/editor/LayersPanel.cpp:257
+msgid "Nenhuma imagem aberta."
+msgstr "कोई छवि खुली नहीं है।"
+
+#: src/editor/LayersPanel.cpp:262
+msgid "Os objetos desenhados (setas, textos, formas…) aparecem aqui, do mais à frente ao mais atrás."
+msgstr "बनाए गए ऑब्जेक्ट (तीर, पाठ, आकृतियाँ…) यहाँ सबसे आगे वाले से सबसे पीछे वाले तक दिखते हैं।"
+
+#: src/editor/LayersPanel.cpp:366
+msgid "Objeto oculto: clique no olho para mostrá-lo."
+msgstr "छिपा ऑब्जेक्ट: दिखाने के लिए आँख पर क्लिक करें।"
 
 #: src/editor/Panels.cpp:251
 msgid "Mais"
@@ -1367,1962 +1581,2195 @@ msgstr "जोड़ें"
 msgid "Excluir este efeito rápido"
 msgstr "यह त्वरित प्रभाव हटाएँ"
 
-#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+#: src/editor/Panels.cpp:1145
+msgid "Pesquisar por nome"
+msgstr "नाम से खोजें"
+
+#: src/editor/Panels.cpp:1158 src/editor/PropsPanel.cpp:1215 src/editor/PropsPanel.cpp:1585 src/editor/main.cpp:1408
+msgid "Nome"
+msgstr "नाम"
+
+#: src/editor/Panels.cpp:1159
+msgid "Aparece na bandeja e na biblioteca. Vazio mostra a data."
+msgstr "ट्रे और लाइब्रेरी में दिखता है। खाली छोड़ने पर तारीख दिखती है।"
+
+#: src/editor/Panels.cpp:1160
+msgid "Renomear captura"
+msgstr "कैप्चर का नाम बदलें"
+
+#: src/editor/Panels.cpp:1687 src/editor/main.cpp:1575
 msgid "Capturas recentes"
 msgstr "हाल के कैप्चर"
 
-#: src/editor/Panels.cpp:1650
+#: src/editor/Panels.cpp:1687
 #, c-format
 msgid "Biblioteca  •  %zu capturas"
 msgstr "लाइब्रेरी  •  %zu कैप्चर"
 
-#: src/editor/Panels.cpp:1651
+#: src/editor/Panels.cpp:1688
 #, c-format
 msgid "  •  %d selecionadas"
 msgstr "  •  %d चुने गए"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 #, c-format
 msgid "Exportar (%d)…"
 msgstr "निर्यात (%d)…"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 #, c-format
 msgid "Excluir (%d)"
 msgstr "हटाएँ (%d)"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 msgid "Limpar seleção"
 msgstr "चयन साफ़ करें"
 
-#: src/editor/Panels.cpp:1661
+#: src/editor/Panels.cpp:1698
 msgid "Biblioteca"
 msgstr "लाइब्रेरी"
 
-#: src/editor/Panels.cpp:1661
+#: src/editor/Panels.cpp:1698
 msgid "Voltar ao editor"
 msgstr "एडिटर पर लौटें"
 
-#: src/editor/Panels.cpp:1666
+#: src/editor/Panels.cpp:1703
 msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
 msgstr "कोई हाल का कैप्चर नहीं। Snapnab से कैप्चर करें (Print Screen) या फ़ाइलें यहाँ छोड़ें।"
 
-#: src/editor/Panels.cpp:1667
+#: src/editor/Panels.cpp:1704
+msgid "Nenhuma captura com esse nome."
+msgstr "इस नाम का कोई कैप्चर नहीं।"
+
+#: src/editor/Panels.cpp:1704
 msgid "A biblioteca está vazia."
 msgstr "लाइब्रेरी खाली है।"
 
-#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+#: src/editor/Panels.cpp:1898 src/editor/main.cpp:952
 msgid "Abrir"
 msgstr "खोलें"
 
-#: src/editor/Panels.cpp:1822
+#: src/editor/Panels.cpp:1899
 msgid "Mostrar na pasta"
 msgstr "फ़ोल्डर में दिखाएँ"
 
-#: src/editor/Panels.cpp:1825
+#: src/editor/Panels.cpp:1902
 #, c-format
 msgid "Exportar %zu itens…"
 msgstr "%zu आइटम निर्यात करें…"
 
-#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+#: src/editor/Panels.cpp:1902 src/editor/PropsPanel.cpp:1208
 msgid "Exportar…"
 msgstr "निर्यात करें…"
 
-#: src/editor/Panels.cpp:1826
+#: src/editor/Panels.cpp:1903
 msgid "Selecionar tudo\tCtrl+A"
 msgstr "सब चुनें\tCtrl+A"
 
-#: src/editor/Panels.cpp:1827
+#: src/editor/Panels.cpp:1904
+msgid "Renomear…\tF2"
+msgstr "नाम बदलें…\tF2"
+
+#: src/editor/Panels.cpp:1905
 msgid "Remover da bandeja"
 msgstr "ट्रे से हटाएँ"
 
-#: src/editor/Panels.cpp:1827
+#: src/editor/Panels.cpp:1905
 msgid "Remover da bandeja (continua na biblioteca)"
 msgstr "ट्रे से हटाएँ (लाइब्रेरी में बना रहेगा)"
 
-#: src/editor/Panels.cpp:1829
+#: src/editor/Panels.cpp:1907
 #, c-format
 msgid "Excluir %zu itens (Lixeira)\tDel"
 msgstr "%zu आइटम हटाएँ (रीसायकल बिन)\tDel"
 
-#: src/editor/Panels.cpp:1829
+#: src/editor/Panels.cpp:1907
 msgid "Excluir (Lixeira)\tDel"
 msgstr "हटाएँ (रीसायकल बिन)\tDel"
 
-#: src/editor/Pdf.cpp:11
+#: src/editor/Panels.cpp:1994
+#, c-format
+msgid "Vídeo  •  %lld:%02lld  •  %d × %d"
+msgstr "वीडियो  •  %lld:%02lld  •  %d × %d"
+
+#: src/editor/Pdf.cpp:23
 msgid "Falha ao codificar a imagem."
 msgstr "छवि एनकोड करने में विफल।"
 
-#: src/editor/Pdf.cpp:44
+#: src/editor/Pdf.cpp:71
 msgid "Não foi possível criar o arquivo."
 msgstr "फ़ाइल नहीं बनाई जा सकी।"
 
-#: src/editor/Pdf.cpp:48
+#: src/editor/Pdf.cpp:75
 msgid "Falha ao gravar o arquivo."
 msgstr "फ़ाइल लिखने में विफल।"
 
-#: src/editor/Popups.cpp:253
+#: src/editor/Popups.cpp:231 src/editor/PropsPanel.cpp:613 src/editor/PropsPanel.cpp:636
+msgid "Tipo"
+msgstr "प्रकार"
+
+#: src/editor/Popups.cpp:231
+msgid "Linear"
+msgstr "रैखिक"
+
+#: src/editor/Popups.cpp:231
+msgid "Radial (do centro)"
+msgstr "त्रिज्यीय (केंद्र से)"
+
+#: src/editor/Popups.cpp:232
+msgid "Ângulo (graus)"
+msgstr "कोण (डिग्री)"
+
+#: src/editor/Popups.cpp:233
+msgid "Cor inicial"
+msgstr "आरंभिक रंग"
+
+#: src/editor/Popups.cpp:234
+msgid "Cor final"
+msgstr "अंतिम रंग"
+
+#: src/editor/Popups.cpp:235
+msgid "Cor intermediária"
+msgstr "मध्य रंग"
+
+#: src/editor/Popups.cpp:237 src/editor/Popups.cpp:240
+msgid "Posição (%)"
+msgstr "स्थिति (%)"
+
+#: src/editor/Popups.cpp:238
+msgid "Segunda cor intermediária"
+msgstr "दूसरा मध्य रंग"
+
+#: src/editor/Popups.cpp:241
+msgid "O ângulo vale para o gradiente linear: 0° da esquerda para a direita, 90° de cima para baixo."
+msgstr "कोण रैखिक ग्रेडिएंट पर लागू होता है: 0° बाएँ से दाएँ, 90° ऊपर से नीचे।"
+
+#: src/editor/Popups.cpp:242
+msgid "Gradiente"
+msgstr "ग्रेडिएंट"
+
+#: src/editor/Popups.cpp:308
 msgid "Cores do tema"
 msgstr "थीम के रंग"
 
-#: src/editor/Popups.cpp:255
+#: src/editor/Popups.cpp:310
 msgid "Cores padrão"
 msgstr "मानक रंग"
 
-#: src/editor/Popups.cpp:256
+#: src/editor/Popups.cpp:311
 msgid "Recentes"
 msgstr "हाल के"
 
-#: src/editor/Popups.cpp:265
+#: src/editor/Popups.cpp:312
+msgid "Gradientes"
+msgstr "ग्रेडिएंट"
+
+#: src/editor/Popups.cpp:335
 msgid "Sem cor"
 msgstr "कोई रंग नहीं"
 
-#: src/editor/Popups.cpp:265
+#: src/editor/Popups.cpp:335
+msgid "Editar gradiente…"
+msgstr "ग्रेडिएंट संपादित करें…"
+
+#: src/editor/Popups.cpp:335
 msgid "Mais cores…"
 msgstr "और रंग…"
 
-#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
-msgid "Retângulo"
-msgstr "आयत"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Retângulo arredondado"
-msgstr "गोल कोनों वाला आयत"
-
-#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
-msgid "Elipse"
-msgstr "दीर्घवृत्त"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Triângulo"
-msgstr "त्रिभुज"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Losango"
-msgstr "समचतुर्भुज"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Paralelogramo"
-msgstr "समांतर चतुर्भुज"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Hexágono"
-msgstr "षट्भुज"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Estrela"
-msgstr "तारा"
-
-#: src/editor/PropsPanel.cpp:97
+#: src/editor/PropsPanel.cpp:118
 msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
 msgstr "तीर बनाने के लिए खींचें। Shift 45° पर रोकता है। “बेज़ियर वक्र” के साथ, मोड़ने के लिए बीच का हैंडल खींचें।"
 
-#: src/editor/PropsPanel.cpp:98
+#: src/editor/PropsPanel.cpp:119
 msgid "Arraste para desenhar uma linha. Shift trava em 45°."
 msgstr "रेखा बनाने के लिए खींचें। Shift 45° पर रोकता है।"
 
-#: src/editor/PropsPanel.cpp:99
-msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
-msgstr "आकृति बनाने के लिए खींचें। Shift अनुपात बनाए रखता है (वर्ग, वृत्त)।"
+#: src/editor/PropsPanel.cpp:120
+msgid "Arraste para desenhar a forma. Shift deixa a forma perfeita (quadrado, círculo, triângulo equilátero, hexágono regular)."
+msgstr "आकृति बनाने के लिए खींचें। Shift उसे सटीक बनाता है (वर्ग, वृत्त, समबाहु त्रिभुज, सम षट्भुज)।"
 
-#: src/editor/PropsPanel.cpp:100
+#: src/editor/PropsPanel.cpp:121
 msgid "Arraste para desenhar à mão livre."
 msgstr "मुक्तहस्त बनाने के लिए खींचें।"
 
-#: src/editor/PropsPanel.cpp:101
-msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
-msgstr "जिसे हाइलाइट करना है उस पर आयत खींचें। रंग और अपारदर्शिता गुणों से आते हैं।"
+#: src/editor/PropsPanel.cpp:122
+msgid "Arraste sobre o que quer destacar. Em Forma, escolha retângulo, elipse, polígono (clique nos cantos) ou mão livre; Shift deixa a forma perfeita."
+msgstr "जिसे हाइलाइट करना है उस पर खींचें। आकृति में आयत, दीर्घवृत्त, बहुभुज (कोनों पर क्लिक करें) या मुक्तहस्त चुनें; Shift आकृति को सटीक बनाता है।"
 
-#: src/editor/PropsPanel.cpp:102
+#: src/editor/PropsPanel.cpp:123
 msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
 msgstr "पाठ बॉक्स बनाने के लिए क्लिक करें या खींचें। डबल-क्लिक पाठ संपादित करता है।"
 
-#: src/editor/PropsPanel.cpp:103
+#: src/editor/PropsPanel.cpp:124
 msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
 msgstr "कॉलआउट बनाने के लिए खींचें और टाइप करें। पीला हैंडल नोक (या तीरों की दिशा) को हिलाता है।"
 
-#: src/editor/PropsPanel.cpp:104
+#: src/editor/PropsPanel.cpp:125
 msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
 msgstr "चरणों को क्रम से गिनने के लिए क्लिक करें। प्रकार अंक, अक्षर या रोमन अंक चुनता है।"
 
-#: src/editor/PropsPanel.cpp:105
+#: src/editor/PropsPanel.cpp:126
 msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
 msgstr "गैलरी में मुहर चुनें और छवि पर क्लिक करें या खींचें। “आयात करें…” आपकी अपनी छवियाँ जोड़ता है।"
 
-#: src/editor/PropsPanel.cpp:106
+#: src/editor/PropsPanel.cpp:127
 msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
 msgstr "मिलते-जुलते रंग वाले क्षेत्र को भरने के लिए क्लिक करें। रंग पिकर छवि से भराव का रंग लेता है।"
 
-#: src/editor/PropsPanel.cpp:107
+#: src/editor/PropsPanel.cpp:128
 msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
 msgstr "छवि के पिक्सेल मिटाने के लिए खींचें (वे पारदर्शी हो जाते हैं)।"
 
-#: src/editor/PropsPanel.cpp:108
+#: src/editor/PropsPanel.cpp:129
 msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
 msgstr "आवर्धक बनाने के लिए खींचें। अलग लेंस के साथ, पीला हैंडल बड़ा किया जाने वाला क्षेत्र चुनता है।"
 
-#: src/editor/PropsPanel.cpp:109
-msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
-msgstr "छिपाने वाले क्षेत्र पर खींचें (धुंधला या पिक्सेलेट)।"
+#: src/editor/PropsPanel.cpp:130
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado). Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita."
+msgstr "छिपाने वाले क्षेत्र पर खींचें (धुंधला या पिक्सेलेट)। आकृति में दीर्घवृत्त, बहुभुज या मुक्तहस्त चुनें; Shift आकृति को सटीक बनाता है।"
 
-#: src/editor/PropsPanel.cpp:110
-msgid "Arraste a área em destaque; o resto da imagem escurece."
-msgstr "उभारे जाने वाले क्षेत्र को खींचें; बाकी छवि गहरी हो जाती है।"
+#: src/editor/PropsPanel.cpp:131
+msgid "Arraste a área em destaque; o resto escurece. Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita."
+msgstr "उभारे जाने वाले क्षेत्र को खींचें; बाकी गहरा हो जाता है। आकृति में दीर्घवृत्त, बहुभुज या मुक्तहस्त चुनें; Shift आकृति को सटीक बनाता है।"
 
-#: src/editor/PropsPanel.cpp:111
+#: src/editor/PropsPanel.cpp:132
 msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
 msgstr "किसी ऑब्जेक्ट को चुनने और खींचने के लिए उस पर क्लिक करें। Smart Move के साथ, छवि का कोई क्षेत्र खिसकाने के लिए उसे खींचें; पृष्ठभूमि भर दी जाती है।"
 
-#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+#: src/editor/PropsPanel.cpp:133 src/editor/PropsPanel.cpp:651
 msgid "Arraste a área a manter; Enter ou duplo clique aplica."
 msgstr "रखा जाने वाला क्षेत्र खींचें; Enter या डबल-क्लिक लागू करता है।"
 
-#: src/editor/PropsPanel.cpp:113
+#: src/editor/PropsPanel.cpp:134
 msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
 msgstr "खिसकाने के लिए चुनें और खींचें (Smart Move); Del मिटाता है; Ctrl+C कॉपी करता है।"
 
-#: src/editor/PropsPanel.cpp:114
+#: src/editor/PropsPanel.cpp:135
 msgid "Arraste sobre a faixa a remover; as partes são unidas."
 msgstr "हटाई जाने वाली पट्टी पर खींचें; बाकी हिस्से जुड़ जाते हैं।"
 
-#: src/editor/PropsPanel.cpp:115
+#: src/editor/PropsPanel.cpp:136
 msgid "Clique na imagem para pegar a cor."
 msgstr "रंग लेने के लिए छवि पर क्लिक करें।"
 
-#: src/editor/PropsPanel.cpp:250
+#: src/editor/PropsPanel.cpp:287
 msgid "Pesquisar carimbos"
 msgstr "मुहरें खोजें"
 
-#: src/editor/PropsPanel.cpp:255
+#: src/editor/PropsPanel.cpp:292
 msgid "I, II, III…"
 msgstr "I, II, III…"
 
-#: src/editor/PropsPanel.cpp:255
+#: src/editor/PropsPanel.cpp:292
 msgid "i, ii, iii…"
 msgstr "i, ii, iii…"
 
-#: src/editor/PropsPanel.cpp:257
+#: src/editor/PropsPanel.cpp:294
 msgid "Laço (mão livre)"
 msgstr "लैसो (मुक्तहस्त)"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Transparência"
 msgstr "पारदर्शिता"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Cor do canvas (branco)"
 msgstr "कैनवास का रंग (सफ़ेद)"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Preenchimento inteligente"
 msgstr "स्मार्ट भराव"
 
-#: src/editor/PropsPanel.cpp:261
+#: src/editor/PropsPanel.cpp:298
 msgid "Horizontal (remove linhas)"
 msgstr "क्षैतिज (पंक्तियाँ हटाता है)"
 
-#: src/editor/PropsPanel.cpp:261
+#: src/editor/PropsPanel.cpp:298
 msgid "Vertical (remove colunas)"
 msgstr "लंबवत (स्तंभ हटाता है)"
 
-#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460
-msgid "Desfoque"
-msgstr "धुंधला"
-
-#: src/editor/PropsPanel.cpp:263
-msgid "Pixelado"
-msgstr "पिक्सेलेट"
-
-#: src/editor/PropsPanel.cpp:264
+#: src/editor/PropsPanel.cpp:301
 msgid "Organizar carimbos…"
 msgstr "मुहरें व्यवस्थित करें…"
 
-#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+#: src/editor/PropsPanel.cpp:302 src/editor/PropsPanel.cpp:337
 msgid "Importar…"
 msgstr "आयात करें…"
 
-#: src/editor/PropsPanel.cpp:269
+#: src/editor/PropsPanel.cpp:306
 msgid "Trazer para a frente"
 msgstr "आगे लाएँ"
 
-#: src/editor/PropsPanel.cpp:270
+#: src/editor/PropsPanel.cpp:307
 msgid "Enviar para trás"
 msgstr "पीछे भेजें"
 
-#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+#: src/editor/PropsPanel.cpp:308 src/editor/main.cpp:954
 msgid "Excluir objeto"
 msgstr "ऑब्जेक्ट हटाएँ"
 
-#: src/editor/PropsPanel.cpp:272
+#: src/editor/PropsPanel.cpp:309
 msgid "Agrupar"
 msgstr "समूह बनाएँ"
 
-#: src/editor/PropsPanel.cpp:273
+#: src/editor/PropsPanel.cpp:310
 msgid "Desagrupar"
 msgstr "समूह तोड़ें"
 
-#: src/editor/PropsPanel.cpp:294
+#: src/editor/PropsPanel.cpp:311 src/editor/PropsPanel.cpp:702 src/editor/main.cpp:966
+msgid "Bloquear"
+msgstr "लॉक करें"
+
+#: src/editor/PropsPanel.cpp:312
+msgid "Levantar a seleção (peça solta)"
+msgstr "चयन उठाएँ (अलग टुकड़ा)"
+
+#: src/editor/PropsPanel.cpp:313
+msgid "Soltar a peça na imagem"
+msgstr "टुकड़े को छवि में छोड़ें"
+
+#: src/editor/PropsPanel.cpp:336
 msgid "Novo tema…"
 msgstr "नई थीम…"
 
-#: src/editor/PropsPanel.cpp:351
+#: src/editor/PropsPanel.cpp:412
 msgid "Aplicar recorte"
 msgstr "कटौती लागू करें"
 
-#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+#: src/editor/PropsPanel.cpp:412 src/editor/main.cpp:957
 msgid "Corte automático"
 msgstr "स्वतः ट्रिम"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Cortar para a seleção"
 msgstr "चयन तक क्रॉप करें"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Copiar seleção"
 msgstr "चयन कॉपी करें"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Excluir seleção"
 msgstr "चयन हटाएँ"
 
-#: src/editor/PropsPanel.cpp:378
+#: src/editor/PropsPanel.cpp:439
 msgid "Tema:"
 msgstr "थीम:"
 
-#: src/editor/PropsPanel.cpp:446
+#: src/editor/PropsPanel.cpp:508
 msgid "Ponta inicial"
 msgstr "शुरुआती सिरा"
 
-#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+#: src/editor/PropsPanel.cpp:509 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:513 src/editor/PropsPanel.cpp:582
 msgid "Tracejado"
 msgstr "डैश"
 
-#: src/editor/PropsPanel.cpp:448
+#: src/editor/PropsPanel.cpp:510
 msgid "Ponta final"
 msgstr "अंतिम सिरा"
 
-#: src/editor/PropsPanel.cpp:456
+#: src/editor/PropsPanel.cpp:518
 msgid "Avançado"
 msgstr "उन्नत"
 
-#: src/editor/PropsPanel.cpp:462
+#: src/editor/PropsPanel.cpp:524
 msgid "Alinhamento"
 msgstr "संरेखण"
 
-#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495
+#: src/editor/PropsPanel.cpp:528 src/editor/PropsPanel.cpp:545 src/editor/PropsPanel.cpp:559 src/editor/PropsPanel.cpp:563
 msgid "Opacidade"
 msgstr "अपारदर्शिता"
 
-#: src/editor/PropsPanel.cpp:467
+#: src/editor/PropsPanel.cpp:529
 msgid "Margem interna"
 msgstr "भीतरी हाशिया"
 
-#: src/editor/PropsPanel.cpp:468
+#: src/editor/PropsPanel.cpp:530
+msgid "Espaçamento entre linhas (%)"
+msgstr "पंक्ति अंतर (%)"
+
+#: src/editor/PropsPanel.cpp:531
 msgid "Sombreado (degradê)"
 msgstr "छायांकित (ग्रेडिएंट)"
 
-#: src/editor/PropsPanel.cpp:474
+#: src/editor/PropsPanel.cpp:537
 #, c-format
 msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
 msgstr "%d ऑब्जेक्ट चुने गए। शैली के बदलाव अंतिम क्लिक किए गए ऑब्जेक्ट के प्रकार वाले ऑब्जेक्ट पर लागू होते हैं।"
 
-#: src/editor/PropsPanel.cpp:475
+#: src/editor/PropsPanel.cpp:538
 #, c-format
 msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
 msgstr "%zu ऑब्जेक्ट का समूह: खिसकाने के लिए खींचें, आकार बदलने के लिए हैंडल का उपयोग करें।"
 
-#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+#: src/editor/PropsPanel.cpp:544 src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:622 src/editor/main.cpp:1664
 msgid "Largura"
 msgstr "चौड़ाई"
 
-#: src/editor/PropsPanel.cpp:483
+#: src/editor/PropsPanel.cpp:546
 msgid "Tamanho inicial"
 msgstr "शुरुआती आकार"
 
-#: src/editor/PropsPanel.cpp:484
+#: src/editor/PropsPanel.cpp:547
 msgid "Tamanho final"
 msgstr "अंतिम आकार"
 
-#: src/editor/PropsPanel.cpp:485
+#: src/editor/PropsPanel.cpp:548
 msgid "Curva de Bézier"
 msgstr "बेज़ियर वक्र"
 
-#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534
+#: src/editor/PropsPanel.cpp:550
+msgid "Fonte do texto"
+msgstr "पाठ का फ़ॉन्ट"
+
+#: src/editor/PropsPanel.cpp:551
+msgid "Tamanho do texto"
+msgstr "पाठ का आकार"
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Depois de desenhar a seta, digite para escrever um texto na ponta inicial; duplo clique edita."
+msgstr "तीर बनाने के बाद आरंभ पर पाठ लिखने के लिए टाइप करें; डबल क्लिक से संपादित करें।"
+
+#: src/editor/PropsPanel.cpp:566 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596 src/editor/PropsPanel.cpp:605
 msgid "Preenchimento"
 msgstr "भराव"
 
-#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+#: src/editor/PropsPanel.cpp:566 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596 src/editor/PropsPanel.cpp:616
 msgid "Contorno"
 msgstr "रूपरेखा"
 
-#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+#: src/editor/PropsPanel.cpp:567 src/editor/PropsPanel.cpp:575
 msgid "Fonte"
 msgstr "फ़ॉन्ट"
 
-#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+#: src/editor/PropsPanel.cpp:568 src/editor/PropsPanel.cpp:579
 msgid "Tamanho da fonte"
 msgstr "फ़ॉन्ट आकार"
 
-#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+#: src/editor/PropsPanel.cpp:569 src/editor/PropsPanel.cpp:580 src/editor/PropsPanel.cpp:597 src/editor/PropsPanel.cpp:629
 msgid "Espessura"
 msgstr "मोटाई"
 
-#: src/editor/PropsPanel.cpp:513
+#: src/editor/PropsPanel.cpp:581
 msgid "Estilo da seta"
 msgstr "तीर की शैली"
 
-#: src/editor/PropsPanel.cpp:515
+#: src/editor/PropsPanel.cpp:583
 msgid "Ponta"
 msgstr "सिरा"
 
-#: src/editor/PropsPanel.cpp:517
+#: src/editor/PropsPanel.cpp:585
 msgid "Cor da seta"
 msgstr "तीर का रंग"
 
-#: src/editor/PropsPanel.cpp:520
+#: src/editor/PropsPanel.cpp:588
 msgid "Tamanho da seta"
 msgstr "तीर का आकार"
 
-#: src/editor/PropsPanel.cpp:537
+#: src/editor/PropsPanel.cpp:589
+msgid "Desfocar o fundo (vidro fosco)"
+msgstr "पृष्ठभूमि धुंधली करें (फ्रॉस्टेड ग्लास)"
+
+#: src/editor/PropsPanel.cpp:591
+msgid "Opacidade do preenchimento"
+msgstr "भराव की अपारदर्शिता"
+
+#: src/editor/PropsPanel.cpp:608
 msgid "Mesma cor em toda a imagem"
 msgstr "पूरी छवि में एक ही रंग"
 
-#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+#: src/editor/PropsPanel.cpp:611 src/editor/main.cpp:1706
 msgid "Cor do texto"
 msgstr "पाठ का रंग"
 
-#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
-msgid "Tipo"
-msgstr "प्रकार"
-
-#: src/editor/PropsPanel.cpp:543
+#: src/editor/PropsPanel.cpp:614
 msgid "Reiniciar a sequência"
 msgstr "क्रम फिर से शुरू करें"
 
-#: src/editor/PropsPanel.cpp:548
+#: src/editor/PropsPanel.cpp:619
+msgid "Espessura do contorno"
+msgstr "रूपरेखा की मोटाई"
+
+#: src/editor/PropsPanel.cpp:624
 msgid "Suavizar as bordas"
 msgstr "किनारे चिकने करें"
 
-#: src/editor/PropsPanel.cpp:552
+#: src/editor/PropsPanel.cpp:628
 msgid "Ampliação (%)"
 msgstr "आवर्धन (%)"
 
-#: src/editor/PropsPanel.cpp:554
+#: src/editor/PropsPanel.cpp:630
 msgid "Lente separada da área ampliada"
 msgstr "लेंस बड़े क्षेत्र से अलग"
 
-#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+#: src/editor/PropsPanel.cpp:631
+msgid "Lupa realista (aro e reflexo)"
+msgstr "वास्तविक आवर्धक (रिम और चमक)"
+
+#: src/editor/PropsPanel.cpp:632
+msgid "Com cabo"
+msgstr "हैंडल के साथ"
+
+#: src/editor/PropsPanel.cpp:637 src/editor/PropsPanel.cpp:641 src/editor/main.cpp:1685
 msgid "Intensidade"
 msgstr "तीव्रता"
 
-#: src/editor/PropsPanel.cpp:565
+#: src/editor/PropsPanel.cpp:645
 msgid "Smart Move"
 msgstr "Smart Move"
 
-#: src/editor/PropsPanel.cpp:567
+#: src/editor/PropsPanel.cpp:647
 msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
 msgstr "छवि का कोई क्षेत्र खींचें, फिर उसे दूसरी जगह खींचें; पृष्ठभूमि भर दी जाती है।"
 
-#: src/editor/PropsPanel.cpp:568
+#: src/editor/PropsPanel.cpp:648
 msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
 msgstr "चुनने के लिए किसी ऑब्जेक्ट पर क्लिक करें। कई चुनने के लिए Ctrl+क्लिक करें या आयत खींचें।"
 
-#: src/editor/PropsPanel.cpp:575
+#: src/editor/PropsPanel.cpp:655
 msgid "Modo"
 msgstr "मोड"
 
-#: src/editor/PropsPanel.cpp:577
+#: src/editor/PropsPanel.cpp:657
 msgid "Seleção global (mesma cor)"
 msgstr "वैश्विक चयन (एक जैसा रंग)"
 
-#: src/editor/PropsPanel.cpp:578
+#: src/editor/PropsPanel.cpp:658
 msgid "Ao mover, preencher"
 msgstr "खिसकाते समय भरें"
 
-#: src/editor/PropsPanel.cpp:582
+#: src/editor/PropsPanel.cpp:664
 msgid "Direção"
 msgstr "दिशा"
 
-#: src/editor/PropsPanel.cpp:583
+#: src/editor/PropsPanel.cpp:665
 msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
 msgstr "हटाई जाने वाली पट्टी पर खींचें; छवि के बाकी हिस्से जुड़ जाते हैं।"
 
-#: src/editor/PropsPanel.cpp:587
+#: src/editor/PropsPanel.cpp:669
 msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
 msgstr "रंग लेने के लिए छवि पर क्लिक करें; यह ड्रॉइंग टूल में चला जाता है।"
 
-#: src/editor/PropsPanel.cpp:681
+#: src/editor/PropsPanel.cpp:679
+msgid "Área de corte (px)"
+msgstr "क्रॉप क्षेत्र (px)"
+
+#: src/editor/PropsPanel.cpp:679
+msgid "Seleção (px)"
+msgstr "चयन (px)"
+
+#: src/editor/PropsPanel.cpp:679
+msgid "Posição e tamanho (px)"
+msgstr "स्थिति और आकार (px)"
+
+#: src/editor/PropsPanel.cpp:695
+msgid "L"
+msgstr "चौ"
+
+#: src/editor/PropsPanel.cpp:695
+msgid "A"
+msgstr "ऊँ"
+
+#: src/editor/PropsPanel.cpp:696 src/editor/main.cpp:371
+msgid "Manter proporção"
+msgstr "अनुपात बनाए रखें"
+
+#: src/editor/PropsPanel.cpp:702
+msgid "Desbloquear"
+msgstr "अनलॉक करें"
+
+#: src/editor/PropsPanel.cpp:828
 msgid "Sombra ▾"
 msgstr "छाया ▾"
 
-#: src/editor/PropsPanel.cpp:866
+#: src/editor/PropsPanel.cpp:1017
 msgid "Carimbos"
 msgstr "मुहरें"
 
-#: src/editor/PropsPanel.cpp:866
+#: src/editor/PropsPanel.cpp:1017
 msgid "Estilos rápidos"
 msgstr "त्वरित शैलियाँ"
 
-#: src/editor/PropsPanel.cpp:884
+#: src/editor/PropsPanel.cpp:1035
 msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
 msgstr "किसी त्वरित शैली को पसंदीदा में जोड़ने के लिए उसके तारे पर क्लिक करें।"
 
-#: src/editor/PropsPanel.cpp:885
+#: src/editor/PropsPanel.cpp:1036
 msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
 msgstr "इस श्रेणी में कोई मुहर नहीं है। छवियाँ जोड़ने के लिए “आयात करें…” का उपयोग करें।"
 
-#: src/editor/PropsPanel.cpp:886
+#: src/editor/PropsPanel.cpp:1037
 msgid "Nenhum carimbo encontrado."
 msgstr "कोई मुहर नहीं मिली।"
 
-#: src/editor/PropsPanel.cpp:952
+#: src/editor/PropsPanel.cpp:1115
 msgid "Propriedades da ferramenta"
 msgstr "टूल के गुण"
 
-#: src/editor/PropsPanel.cpp:1012
+#: src/editor/PropsPanel.cpp:1173
+msgid "Desafixar"
+msgstr "पिन हटाएँ"
+
+#: src/editor/PropsPanel.cpp:1173
+msgid "Fixar no topo"
+msgstr "ऊपर पिन करें"
+
+#: src/editor/PropsPanel.cpp:1182
+msgid "Carimbo desafixado."
+msgstr "मुहर से पिन हटाया गया।"
+
+#: src/editor/PropsPanel.cpp:1182
+msgid "Carimbo fixado: aparece primeiro na categoria e em “Fixados”."
+msgstr "मुहर पिन की गई: यह अपनी श्रेणी और “पिन किए गए” में सबसे पहले दिखेगी।"
+
+#: src/editor/PropsPanel.cpp:1191
 msgid "Aplicar este estilo"
 msgstr "यह शैली लागू करें"
 
-#: src/editor/PropsPanel.cpp:1013
+#: src/editor/PropsPanel.cpp:1192
 msgid "Remover dos favoritos"
 msgstr "पसंदीदा से हटाएँ"
 
-#: src/editor/PropsPanel.cpp:1013
+#: src/editor/PropsPanel.cpp:1192
 msgid "Adicionar aos favoritos"
 msgstr "पसंदीदा में जोड़ें"
 
-#: src/editor/PropsPanel.cpp:1014
+#: src/editor/PropsPanel.cpp:1193
 msgid "Excluir este estilo rápido"
 msgstr "यह त्वरित शैली हटाएँ"
 
-#: src/editor/PropsPanel.cpp:1027
+#: src/editor/PropsPanel.cpp:1206
 msgid "Editar uma cópia do tema…"
 msgstr "थीम की प्रति संपादित करें…"
 
-#: src/editor/PropsPanel.cpp:1027
+#: src/editor/PropsPanel.cpp:1206
 msgid "Editar o tema…"
 msgstr "थीम संपादित करें…"
 
-#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
-msgid "Nome"
-msgstr "नाम"
-
-#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#: src/editor/PropsPanel.cpp:1216 src/editor/PropsPanel.cpp:1586
 #, c-format
 msgid "Cor %d"
 msgstr "रंग %d"
 
-#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+#: src/editor/PropsPanel.cpp:1217 src/editor/PropsPanel.cpp:1587
 msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
 msgstr "सभी टूल की त्वरित शैलियाँ इन रंगों से बनाई जाती हैं।"
 
-#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+#: src/editor/PropsPanel.cpp:1218 src/editor/PropsPanel.cpp:1588
 msgid "Novo tema"
 msgstr "नई थीम"
 
-#: src/editor/PropsPanel.cpp:1039
+#: src/editor/PropsPanel.cpp:1218
 msgid "Editar tema"
 msgstr "थीम संपादित करें"
 
-#: src/editor/PropsPanel.cpp:1051
+#: src/editor/PropsPanel.cpp:1230
 msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
 msgstr "Snapnab थीम (*.snaptheme)|*.snaptheme|"
 
-#: src/editor/PropsPanel.cpp:1051
+#: src/editor/PropsPanel.cpp:1230
 msgid "Exportar tema"
 msgstr "थीम निर्यात करें"
 
-#: src/editor/PropsPanel.cpp:1052
+#: src/editor/PropsPanel.cpp:1231
 msgid "Não foi possível exportar o tema."
 msgstr "थीम निर्यात नहीं की जा सकी।"
 
-#: src/editor/PropsPanel.cpp:1056
+#: src/editor/PropsPanel.cpp:1235
 #, c-format
 msgid "Excluir o tema \"%s\"?"
 msgstr "थीम \"%s\" हटाएँ?"
 
-#: src/editor/PropsPanel.cpp:1079
+#: src/editor/PropsPanel.cpp:1258
 msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
 msgstr "रंग पिकर: भराव का रंग लेने के लिए छवि पर क्लिक करें।"
 
-#: src/editor/PropsPanel.cpp:1099
+#: src/editor/PropsPanel.cpp:1282
 msgid "Mostrar sombra"
 msgstr "छाया दिखाएँ"
 
-#: src/editor/PropsPanel.cpp:1100
+#: src/editor/PropsPanel.cpp:1283
 msgid "Cor da sombra…"
 msgstr "छाया का रंग…"
 
-#: src/editor/PropsPanel.cpp:1103
+#: src/editor/PropsPanel.cpp:1286
 msgid "Distância"
 msgstr "दूरी"
 
-#: src/editor/PropsPanel.cpp:1201
+#: src/editor/PropsPanel.cpp:1349
+msgid "Polígono: clique nos cantos; clique no primeiro ponto ou dê um duplo clique para fechar."
+msgstr "बहुभुज: कोनों पर क्लिक करें; बंद करने के लिए पहले बिंदु पर क्लिक या डबल क्लिक करें।"
+
+#: src/editor/PropsPanel.cpp:1349
+msgid "Mão livre: arraste contornando a área."
+msgstr "फ्रीहैंड: क्षेत्र के चारों ओर खींचें।"
+
+#: src/editor/PropsPanel.cpp:1391
 msgid "A sequência de passos recomeça em 1."
 msgstr "चरणों का क्रम फिर से 1 से शुरू होगा।"
 
-#: src/editor/PropsPanel.cpp:1363
+#: src/editor/PropsPanel.cpp:1584
 msgid "Meu tema"
 msgstr "मेरी थीम"
 
-#: src/editor/PropsPanel.cpp:1374
+#: src/editor/PropsPanel.cpp:1595
 msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
 msgstr "Snapnab थीम (*.snaptheme)|*.snaptheme|सभी फ़ाइलें|*.*|"
 
-#: src/editor/PropsPanel.cpp:1374
+#: src/editor/PropsPanel.cpp:1595
 msgid "Importar tema"
 msgstr "थीम आयात करें"
 
-#: src/editor/PropsPanel.cpp:1408
+#: src/editor/PropsPanel.cpp:1630
 #, c-format
 msgid "%d carimbo(s) importado(s) para Meus carimbos."
 msgstr "%d मुहर \"मेरी मुहरें\" में आयात की गईं।"
 
-#: src/editor/QuickStyles.cpp:200
+#: src/editor/PropsPanel.cpp:1641 src/editor/main.cpp:1376
+msgid "Selecione uma área com a ferramenta Seleção para levantá-la."
+msgstr "इसे उठाने के लिए चयन टूल से एक क्षेत्र चुनें।"
+
+#: src/editor/PropsPanel.cpp:1642 src/editor/main.cpp:1377
+msgid "Peça solta: ajuste o resto da imagem (cortar, recortar faixa…), posicione a peça e tecle Enter para soltá-la."
+msgstr "अलग टुकड़ा: बाकी छवि समायोजित करें (क्रॉप, पट्टी हटाएँ…), टुकड़ा रखें और छोड़ने के लिए Enter दबाएँ।"
+
+#: src/editor/PropsPanel.cpp:1646 src/editor/main.cpp:1379
+msgid "Peça solta na imagem."
+msgstr "टुकड़ा छवि में छोड़ा गया।"
+
+#: src/editor/QuickStyles.cpp:229
 msgid "Básico"
 msgstr "मूल"
 
-#: src/editor/QuickStyles.cpp:201
+#: src/editor/QuickStyles.cpp:230
 msgid "Industrial"
 msgstr "औद्योगिक"
 
-#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+#: src/editor/QuickStyles.cpp:247 src/editor/QuickStyles.cpp:339
 msgid "Tema"
 msgstr "थीम"
 
-#: src/editor/QuickStyles.cpp:323
+#: src/editor/QuickStyles.cpp:352
 msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
 msgstr "यह फ़ाइल Snapnab थीम (.snaptheme) नहीं है।"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "Negócios"
 msgstr "व्यवसाय"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "Interface"
 msgstr "इंटरफ़ेस"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "Atividades"
 msgstr "गतिविधियाँ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "Comida e bebida"
 msgstr "भोजन और पेय"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "Feriados"
 msgstr "त्योहार"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "Smileys e pessoas"
 msgstr "स्माइली और लोग"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "Adesivos"
 msgstr "स्टिकर"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "Símbolos"
 msgstr "प्रतीक"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "Viagem e lugares"
 msgstr "यात्रा और स्थान"
 
-#: src/editor/Stamps.cpp:92
+#: src/editor/Stamps.cpp:64
+msgid "Antes"
+msgstr "पहले"
+
+#: src/editor/Stamps.cpp:64
+msgid "Depois"
+msgstr "बाद में"
+
+#: src/editor/Stamps.cpp:64
+msgid "Errado"
+msgstr "गलत"
+
+#: src/editor/Stamps.cpp:64
+msgid "Certo"
+msgstr "सही"
+
+#: src/editor/Stamps.cpp:65
+msgid "Novo"
+msgstr "नया"
+
+#: src/editor/Stamps.cpp:65
+msgid "Atualizado"
+msgstr "अपडेट किया गया"
+
+#: src/editor/Stamps.cpp:65
+msgid "Incorreto"
+msgstr "अनुचित"
+
+#: src/editor/Stamps.cpp:65
+msgid "Correto"
+msgstr "उचित"
+
+#: src/editor/Stamps.cpp:66
+msgid "Sim"
+msgstr "हाँ"
+
+#: src/editor/Stamps.cpp:66
+msgid "Não"
+msgstr "नहीं"
+
+#: src/editor/Stamps.cpp:66
+msgid "Faça"
+msgstr "करें"
+
+#: src/editor/Stamps.cpp:66
+msgid "Não faça"
+msgstr "न करें"
+
+#: src/editor/Stamps.cpp:67
+msgid "Importante"
+msgstr "महत्वपूर्ण"
+
+#: src/editor/Stamps.cpp:67
+msgid "Dica"
+msgstr "सुझाव"
+
+#: src/editor/Stamps.cpp:67
+msgid "Nota"
+msgstr "नोट"
+
+#: src/editor/Stamps.cpp:67
+msgid "Exemplo"
+msgstr "उदाहरण"
+
+#: src/editor/Stamps.cpp:68
+msgid "Rascunho"
+msgstr "मसौदा"
+
+#: src/editor/Stamps.cpp:68
+msgid "Beta"
+msgstr "बीटा"
+
+#: src/editor/Stamps.cpp:68
+msgid "Obsoleto"
+msgstr "अप्रचलित"
+
+#: src/editor/Stamps.cpp:68
+msgid "Em breve"
+msgstr "जल्द आ रहा है"
+
+#: src/editor/Stamps.cpp:184
 msgid "Meus carimbos"
 msgstr "मेरी मुहरें"
 
-#: src/editor/Stamps.cpp:100
+#: src/editor/Stamps.cpp:192
 msgid "Meus carimbos › "
 msgstr "मेरी मुहरें › "
 
-#: src/editor/Stamps.cpp:125
+#: src/editor/Stamps.cpp:198
+msgid "Rótulos"
+msgstr "लेबल"
+
+#: src/editor/Stamps.cpp:208
+msgid "Fixados"
+msgstr "पिन किए गए"
+
+#: src/editor/Stamps.cpp:229
 msgid "Importar carimbos"
 msgstr "मुहरें आयात करें"
 
-#: src/editor/Stamps.cpp:126
+#: src/editor/Stamps.cpp:230
 msgid "Imagens"
 msgstr "छवियाँ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "clipe anexo"
 msgstr "पेपरक्लिप अटैचमेंट"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lupa pesquisar"
 msgstr "आवर्धक खोज"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "engrenagem configurações"
 msgstr "गियर सेटिंग्स"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "relógio hora"
 msgstr "घड़ी समय"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "usuário pessoa"
 msgstr "उपयोगकर्ता व्यक्ति"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "equipe pessoas"
 msgstr "टीम लोग"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cadeado fechado segurança"
 msgstr "बंद ताला सुरक्षा"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cadeado aberto"
 msgstr "खुला ताला"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "marcador"
 msgstr "बुकमार्क"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "sinal wi-fi"
 msgstr "वाई-फ़ाई सिग्नल"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "notebook código"
 msgstr "लैपटॉप कोड"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "baixar download"
 msgstr "डाउनलोड"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "enviar upload"
 msgstr "अपलोड"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "mesclar"
 msgstr "मिलाएँ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "repetir"
 msgstr "दोहराएँ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "gráfico barras"
 msgstr "बार चार्ट"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "crescimento"
 msgstr "वृद्धि"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "queda"
 msgstr "गिरावट"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lista concluído"
 msgstr "सूची पूरी"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "link compartilhar"
 msgstr "लिंक साझा करें"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "reproduzir play"
 msgstr "चलाएँ प्ले"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "parar"
 msgstr "रोकें"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "pausar"
 msgstr "विराम"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "avançar"
 msgstr "आगे बढ़ाएँ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "voltar"
 msgstr "पीछे जाएँ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "dinheiro moedas"
 msgstr "पैसे सिक्के"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cartão pagamento"
 msgstr "कार्ड भुगतान"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "globo internet"
 msgstr "ग्लोब इंटरनेट"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "prêmio medalha"
 msgstr "पुरस्कार पदक"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "caneta"
 msgstr "पेन"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lápis"
 msgstr "पेंसिल"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "documento"
 msgstr "दस्तावेज़"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "nota"
 msgstr "नोट"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "telefone"
 msgstr "फ़ोन"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "e-mail carta"
 msgstr "ईमेल पत्र"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "conversa comentário"
 msgstr "बातचीत टिप्पणी"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "monitor computador"
 msgstr "मॉनिटर कंप्यूटर"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "celular"
 msgstr "मोबाइल फ़ोन"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "mouse"
 msgstr "माउस"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "nuvem"
 msgstr "बादल"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "pasta"
 msgstr "फ़ोल्डर"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "calendário"
 msgstr "कैलेंडर"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "maleta trabalho"
 msgstr "ब्रीफ़केस काम"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "alfinete"
 msgstr "पिन"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lixeira"
 msgstr "रद्दी की टोकरी"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "sino notificação"
 msgstr "घंटी सूचना"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "ideia lâmpada"
 msgstr "विचार बल्ब"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "alvo meta"
 msgstr "निशाना लक्ष्य"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "foguete lançamento"
 msgstr "रॉकेट लॉन्च"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "troféu"
 msgstr "ट्रॉफ़ी"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "concluído certo"
 msgstr "पूरा सही"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "errado fechar"
 msgstr "गलत बंद"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "atenção aviso"
 msgstr "ध्यान चेतावनी"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "informação"
 msgstr "जानकारी"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "pergunta dúvida"
 msgstr "प्रश्न संदेह"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "exclamação importante"
 msgstr "विस्मयादिबोधक महत्वपूर्ण"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "estrela favorito"
 msgstr "तारा पसंदीदा"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "coração"
 msgstr "दिल"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "positivo curtir"
 msgstr "अंगूठा ऊपर पसंद"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "negativo"
 msgstr "अंगूठा नीचे"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta direita"
 msgstr "दायाँ तीर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta esquerda"
 msgstr "बायाँ तीर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta cima"
 msgstr "ऊपर तीर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta baixo"
 msgstr "नीचे तीर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta diagonal"
 msgstr "तिरछा तीर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "atualizar"
 msgstr "रीफ़्रेश"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "adicionar mais"
 msgstr "जोड़ें प्लस"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "remover menos"
 msgstr "हटाएँ माइनस"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "marca certo"
 msgstr "सही का निशान"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "multiplicar fechar"
 msgstr "गुणा बंद"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "vermelho"
 msgstr "लाल"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "laranja"
 msgstr "नारंगी"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "amarelo"
 msgstr "पीला"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "verde"
 msgstr "हरा"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "azul"
 msgstr "नीला"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "roxo"
 msgstr "बैंगनी"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "preto"
 msgstr "काला"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "branco"
 msgstr "सफ़ेद"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado vermelho"
 msgstr "लाल वर्ग"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado verde"
 msgstr "हरा वर्ग"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado azul"
 msgstr "नीला वर्ग"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "botão rádio"
 msgstr "रेडियो बटन"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa"
 msgstr "बॉक्स"
 
-#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:24 src/editor/Stamps.cpp:50
 msgid "caixa marcada"
 msgstr "चिह्नित बॉक्स"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "som alto"
 msgstr "तेज़ आवाज़"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "sem som mudo"
 msgstr "आवाज़ बंद म्यूट"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "início casa"
 msgstr "होम घर"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "chave senha"
 msgstr "चाबी पासवर्ड"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "carrinho compras"
 msgstr "शॉपिंग कार्ट"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa de entrada"
 msgstr "इनबॉक्स"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa de saída"
 msgstr "आउटबॉक्स"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "zoom pesquisa"
 msgstr "ज़ूम खोज"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "futebol"
 msgstr "फ़ुटबॉल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "basquete"
 msgstr "बास्केटबॉल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "futebol americano"
 msgstr "अमेरिकी फ़ुटबॉल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "beisebol"
 msgstr "बेसबॉल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "tênis"
 msgstr "टेनिस"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "vôlei"
 msgstr "वॉलीबॉल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pingue-pongue"
 msgstr "टेबल टेनिस"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "badminton"
 msgstr "बैडमिंटन"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "boxe"
 msgstr "मुक्केबाज़ी"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "boliche"
 msgstr "बॉलिंग"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "golfe"
 msgstr "गोल्फ़"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pesca"
 msgstr "मछली पकड़ना"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "esqui"
 msgstr "स्कीइंग"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "snowboard"
 msgstr "स्नोबोर्ड"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "surfe"
 msgstr "सर्फ़िंग"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "ciclismo bicicleta"
 msgstr "साइकिलिंग साइकिल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "natação"
 msgstr "तैराकी"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "musculação"
 msgstr "भारोत्तोलन"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "videogame jogo"
 msgstr "वीडियो गेम खेल"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "dado"
 msgstr "पासा"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "quebra-cabeça"
 msgstr "पहेली"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pintura arte"
 msgstr "चित्रकारी कला"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "teatro"
 msgstr "रंगमंच"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "microfone"
 msgstr "माइक्रोफ़ोन"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "fone"
 msgstr "हेडफ़ोन"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "guitarra"
 msgstr "गिटार"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "piano"
 msgstr "पियानो"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "bateria"
 msgstr "ड्रम"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "cinema filme"
 msgstr "सिनेमा फ़िल्म"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "primeiro lugar"
 msgstr "पहला स्थान"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "ingresso"
 msgstr "टिकट"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "foto câmera"
 msgstr "फ़ोटो कैमरा"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "maçã"
 msgstr "सेब"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "banana"
 msgstr "केला"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "uva"
 msgstr "अंगूर"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "morango"
 msgstr "स्ट्रॉबेरी"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "melancia"
 msgstr "तरबूज़"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cereja"
 msgstr "चेरी"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pêssego"
 msgstr "आड़ू"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "abacaxi"
 msgstr "अनानास"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "abacate"
 msgstr "एवोकाडो"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cenoura"
 msgstr "गाजर"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "milho"
 msgstr "मक्का"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pão"
 msgstr "ब्रेड"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "queijo"
 msgstr "चीज़"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "hambúrguer"
 msgstr "हैमबर्गर"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "batata frita"
 msgstr "फ़्रेंच फ़्राइज़"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pizza"
 msgstr "पिज़्ज़ा"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cachorro-quente"
 msgstr "हॉट डॉग"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "taco"
 msgstr "टाको"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "sushi"
 msgstr "सुशी"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "lámen sopa"
 msgstr "रामेन सूप"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "rosquinha"
 msgstr "डोनट"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "biscoito"
 msgstr "बिस्कुट"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "bolo aniversário"
 msgstr "जन्मदिन का केक"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "torta"
 msgstr "पाई"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "chocolate"
 msgstr "चॉकलेट"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pipoca"
 msgstr "पॉपकॉर्न"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "café"
 msgstr "कॉफ़ी"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "chá"
 msgstr "चाय"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "refrigerante"
 msgstr "सोडा"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cerveja"
 msgstr "बीयर"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "vinho"
 msgstr "वाइन"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "brinde"
 msgstr "चीयर्स"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "natal árvore"
 msgstr "क्रिसमस ट्री"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "papai noel"
 msgstr "सांता क्लॉज़"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "presente"
 msgstr "उपहार"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "abóbora halloween"
 msgstr "कद्दू हैलोवीन"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "fantasma"
 msgstr "भूत"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "peru"
 msgstr "टर्की"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "coelho páscoa"
 msgstr "ईस्टर खरगोश"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "ovo"
 msgstr "अंडा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "coração presente"
 msgstr "दिल उपहार"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "flores"
 msgstr "फूल"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "fogos"
 msgstr "आतिशबाज़ी"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "estrelinha"
 msgstr "फुलझड़ी"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "festa"
 msgstr "पार्टी"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "confete"
 msgstr "कंफ़ेटी"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "balão"
 msgstr "गुब्बारा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "vela"
 msgstr "मोमबत्ती"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "estrela brilhante"
 msgstr "चमकता तारा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "neve floco"
 msgstr "बर्फ़ का फाहा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "boneco de neve"
 msgstr "स्नोमैन"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "laço"
 msgstr "रिबन"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "envelope"
 msgstr "लिफ़ाफ़ा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "trevo sorte"
 msgstr "तिपतिया घास भाग्य"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "piñata"
 msgstr "पिनाटा"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "menorá"
 msgstr "मेनोरा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorriso feliz"
 msgstr "मुस्कान खुश"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "alegre"
 msgstr "प्रसन्न"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "rindo"
 msgstr "हँसता हुआ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorrisão"
 msgstr "बड़ी मुस्कान"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "gargalhada"
 msgstr "ठहाका"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "aliviado"
 msgstr "राहत"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "chorando de rir"
 msgstr "हँसी के आँसू"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorriso leve"
 msgstr "हल्की मुस्कान"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "piscada"
 msgstr "आँख मारना"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "contente"
 msgstr "संतुष्ट"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apaixonado"
 msgstr "प्यार में"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "beijo"
 msgstr "चुंबन"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "legal óculos"
 msgstr "कूल चश्मा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "pensando"
 msgstr "सोचता हुआ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "neutro"
 msgstr "तटस्थ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "dormindo"
 msgstr "सोता हुआ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "surpreso"
 msgstr "आश्चर्यचकित"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "espantado"
 msgstr "चकित"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "triste"
 msgstr "उदास"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "chorando"
 msgstr "रोता हुआ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "bravo"
 msgstr "गुस्सा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "cabeça explodindo"
 msgstr "दिमाग़ उड़ गया"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "comemorando"
 msgstr "जश्न"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "encantado"
 msgstr "प्रफुल्लित"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "anjo"
 msgstr "फ़रिश्ता"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "de cabeça para baixo"
 msgstr "उल्टा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "abraço"
 msgstr "गले लगना"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "revirando olhos"
 msgstr "आँखें घुमाना"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "careta"
 msgstr "मुँह बनाना"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "olá tchau"
 msgstr "नमस्ते अलविदा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "palmas"
 msgstr "तालियाँ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "viva"
 msgstr "हुर्रे"
 
-#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:41 src/editor/Stamps.cpp:47
 msgid "ok"
 msgstr "ठीक"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "paz"
 msgstr "शांति"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "dedos cruzados"
 msgstr "उंगलियाँ क्रॉस"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando direita"
 msgstr "दाईं ओर इशारा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando esquerda"
 msgstr "बाईं ओर इशारा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando cima"
 msgstr "ऊपर इशारा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando baixo"
 msgstr "नीचे इशारा"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "força"
 msgstr "ताक़त"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "por favor obrigado"
 msgstr "कृपया धन्यवाद"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "acordo aperto de mão"
 msgstr "सौदा हाथ मिलाना"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "cem pontos"
 msgstr "सौ अंक"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "fogo"
 msgstr "आग"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "brilho"
 msgstr "चमक"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "explosão"
 msgstr "विस्फोट"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "tontura"
 msgstr "चक्कर"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "raiva"
 msgstr "क्रोध"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "sono"
 msgstr "नींद"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "gotas"
 msgstr "बूँदें"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "novo"
 msgstr "नया"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "legal"
 msgstr "बढ़िया"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "grátis"
 msgstr "मुफ़्त"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "up"
 msgstr "up"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "topo"
 msgstr "शीर्ष"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "em breve"
 msgstr "जल्द आ रहा है"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "arco-íris"
 msgstr "इंद्रधनुष"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "coroa"
 msgstr "मुकुट"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "diamante"
 msgstr "हीरा"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bandeira"
 msgstr "झंडा"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "chegada"
 msgstr "समाप्ति रेखा"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "megafone"
 msgstr "मेगाफ़ोन"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "anúncio"
 msgstr "घोषणा"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "etiqueta"
 msgstr "लेबल"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "medalha"
 msgstr "पदक"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "ímã"
 msgstr "चुंबक"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bola de cristal"
 msgstr "क्रिस्टल बॉल"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "varinha mágica"
 msgstr "जादू की छड़ी"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bomba"
 msgstr "बम"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "trevo"
 msgstr "तिपतिया घास"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seta dupla horizontal"
 msgstr "क्षैतिज दोहरा तीर"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seta dupla vertical"
 msgstr "लंबवत दोहरा तीर"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "girar"
 msgstr "घुमाएँ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dividir"
 msgstr "भाग"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "infinito"
 msgstr "अनंत"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dupla exclamação"
 msgstr "दोहरा विस्मयादिबोधक"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "exclamação pergunta"
 msgstr "विस्मयादिबोधक प्रश्न"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "proibido"
 msgstr "निषिद्ध"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "entrada proibida"
 msgstr "प्रवेश वर्जित"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "círculo"
 msgstr "वृत्त"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "losango laranja"
 msgstr "नारंगी समचतुर्भुज"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "losango azul"
 msgstr "नीला समचतुर्भुज"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "reciclar"
 msgstr "पुनर्चक्रण"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "raio energia"
 msgstr "बिजली ऊर्जा"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "radioativo"
 msgstr "रेडियोधर्मी"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "risco biológico"
 msgstr "जैविक ख़तरा"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "copyright"
 msgstr "कॉपीराइट"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "marca registrada"
 msgstr "पंजीकृत ट्रेडमार्क"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "marca"
 msgstr "ट्रेडमार्क"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "hashtag"
 msgstr "हैशटैग"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "um"
 msgstr "एक"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dois"
 msgstr "दो"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "três"
 msgstr "तीन"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "quatro"
 msgstr "चार"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "cinco"
 msgstr "पाँच"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seis"
 msgstr "छह"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "sete"
 msgstr "सात"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "oito"
 msgstr "आठ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "nove"
 msgstr "नौ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dez"
 msgstr "दस"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "letra a"
 msgstr "अक्षर a"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "letra b"
 msgstr "अक्षर b"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "ab"
 msgstr "ab"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "abc"
 msgstr "abc"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "cifrão"
 msgstr "डॉलर चिह्न"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "câmbio"
 msgstr "मुद्रा विनिमय"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "carro"
 msgstr "कार"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "táxi"
 msgstr "टैक्सी"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ônibus"
 msgstr "बस"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ambulância"
 msgstr "एम्बुलेंस"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bombeiros"
 msgstr "दमकल"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "polícia"
 msgstr "पुलिस"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bicicleta"
 msgstr "साइकिल"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "moto"
 msgstr "स्कूटर"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "trem"
 msgstr "रेलगाड़ी"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "avião"
 msgstr "हवाई जहाज़"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "navio"
 msgstr "जहाज़"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "veleiro"
 msgstr "पाल नौका"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "helicóptero"
 msgstr "हेलिकॉप्टर"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "mapa"
 msgstr "नक्शा"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bússola"
 msgstr "कंपास"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "montanha"
 msgstr "पहाड़"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "praia"
 msgstr "समुद्र तट"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ilha"
 msgstr "द्वीप"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "acampamento"
 msgstr "कैंपिंग"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "cidade"
 msgstr "शहर"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "prédio escritório"
 msgstr "दफ़्तर की इमारत"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "hospital"
 msgstr "अस्पताल"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "banco"
 msgstr "बैंक"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "hotel"
 msgstr "होटल"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "escola"
 msgstr "स्कूल"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "igreja"
 msgstr "चर्च"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "estátua"
 msgstr "मूर्ति"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "torre"
 msgstr "मीनार"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "terra mundo"
 msgstr "पृथ्वी दुनिया"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "posto combustível"
 msgstr "पेट्रोल पंप"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "semáforo"
 msgstr "ट्रैफ़िक लाइट"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "estacionamento"
 msgstr "पार्किंग"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "mala"
 msgstr "सूटकेस"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "local pino"
 msgstr "स्थान पिन"
 
@@ -3480,7 +3927,7 @@ msgstr "सीमा: चिह्नित चयन।"
 msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
 msgstr "सीमा: पूरा वीडियो (सीमित करने के लिए शुरुआत/अंत चिह्नित करें)।"
 
-#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1682 src/editor/main.cpp:1686 src/editor/main.cpp:1692
 msgid "Cores"
 msgstr "रंग"
 
@@ -3524,20 +3971,20 @@ msgstr "GIF नहीं बनाया जा सका।\n"
 msgid "Marque o início e o fim do trecho a remover."
 msgstr "हटाए जाने वाले हिस्से की शुरुआत और अंत चिह्नित करें।"
 
-#: src/editor/main.cpp:96
+#: src/editor/main.cpp:101
 msgid " — Snapnab Editor"
 msgstr " — Snapnab Editor"
 
-#: src/editor/main.cpp:112
+#: src/editor/main.cpp:117
 msgid "Vídeo: "
 msgstr "वीडियो: "
 
-#: src/editor/main.cpp:113
+#: src/editor/main.cpp:118
 #, c-format
 msgid "%d × %d px"
 msgstr "%d × %d px"
 
-#: src/editor/main.cpp:114
+#: src/editor/main.cpp:119
 msgid ""
 "\n"
 "Captura: "
@@ -3545,7 +3992,7 @@ msgstr ""
 "\n"
 "कैप्चर: "
 
-#: src/editor/main.cpp:115
+#: src/editor/main.cpp:120
 msgid ""
 "\n"
 "Aplicativo: "
@@ -3553,7 +4000,7 @@ msgstr ""
 "\n"
 "ऐप्लिकेशन: "
 
-#: src/editor/main.cpp:116
+#: src/editor/main.cpp:121
 msgid ""
 "\n"
 "Janela: "
@@ -3561,7 +4008,7 @@ msgstr ""
 "\n"
 "विंडो: "
 
-#: src/editor/main.cpp:117
+#: src/editor/main.cpp:122
 #, c-format
 msgid ""
 "\n"
@@ -3570,7 +4017,7 @@ msgstr ""
 "\n"
 "ऑब्जेक्ट: %zu"
 
-#: src/editor/main.cpp:118
+#: src/editor/main.cpp:123
 msgid ""
 "\n"
 "Etiquetas: "
@@ -3578,814 +4025,950 @@ msgstr ""
 "\n"
 "टैग: "
 
-#: src/editor/main.cpp:255
+#: src/editor/main.cpp:264
 msgid "Arquivo não encontrado:\n"
 msgstr "फ़ाइल नहीं मिली:\n"
 
-#: src/editor/main.cpp:258
+#: src/editor/main.cpp:267
 msgid "Não foi possível abrir:\n"
 msgstr "खोला नहीं जा सका:\n"
 
-#: src/editor/main.cpp:262
+#: src/editor/main.cpp:271
 msgid "Arquivo importado"
 msgstr "आयात की गई फ़ाइल"
 
-#: src/editor/main.cpp:283
+#: src/editor/main.cpp:293
 #, c-format
 msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
 msgstr "%d × %d px  •  %zu ऑब्जेक्ट  •  पूर्ववत करने के लिए %zu चरण"
 
-#: src/editor/main.cpp:348
+#: src/editor/main.cpp:358
 msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
 msgstr "पहले चयन करें (चयन टूल) या कटौती करें।"
 
-#: src/editor/main.cpp:351
+#: src/editor/main.cpp:361
 msgid "Ângulo (graus, horário)"
 msgstr "कोण (डिग्री, दक्षिणावर्त)"
 
-#: src/editor/main.cpp:351 src/editor/main.cpp:483
+#: src/editor/main.cpp:361 src/editor/main.cpp:506
 msgid "Cor de fundo"
 msgstr "पृष्ठभूमि का रंग"
 
-#: src/editor/main.cpp:352
+#: src/editor/main.cpp:362
 msgid "Fundo transparente"
 msgstr "पारदर्शी पृष्ठभूमि"
 
-#: src/editor/main.cpp:353
+#: src/editor/main.cpp:363
 msgid "Os objetos serão mesclados à imagem."
 msgstr "ऑब्जेक्ट छवि में मिला दिए जाएँगे।"
 
-#: src/editor/main.cpp:361
+#: src/editor/main.cpp:371
 msgid "ou escala (%)"
 msgstr "या पैमाना (%)"
 
-#: src/editor/main.cpp:361
-msgid "Manter proporção"
-msgstr "अनुपात बनाए रखें"
-
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Âncora"
 msgstr "एंकर"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior esquerda"
 msgstr "ऊपर बाएँ"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior"
 msgstr "ऊपर"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior direita"
 msgstr "ऊपर दाएँ"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Centro"
 msgstr "बीच में"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior esquerda"
 msgstr "नीचे बाएँ"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior"
 msgstr "नीचे"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior direita"
 msgstr "नीचे दाएँ"
 
-#: src/editor/main.cpp:381
+#: src/editor/main.cpp:391
 msgid "Cor do canvas"
 msgstr "कैनवास का रंग"
 
-#: src/editor/main.cpp:381 src/editor/main.cpp:483
+#: src/editor/main.cpp:391 src/editor/main.cpp:506
 msgid "Transparente"
 msgstr "पारदर्शी"
 
-#: src/editor/main.cpp:382
+#: src/editor/main.cpp:392
 msgid "Tamanho do canvas"
 msgstr "कैनवास का आकार"
 
-#: src/editor/main.cpp:402
+#: src/editor/main.cpp:416
 msgid "Nada a cortar: as bordas não são uniformes."
 msgstr "काटने को कुछ नहीं: किनारे एक जैसे नहीं हैं।"
 
-#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+#: src/editor/main.cpp:452 src/editor/main.cpp:953 src/editor/main.cpp:1986
 msgid "Salvar como"
 msgstr "इस रूप में सहेजें"
 
-#: src/editor/main.cpp:446
+#: src/editor/main.cpp:460
 msgid "Qualidade JPEG (1–100)"
 msgstr "JPEG गुणवत्ता (1–100)"
 
-#: src/editor/main.cpp:457
+#: src/editor/main.cpp:471
 msgid "Não foi possível salvar:\n"
 msgstr "सहेजा नहीं जा सका:\n"
 
-#: src/editor/main.cpp:458
+#: src/editor/main.cpp:472
 msgid "Salvo em "
 msgstr "यहाँ सहेजा गया: "
 
-#: src/editor/main.cpp:469
+#: src/editor/main.cpp:492
 msgid "Salvo na biblioteca: "
 msgstr "लाइब्रेरी में सहेजा गया: "
 
-#: src/editor/main.cpp:477
+#: src/editor/main.cpp:500
 msgid "Da área de transferência"
 msgstr "क्लिपबोर्ड से"
 
-#: src/editor/main.cpp:478
+#: src/editor/main.cpp:501
 msgid "Imagem nova criada a partir da área de transferência."
 msgstr "क्लिपबोर्ड से नई छवि बनाई गई।"
 
-#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+#: src/editor/main.cpp:507 src/editor/main.cpp:508 src/editor/main.cpp:951
 msgid "Nova imagem"
 msgstr "नई छवि"
 
-#: src/editor/main.cpp:485
+#: src/editor/main.cpp:508
 msgid "Imagem nova"
 msgstr "नई छवि"
 
-#: src/editor/main.cpp:510
+#: src/editor/main.cpp:533
 msgid "Enviar para a Lixeira?\n"
 msgstr "रीसायकल बिन में भेजें?\n"
 
-#: src/editor/main.cpp:511
+#: src/editor/main.cpp:534
 #, c-format
 msgid "Enviar %zu itens da biblioteca para a Lixeira?"
 msgstr "लाइब्रेरी के %zu आइटम रीसायकल बिन में भेजें?"
 
-#: src/editor/main.cpp:524
+#: src/editor/main.cpp:547
 msgid "Item enviado para a Lixeira."
 msgstr "आइटम रीसायकल बिन में भेजा गया।"
 
-#: src/editor/main.cpp:524
+#: src/editor/main.cpp:547
 #, c-format
 msgid "%zu itens enviados para a Lixeira."
 msgstr "%zu आइटम रीसायकल बिन में भेजे गए।"
 
-#: src/editor/main.cpp:534
+#: src/editor/main.cpp:557
 msgid "Exportar para a pasta"
 msgstr "फ़ोल्डर में निर्यात करें"
 
-#: src/editor/main.cpp:552
+#: src/editor/main.cpp:575
 msgid "Formato das imagens"
 msgstr "छवियों का फ़ॉर्मेट"
 
-#: src/editor/main.cpp:553
+#: src/editor/main.cpp:576
 msgid "Vídeos são copiados em MP4."
 msgstr "वीडियो MP4 में कॉपी किए जाते हैं।"
 
-#: src/editor/main.cpp:554
+#: src/editor/main.cpp:577
 #, c-format
 msgid "Exportar %zu item(ns)"
 msgstr "%zu आइटम निर्यात करें"
 
-#: src/editor/main.cpp:576
+#: src/editor/main.cpp:599
 #, c-format
 msgid "%d item(ns) exportado(s) para %s"
 msgstr "%d आइटम %s में निर्यात किए गए"
 
-#: src/editor/main.cpp:576
+#: src/editor/main.cpp:599
 #, c-format
 msgid " — %d falha(s)"
 msgstr " — %d विफल"
 
-#: src/editor/main.cpp:621
+#: src/editor/main.cpp:644
 msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
 msgstr "कोई MAPI ईमेल क्लाइंट कॉन्फ़िगर नहीं है। छवि यहाँ सहेजी गई:\n"
 
-#: src/editor/main.cpp:627
+#: src/editor/main.cpp:650
 msgid "Captura: "
 msgstr "कैप्चर: "
 
-#: src/editor/main.cpp:631
+#: src/editor/main.cpp:654
 #, c-format
 msgid "Falha ao enviar e-mail (MAPI %u)."
 msgstr "ईमेल भेजने में विफल (MAPI %u)।"
 
-#: src/editor/main.cpp:638
+#: src/editor/main.cpp:661
 msgid "Abrir em programa externo"
 msgstr "बाहरी प्रोग्राम में खोलें"
 
-#: src/editor/main.cpp:651
+#: src/editor/main.cpp:674
 msgid "OCR indisponível: "
 msgstr "OCR उपलब्ध नहीं: "
 
-#: src/editor/main.cpp:651 src/editor/main.cpp:820
+#: src/editor/main.cpp:674 src/editor/main.cpp:954
 msgid "Grab Text"
 msgstr "पाठ निकालें"
 
-#: src/editor/main.cpp:652
+#: src/editor/main.cpp:675
 msgid "(nenhum texto reconhecido)"
 msgstr "(कोई पाठ नहीं पहचाना गया)"
 
-#: src/editor/main.cpp:653
+#: src/editor/main.cpp:676
 msgid "Grab Text — texto reconhecido"
 msgstr "पाठ निकालें — पहचाना गया पाठ"
 
-#: src/editor/main.cpp:668
+#: src/editor/main.cpp:718
+msgid "Objetos bloqueados não são recortados."
+msgstr "लॉक किए गए ऑब्जेक्ट काटे नहीं जाते।"
+
+#: src/editor/main.cpp:743 src/editor/main.cpp:777
 msgid "Nada para colar."
 msgstr "चिपकाने के लिए कुछ नहीं।"
 
-#: src/editor/main.cpp:669
+#: src/editor/main.cpp:749
+msgid "O texto copiado não tem formatação; colado com o estilo do objeto."
+msgstr "कॉपी किए गए पाठ में फ़ॉर्मेटिंग नहीं है; ऑब्जेक्ट की शैली के साथ चिपकाया गया।"
+
+#: src/editor/main.cpp:759
+msgid "Colado no mesmo lugar."
+msgstr "उसी जगह चिपकाया गया।"
+
+#: src/editor/main.cpp:759
+msgid "Colado."
+msgstr "चिपकाया गया।"
+
+#: src/editor/main.cpp:780
 msgid "Colado"
 msgstr "चिपकाया गया"
 
-#: src/editor/main.cpp:705
+#: src/editor/main.cpp:822
 msgid "Nova &captura\tCtrl+Shift+N"
 msgstr "नया कैप्चर(&C)\tCtrl+Shift+N"
 
-#: src/editor/main.cpp:705
+#: src/editor/main.cpp:822
 msgid "Nova &gravação de vídeo"
 msgstr "नई वीडियो रिकॉर्डिंग(&R)"
 
-#: src/editor/main.cpp:706
+#: src/editor/main.cpp:823
 msgid "Novo da área de &transferência"
 msgstr "क्लिपबोर्ड से नया(&B)"
 
-#: src/editor/main.cpp:706
+#: src/editor/main.cpp:823
 msgid "Nova &imagem…"
 msgstr "नई छवि(&I)…"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "&Abrir…\tCtrl+O"
 msgstr "खोलें(&O)…\tCtrl+O"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "&Salvar\tCtrl+S"
 msgstr "सहेजें(&S)\tCtrl+S"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "Salvar &como…\tCtrl+Shift+S"
 msgstr "इस रूप में सहेजें(&A)…\tCtrl+Shift+S"
 
-#: src/editor/main.cpp:708
+#: src/editor/main.cpp:825
 msgid "&Duplicar"
 msgstr "प्रति बनाएँ(&D)"
 
-#: src/editor/main.cpp:708
+#: src/editor/main.cpp:825
 msgid "&Excluir (Lixeira)"
 msgstr "हटाएँ (रीसायकल बिन)(&L)"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "&Imprimir…\tCtrl+P"
 msgstr "प्रिंट करें(&P)…\tCtrl+P"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "Enviar por &e-mail…"
 msgstr "ईमेल से भेजें(&E)…"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "Abrir em &programa externo…"
 msgstr "बाहरी प्रोग्राम में खोलें(&G)…"
 
-#: src/editor/main.cpp:710
+#: src/editor/main.cpp:827
 msgid "&Fechar documento\tCtrl+W"
 msgstr "दस्तावेज़ बंद करें(&W)\tCtrl+W"
 
-#: src/editor/main.cpp:710
+#: src/editor/main.cpp:827
 msgid "Sai&r"
 msgstr "बाहर निकलें(&X)"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "&Desfazer\tCtrl+Z"
 msgstr "पूर्ववत करें(&U)\tCtrl+Z"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "&Refazer\tCtrl+Y"
 msgstr "फिर से करें(&R)\tCtrl+Y"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "Desfazer &tudo"
 msgstr "सब पूर्ववत करें(&L)"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829 src/editor/main.cpp:1944
 msgid "Recor&tar\tCtrl+X"
 msgstr "काटें(&T)\tCtrl+X"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829 src/editor/main.cpp:1944 src/editor/main.cpp:1967
 msgid "&Copiar\tCtrl+C"
 msgstr "कॉपी करें(&C)\tCtrl+C"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829
 msgid "Copiar t&udo\tCtrl+Shift+C"
 msgstr "सब कॉपी करें(&O)\tCtrl+Shift+C"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:830 src/editor/main.cpp:1945 src/editor/main.cpp:1964
 msgid "C&olar\tCtrl+V"
 msgstr "चिपकाएँ(&P)\tCtrl+V"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:830 src/editor/main.cpp:1945 src/editor/main.cpp:1964
+msgid "Colar no &mesmo lugar\tCtrl+Shift+V"
+msgstr "उसी जगह चिपकाएँ(&I)\tCtrl+Shift+V"
+
+#: src/editor/main.cpp:831 src/editor/main.cpp:1946
 msgid "E&xcluir\tDel"
 msgstr "हटाएँ(&D)\tDel"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:831 src/editor/main.cpp:1972
 msgid "Selecionar tu&do\tCtrl+A"
 msgstr "सब चुनें(&A)\tCtrl+A"
 
-#: src/editor/main.cpp:714
+#: src/editor/main.cpp:832 src/editor/main.cpp:1967
 msgid "Cortar para a &seleção"
 msgstr "चयन तक क्रॉप करें(&S)"
 
-#: src/editor/main.cpp:715
+#: src/editor/main.cpp:832 src/editor/main.cpp:1968
+msgid "&Levantar a seleção (peça solta)\tCtrl+Shift+L"
+msgstr "चयन उठाएँ (अलग टुकड़ा)(&L)\tCtrl+Shift+L"
+
+#: src/editor/main.cpp:833
+msgid "Soltar a &peça na imagem\tEnter"
+msgstr "टुकड़े को छवि में छोड़ें(&P)\tEnter"
+
+#: src/editor/main.cpp:834
+msgid "Colar texto sem &formatação"
+msgstr "बिना फ़ॉर्मेटिंग पाठ चिपकाएँ(&F)"
+
+#: src/editor/main.cpp:834
+msgid "Seleção encaixa nas &bordas da imagem"
+msgstr "चयन छवि के किनारों से चिपके(&E)"
+
+#: src/editor/main.cpp:835
 msgid "&Grab Text (OCR)\tCtrl+Shift+O"
 msgstr "पाठ निकालें (OCR)(&G)\tCtrl+Shift+O"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "&Borda"
 msgstr "बॉर्डर(&B)"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "Bor&das"
 msgstr "किनारे(&E)"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "&Informações da captura"
 msgstr "कैप्चर जानकारी(&I)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "&Perspectiva"
 msgstr "परिप्रेक्ष्य(&P)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "D&obra de página"
 msgstr "मुड़ा कोना(&U)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "&Sombra"
 msgstr "छाया(&S)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "&Filtros"
 msgstr "फ़िल्टर(&F)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "&Ajuste de cores"
 msgstr "रंग समायोजन(&A)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "Substituição de co&r"
 msgstr "रंग बदलें(&R)"
 
-#: src/editor/main.cpp:720
+#: src/editor/main.cpp:840
 msgid "Spotlight e &lupa"
 msgstr "स्पॉटलाइट और आवर्धक(&M)"
 
-#: src/editor/main.cpp:720
+#: src/editor/main.cpp:840
 msgid "&Marca d'água"
 msgstr "वॉटरमार्क(&W)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "À &esquerda"
 msgstr "बाएँ(&L)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "Ao &centro"
 msgstr "बीच में(&C)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "À &direita"
 msgstr "दाएँ(&R)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "Em &cima"
 msgstr "ऊपर(&T)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "No &meio"
 msgstr "मध्य(&M)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "Em&baixo"
 msgstr "नीचे(&B)"
 
-#: src/editor/main.cpp:728
+#: src/editor/main.cpp:848
+msgid "Distribuir na &horizontal"
+msgstr "क्षैतिज वितरित करें(&H)"
+
+#: src/editor/main.cpp:848
+msgid "Distribuir na &vertical"
+msgstr "लंबवत वितरित करें(&V)"
+
+#: src/editor/main.cpp:853 src/editor/main.cpp:1952
 msgid "Trazer para a &frente\tCtrl+Shift+F"
 msgstr "आगे लाएँ(&F)\tCtrl+Shift+F"
 
-#: src/editor/main.cpp:728
+#: src/editor/main.cpp:853 src/editor/main.cpp:1952
 msgid "Trazer para o &primeiro plano"
 msgstr "सबसे आगे लाएँ(&O)"
 
-#: src/editor/main.cpp:729
+#: src/editor/main.cpp:854 src/editor/main.cpp:1953
 msgid "Enviar para &trás\tCtrl+Shift+B"
 msgstr "पीछे भेजें(&B)\tCtrl+Shift+B"
 
-#: src/editor/main.cpp:729
+#: src/editor/main.cpp:854 src/editor/main.cpp:1953
 msgid "Enviar para o plano de &fundo"
 msgstr "सबसे पीछे भेजें(&K)"
 
-#: src/editor/main.cpp:731
+#: src/editor/main.cpp:856
 msgid "&Alinhar"
 msgstr "संरेखित करें(&A)"
 
-#: src/editor/main.cpp:733
+#: src/editor/main.cpp:858
 msgid "Espelhar na &vertical"
 msgstr "लंबवत पलटें(&V)"
 
-#: src/editor/main.cpp:734
+#: src/editor/main.cpp:859
 msgid "Espelhar na &horizontal"
 msgstr "क्षैतिज पलटें(&H)"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "Sentido &horário\tCtrl+R"
 msgstr "दक्षिणावर्त(&C)\tCtrl+R"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "Sentido &anti-horário"
 msgstr "वामावर्त(&W)"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "&180 graus"
 msgstr "180 डिग्री(&1)"
 
-#: src/editor/main.cpp:736
+#: src/editor/main.cpp:861
 msgid "Ângulo &personalizado…"
 msgstr "कस्टम कोण(&A)…"
 
-#: src/editor/main.cpp:738
+#: src/editor/main.cpp:863
 msgid "Ferramen&tas"
 msgstr "टूल(&T)"
 
-#: src/editor/main.cpp:739
+#: src/editor/main.cpp:864
 msgid "&Efeitos"
 msgstr "प्रभाव(&E)"
 
-#: src/editor/main.cpp:741
+#: src/editor/main.cpp:866
 msgid "&Organizar"
 msgstr "व्यवस्थित करें(&R)"
 
-#: src/editor/main.cpp:742
+#: src/editor/main.cpp:867 src/editor/main.cpp:1960
 msgid "A&grupar\tCtrl+Shift+G"
 msgstr "समूह बनाएँ(&G)\tCtrl+Shift+G"
 
-#: src/editor/main.cpp:743
+#: src/editor/main.cpp:868 src/editor/main.cpp:1962
 msgid "Desagr&upar\tCtrl+Shift+U"
 msgstr "समूह तोड़ें(&U)\tCtrl+Shift+U"
 
-#: src/editor/main.cpp:745
+#: src/editor/main.cpp:869
+msgid "&Bloquear objeto\tCtrl+L"
+msgstr "ऑब्जेक्ट लॉक करें(&L)\tCtrl+L"
+
+#: src/editor/main.cpp:870
+msgid "Desblo&quear objeto\tCtrl+Shift+K"
+msgstr "ऑब्जेक्ट अनलॉक करें(&U)\tCtrl+Shift+K"
+
+#: src/editor/main.cpp:874
 msgid "&Mesclar\tCtrl+T"
 msgstr "मिलाएँ(&M)\tCtrl+T"
 
-#: src/editor/main.cpp:746
+#: src/editor/main.cpp:875
 msgid "Mesclar t&udo\tCtrl+Shift+T"
 msgstr "सब मिलाएँ(&L)\tCtrl+Shift+T"
 
-#: src/editor/main.cpp:748
+#: src/editor/main.cpp:877
 msgid "A&parar"
 msgstr "ट्रिम करें(&P)"
 
-#: src/editor/main.cpp:749
+#: src/editor/main.cpp:878
 msgid "&Redimensionar imagem…"
 msgstr "छवि का आकार बदलें(&R)…"
 
-#: src/editor/main.cpp:750
+#: src/editor/main.cpp:879
 msgid "Redimensionar &canvas…"
 msgstr "कैनवास का आकार बदलें(&C)…"
 
-#: src/editor/main.cpp:751
+#: src/editor/main.cpp:880
 msgid "Aplicar mode&lo…\tCtrl+Alt+C"
 msgstr "टेम्पलेट लागू करें(&L)…\tCtrl+Alt+C"
 
-#: src/editor/main.cpp:753
+#: src/editor/main.cpp:882
 msgid "&Girar"
 msgstr "घुमाएँ(&O)"
 
-#: src/editor/main.cpp:754
+#: src/editor/main.cpp:883
 msgid "Encai&xe no canvas\tCtrl+;"
 msgstr "कैनवास पर स्नैप(&X)\tCtrl+;"
 
-#: src/editor/main.cpp:755
+#: src/editor/main.cpp:884
 msgid "Cor do canva&s…"
 msgstr "कैनवास का रंग(&S)…"
 
-#: src/editor/main.cpp:757
+#: src/editor/main.cpp:886
 msgid "Etiquetar &imagem…"
 msgstr "छवि टैग करें(&I)…"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Ampliar\tCtrl++"
 msgstr "ज़ूम इन(&I)\tCtrl++"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Reduzir\tCtrl+-"
 msgstr "ज़ूम आउट(&O)\tCtrl+-"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Tamanho real\tCtrl+1"
 msgstr "वास्तविक आकार(&A)\tCtrl+1"
 
-#: src/editor/main.cpp:759
+#: src/editor/main.cpp:888
 msgid "A&justar à janela\tCtrl+0"
 msgstr "विंडो में फ़िट करें(&F)\tCtrl+0"
 
-#: src/editor/main.cpp:759
+#: src/editor/main.cpp:888
 msgid "&Cor de fundo da área…"
 msgstr "क्षेत्र की पृष्ठभूमि का रंग(&B)…"
 
-#: src/editor/main.cpp:760
+#: src/editor/main.cpp:889
+msgid "Ré&guas e guias\tCtrl+Shift+R"
+msgstr "रूलर और गाइड(&R)\tCtrl+Shift+R"
+
+#: src/editor/main.cpp:889
+msgid "Remover as gu&ias"
+msgstr "गाइड हटाएँ(&G)"
+
+#: src/editor/main.cpp:890
 msgid "Painel de &efeitos"
 msgstr "प्रभाव पैनल(&E)"
 
-#: src/editor/main.cpp:760
+#: src/editor/main.cpp:890
+msgid "Painel de ca&madas"
+msgstr "लेयर पैनल(&L)"
+
+#: src/editor/main.cpp:890
 msgid "&Biblioteca"
 msgstr "लाइब्रेरी(&L)"
 
-#: src/editor/main.cpp:761
+#: src/editor/main.cpp:891
 msgid "Capturas &recentes (bandeja)"
 msgstr "हाल के कैप्चर (ट्रे)(&R)"
 
-#: src/editor/main.cpp:762
+#: src/editor/main.cpp:892
 msgid "&Personalizar a barra de ferramentas…"
 msgstr "टूलबार अनुकूलित करें(&C)…"
 
-#: src/editor/main.cpp:763
+#: src/editor/main.cpp:893
 msgid "&Atalhos de teclado"
 msgstr "कीबोर्ड शॉर्टकट(&K)"
 
-#: src/editor/main.cpp:763
+#: src/editor/main.cpp:894
 msgid "&Sobre o Snapnab Editor"
 msgstr "Snapnab Editor के बारे में(&A)"
 
-#: src/editor/main.cpp:764
+#: src/editor/main.cpp:895
 msgid "&Arquivo"
 msgstr "फ़ाइल(&F)"
 
-#: src/editor/main.cpp:765
+#: src/editor/main.cpp:896
 msgid "&Editar"
 msgstr "संपादन(&E)"
 
-#: src/editor/main.cpp:766
+#: src/editor/main.cpp:897
 msgid "&Imagem"
 msgstr "छवि(&I)"
 
-#: src/editor/main.cpp:767
+#: src/editor/main.cpp:898
 msgid "E&xibir"
 msgstr "दृश्य(&V)"
 
-#: src/editor/main.cpp:768
+#: src/editor/main.cpp:899
 msgid "A&juda"
 msgstr "सहायता(&H)"
 
-#: src/editor/main.cpp:796
+#: src/editor/main.cpp:930
 msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
 msgstr "पसंदीदा: सभी टूल की आपकी पसंदीदा शैलियाँ"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Seta (A)"
 msgstr "तीर (A)"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Texto (T)"
 msgstr "पाठ (T)"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Balão (C)"
 msgstr "कॉलआउट (C)"
 
-#: src/editor/main.cpp:798
+#: src/editor/main.cpp:932
 msgid "Forma: retângulo, elipse… (R)"
 msgstr "आकृति: आयत, दीर्घवृत्त… (R)"
 
-#: src/editor/main.cpp:798
+#: src/editor/main.cpp:932
 msgid "Carimbo (K)"
 msgstr "मुहर (K)"
 
-#: src/editor/main.cpp:799
+#: src/editor/main.cpp:933
 msgid "Preencher (F)"
 msgstr "भरें (F)"
 
-#: src/editor/main.cpp:799
+#: src/editor/main.cpp:933
 msgid "Seleção e Smart Move (S)"
 msgstr "चयन और Smart Move (S)"
 
-#: src/editor/main.cpp:800
+#: src/editor/main.cpp:934
 msgid "Varinha mágica: seleciona pela cor"
 msgstr "जादू की छड़ी: रंग से चुनती है"
 
-#: src/editor/main.cpp:800
+#: src/editor/main.cpp:934
 msgid "Cortar (X)"
 msgstr "क्रॉप (X)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Recortar faixa (U)"
 msgstr "पट्टी काटें (U)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Caneta (P)"
 msgstr "पेन (P)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Linha (L)"
 msgstr "रेखा (L)"
 
-#: src/editor/main.cpp:802
-msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
-msgstr "हाइलाइटर: चुने गए रंग और अपारदर्शिता में आयत खींचें (H)"
+#: src/editor/main.cpp:936
+msgid "Marcador: retângulo, elipse, polígono ou mão livre (H)"
+msgstr "हाइलाइटर: आयत, दीर्घवृत्त, बहुभुज या मुक्तहस्त (H)"
 
-#: src/editor/main.cpp:803
+#: src/editor/main.cpp:937
 msgid "Passos numerados (N)"
 msgstr "क्रमांकित चरण (N)"
 
-#: src/editor/main.cpp:803
+#: src/editor/main.cpp:937
 msgid "Borracha (E)"
 msgstr "इरेज़र (E)"
 
-#: src/editor/main.cpp:804
+#: src/editor/main.cpp:938
 msgid "Ocultar: desfoque/pixelado (B)"
 msgstr "छिपाएँ: धुंधला/पिक्सेलेट (B)"
 
-#: src/editor/main.cpp:804
+#: src/editor/main.cpp:938
 msgid "Mover e Smart Move (V)"
 msgstr "खिसकाएँ और Smart Move (V)"
 
-#: src/editor/main.cpp:805
+#: src/editor/main.cpp:939
 msgid "Lupa (Z)"
 msgstr "आवर्धक (Z)"
 
-#: src/editor/main.cpp:805
+#: src/editor/main.cpp:939
 msgid "Destaque/spotlight (G)"
 msgstr "स्पॉटलाइट (G)"
 
-#: src/editor/main.cpp:806
+#: src/editor/main.cpp:940
 msgid "Conta-gotas (I)"
 msgstr "रंग पिकर (I)"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "Salvar como arquivo (PNG, JPG, PDF…)"
 msgstr "फ़ाइल के रूप में सहेजें (PNG, JPG, PDF…)"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "E-mail"
 msgstr "ईमेल"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "Enviar por e-mail"
 msgstr "ईमेल से भेजें"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Copiar a imagem inteira"
 msgstr "पूरी छवि कॉपी करें"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Impressora"
 msgstr "प्रिंटर"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Imprimir a imagem"
 msgstr "छवि प्रिंट करें"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Desfazer"
 msgstr "पूर्ववत करें"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Desfazer (Ctrl+Z)"
 msgstr "पूर्ववत करें (Ctrl+Z)"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Refazer"
 msgstr "फिर से करें"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Refazer (Ctrl+Y)"
 msgstr "फिर से करें (Ctrl+Y)"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Nova imagem em branco"
 msgstr "नई खाली छवि"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Da área de transf."
 msgstr "क्लिपबोर्ड से"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Nova imagem da área de transferência"
 msgstr "क्लिपबोर्ड से नई छवि"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Abrir arquivo (Ctrl+O)"
 msgstr "फ़ाइल खोलें (Ctrl+O)"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Salvar"
 msgstr "सहेजें"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Salvar na biblioteca (Ctrl+S)"
 msgstr "लाइब्रेरी में सहेजें (Ctrl+S)"
 
-#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+#: src/editor/main.cpp:953 src/editor/main.cpp:1986
 msgid "Salvar como arquivo (Ctrl+Shift+S)"
 msgstr "फ़ाइल के रूप में सहेजें (Ctrl+Shift+S)"
 
-#: src/editor/main.cpp:819
+#: src/editor/main.cpp:953
 msgid "Duplicar a imagem"
 msgstr "छवि की प्रति बनाएँ"
 
-#: src/editor/main.cpp:820
+#: src/editor/main.cpp:954
 msgid "Excluir o objeto selecionado (Del)"
 msgstr "चुना गया ऑब्जेक्ट हटाएँ (Del)"
 
-#: src/editor/main.cpp:820
+#: src/editor/main.cpp:954
 msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
 msgstr "छवि का पाठ पहचानें (Ctrl+Shift+T)"
 
-#: src/editor/main.cpp:821
+#: src/editor/main.cpp:955
 msgid "Excluir imagem"
 msgstr "छवि हटाएँ"
 
-#: src/editor/main.cpp:821
+#: src/editor/main.cpp:955
 msgid "Enviar a imagem para a Lixeira"
 msgstr "छवि को रीसायकल बिन में भेजें"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Mesclar tudo"
 msgstr "सब मिलाएँ"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Mesclar todos os objetos na imagem"
 msgstr "सभी ऑब्जेक्ट छवि में मिलाएँ"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Girar 90° no sentido horário (Ctrl+R)"
 msgstr "90° दक्षिणावर्त घुमाएँ (Ctrl+R)"
 
-#: src/editor/main.cpp:823
+#: src/editor/main.cpp:957
 msgid "Cortar as bordas de cor uniforme"
 msgstr "एक जैसे रंग वाले किनारे काटें"
 
-#: src/editor/main.cpp:854
+#: src/editor/main.cpp:958 src/editor/main.cpp:1956
+msgid "Alinhar à esquerda"
+msgstr "बाएँ संरेखित करें"
+
+#: src/editor/main.cpp:958
+msgid "Alinhar os objetos à esquerda"
+msgstr "ऑब्जेक्ट बाएँ संरेखित करें"
+
+#: src/editor/main.cpp:959 src/editor/main.cpp:1956
+msgid "Alinhar ao centro"
+msgstr "केंद्र में संरेखित करें"
+
+#: src/editor/main.cpp:959
+msgid "Alinhar os objetos ao centro"
+msgstr "ऑब्जेक्ट केंद्र में संरेखित करें"
+
+#: src/editor/main.cpp:960 src/editor/main.cpp:1956
+msgid "Alinhar à direita"
+msgstr "दाएँ संरेखित करें"
+
+#: src/editor/main.cpp:960
+msgid "Alinhar os objetos à direita"
+msgstr "ऑब्जेक्ट दाएँ संरेखित करें"
+
+#: src/editor/main.cpp:961 src/editor/main.cpp:1957
+msgid "Alinhar em cima"
+msgstr "ऊपर संरेखित करें"
+
+#: src/editor/main.cpp:961
+msgid "Alinhar os objetos em cima"
+msgstr "ऑब्जेक्ट ऊपर संरेखित करें"
+
+#: src/editor/main.cpp:962 src/editor/main.cpp:1957
+msgid "Alinhar no meio"
+msgstr "बीच में संरेखित करें"
+
+#: src/editor/main.cpp:962
+msgid "Alinhar os objetos no meio"
+msgstr "ऑब्जेक्ट बीच में संरेखित करें"
+
+#: src/editor/main.cpp:963 src/editor/main.cpp:1957
+msgid "Alinhar embaixo"
+msgstr "नीचे संरेखित करें"
+
+#: src/editor/main.cpp:963
+msgid "Alinhar os objetos embaixo"
+msgstr "ऑब्जेक्ट नीचे संरेखित करें"
+
+#: src/editor/main.cpp:964 src/editor/main.cpp:1958
+msgid "Distribuir na horizontal"
+msgstr "क्षैतिज वितरित करें"
+
+#: src/editor/main.cpp:964
+msgid "Espaçar 3 ou mais objetos igualmente na horizontal"
+msgstr "3 या अधिक ऑब्जेक्ट क्षैतिज रूप से बराबर दूरी पर रखें"
+
+#: src/editor/main.cpp:965 src/editor/main.cpp:1958
+msgid "Distribuir na vertical"
+msgstr "लंबवत वितरित करें"
+
+#: src/editor/main.cpp:965
+msgid "Espaçar 3 ou mais objetos igualmente na vertical"
+msgstr "3 या अधिक ऑब्जेक्ट लंबवत रूप से बराबर दूरी पर रखें"
+
+#: src/editor/main.cpp:966
+msgid "Bloquear o objeto selecionado (Ctrl+L)"
+msgstr "चयनित ऑब्जेक्ट लॉक करें (Ctrl+L)"
+
+#: src/editor/main.cpp:967
+msgid "Réguas"
+msgstr "रूलर"
+
+#: src/editor/main.cpp:967
+msgid "Mostrar réguas, guias e coordenadas (Ctrl+Shift+R)"
+msgstr "रूलर, गाइड और निर्देशांक दिखाएँ (Ctrl+Shift+R)"
+
+#: src/editor/main.cpp:998
 msgid "Efeito: "
 msgstr "प्रभाव: "
 
-#: src/editor/main.cpp:854
+#: src/editor/main.cpp:998
 msgid " — abre os ajustes no painel de efeitos"
 msgstr " — प्रभाव पैनल में सेटिंग्स खोलता है"
 
-#: src/editor/main.cpp:957
+#: src/editor/main.cpp:1101
 msgid "Ferramenta: "
 msgstr "टूल: "
 
-#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+#: src/editor/main.cpp:1161 src/editor/main.cpp:1202
 msgid "Ampliar parte da imagem"
 msgstr "छवि का कोई हिस्सा बड़ा करें"
 
-#: src/editor/main.cpp:1021
+#: src/editor/main.cpp:1165
 msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
 msgstr "ज़रूरी विवरण उभारने के लिए छवि के हिस्से बड़े करें। आवर्धक बनाने के लिए खींचें; अलग लेंस के साथ, पीला हैंडल बड़ा किया जाने वाला क्षेत्र चुनता है।"
 
-#: src/editor/main.cpp:1036
+#: src/editor/main.cpp:1180
 msgid "Entendi!"
 msgstr "समझ गया!"
 
-#: src/editor/main.cpp:1083
+#: src/editor/main.cpp:1227
 msgid "Ferramentas de desenho"
 msgstr "ड्रॉइंग टूल"
 
-#: src/editor/main.cpp:1084
+#: src/editor/main.cpp:1228
 msgid "Itens de menu"
 msgstr "मेनू आइटम"
 
-#: src/editor/main.cpp:1085
+#: src/editor/main.cpp:1229
 msgid "Destinos de compartilhamento"
 msgstr "साझा करने के गंतव्य"
 
-#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+#: src/editor/main.cpp:1230 src/editor/main.cpp:1632
 msgid "Efeitos"
 msgstr "प्रभाव"
 
-#: src/editor/main.cpp:1090
+#: src/editor/main.cpp:1234
 msgid "Diversos"
 msgstr "विविध"
 
-#: src/editor/main.cpp:1106
+#: src/editor/main.cpp:1250
 msgid "Personalização cancelada."
 msgstr "अनुकूलन रद्द किया गया।"
 
-#: src/editor/main.cpp:1113
+#: src/editor/main.cpp:1257
 msgid "Barra de ferramentas personalizada."
 msgstr "अनुकूलित टूलबार।"
 
-#: src/editor/main.cpp:1113
+#: src/editor/main.cpp:1257
 msgid "Barra de ferramentas automática."
 msgstr "स्वचालित टूलबार।"
 
-#: src/editor/main.cpp:1134
+#: src/editor/main.cpp:1278
 msgid "Personalizar a barra…"
 msgstr "बार अनुकूलित करें…"
 
-#: src/editor/main.cpp:1136
+#: src/editor/main.cpp:1280
 msgid "Voltar ao padrão (automática)"
 msgstr "डिफ़ॉल्ट पर लौटें (स्वचालित)"
 
-#: src/editor/main.cpp:1143
+#: src/editor/main.cpp:1301
 msgid "Atalhos do Snapnab Editor"
 msgstr "Snapnab Editor के शॉर्टकट"
 
-#: src/editor/main.cpp:1144
+#: src/editor/main.cpp:1302
 msgid ""
 "Ferramentas (com a área de pintura em foco):\n"
 "  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
@@ -4415,75 +4998,115 @@ msgstr ""
 "छवि:     Ctrl+Shift+F/B एक स्तर आगे/पीछे • Ctrl+T ऑब्जेक्ट मिलाएँ • Ctrl+Shift+T सब मिलाएँ • Ctrl+; स्नैप\n"
 "वीडियो:  Space चलाएँ/रोकें • ←/→ फ़्रेम • I/O शुरुआत/अंत चिह्नित करते हैं\n"
 
-#: src/editor/main.cpp:1169
+#: src/editor/main.cpp:1328
 msgid "Imagem inteira copiada para a área de transferência."
 msgstr "पूरी छवि क्लिपबोर्ड पर कॉपी की गई।"
 
-#: src/editor/main.cpp:1174
+#: src/editor/main.cpp:1333
 msgid "Arquivo…"
 msgstr "फ़ाइल…"
 
-#: src/editor/main.cpp:1176
+#: src/editor/main.cpp:1335
 msgid "E-mail…"
 msgstr "ईमेल…"
 
-#: src/editor/main.cpp:1177
+#: src/editor/main.cpp:1336
 msgid "Impressora…"
 msgstr "प्रिंटर…"
 
-#: src/editor/main.cpp:1178
+#: src/editor/main.cpp:1337
 msgid "Programa externo…"
 msgstr "बाहरी प्रोग्राम…"
 
-#: src/editor/main.cpp:1201
+#: src/editor/main.cpp:1360
 msgid "Copiado."
 msgstr "कॉपी किया गया।"
 
-#: src/editor/main.cpp:1226
+#: src/editor/main.cpp:1367
+msgid "Selecione um objeto para bloquear ou desbloquear."
+msgstr "लॉक या अनलॉक करने के लिए कोई ऑब्जेक्ट चुनें।"
+
+#: src/editor/main.cpp:1371
+msgid "Objeto bloqueado: não pode ser movido, redimensionado nem excluído."
+msgstr "ऑब्जेक्ट लॉक: इसे न खिसकाया जा सकता है, न आकार बदला जा सकता है, न हटाया जा सकता है।"
+
+#: src/editor/main.cpp:1371
+msgid "Objeto desbloqueado."
+msgstr "ऑब्जेक्ट अनलॉक किया गया।"
+
+#: src/editor/main.cpp:1387
+msgid "Réguas ligadas: arraste de uma régua para criar uma guia; arraste a guia de volta para removê-la."
+msgstr "रूलर चालू: गाइड बनाने के लिए रूलर से खींचें; हटाने के लिए गाइड को वापस खींचें।"
+
+#: src/editor/main.cpp:1387
+msgid "Réguas desligadas."
+msgstr "रूलर बंद।"
+
+#: src/editor/main.cpp:1398
+msgid "A seleção e o corte encaixam nas bordas da imagem (Alt desliga na hora)."
+msgstr "चयन और क्रॉप छवि के किनारों से चिपकते हैं (Alt तुरंत बंद करता है)।"
+
+#: src/editor/main.cpp:1398
+msgid "Encaixe nas bordas desligado."
+msgstr "किनारों से चिपकना बंद।"
+
+#: src/editor/main.cpp:1403
+msgid "Texto colado sem formatação (Ctrl+Shift+V mantém a formatação)."
+msgstr "पाठ बिना फ़ॉर्मेटिंग के चिपकता है (Ctrl+Shift+V फ़ॉर्मेटिंग रखता है)।"
+
+#: src/editor/main.cpp:1403
+msgid "Texto colado com a formatação de origem (Ctrl+Shift+V cola sem formatação)."
+msgstr "पाठ मूल फ़ॉर्मेटिंग के साथ चिपकता है (Ctrl+Shift+V बिना फ़ॉर्मेटिंग चिपकाता है)।"
+
+#: src/editor/main.cpp:1409
+msgid "Renomear objeto"
+msgstr "ऑब्जेक्ट का नाम बदलें"
+
+#: src/editor/main.cpp:1441
 msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
 msgstr "समूह बनाने के लिए दो या अधिक ऑब्जेक्ट चुनें (Ctrl+क्लिक करें या खिसकाएँ टूल से आयत खींचें)।"
 
-#: src/editor/main.cpp:1228
+#: src/editor/main.cpp:1443
 msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
 msgstr "ऑब्जेक्ट का समूह बना। छवि › समूह तोड़ें (Ctrl+Shift+U) उन्हें अलग करता है।"
 
-#: src/editor/main.cpp:1233
+#: src/editor/main.cpp:1448
 msgid "Grupo desfeito."
 msgstr "समूह तोड़ा गया।"
 
-#: src/editor/main.cpp:1236
+#: src/editor/main.cpp:1451
 msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
 msgstr "टेम्पलेट (छवियाँ जोड़ना) अभी Snapnab में उपलब्ध नहीं हैं।"
 
-#: src/editor/main.cpp:1241
+#: src/editor/main.cpp:1456
 msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
 msgstr "कैनवास पर स्नैप चालू (खींचते समय Alt इसे कुछ देर के लिए बंद करता है)।"
 
-#: src/editor/main.cpp:1241
+#: src/editor/main.cpp:1456
 msgid "Encaixe no canvas desligado."
 msgstr "कैनवास पर स्नैप बंद।"
 
-#: src/editor/main.cpp:1245
+#: src/editor/main.cpp:1460
 msgid "Etiquetas"
 msgstr "टैग"
 
-#: src/editor/main.cpp:1246
+#: src/editor/main.cpp:1461
 msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
 msgstr "टैग को अल्पविराम से अलग करें। वे कैप्चर में सहेजे जाते हैं।"
 
-#: src/editor/main.cpp:1247
+#: src/editor/main.cpp:1462
 msgid "Etiquetar imagem"
 msgstr "छवि टैग करें"
 
-#: src/editor/main.cpp:1250
+#: src/editor/main.cpp:1465
 msgid "Etiquetas removidas."
 msgstr "टैग हटाए गए।"
 
-#: src/editor/main.cpp:1250
+#: src/editor/main.cpp:1465
 msgid "Etiquetas: "
 msgstr "टैग: "
 
-#: src/editor/main.cpp:1267
+#: src/editor/main.cpp:1483
 msgid ""
 "Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
 "OCR, exportação PDF e edição de vídeo (cortes e GIF)."
@@ -4491,11 +5114,11 @@ msgstr ""
 "वेक्टर ऑब्जेक्ट, प्रभाव, Smart Move,\n"
 "OCR, PDF निर्यात और वीडियो संपादन (कटौती और GIF) के साथ कैप्चर संपादन।"
 
-#: src/editor/main.cpp:1270
+#: src/editor/main.cpp:1486
 msgid "Sobre"
 msgstr "के बारे में"
 
-#: src/editor/main.cpp:1311
+#: src/editor/main.cpp:1529
 msgid ""
 "SnapnabEditor.exe [opções] [arquivo…]\n"
 "\n"
@@ -4509,295 +5132,315 @@ msgstr ""
 "/NewFromClipboard   क्लिपबोर्ड से छवि बनाता है\n"
 "/restartwait        पिछले इंस्टेंस के बंद होने की प्रतीक्षा करता है"
 
-#: src/editor/main.cpp:1371
+#: src/editor/main.cpp:1589
 #, c-format
 msgid "Zoom %d%%  ▾"
 msgstr "ज़ूम %d%%  ▾"
 
-#: src/editor/main.cpp:1371
+#: src/editor/main.cpp:1589
 #, c-format
 msgid "%d × %d px  ▾"
 msgstr "%d × %d px  ▾"
 
-#: src/editor/main.cpp:1409
+#: src/editor/main.cpp:1632
 msgid "Propriedades"
 msgstr "गुण"
 
-#: src/editor/main.cpp:1440
+#: src/editor/main.cpp:1663
 msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
 msgstr "छवि के चारों ओर ठोस रूपरेखा, आपकी चुनी हुई चौड़ाई और रंग में।"
 
-#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451
+#: src/editor/main.cpp:1663 src/editor/main.cpp:1666 src/editor/main.cpp:1670 src/editor/main.cpp:1674
 msgid "Bordas e sombras"
 msgstr "बॉर्डर और छाया"
 
-#: src/editor/main.cpp:1443
+#: src/editor/main.cpp:1666
 msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
 msgstr "छवि के पीछे हल्की छाया, जो कैप्चर को पृष्ठभूमि से अलग दिखाती है।"
 
-#: src/editor/main.cpp:1444
+#: src/editor/main.cpp:1667
 msgid "Deslocamento"
 msgstr "खिसकाव"
 
-#: src/editor/main.cpp:1447
+#: src/editor/main.cpp:1670
 msgid "Perspectiva"
 msgstr "परिप्रेक्ष्य"
 
-#: src/editor/main.cpp:1447
+#: src/editor/main.cpp:1670
 msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
 msgstr "छवि को ऐसे झुकाता है जैसे वह बगल से, खड़ी या लेटी हो।"
 
-#: src/editor/main.cpp:1448
+#: src/editor/main.cpp:1671
 msgid "Horizontal"
 msgstr "क्षैतिज"
 
-#: src/editor/main.cpp:1449
+#: src/editor/main.cpp:1672
 msgid "Vertical"
 msgstr "लंबवत"
 
-#: src/editor/main.cpp:1450
+#: src/editor/main.cpp:1673
 msgid "Inclinação"
 msgstr "झुकाव"
 
-#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+#: src/editor/main.cpp:1674 src/editor/main.cpp:1797 src/editor/main.cpp:1891
 msgid "Dobra de página"
 msgstr "मुड़ा कोना"
 
-#: src/editor/main.cpp:1451
+#: src/editor/main.cpp:1674
 msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
 msgstr "छवि का एक कोना मोड़ता है, जैसे काग़ज़ की शीट का सिरा।"
 
-#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+#: src/editor/main.cpp:1675 src/editor/main.cpp:1679 src/editor/main.cpp:1705
 msgid "Tamanho"
 msgstr "आकार"
 
-#: src/editor/main.cpp:1452
+#: src/editor/main.cpp:1675
 msgid "Pequena"
 msgstr "छोटा"
 
-#: src/editor/main.cpp:1452
+#: src/editor/main.cpp:1675
 msgid "Grande"
 msgstr "बड़ा"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Canto"
 msgstr "कोना"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Superior esquerdo"
 msgstr "ऊपर बाएँ"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Superior direito"
 msgstr "ऊपर दाएँ"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Inferior direito"
 msgstr "नीचे दाएँ"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Inferior esquerdo"
 msgstr "नीचे बाएँ"
 
-#: src/editor/main.cpp:1454
+#: src/editor/main.cpp:1677
 msgid "Bordas"
 msgstr "किनारे"
 
-#: src/editor/main.cpp:1454
+#: src/editor/main.cpp:1677
 msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
 msgstr "फटा, लहर, आरी, शार्क, धुँधला या ढलान।"
 
-#: src/editor/main.cpp:1459
+#: src/editor/main.cpp:1682
 msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
 msgstr "धूसर, सीपिया, उलटें, श्वेत-श्याम, उभार, मोज़ेक, तीक्ष्णता, धुंधला।"
 
-#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+#: src/editor/main.cpp:1683 src/editor/main.cpp:1702
 msgid "Relevo"
 msgstr "उभार"
 
-#: src/editor/main.cpp:1460
+#: src/editor/main.cpp:1683
 msgid "Mosaico"
 msgstr "मोज़ेक"
 
-#: src/editor/main.cpp:1460
+#: src/editor/main.cpp:1683
 msgid "Nitidez"
 msgstr "तीक्ष्णता"
 
-#: src/editor/main.cpp:1463
+#: src/editor/main.cpp:1686
 msgid "Ajuste de cores"
 msgstr "रंग समायोजन"
 
-#: src/editor/main.cpp:1463
+#: src/editor/main.cpp:1686
 msgid "Brilho, contraste, gama, matiz e saturação."
 msgstr "चमक, कंट्रास्ट, गामा, ह्यू और संतृप्ति।"
 
-#: src/editor/main.cpp:1466
+#: src/editor/main.cpp:1689
 msgid "Gama"
 msgstr "गामा"
 
-#: src/editor/main.cpp:1467
+#: src/editor/main.cpp:1690
 msgid "Matiz"
 msgstr "ह्यू"
 
-#: src/editor/main.cpp:1469
+#: src/editor/main.cpp:1692
 msgid "Troca uma cor por outra (ou por transparente)."
 msgstr "एक रंग को दूसरे से (या पारदर्शी से) बदलता है।"
 
-#: src/editor/main.cpp:1470
+#: src/editor/main.cpp:1693
 msgid "Cor atual"
 msgstr "वर्तमान रंग"
 
-#: src/editor/main.cpp:1470
+#: src/editor/main.cpp:1693
 msgid "Tornar transparente"
 msgstr "पारदर्शी बनाएँ"
 
-#: src/editor/main.cpp:1472
+#: src/editor/main.cpp:1695
 msgid "Spotlight e lupa"
 msgstr "स्पॉटलाइट और आवर्धक"
 
-#: src/editor/main.cpp:1472
+#: src/editor/main.cpp:1695
 msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
 msgstr "चयन (या छवि के बीच के भाग) को उभारता है और बाकी को गहरा करता है।"
 
-#: src/editor/main.cpp:1473
+#: src/editor/main.cpp:1696
 msgid "Escurecer"
 msgstr "गहरा करें"
 
-#: src/editor/main.cpp:1475
+#: src/editor/main.cpp:1698
 msgid "Ampliar"
 msgstr "बड़ा करें"
 
-#: src/editor/main.cpp:1476
+#: src/editor/main.cpp:1699
 msgid "Sombra na área em foco"
 msgstr "फ़ोकस वाले क्षेत्र में छाया"
 
-#: src/editor/main.cpp:1477
+#: src/editor/main.cpp:1700
 msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
 msgstr "छवि पर पारभासी पाठ, एक बार या टाइल किया हुआ।"
 
-#: src/editor/main.cpp:1478
+#: src/editor/main.cpp:1701
 msgid "Confidencial"
 msgstr "गोपनीय"
 
-#: src/editor/main.cpp:1479
+#: src/editor/main.cpp:1702
 msgid "Repetir em mosaico"
 msgstr "टाइल करें"
 
-#: src/editor/main.cpp:1480
+#: src/editor/main.cpp:1703
 msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
 msgstr "ऊपर या नीचे पाठ की पट्टी; {date} और {time} स्वीकार करती है।"
 
-#: src/editor/main.cpp:1483
+#: src/editor/main.cpp:1706
 msgid "Cor da faixa"
 msgstr "पट्टी का रंग"
 
-#: src/editor/main.cpp:1572
+#: src/editor/main.cpp:1795
 msgid "Borda e sombra"
 msgstr "बॉर्डर और छाया"
 
-#: src/editor/main.cpp:1573
+#: src/editor/main.cpp:1796
 msgid "Papel rasgado"
 msgstr "फटा काग़ज़"
 
-#: src/editor/main.cpp:1576
+#: src/editor/main.cpp:1799
 msgid "Serrilhado"
 msgstr "दाँतेदार"
 
-#: src/editor/main.cpp:1578
+#: src/editor/main.cpp:1801
 msgid "Chanfrado"
 msgstr "ढलान वाला"
 
-#: src/editor/main.cpp:1589
+#: src/editor/main.cpp:1812
 msgid "Efeito"
 msgstr "प्रभाव"
 
-#: src/editor/main.cpp:1636
+#: src/editor/main.cpp:1859
 msgid "Efeito aplicado: "
 msgstr "प्रभाव लागू किया गया: "
 
-#: src/editor/main.cpp:1636
+#: src/editor/main.cpp:1859
 msgid " (Ctrl+Z desfaz)"
 msgstr " (Ctrl+Z पूर्ववत करता है)"
 
-#: src/editor/main.cpp:1644
+#: src/editor/main.cpp:1867
 msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
 msgstr "स्पॉटलाइट: चयन न होने पर फ़ोकस छवि के बीच में होता है। क्षेत्र चुनने के लिए चयन टूल का उपयोग करें।"
 
-#: src/editor/main.cpp:1665
+#: src/editor/main.cpp:1888
 #, c-format
 msgid "Meu efeito %zu"
 msgstr "मेरा प्रभाव %zu"
 
-#: src/editor/main.cpp:1666
+#: src/editor/main.cpp:1889
 msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
 msgstr "सेटिंग्स पैनल के प्रभावों से आती हैं (बदलने के लिए हर एक को खोलें):"
 
-#: src/editor/main.cpp:1670
+#: src/editor/main.cpp:1893
 msgid "Adicionar aos efeitos rápidos"
 msgstr "त्वरित प्रभावों में जोड़ें"
 
-#: src/editor/main.cpp:1682
+#: src/editor/main.cpp:1905
 msgid "Efeito rápido adicionado: "
 msgstr "त्वरित प्रभाव जोड़ा गया: "
 
-#: src/editor/main.cpp:1712
+#: src/editor/main.cpp:1942
+msgid "Abrir o link"
+msgstr "लिंक खोलें"
+
+#: src/editor/main.cpp:1943 src/editor/main.cpp:1970
+msgid "Soltar a peça na imagem\tEnter"
+msgstr "टुकड़े को छवि में छोड़ें\tEnter"
+
+#: src/editor/main.cpp:1948
+msgid "Desblo&quear\tCtrl+Shift+K"
+msgstr "अनलॉक करें(&U)\tCtrl+Shift+K"
+
+#: src/editor/main.cpp:1948
+msgid "&Bloquear\tCtrl+L"
+msgstr "लॉक करें(&L)\tCtrl+L"
+
+#: src/editor/main.cpp:1950
+msgid "Re&nomear…"
+msgstr "नाम बदलें(&N)…"
+
+#: src/editor/main.cpp:1983
 msgid "Nova captura de imagem (pede ao Snapnab)"
 msgstr "नया छवि कैप्चर (Snapnab से माँगता है)"
 
-#: src/editor/main.cpp:1713
+#: src/editor/main.cpp:1984
 msgid "Nova gravação de vídeo"
 msgstr "नई वीडियो रिकॉर्डिंग"
 
-#: src/editor/main.cpp:1714
+#: src/editor/main.cpp:1985
 msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
 msgstr "पूरी छवि कॉपी करें (Ctrl+Shift+C)"
 
-#: src/editor/main.cpp:1716
+#: src/editor/main.cpp:1987
 msgid "Compartilhar"
 msgstr "साझा करें"
 
-#: src/editor/main.cpp:1716
+#: src/editor/main.cpp:1987
 msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
 msgstr "साझा करें: फ़ाइल, क्लिपबोर्ड, ईमेल, प्रिंटर, प्रोग्राम"
 
-#: src/editor/main.cpp:1734
+#: src/editor/main.cpp:2005
 #, c-format
 msgid "Excluir o efeito rápido \"%s\"?"
 msgstr "त्वरित प्रभाव \"%s\" हटाएँ?"
 
-#: src/editor/main.cpp:1758
+#: src/editor/main.cpp:2029
 msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
 msgstr "अनुकूलित टूलबार। और › डिफ़ॉल्ट पर लौटें इसे पूर्ववत करता है।"
 
-#: src/editor/main.cpp:1776
+#: src/editor/main.cpp:2057
 #, c-format
 msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
 msgstr "%d ऑब्जेक्ट चुने गए  •  Ctrl+Shift+G समूह बनाता है  •  व्यवस्थित करें › संरेखित करें उन्हें आपस में संरेखित करता है"
 
-#: src/editor/main.cpp:1783
+#: src/editor/main.cpp:2065
 msgid "Cor capturada: "
 msgstr "लिया गया रंग: "
 
-#: src/editor/main.cpp:1783
+#: src/editor/main.cpp:2065
 msgid " (aplicada às ferramentas de desenho)"
 msgstr " (ड्रॉइंग टूल पर लागू)"
 
-#: src/editor/main.cpp:1803
+#: src/editor/main.cpp:2088
 msgid "Quadro do vídeo"
 msgstr "वीडियो का फ़्रेम"
 
-#: src/editor/main.cpp:1803
+#: src/editor/main.cpp:2088
 msgid "Quadro de vídeo"
 msgstr "वीडियो फ़्रेम"
 
-#: src/editor/main.cpp:1804
+#: src/editor/main.cpp:2089
 msgid "Vídeo salvo: "
 msgstr "वीडियो सहेजा गया: "
 
-#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+#: src/editor/main.cpp:2132 src/editor/main.cpp:2132
 msgid "Editar"
 msgstr "संपादन"
 
-#: src/editor/main.cpp:1865
+#: src/editor/main.cpp:2157
 msgid "Ajustar à janela\tCtrl+0"
 msgstr "विंडो में फ़िट करें\tCtrl+0"

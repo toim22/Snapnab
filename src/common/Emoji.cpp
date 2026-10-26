@@ -46,14 +46,14 @@ Image RenderEmoji(const std::wstring& text, int px) {
     rt->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
     rt->BeginDraw();
     rt->Clear(D2D1::ColorF(0, 0, 0, 0));
-    // um pouco maior que o quadrado na vertical: a caixa da fonte tem respiro acima e abaixo do desenho
+    // a little taller than the square: the font box has breathing room above and below the glyph
     rt->DrawText(text.c_str(), (UINT32)text.size(), fmt.Get(), D2D1::RectF(-px * 0.1f, -px * 0.12f, px * 1.1f, px * 1.06f), brush.Get(),
                  D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
     if (FAILED(rt->EndDraw())) return {};
     Image out(px, px);
     WICRect wr{ 0, 0, px, px };
     if (FAILED(bmp->CopyPixels(&wr, px * 4, (UINT)(out.px.size() * 4), (BYTE*)out.px.data()))) return {};
-    for (auto& p : out.px) {           // pré-multiplicado → alfa direto
+    for (auto& p : out.px) {           // premultiplied → straight alpha
         int a = CA(p);
         if (a == 0) { p = 0; continue; }
         if (a < 255) p = ARGB(a, std::min(255, CR(p) * 255 / a), std::min(255, CG(p) * 255 / a), std::min(255, CB(p) * 255 / a));

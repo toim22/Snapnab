@@ -1,5 +1,5 @@
-﻿; *** Inno Setup — mensagens em বাংলা (Snapnab) ***
-; Tradução feita para o instalador do Snapnab a partir do Default.isl do Inno Setup 6.
+﻿; *** Inno Setup — messages in বাংলা (Snapnab) ***
+; Translation made for the Snapnab installer from Inno Setup 6's Default.isl.
 
 [LangOptions]
 LanguageName=বাংলা

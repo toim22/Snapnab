@@ -1,4 +1,4 @@
-# Gera src/resources/Snapnab.ico e SnapnabEditor.ico (PNG embutido em ICO) sem dependências externas.
+# Generates src/resources/Snapnab.ico and SnapnabEditor.ico (PNG embedded in ICO) without external dependencies.
 #   python scripts/make_icons.py
 import zlib, struct, math, os
 
@@ -21,7 +21,7 @@ def render(s, editor):
             for sy in range(ss):
                 for sx in range(ss):
                     fx = x + (sx + .5) / ss; fy = y + (sy + .5) / ss
-                    # quadrado arredondado
+                    # rounded square
                     dx = max(r - fx, 0, fx - (s - r)); dy = max(r - fy, 0, fy - (s - r))
                     if dx * dx + dy * dy > r * r: continue
                     t = (fx + fy) / (2 * s)
@@ -29,7 +29,7 @@ def render(s, editor):
                     u, v = fx / s, fy / s
                     white = False
                     if editor:
-                        # quadro + lápis diagonal
+                        # frame + diagonal pencil
                         if (0.18 < u < 0.70 and 0.20 < v < 0.72) and not (0.25 < u < 0.63 and 0.27 < v < 0.65): white = True
                         d = abs((u - 0.42) - (0.75 - v) * 1.0) / math.sqrt(2)
                         if d < 0.06 and 0.38 < u < 0.86: white = True

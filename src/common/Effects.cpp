@@ -282,7 +282,7 @@ Image EdgeEffect(const Image& s, Edge style, int size, int sides, bool shadow) {
         for (int i = 0; i < len; i++) setDepth(i, EdgeDepth(style, i, size, rng, walk));
     };
     if (style == Edge::Beveled) {
-        // chanfro 3D: faixa clara em cima/à esquerda e escura embaixo/à direita, esmaecendo para dentro
+        // 3D bevel: light band at the top/left and dark band at the bottom/right, fading inward
         for (int y = 0; y < d.h; y++)
             for (int x = 0; x < d.w; x++) {
                 double li = 0, dk = 0;
@@ -318,7 +318,7 @@ Image EdgeEffect(const Image& s, Edge style, int size, int sides, bool shadow) {
     return shadow ? Shadow(d, 5, 5, 45) : d;
 }
 
-// amostra bilinear (fora da imagem = transparente)
+// bilinear sample (outside the image = transparent)
 static uint32_t Sample(const Image& s, double x, double y) {
     if (x < -0.5 || y < -0.5 || x > s.w - 0.5 || y > s.h - 0.5) return 0;
     int x0 = (int)std::floor(x), y0 = (int)std::floor(y);
@@ -334,8 +334,8 @@ static uint32_t Sample(const Image& s, double x, double y) {
 }
 
 Image Perspective(const Image& s, int horizontal, int vertical, int shear) {
-    // inclinação horizontal: um lado fica mais baixo que o outro (trapézio); vertical: idem em cima/embaixo;
-    // cisalhamento: desloca as linhas proporcionalmente à altura
+    // horizontal tilt: one side ends up lower than the other (trapezoid); vertical: same at the top/bottom;
+    // shear: shifts the rows in proportion to the height
     Image d(s.w, s.h, 0);
     double hz = std::clamp(horizontal, -100, 100) / 100.0 * 0.6, vt = std::clamp(vertical, -100, 100) / 100.0 * 0.6;
     double sh = std::clamp(shear, -100, 100) / 100.0 * 0.5;
@@ -343,8 +343,8 @@ Image Perspective(const Image& s, int horizontal, int vertical, int shear) {
     for (int y = 0; y < d.h; y++)
         for (int x = 0; x < d.w; x++) {
             double u = s.w > 1 ? x / (double)(s.w - 1) : 0, v = s.h > 1 ? y / (double)(s.h - 1) : 0;
-            double sy = 1 - std::fabs(hz) * (hz > 0 ? u : 1 - u);       // escala vertical de cada coluna
-            double sx = 1 - std::fabs(vt) * (vt > 0 ? v : 1 - v);       // escala horizontal de cada linha
+            double sy = 1 - std::fabs(hz) * (hz > 0 ? u : 1 - u);       // vertical scale of each column
+            double sx = 1 - std::fabs(vt) * (vt > 0 ? v : 1 - v);       // horizontal scale of each row
             double xs = (x - cx) / sx + cx - sh * (y - cy);
             double ys = (y - cy) / sy + cy;
             d.at(x, y) = Sample(s, xs, ys);
@@ -353,14 +353,14 @@ Image Perspective(const Image& s, int horizontal, int vertical, int shear) {
 }
 
 Image PageCurl(const Image& sIn, int size, int corner) {
-    // trabalha sempre no canto inferior direito; os outros cantos espelham antes e depois
+    // always works on the bottom-right corner; the other corners are mirrored before and after
     bool fh = corner == 0 || corner == 3, fv = corner == 0 || corner == 1;
     Image s = sIn;
     if (fh) s = FlipH(s);
     if (fv) s = FlipV(s);
     size = std::clamp(size, 8, std::max(8, std::min(s.w, s.h) - 4));
     int W = s.w, H = s.h;
-    // o canto além da linha da dobra (x + y > W + H - size) some
+    // the corner beyond the fold line (x + y > W + H - size) disappears
     for (int y = std::max(0, H - size); y < H; y++)
         for (int x = std::max(0, W - size); x < W; x++)
             if (x + y > W + H - size) s.at(x, y) = 0;
@@ -368,7 +368,7 @@ Image PageCurl(const Image& sIn, int size, int corner) {
         auto bmp = s.WrapGdip();
         Graphics g(bmp.get());
         g.SetSmoothingMode(SmoothingModeAntiAlias);
-        // a aba dobrada é o reflexo do canto removido sobre a linha da dobra
+        // the folded flap is the reflection of the removed corner over the fold line
         PointF a((REAL)(W - size), (REAL)H), b((REAL)W, (REAL)(H - size)), tip((REAL)(W - size), (REAL)(H - size));
         PointF shadowTri[3] = { a, b, PointF(tip.X - size * 0.08f, tip.Y - size * 0.08f) };
         SolidBrush shb(Color(70, 0, 0, 0));
@@ -501,7 +501,7 @@ Image Caption(const Image& s, const std::wstring& textIn, bool top, int fontPx, 
 }
 
 Image ApplyCaptureEffects(const Image& s, const CaptureEffects& e) {
-    // geometria primeiro, depois cor, texto e acabamento (borda, bordas especiais e sombra por último)
+    // geometry first, then color, text and finish (border, edge effects and shadow last)
     Image img = e.trim ? AutoTrim(s, e.trimTolerance) : s;
     if (e.rotate) {
         switch (e.rotateKind) {

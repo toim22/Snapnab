@@ -42,8 +42,8 @@ static std::vector<Interval> Normalize(std::vector<Interval> cuts) {
     return out;
 }
 
-// copia o quadro (2D, qualquer sinal de pitch) para Image de cima para baixo. O decodificador costuma entregar linhas
-// mais largas que o vídeo (largura alinhada a 16/32/64 px), então o passo entre linhas nunca é suposto igual a w * 4.
+// copies the frame (2D, any pitch sign) to Image top-down. The decoder often delivers rows
+// wider than the video (width aligned to 16/32/64 px), so the stride is never assumed to be w * 4.
 static bool SampleToImage(IMFSample* s, int w, int h, Image& out) {
     out = Image(w, h);
     auto copy2d = [&](IMFMediaBuffer* b) {
@@ -66,7 +66,7 @@ static bool SampleToImage(IMFSample* s, int w, int h, Image& out) {
     if (!copy2d(buf.Get())) {
         BYTE* p; DWORD len;
         if (FAILED(buf->Lock(&p, nullptr, &len))) return false;
-        // buffer linear: o passo sai do tamanho (altura também pode vir alinhada)
+        // linear buffer: the stride comes from the size (the height may be aligned too)
         DWORD pitch = 0;
         for (int a : { 1, 2, 8, 16, 32, 64 }) {
             DWORD hh = (DWORD)((h + a - 1) / a * a);
@@ -80,7 +80,7 @@ static bool SampleToImage(IMFSample* s, int w, int h, Image& out) {
     return true;
 }
 
-// ---------------------------------------------------------------- leitor
+// ---------------------------------------------------------------- reader
 bool VideoReader::Open(const std::wstring& path) {
     Close();
     if (FAILED(MFStartup(MF_VERSION, MFSTARTUP_FULL))) return false;
@@ -137,7 +137,7 @@ bool VideoReader::ReadFrame(Image& out, LONGLONG& ts) {
     return false;
 }
 
-// ---------------------------------------------------------------- transcodificação com cortes
+// ---------------------------------------------------------------- transcoding with cuts
 bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::vector<Interval> cuts, Progress progress, std::wstring& err) {
     cuts = Normalize(cuts);
     CoInitializeEx(nullptr, COINIT_MULTITHREADED);
@@ -147,20 +147,20 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         ComPtr<IMFAttributes> ra;
         MFCreateAttributes(&ra, 1);
         ra->SetUINT32(MF_SOURCE_READER_ENABLE_VIDEO_PROCESSING, TRUE);
-        // leitores separados para vídeo e áudio (ler os dois num só leitor com ANY_STREAM falha de forma intermitente
-        // quando o processamento de vídeo está ativo); as amostras são intercaladas por timestamp na escrita
+        // separate readers for video and audio (reading both in a single reader with ANY_STREAM fails intermittently
+        // when video processing is enabled); the samples are interleaved by timestamp when writing
         ComPtr<IMFSourceReader> rd, rdA;
         if (FAILED(MFCreateSourceReaderFromURL(src.c_str(), ra.Get(), &rd))) { err = Tr(L"Não foi possível abrir o vídeo."); break; }
         rd->SetStreamSelection((DWORD)MF_SOURCE_READER_ALL_STREAMS, FALSE);
         rd->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, TRUE);
-        // vídeo → RGB32
+        // video → RGB32
         ComPtr<IMFMediaType> vt; MFCreateMediaType(&vt);
         vt->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video); vt->SetGUID(MF_MT_SUBTYPE, MFVideoFormat_RGB32);
         if (FAILED(rd->SetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, nullptr, vt.Get()))) { err = Tr(L"Formato de vídeo não suportado."); break; }
         ComPtr<IMFMediaType> vcur; rd->GetCurrentMediaType((DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, &vcur);
         UINT32 w, h, fn = 30, fd = 1; MFGetAttributeSize(vcur.Get(), MF_MT_FRAME_SIZE, &w, &h);
         MFGetAttributeRatio(vcur.Get(), MF_MT_FRAME_RATE, &fn, &fd);
-        // áudio → PCM 16 bits (se existir)
+        // audio → 16-bit PCM (if present)
         bool hasAudio = false;
         UINT32 rate = 48000, ch = 2;
         if (SUCCEEDED(MFCreateSourceReaderFromURL(src.c_str(), nullptr, &rdA))) {
@@ -220,7 +220,7 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         bool videoDone = false, audioDone = !hasAudio, canceled = false;
         std::vector<BYTE> flip((size_t)ow * oh * 4);
         int lastPct = -1;
-        // próxima amostra pendente de cada leitor
+        // next pending sample of each reader
         struct Pending { ComPtr<IMFSample> s; LONGLONG ts = 0; bool have = false; };
         Pending pv2, pa;
         auto fetch = [&](IMFSourceReader* r, DWORD stream, Pending& p, bool& done) -> bool {
@@ -236,8 +236,8 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
         while (!(videoDone && audioDone)) {
             if (!fetch(rd.Get(), (DWORD)MF_SOURCE_READER_FIRST_VIDEO_STREAM, pv2, videoDone)) break;
             if (hasAudio && !fetch(rdA.Get(), (DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, pa, audioDone)) {
-                // áudio ilegível: segue só com o vídeo
-                Log(L"Corte: áudio ilegível (%s), continuando sem áudio", err.c_str());
+                // unreadable audio: continue with video only
+                Log(L"Cut: unreadable audio (%s), continuing without audio", err.c_str());
                 err.clear(); audioDone = true; pa.have = false;
             }
             if (!pv2.have && !pa.have) continue;
@@ -246,14 +246,14 @@ bool TranscodeWithCuts(const std::wstring& src, const std::wstring& dst, std::ve
             ComPtr<IMFSample> s = cur.s;
             LONGLONG ts = cur.ts;
             cur.have = false; cur.s.Reset();
-            // trecho cortado: descarta; senão reescreve o PTS descontando os cortes anteriores
+            // cut range: discard; otherwise rewrite the PTS minus the previous cuts
             if (IsInsideAnyCut(cuts, ts)) continue;
             LONGLONG removed = PrecedingCutsDuration(cuts, ts);
             LONGLONG dur = 0; s->GetSampleDuration(&dur);
             if (isVideo) {
                 Image img;
                 if (!SampleToImage(s.Get(), (int)w, (int)h, img)) continue;
-                // RGB32 de entrada do sink writer: de baixo para cima
+                // sink writer input RGB32: bottom-up
                 for (UINT32 y = 0; y < oh; y++) memcpy(flip.data() + (size_t)(oh - 1 - y) * ow * 4, img.row((int)y), (size_t)ow * 4);
                 ComPtr<IMFMediaBuffer> b; MFCreateMemoryBuffer((DWORD)flip.size(), &b);
                 BYTE* p; b->Lock(&p, nullptr, nullptr); memcpy(p, flip.data(), flip.size()); b->Unlock();
@@ -301,7 +301,7 @@ bool CreateGifFromVideo(const std::wstring& src, const std::wstring& dst, LONGLO
                 while (rd.ReadFrame(img, ts)) {
                     if (ts < next - step / 2) continue;
                     if (ts > to) break;
-                    // quadros repetidos aumentam o atraso em vez de duplicar o quadro
+                    // repeated frames increase the delay instead of duplicating the frame
                     int reps = 1;
                     next += step;
                     while (ts >= next + step / 2) { next += step; reps++; }
@@ -319,7 +319,7 @@ bool CreateGifFromVideo(const std::wstring& src, const std::wstring& dst, LONGLO
     return ok;
 }
 
-// ---------------------------------------------------------------- janela de progresso
+// ---------------------------------------------------------------- progress window
 bool RunWithProgress(HWND owner, const std::wstring& title, std::function<bool(Progress)> work) {
     static bool reg = false;
     if (!reg) {
@@ -363,8 +363,8 @@ bool RunWithProgress(HWND owner, const std::wstring& title, std::function<bool(P
     return result;
 }
 
-// ---------------------------------------------------------------- áudio da prévia (waveOut)
-// Lê a faixa de áudio em PCM 16 bits numa thread própria e toca pelo waveOut, pulando os trechos cortados.
+// ---------------------------------------------------------------- preview audio (waveOut)
+// Reads the audio track as 16-bit PCM on its own thread and plays it through waveOut, skipping the cut ranges.
 struct VideoView::AudioPlayer {
     std::thread th;
     std::atomic<bool> run{ false };
@@ -386,7 +386,7 @@ struct VideoView::AudioPlayer {
         ComPtr<IMFSourceReader> rd;
         if (FAILED(MFCreateSourceReaderFromURL(path.c_str(), nullptr, &rd))) return;
         rd->SetStreamSelection((DWORD)MF_SOURCE_READER_ALL_STREAMS, FALSE);
-        if (FAILED(rd->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, TRUE))) return;   // vídeo sem áudio
+        if (FAILED(rd->SetStreamSelection((DWORD)MF_SOURCE_READER_FIRST_AUDIO_STREAM, TRUE))) return;   // video without audio
         ComPtr<IMFMediaType> mt;
         MFCreateMediaType(&mt);
         mt->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio); mt->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_PCM);
@@ -442,7 +442,7 @@ struct VideoView::AudioPlayer {
     }
 };
 
-// ---------------------------------------------------------------- vista de vídeo
+// ---------------------------------------------------------------- video view
 enum { B_PLAY = 1, B_PREV, B_NEXT, B_MARKIN, B_MARKOUT, B_CUT, B_UNDOCUT, B_SAVEMP4, B_SAVEFRAME, B_GIF, B_PLAYER };
 
 static std::wstring FmtTime(LONGLONG t) {
@@ -520,7 +520,7 @@ void VideoView::ShowAt(LONGLONG t) {
     t = std::clamp<LONGLONG>(t, 0, std::max<LONGLONG>(0, reader_.duration - 1));
     reader_.Seek(t);
     Image img; LONGLONG ts = 0;
-    // decodifica a partir do quadro-chave até alcançar t
+    // decodes from the key frame until it reaches t
     for (int i = 0; i < 600; i++) {
         if (!reader_.ReadFrame(img, ts)) break;
         frame_ = img;
@@ -559,7 +559,7 @@ void VideoView::StopPlay() {
     SetWindowTextW(btn_[B_PLAY], Tr(L"▶ Reproduzir"));
 }
 
-// relógio de parede convertido para o tempo do vídeo-fonte, pulando os trechos cortados (como o áudio)
+// wall clock converted to source video time, skipping the cut ranges (like the audio)
 LONGLONG VideoView::PlayClock() const {
     LONGLONG t = playFrom_ + (LONGLONG)(GetTickCount64() - playTick_) * 10000;
     for (auto& c : Normalize(cuts_))
@@ -589,7 +589,7 @@ void VideoView::Paint(HDC hdc) {
                 ui::DrawTextCentered(mem, Tr(L"trecho cortado"), tag, RGB(255, 255, 255), ui::UiFont(dpi, 9, true));
             }
         }
-        // linha do tempo
+        // timeline
         HBRUSH tb = CreateSolidBrush(RGB(70, 72, 78)); FillRect(mem, &tl, tb); DeleteObject(tb);
         auto xOf = [&](LONGLONG t) { return tl.left + (int)((double)t / std::max<LONGLONG>(1, reader_.duration) * (tl.right - tl.left)); };
         for (auto& c : Normalize(cuts_)) {
@@ -678,7 +678,7 @@ LRESULT VideoView::Handle(UINT m, WPARAM w, LPARAM l) {
     case WM_PAINT: { PAINTSTRUCT ps; HDC dc = BeginPaint(hwnd, &ps); Paint(dc); EndPaint(hwnd, &ps); return 0; }
     case WM_TIMER: {
         if (!playing_) return 0;
-        // mostra o quadro mais recente que o relógio já alcançou (o áudio segue o mesmo relógio)
+        // shows the most recent frame the clock has reached (the audio follows the same clock)
         LONGLONG clock = PlayClock();
         bool shown = false;
         for (int i = 0; i < 16; i++) {
@@ -686,7 +686,7 @@ LRESULT VideoView::Handle(UINT m, WPARAM w, LPARAM l) {
                 Image img; LONGLONG ts;
                 if (!reader_.ReadFrame(img, ts)) { if (!shown) StopPlay(); break; }
                 bool skipped = false;
-                for (auto& c : Normalize(cuts_))      // pula os trechos cortados na prévia
+                for (auto& c : Normalize(cuts_))      // skips the cut ranges in the preview
                     if (ts >= c.start && ts < c.end) { reader_.Seek(c.end); skipped = true; break; }
                 if (skipped) continue;
                 pending_ = std::move(img); pendingTs_ = ts;

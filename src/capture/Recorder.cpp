@@ -14,19 +14,19 @@ using Microsoft::WRL::ComPtr;
 
 namespace snap {
 
-static constexpr int kRate = 48000;     // taxa do mixer/AAC
+static constexpr int kRate = 48000;     // mixer/AAC rate
 static constexpr LONGLONG kHns = 10000000;
 
-// ---------------------------------------------------------------- fonte de áudio WASAPI
+// ---------------------------------------------------------------- WASAPI audio source
 struct Recorder::AudioSource {
     bool loopback = false;
     std::atomic<bool> run{ false };
     std::atomic<float>* level = nullptr;
     std::thread th;
     std::mutex m;
-    std::deque<float> buf;               // estéreo intercalado a 48 kHz
+    std::deque<float> buf;               // interleaved stereo at 48 kHz
     std::wstring deviceName;
-    // reamostragem linear
+    // linear resampling
     double pos = 0; float prevL = 0, prevR = 0;
     std::promise<bool> ready_;
 
@@ -46,7 +46,7 @@ struct Recorder::AudioSource {
         CoInitializeEx(nullptr, COINIT_MULTITHREADED);
         bool signalled = false;
         auto fail = [&](const wchar_t* what, HRESULT hr) {
-            Log(L"Áudio (%s): %s falhou 0x%08X", loopback ? L"sistema" : L"microfone", what, hr);
+            Log(L"Audio (%s): %s failed 0x%08X", loopback ? L"system" : L"microphone", what, hr);
             if (!signalled) { ready.set_value(false); signalled = true; }
         };
         do {
@@ -64,8 +64,8 @@ struct Recorder::AudioSource {
             if (FAILED(hr)) { fail(L"GetMixFormat", hr); break; }
             hr = client->Initialize(AUDCLNT_SHAREMODE_SHARED, loopback ? AUDCLNT_STREAMFLAGS_LOOPBACK : 0, 2000000, 0, wf, nullptr);
             if (FAILED(hr)) {
-                // alguns drivers recusam o próprio formato de mixagem: tenta float estéreo 48 kHz com conversão do WASAPI
-                Log(L"Áudio (%s): formato de mixagem recusado (0x%08X), tentando conversão automática", loopback ? L"sistema" : L"microfone", hr);
+                // some drivers reject their own mix format: try stereo float 48 kHz with WASAPI conversion
+                Log(L"Audio (%s): mix format rejected (0x%08X), trying automatic conversion", loopback ? L"system" : L"microphone", hr);
                 client.Reset();
                 if (FAILED(dev->Activate(__uuidof(IAudioClient), CLSCTX_ALL, nullptr, (void**)client.GetAddressOf()))) { CoTaskMemFree(wf); fail(L"Activate", hr); break; }
                 WAVEFORMATEX* std = (WAVEFORMATEX*)CoTaskMemAlloc(sizeof(WAVEFORMATEX));
@@ -85,13 +85,13 @@ struct Recorder::AudioSource {
             if (wf->wFormatTag == WAVE_FORMAT_EXTENSIBLE)
                 isFloat = ((WAVEFORMATEXTENSIBLE*)wf)->SubFormat == KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
             int ch = wf->nChannels, bits = wf->wBitsPerSample, rate = wf->nSamplesPerSec, blk = wf->nBlockAlign;
-            Log(L"Áudio (%s): %d Hz, %d canais, %d bits%s", loopback ? L"sistema" : L"microfone", rate, ch, bits, isFloat ? L" float" : L"");
+            Log(L"Audio (%s): %d Hz, %d channels, %d bits%s", loopback ? L"system" : L"microphone", rate, ch, bits, isFloat ? L" float" : L"");
             CoTaskMemFree(wf);
             hr = client->Start();
             if (FAILED(hr)) { fail(L"Start", hr); break; }
             ready.set_value(true); signalled = true;
 
-            std::vector<float> st;   // quadros estéreo na taxa original
+            std::vector<float> st;   // stereo frames at the original rate
             while (run) {
                 Sleep(10);
                 UINT32 pkt = 0;
@@ -146,15 +146,15 @@ struct Recorder::AudioSource {
             pos -= n;
             if (n) { prevL = s[(size_t)(n - 1) * 2]; prevR = s[(size_t)(n - 1) * 2 + 1]; }
         }
-        size_t maxFrames = kRate * 5;                 // nunca acumula mais que 5 s
+        size_t maxFrames = kRate * 5;                 // never buffers more than 5 s
         if (buf.size() > maxFrames * 2) buf.erase(buf.begin(), buf.begin() + (buf.size() - maxFrames * 2));
     }
 
-    // retira até n quadros; devolve quantos vieram
+    // takes up to n frames; returns how many came
     size_t Pop(float* out, size_t n) {
         std::lock_guard<std::mutex> lk(m);
         size_t avail = buf.size() / 2;
-        // deriva: se o buffer cresceu demais (> n + 200 ms), descarta o excesso mais antigo
+        // drift: if the buffer grew too much (> n + 200 ms), drops the oldest excess
         if (avail > n + kRate / 5) {
             size_t drop = avail - n - kRate / 20;
             buf.erase(buf.begin(), buf.begin() + drop * 2);
@@ -169,7 +169,7 @@ struct Recorder::AudioSource {
 };
 
 // ---------------------------------------------------------------- Recorder
-Recorder::~Recorder() { if (running_) Cancel(); }
+Recorder::~Recorder() { if (running_) Cancel(); StopMonitor(); }
 
 LONGLONG Recorder::Now100ns() const {
     std::lock_guard<std::mutex> lk(clockMutex_);
@@ -239,15 +239,49 @@ static HRESULT CreateWriter(const RecordSettings& s, int w, int h, bool hw, bool
     return S_OK;
 }
 
+// level meters before the recording: the sources capture and the buffers are emptied (nothing is written); the
+// automatic gain is estimated from the peak, as the mixer does
+void Recorder::StartMonitor(bool mic, bool sys) {
+    if (state_ != Idle || monitoring_) return;
+    if (mic) { mic_ = std::make_shared<AudioSource>(); hasMic_ = mic_->Start(false, &micLevel_); if (!hasMic_) mic_.reset(); }
+    if (sys) { sys_ = std::make_shared<AudioSource>(); hasSys_ = sys_->Start(true, &sysLevel_); if (!hasSys_) sys_.reset(); }
+    if (!mic_ && !sys_) return;
+    monitoring_ = true;
+    monitorThread_ = std::thread([this] {
+        float env = 0;
+        while (monitoring_) {
+            Sleep(50);
+            if (mic_) mic_->Clear();
+            if (sys_) sys_->Clear();
+            env = std::max((float)micLevel_, env * 0.97f);
+            micGainNow_ = autoGain_ ? std::clamp(0.5f / std::max(env, 1e-4f), 1.0f, 8.0f) : 1.0f;
+        }
+    });
+}
+
+void Recorder::StopMonitor() {
+    if (!monitoring_ && !monitorThread_.joinable()) return;
+    monitoring_ = false;
+    if (monitorThread_.joinable()) monitorThread_.join();
+    if (mic_) mic_->Stop();
+    if (sys_) sys_->Stop();
+    mic_.reset(); sys_.reset();
+    hasMic_ = hasSys_ = false;
+    micLevel_ = 0; sysLevel_ = 0; micGainNow_ = 1;
+}
+
 bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
     if (state_ != Idle) return false;
+    StopMonitor();
     settings_ = s;
+    micVol_ = std::clamp(s.micVolume, 0, 200); sysVol_ = std::clamp(s.sysVolume, 0, 200); autoGain_ = s.autoGain;
+    micGainNow_ = 1;
     notify_ = notify; notifyMsg_ = notifyMsg;
     micMuted_ = s.micMuted; sysMuted_ = s.sysMuted;
     lastError.clear();
     firstFrame = Image();
 
-    // tamanho de saída: par, ≤ 1080 linhas (opcional) e dentro do limite do codificador H.264 (4096×2304)
+    // output size: even, ≤ 1080 lines (optional) and within the H.264 encoder limit (4096×2304)
     int w = s.rect.right - s.rect.left, h = s.rect.bottom - s.rect.top;
     if (w < 16 || h < 16) { lastError = Tr(L"Área de gravação muito pequena."); return false; }
     double sc = 1.0;
@@ -258,7 +292,7 @@ bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
 
     if (FAILED(MFStartup(MF_VERSION, MFSTARTUP_FULL))) { lastError = Tr(L"Media Foundation indisponível."); return false; }
 
-    // fontes de áudio
+    // audio sources
     if (s.microphone) { mic_ = std::make_shared<AudioSource>(); hasMic_ = mic_->Start(false, &micLevel_); if (!hasMic_) mic_.reset(); }
     if (s.systemAudio) { sys_ = std::make_shared<AudioSource>(); hasSys_ = sys_->Start(true, &sysLevel_); if (!hasSys_) sys_.reset(); }
     audioEnabled_ = hasMic_ || hasSys_;
@@ -266,13 +300,13 @@ bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
     ComPtr<IMFSinkWriter> wr;
     HRESULT hr = CreateWriter(settings_, outW_, outH_, s.hardware, audioEnabled_, wr, videoStream_, audioStream_);
     if (FAILED(hr) && s.hardware) {
-        Log(L"Gravador: codificador por hardware recusado (0x%08X), tentando software", hr);
+        Log(L"Recorder: hardware encoder rejected (0x%08X), trying software", hr);
         DeleteFileW(s.path.c_str());
         hr = CreateWriter(settings_, outW_, outH_, false, audioEnabled_, wr, videoStream_, audioStream_);
     }
     if (FAILED(hr)) {
         lastError = Format(Tr(L"Não foi possível iniciar o codificador MP4 (0x%08X)."), hr);
-        Log(L"Gravador: %s", lastError.c_str());
+        Log(L"Recorder: %s", lastError.c_str());
         if (mic_) mic_->Stop(); if (sys_) sys_->Stop();
         mic_.reset(); sys_.reset();
         MFShutdown();
@@ -284,10 +318,10 @@ bool Recorder::Start(const RecordSettings& s, HWND notify, UINT notifyMsg) {
     pausedTotal_ = 0;
     state_ = Recording;
     running_ = true;
-    SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);   // impede o sistema de dormir
+    SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);   // keeps the system from sleeping
     videoThread_ = std::thread([this] { VideoThread(); });
     if (audioEnabled_) audioThread_ = std::thread([this] { AudioMixThread(); });
-    Log(L"Gravador: iniciado %dx%d → %dx%d @%d fps, áudio mic=%d sis=%d, %s", w, h, outW_, outH_, s.fps, hasMic_, hasSys_, s.path.c_str());
+    Log(L"Recorder: started %dx%d → %dx%d @%d fps, audio mic=%d sys=%d, %s", w, h, outW_, outH_, s.fps, hasMic_, hasSys_, s.path.c_str());
     return true;
 }
 
@@ -327,7 +361,7 @@ bool Recorder::WriteSample(DWORD stream, const void* data, DWORD len, LONGLONG t
     smp->SetSampleDuration(dur);
     std::lock_guard<std::mutex> lk(writerMutex_);
     HRESULT hr = ((IMFSinkWriter*)writer_)->WriteSample(stream, smp.Get());
-    if (FAILED(hr)) Log(L"Gravador: WriteSample(%u) 0x%08X", stream, hr);
+    if (FAILED(hr)) Log(L"Recorder: WriteSample(%u) 0x%08X", stream, hr);
     return SUCCEEDED(hr);
 }
 
@@ -340,7 +374,7 @@ void Recorder::VideoThread() {
     HDC mem = CreateCompatibleDC(screen);
     BITMAPINFO bi{};
     bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    bi.bmiHeader.biWidth = outW_; bi.bmiHeader.biHeight = outH_;     // de baixo para cima = RGB32 padrão do MF
+    bi.bmiHeader.biWidth = outW_; bi.bmiHeader.biHeight = outH_;     // bottom-up = MF default RGB32
     bi.bmiHeader.biPlanes = 1; bi.bmiHeader.biBitCount = 32; bi.bmiHeader.biCompression = BI_RGB;
     void* bits = nullptr;
     HBITMAP dib = CreateDIBSection(screen, &bi, DIB_RGB_COLORS, &bits, nullptr, 0);
@@ -374,7 +408,7 @@ void Recorder::VideoThread() {
             }
         }
         GdiFlush();
-        // canal alfa do BitBlt é indefinido: o codificador ignora, mas a miniatura precisa de opaco
+        // the BitBlt alpha channel is undefined: the encoder ignores it, but the thumbnail needs it opaque
         if (firstFrame.empty()) {
             Image f(outW_, outH_);
             for (int y = 0; y < outH_; y++) memcpy(f.row(y), (uint32_t*)bits + (size_t)(outH_ - 1 - y) * outW_, outW_ * 4);
@@ -388,7 +422,7 @@ void Recorder::VideoThread() {
             break;
         }
         lastTs = ts;
-        // limites de espaço em disco (avisa / para)
+        // disk space limits (warn / stop)
         ULONGLONG nowTick = GetTickCount64();
         if (nowTick - lastDiskCheck > 2000) {
             lastDiskCheck = nowTick;
@@ -398,7 +432,7 @@ void Recorder::VideoThread() {
                 else if (!warnedDisk && freeBytes.QuadPart < 1024ull * 1024 * 1024) { warnedDisk = true; PostMessageW(notify_, notifyMsg_, NoteDiskLow, 0); }
             }
         }
-        // espera o próximo quadro na grade de tempo
+        // waits for the next frame on the time grid
         LONGLONG next = (t / frameDur + 1) * frameDur;
         for (;;) {
             if (!running_ || state_ == Paused) break;
@@ -417,11 +451,11 @@ void Recorder::VideoThread() {
 
 void Recorder::AudioMixThread() {
     CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-    LONGLONG written = 0;            // quadros já gravados
+    LONGLONG written = 0;            // frames already written
     std::vector<float> a, b;
     std::vector<int16_t> out;
-    // ganho automático do microfone: microfones de notebook chegam 20–30 dB abaixo do ideal. O envelope de pico
-    // mira -6 dBFS com ganho de 1× a 8×; desce na hora (sem estourar) e sobe devagar (sem "bombear" o ruído).
+    // automatic microphone gain: laptop microphones arrive 20–30 dB below ideal. The peak envelope
+    // targets -6 dBFS with a gain of 1× to 8×; it drops immediately (no clipping) and rises slowly (no noise "pumping").
     float micEnv = 0, micGain = 1;
     while (running_) {
         Sleep(20);
@@ -439,13 +473,18 @@ void Recorder::AudioMixThread() {
             float blockPeak = 0;
             for (float s : a) blockPeak = std::max(blockPeak, std::fabs(s));
             micEnv = std::max(blockPeak, micEnv * 0.97f);
-            float want = std::clamp(0.5f / std::max(micEnv, 1e-4f), 1.0f, 8.0f);
-            micGain = want < micGain ? want : micGain + (want - micGain) * 0.02f;
-            for (float& s : a) s *= micGain;
+            if (autoGain_) {
+                float want = std::clamp(0.5f / std::max(micEnv, 1e-4f), 1.0f, 8.0f);
+                micGain = want < micGain ? want : micGain + (want - micGain) * 0.02f;
+            } else micGain = 1;                                  // manual: only the volume
+            micGainNow_ = micGain;
+            float k = micGain * micVol_ / 100.0f;
+            for (float& s : a) s *= k;
         }
+        if (sys_ && sysVol_ != 100) { float k = sysVol_ / 100.0f; for (float& s : b) s *= k; }
         for (size_t i = 0; i < out.size(); i++) {
             float v = (mm ? 0.0f : a[i]) + (sm ? 0.0f : b[i]);
-            v = v / (1.0f + std::fabs(v) * 0.15f) * 1.15f;      // limitador suave: mic + sistema juntos não estouram
+            v = v / (1.0f + std::fabs(v) * 0.15f) * 1.15f;      // soft limiter: mic + system together do not clip
             out[i] = (int16_t)std::lround(std::clamp(v, -1.0f, 1.0f) * 32767.0f);
         }
         LONGLONG t0 = written * kHns / kRate, t1 = (written + n) * kHns / kRate;
@@ -475,7 +514,7 @@ bool Recorder::Stop() {
     if (writer_) {
         HRESULT hr = ((IMFSinkWriter*)writer_)->Finalize();
         ok = SUCCEEDED(hr);
-        if (!ok) { Log(L"Gravador: Finalize 0x%08X", hr); lastError = Format(Tr(L"Falha ao finalizar o MP4 (0x%08X)."), hr); }
+        if (!ok) { Log(L"Recorder: Finalize 0x%08X", hr); lastError = Format(Tr(L"Falha ao finalizar o MP4 (0x%08X)."), hr); }
         ((IMFSinkWriter*)writer_)->Release();
         writer_ = nullptr;
     }
@@ -483,14 +522,14 @@ bool Recorder::Stop() {
     SetThreadExecutionState(ES_CONTINUOUS);
     state_ = Idle;
     micLevel_ = 0; sysLevel_ = 0;
-    Log(L"Gravador: parado (%s)", ok ? L"ok" : L"erro");
+    Log(L"Recorder: stopped (%s)", ok ? L"ok" : L"error");
     return ok;
 }
 
 void Recorder::Cancel() {
     Stop();
     DeleteFileW(settings_.path.c_str());
-    Log(L"Gravador: cancelado");
+    Log(L"Recorder: canceled");
 }
 
 } // namespace snap

@@ -18,7 +18,7 @@ static bool ReadHkcuDword(const wchar_t* key, const wchar_t* name, DWORD& v) {
 
 ThemeColors LoadThemeColors() {
     ThemeColors t;
-    // AccentPalette = 8 cores RGBA (Light3, Light2, Light1, Accent, Dark1, Dark2, Dark3, …)
+    // AccentPalette = 8 RGBA colors (Light3, Light2, Light1, Accent, Dark1, Dark2, Dark3, …)
     BYTE pal[32]; DWORD cb = sizeof pal;
     DWORD v;
     if (RegGetValueW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent", L"AccentPalette",
@@ -36,14 +36,14 @@ ThemeColors LoadThemeColors() {
         t.accentDark = Mix(t.accent, 0, 0.25);
         t.accentText = Mix(t.accent, 0, 0.4);
     }
-    while (Luma(t.accentText) > 0.42) t.accentText = Mix(t.accentText, 0, 0.15);   // legível sobre fundo claro
+    while (Luma(t.accentText) > 0.42) t.accentText = Mix(t.accentText, 0, 0.15);   // readable on a light background
     t.control = Luma(t.accent) > 0.55 ? t.accentDark : t.accent;
-    // fundos neutros puxados de leve para a cor de destaque
+    // neutral backgrounds slightly tinted toward the accent color
     t.bgMain = Mix(RGB(251, 251, 252), t.accent, 0.05);
     t.bgBar = Mix(RGB(246, 246, 248), t.accent, 0.09);
     t.bgSide = Mix(RGB(238, 239, 241), t.accent, 0.13);
     t.line = Mix(RGB(220, 221, 225), t.accent, 0.18);
-    // barra de título: na cor de destaque se o usuário pediu isso nas barras de título do Windows
+    // title bar: in the accent color if the user asked for it on the Windows title bars
     DWORD prevalence = 0;
     ReadHkcuDword(L"Software\\Microsoft\\Windows\\DWM", L"ColorPrevalence", prevalence);
     t.captionAccent = prevalence != 0;

@@ -1,4 +1,4 @@
-// Gerenciador de atalhos globais (comp_7 §4.2) + gancho de teclado de reserva (CSnagItKeybHook, §4.3)
+// Global hotkey manager (comp_7 §4.2) + fallback keyboard hook (CSnagItKeybHook, §4.3)
 #pragma once
 #include "Common.h"
 
@@ -8,7 +8,7 @@ class HotkeyManager {
 public:
     enum Result { Ok, Removed, InternalConflict, HookedFallback, Failed };
     void Init(HWND hwnd) { hwnd_ = hwnd; }
-    // (0,0) remove; conflito interno não registra; conflito externo cai para o gancho WH_KEYBOARD_LL
+    // (0,0) removes; an internal conflict is not registered; an external conflict falls back to the WH_KEYBOARD_LL hook
     Result Set(int id, UINT mods, UINT vk, bool allowOverride = true);
     void Remove(int id) { Set(id, 0, 0); }
     void Clear();
@@ -18,8 +18,8 @@ private:
     static LRESULT CALLBACK LowLevelProc(int code, WPARAM w, LPARAM l);
     void UpdateHook();
     HWND hwnd_ = nullptr;
-    std::map<int, std::pair<UINT, UINT>> map_;      // id → (mods, vk) aceitos
-    std::map<int, std::pair<UINT, UINT>> hooked_;   // ids servidos pelo gancho
+    std::map<int, std::pair<UINT, UINT>> map_;      // id → accepted (mods, vk)
+    std::map<int, std::pair<UINT, UINT>> hooked_;   // ids served by the hook
     HHOOK hook_ = nullptr;
 };
 

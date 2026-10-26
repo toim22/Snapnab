@@ -1,6 +1,6 @@
-// Webcam picture-in-picture (CCameraSource + MFPreviewWindow, comp_3 §8). A câmera é lida com o Media Foundation
-// (IMFSourceReader → RGB32) e desenhada numa janela redonda sempre visível, posicionada dentro da área gravada:
-// como a gravação copia a tela, a webcam entra no vídeo. A janela pode ser arrastada durante a gravação.
+// Picture-in-picture webcam (CCameraSource + MFPreviewWindow, comp_3 §8). The camera is read with Media Foundation
+// (IMFSourceReader → RGB32) and drawn in an always-on-top round window, placed inside the recorded area:
+// since the recording copies the screen, the webcam ends up in the video. The window can be dragged while recording.
 #pragma once
 #include "Image.h"
 
@@ -14,17 +14,17 @@ const wchar_t* CamShapeName(CamShape s);
 
 struct WebcamStyle {
     CamShape shape = CamShape::Circle;
-    bool chroma = false;                       // remove o fundo da cor escolhida (sem moldura nem sombra)
-    COLORREF key = RGB(0, 177, 64);            // verde de tela verde
+    bool chroma = false;                       // removes the background of the chosen color (no frame or shadow)
+    COLORREF key = RGB(0, 177, 64);            // green-screen green
     int tolerance = 40;                        // 0..100
 };
 
-// alfa do chroma key de um pixel BGRA (0 = fundo removido, 255 = mantém); exposto para os testes
+// chroma key alpha of a BGRA pixel (0 = background removed, 255 = kept); exposed for the tests
 uint8_t ChromaAlpha(uint32_t px, COLORREF key, int tolerance);
 
 class WebcamOverlay {
 public:
-    bool Start(const std::wstring& link, RECT area, const WebcamStyle& style, std::wstring& err);   // link vazio = primeira câmera
+    bool Start(const std::wstring& link, RECT area, const WebcamStyle& style, std::wstring& err);   // empty link = first camera
     void Stop();
     void SetVisible(bool on);
     bool running() const { return running_; }
@@ -41,7 +41,7 @@ private:
     std::mutex frameMutex_;
     Image frame_;
     WebcamStyle style_;
-    std::atomic<double> aspect_{ 4.0 / 3 };    // largura/altura da imagem da câmera
+    std::atomic<double> aspect_{ 4.0 / 3 };    // width/height of the camera image
     bool dragging_ = false;
     POINT dragOff_{};
 };

@@ -11,7 +11,7 @@ struct ViewHash {
     using is_transparent = void;
     size_t operator()(std::wstring_view s) const { return std::hash<std::wstring_view>{}(s); }
 };
-std::unordered_map<std::wstring, std::wstring, ViewHash, std::equal_to<>> g_catalog;     // português → idioma em uso
+std::unordered_map<std::wstring, std::wstring, ViewHash, std::equal_to<>> g_catalog;     // Portuguese → language in use
 std::wstring g_current = L"pt";
 } // namespace
 
@@ -30,7 +30,7 @@ std::wstring Tr(const std::wstring& pt) {
 namespace i18n {
 
 const std::vector<Language>& Languages() {
-    // os 12 idiomas mais falados (total de falantes), cada um com o próprio nome
+    // the 12 most spoken languages (total speakers), each with its own name
     static const std::vector<Language> list = {
         { L"pt", L"Português" }, { L"en", L"English" }, { L"zh", L"中文（简体）" }, { L"hi", L"हिन्दी" },
         { L"es", L"Español" }, { L"ar", L"العربية" }, { L"fr", L"Français" }, { L"bn", L"বাংলা" },
@@ -54,7 +54,7 @@ std::wstring Configured() {
 
 void SetConfigured(const std::wstring& code) { RegSetString(L"Language", code); }
 
-// idiomas de exibição do Windows em ordem de preferência ("pt-BR", "en-US"…)
+// Windows display languages in order of preference ("pt-BR", "en-US"…)
 static std::vector<std::wstring> WindowsLanguages() {
     std::vector<std::wstring> out;
     ULONG n = 0, cch = 0;
@@ -82,14 +82,14 @@ std::wstring Resolve() {
 void Init() {
     g_current = Resolve();
     g_catalog.clear();
-    if (g_current == L"pt") { Log(L"Idioma: pt (textos do próprio programa)"); return; }
+    if (g_current == L"pt") { Log(L"Language: pt (the program's built-in strings)"); return; }
     std::vector<std::pair<std::wstring, std::wstring>> entries;
-    if (g_current != L"en") LoadPo(CatalogPath(L"en"), entries);      // o que faltar no catálogo fica em inglês
+    if (g_current != L"en") LoadPo(CatalogPath(L"en"), entries);      // whatever is missing from the catalog stays in English
     bool ok = LoadPo(CatalogPath(g_current), entries);
     for (auto& e : entries) g_catalog[e.first] = e.second;
     if (Rtl())
         for (auto& [pt, text] : g_catalog) {
-            if (text.find(L'|') != std::wstring::npos) continue;        // filtros de arquivo: os padrões ficam intactos
+            if (text.find(L'|') != std::wstring::npos) continue;        // file filters: the patterns stay intact
             std::wstring out;
             size_t start = 0;
             while (start <= text.size()) {
@@ -102,26 +102,26 @@ void Init() {
             }
             text = out;
         }
-    Log(L"Idioma: %s (%s, %zu textos)", g_current.c_str(), ok ? L"catálogo carregado" : L"catálogo não abriu", g_catalog.size());
+    Log(L"Language: %s (%s, %zu strings)", g_current.c_str(), ok ? L"catalog loaded" : L"catalog did not open", g_catalog.size());
 }
 
 const std::wstring& Current() { return g_current; }
 bool Rtl() { return g_current == L"ar" || g_current == L"ur"; }
 
 const wchar_t* UiFontFace() {
-    // a Segoe UI liga os ideogramas à Meiryo (desenho japonês) e não tem devanágari nem bengali
+    // Segoe UI maps ideographs to Meiryo (Japanese glyphs) and has no Devanagari or Bengali
     if (g_current == L"zh") return L"Microsoft YaHei UI";
     if (g_current == L"hi" || g_current == L"bn") return L"Nirmala UI";
     return nullptr;
 }
 
 wchar_t AltKey(const std::wstring& name, wchar_t fallback) {
-    // a barra de título compara a tecla virtual (A–Z); nomes em outros alfabetos ficam com a letra do português
+    // the title bar compares the virtual key (A–Z); names in other alphabets keep the Portuguese letter
     wchar_t c = name.empty() ? 0 : (wchar_t)towupper(name[0]);
     return c >= L'A' && c <= L'Z' ? c : fallback;
 }
 
-// ---------------------------------------------------------------- leitura do .po
+// ---------------------------------------------------------------- reading the .po
 static bool ParseQuoted(std::string_view line, std::string& out) {
     size_t a = line.find('"'), b = line.rfind('"');
     if (a == std::string_view::npos || b <= a) return false;
@@ -162,7 +162,7 @@ bool LoadPo(const std::wstring& path, std::vector<std::pair<std::wstring, std::w
         while (!l.empty() && (l.front() == ' ' || l.front() == '\t')) l.remove_prefix(1);
         if (l.empty()) { flush(); continue; }
         bool starts = l.front() != '"';
-        if (starts && (field == Str || field == Skip) && l.rfind("msgstr", 0) != 0) flush();     // entrada seguinte sem linha em branco
+        if (starts && (field == Str || field == Skip) && l.rfind("msgstr", 0) != 0) flush();     // next entry without a blank line
         if (l.front() == '#') { if (l.rfind("#,", 0) == 0 && l.find("fuzzy") != std::string_view::npos) fuzzy = true; continue; }
         if (l.rfind("msgctxt", 0) == 0) { field = Ctxt; ParseQuoted(l, ctxt); }
         else if (l.rfind("msgid_plural", 0) == 0) field = Skip;

@@ -1,4 +1,5 @@
 #include "Stamps.h"
+#include "Xml.h"
 #include <shobjidl.h>
 
 namespace snap::ed {
@@ -9,9 +10,9 @@ std::wstring MyStampsDir() {
     return d;
 }
 
-// categorias de fábrica (as mesmas da galeria original: Atividades, Negócios, Comida e bebida, Feriados, Interface,
-// Smileys e pessoas, Adesivos, Símbolos, Viagem e lugares); o nome de cada carimbo serve para a busca e é traduzido
-// um a um (scripts/i18n.py extrai os nomes destas listas)
+// built-in categories (the same as the original gallery: Activities, Business, Food and drink, Holidays, Interface,
+// Smileys and people, Stickers, Symbols, Travel and places); each stamp's name is used for search and is translated
+// one by one (scripts/i18n.py extracts the names from these lists)
 static const struct { const wchar_t* cat; const wchar_t* list; } kStock[] = {
     { TR_NOOP(L"Negócios"), L"📎 clipe anexo|🔍 lupa pesquisar|⚙️ engrenagem configurações|🕐 relógio hora|👤 usuário pessoa|👥 equipe pessoas|"
                    L"🔒 cadeado fechado segurança|🔓 cadeado aberto|🔖 marcador|📶 sinal wi-fi|💻 notebook código|⬇️ baixar download|"
@@ -57,6 +58,97 @@ static const struct { const wchar_t* cat; const wchar_t* list; } kStock[] = {
                            L"🗽 estátua|🗼 torre|🌍 terra mundo|⛽ posto combustível|🚦 semáforo|🅿️ estacionamento|🧳 mala|📍 local pino" },
 };
 
+// label stamps (Before/After, Wrong/Right, New, Updated…): rounded badges with the text in the interface language;
+// the text goes into the id when the stamp is placed, so the document keeps it
+static const struct { uint32_t color; const wchar_t* text; } kLabels[] = {
+    { 0x5A6B7D, TR_NOOP(L"Antes") }, { 0x2E9E5B, TR_NOOP(L"Depois") }, { 0xD93A3A, TR_NOOP(L"Errado") }, { 0x2E9E5B, TR_NOOP(L"Certo") },
+    { 0xF08A24, TR_NOOP(L"Novo") }, { 0x7E57C2, TR_NOOP(L"Atualizado") }, { 0xD93A3A, TR_NOOP(L"Incorreto") }, { 0x2E9E5B, TR_NOOP(L"Correto") },
+    { 0x2E9E5B, TR_NOOP(L"Sim") }, { 0xD93A3A, TR_NOOP(L"Não") }, { 0x2E9E5B, TR_NOOP(L"Faça") }, { 0xD93A3A, TR_NOOP(L"Não faça") },
+    { 0xE53935, TR_NOOP(L"Importante") }, { 0x1E88E5, TR_NOOP(L"Dica") }, { 0x1E88E5, TR_NOOP(L"Nota") }, { 0x00897B, TR_NOOP(L"Exemplo") },
+    { 0x757575, TR_NOOP(L"Rascunho") }, { 0x8E24AA, TR_NOOP(L"Beta") }, { 0x757575, TR_NOOP(L"Obsoleto") }, { 0xF9A825, TR_NOOP(L"Em breve") },
+};
+
+static std::vector<StampItem> LabelStamps() {
+    std::vector<StampItem> v;
+    for (auto& l : kLabels) {
+        std::wstring t = Tr(l.text);
+        v.push_back({ Format(L"label:%06X:", l.color) + t, t });
+    }
+    return v;
+}
+
+// ---------------------------------------------------------------- order and pins (StampOrder.xml)
+static std::wstring OrderFile() { return AppDataDir() + L"\\StampOrder.xml"; }
+
+struct StampPrefs { std::map<std::wstring, std::vector<std::wstring>> order; std::vector<std::wstring> pinned; };
+
+static StampPrefs& Prefs() {
+    static StampPrefs p;
+    static bool loaded = false;
+    if (!loaded) {
+        loaded = true;
+        XmlNode root;
+        if (XmlLoadFile(OrderFile(), root)) {
+            for (auto& c : root.children) {
+                if (c.name == "Category") { auto& list = p.order[c.getW("Key")]; for (auto& it : c.children) list.push_back(it.getW("Id")); }
+                if (c.name == "Pinned") for (auto& it : c.children) p.pinned.push_back(it.getW("Id"));
+            }
+        }
+    }
+    return p;
+}
+
+static void SavePrefs() {
+    XmlNode root("StampOrder");
+    for (auto& [key, list] : Prefs().order) {
+        XmlNode& c = root.add("Category");
+        c.setW("Key", key);
+        for (auto& id : list) c.add("Item").setW("Id", id);
+    }
+    XmlNode& pn = root.add("Pinned");
+    for (auto& id : Prefs().pinned) pn.add("Item").setW("Id", id);
+    XmlSaveFile(OrderFile(), root);
+}
+
+bool IsStampPinned(const std::wstring& id) {
+    auto& p = Prefs().pinned;
+    return std::find(p.begin(), p.end(), id) != p.end();
+}
+
+void SetStampPinned(const std::wstring& id, bool pin) {
+    auto& p = Prefs().pinned;
+    p.erase(std::remove(p.begin(), p.end(), id), p.end());
+    if (pin) p.push_back(id);
+    SavePrefs();
+}
+
+// the saved order first (items that no longer exist are skipped), the new ones after; then the pinned ones go to the top
+static void ApplyOrder(StampCategory& c) {
+    auto it = Prefs().order.find(c.key);
+    if (it != Prefs().order.end()) {
+        std::vector<StampItem> sorted;
+        for (auto& id : it->second)
+            for (auto& item : c.items) if (item.id == id) { sorted.push_back(item); break; }
+        for (auto& item : c.items)
+            if (std::find(it->second.begin(), it->second.end(), item.id) == it->second.end()) sorted.push_back(item);
+        c.items = std::move(sorted);
+    }
+    std::stable_partition(c.items.begin(), c.items.end(), [](const StampItem& s) { return IsStampPinned(s.id); });
+}
+
+void MoveStamp(const StampCategory& cat, int from, int to) {
+    if (cat.key.empty() || from < 0 || to < 0 || from >= (int)cat.items.size() || to >= (int)cat.items.size() || from == to) return;
+    std::vector<std::wstring> ids;
+    for (auto& it : cat.items) ids.push_back(it.id);
+    std::wstring moved = ids[from];
+    ids.erase(ids.begin() + from);
+    ids.insert(ids.begin() + to, moved);
+    if (cat.pinned) {                               // "Pinned" category: the order of the pins
+        Prefs().pinned = ids;
+    } else Prefs().order[cat.key] = ids;
+    SavePrefs();
+}
+
 static std::vector<StampItem> ParseList(const wchar_t* list) {
     std::vector<StampItem> v;
     std::wstring s = list;
@@ -89,7 +181,7 @@ static void ListImages(const std::wstring& dir, std::vector<StampItem>& out) {
 std::vector<StampCategory> StampCategories() {
     std::vector<StampCategory> cats;
     std::wstring dir = MyStampsDir();
-    StampCategory mine{ Tr(L"Meus carimbos"), {}, true };
+    StampCategory mine{ Tr(L"Meus carimbos"), {}, true, L"mine" };
     ListImages(dir, mine.items);
     cats.push_back(mine);
     WIN32_FIND_DATAW fd;
@@ -97,13 +189,23 @@ std::vector<StampCategory> StampCategories() {
     if (h != INVALID_HANDLE_VALUE) {
         do {
             if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || fd.cFileName[0] == L'.') continue;
-            StampCategory c{ std::wstring(Tr(L"Meus carimbos › ")) + fd.cFileName, {}, true };
+            StampCategory c{ std::wstring(Tr(L"Meus carimbos › ")) + fd.cFileName, {}, true, std::wstring(L"mine:") + fd.cFileName };
             ListImages(dir + L"\\" + fd.cFileName, c.items);
             cats.push_back(c);
         } while (FindNextFileW(h, &fd));
         FindClose(h);
     }
-    for (auto& s : kStock) cats.push_back({ Tr(s.cat), ParseList(s.list), false });
+    cats.push_back({ Tr(L"Rótulos"), LabelStamps(), false, L"labels" });
+    for (auto& s : kStock) cats.push_back({ Tr(s.cat), ParseList(s.list), false, s.cat });
+    // pinned stamps: first in their categories and gathered in "Pinned" (in the pin order)
+    std::vector<StampItem> pins;
+    for (auto& id : Prefs().pinned)
+        for (auto& c : cats) {
+            auto f = std::find_if(c.items.begin(), c.items.end(), [&](const StampItem& s) { return s.id == id; });
+            if (f != c.items.end()) { pins.push_back(*f); break; }
+        }
+    for (auto& c : cats) ApplyOrder(c);
+    if (!pins.empty()) cats.insert(cats.begin(), StampCategory{ Tr(L"Fixados"), pins, false, L"pinned", true });
     return cats;
 }
 
@@ -111,9 +213,11 @@ std::vector<StampItem> SearchStamps(const std::vector<StampCategory>& cats, cons
     std::vector<StampItem> out;
     std::wstring q = ToLower(Trim(text));
     if (q.empty()) return out;
-    for (auto& c : cats)
+    for (auto& c : cats) {
+        if (c.pinned) continue;                     // the pinned ones also are in their own category
         for (auto& it : c.items)
             if (ToLower(it.name).find(q) != std::wstring::npos || ToLower(c.name).find(q) != std::wstring::npos) out.push_back(it);
+    }
     return out;
 }
 

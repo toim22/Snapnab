@@ -1,6 +1,6 @@
-# Snapnab — traduções da interface.
+# Snapnab — interface translations.
 # Copyright © 2026 Antonio Rezende. GPL-3.0.
-# Idioma: اردو.
+# Language: اردو.
 #
 msgid ""
 msgstr ""
@@ -19,31 +19,35 @@ msgstr "%d سیکنڈ میں کیپچر…"
 msgid "A região fixa está fora da tela. Ajuste a posição na engrenagem da Seleção."
 msgstr "مقررہ حصہ اسکرین سے باہر ہے۔ انتخاب کے گیئر مینو میں اس کی جگہ درست کریں۔"
 
-#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:359 src/capture/main.cpp:456
+#: src/capture/CaptureEngine.cpp:141 src/capture/main.cpp:373 src/capture/main.cpp:470
 msgid "Região fixa"
 msgstr "مقررہ حصہ"
 
-#: src/capture/CaptureEngine.cpp:161 src/editor/main.cpp:476
+#: src/capture/CaptureEngine.cpp:163
+msgid "Janelas como objetos"
+msgstr "ونڈوز بطور آبجیکٹ"
+
+#: src/capture/CaptureEngine.cpp:176 src/editor/main.cpp:499
 msgid "A área de transferência não contém imagem."
 msgstr "کلپ بورڈ میں کوئی تصویر نہیں ہے۔"
 
-#: src/capture/CaptureEngine.cpp:164 src/capture/Presets.cpp:19 src/editor/main.cpp:477 src/editor/main.cpp:669
+#: src/capture/CaptureEngine.cpp:179 src/capture/Presets.cpp:19 src/editor/main.cpp:500 src/editor/main.cpp:780
 msgid "Área de transferência"
 msgstr "کلپ بورڈ"
 
-#: src/capture/CaptureEngine.cpp:170
+#: src/capture/CaptureEngine.cpp:185
 msgid "Capturar de arquivo gráfico"
 msgstr "گرافک فائل سے کیپچر"
 
-#: src/capture/CaptureEngine.cpp:172
+#: src/capture/CaptureEngine.cpp:187
 msgid "Não foi possível abrir a imagem."
 msgstr "تصویر نہیں کھولی جا سکی۔"
 
-#: src/capture/CaptureEngine.cpp:181
+#: src/capture/CaptureEngine.cpp:196
 msgid "Nenhum menu aberto encontrado; selecione a região."
 msgstr "کوئی کھلا مینو نہیں ملا؛ حصہ منتخب کریں۔"
 
-#: src/capture/CaptureEngine.cpp:281
+#: src/capture/CaptureEngine.cpp:443
 msgid ""
 "Não foi possível reconhecer o texto.\n"
 "\n"
@@ -51,59 +55,59 @@ msgstr ""
 "متن کی شناخت نہیں ہو سکی۔\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:281 src/capture/CaptureEngine.cpp:282
+#: src/capture/CaptureEngine.cpp:443 src/capture/CaptureEngine.cpp:444
 msgid "Snapnab — Capturar texto"
 msgstr "Snapnab — متن نکالیں"
 
-#: src/capture/CaptureEngine.cpp:282
+#: src/capture/CaptureEngine.cpp:444
 msgid "Nenhum texto encontrado na captura."
 msgstr "کیپچر میں کوئی متن نہیں ملا۔"
 
-#: src/capture/CaptureEngine.cpp:293
+#: src/capture/CaptureEngine.cpp:455
 msgid "Capturar texto — copiado para a área de transferência"
 msgstr "متن نکالیں — کلپ بورڈ پر کاپی ہو گیا"
 
-#: src/capture/CaptureEngine.cpp:300
+#: src/capture/CaptureEngine.cpp:463
 msgid "copiada para a área de transferência"
 msgstr "کلپ بورڈ پر کاپی ہو گئی"
 
-#: src/capture/CaptureEngine.cpp:306
+#: src/capture/CaptureEngine.cpp:469
 msgid "salva em "
 msgstr "یہاں محفوظ کی گئی: "
 
-#: src/capture/CaptureEngine.cpp:322
+#: src/capture/CaptureEngine.cpp:485
 msgid "Captura adicionada à biblioteca"
 msgstr "کیپچر لائبریری میں شامل ہو گیا"
 
-#: src/capture/CaptureEngine.cpp:447
+#: src/capture/CaptureEngine.cpp:610
 msgid "A janela será ampliada além da tela, capturada e restaurada."
 msgstr "ونڈو کو اسکرین سے بڑا کیا جائے گا، کیپچر کیا جائے گا اور پھر بحال کر دیا جائے گا۔"
 
-#: src/capture/CaptureEngine.cpp:448
+#: src/capture/CaptureEngine.cpp:611
 msgid "Nova largura (px)"
 msgstr "نئی چوڑائی (px)"
 
-#: src/capture/CaptureEngine.cpp:449
+#: src/capture/CaptureEngine.cpp:612
 msgid "Nova altura (px)"
 msgstr "نئی اونچائی (px)"
 
-#: src/capture/CaptureEngine.cpp:451 src/capture/Presets.cpp:17
+#: src/capture/CaptureEngine.cpp:614 src/capture/Presets.cpp:17
 msgid "Janela estendida"
 msgstr "توسیع شدہ ونڈو"
 
-#: src/capture/CaptureEngine.cpp:523
+#: src/capture/CaptureEngine.cpp:686
 msgid "Imagem durante gravação"
 msgstr "ریکارڈنگ کے دوران تصویر"
 
-#: src/capture/CaptureEngine.cpp:526
+#: src/capture/CaptureEngine.cpp:689
 msgid "Imagem capturada sem parar a gravação."
 msgstr "ریکارڈنگ روکے بغیر تصویر کیپچر ہو گئی۔"
 
-#: src/capture/CaptureEngine.cpp:536 src/capture/Webcam.cpp:91
+#: src/capture/CaptureEngine.cpp:703 src/capture/Webcam.cpp:91
 msgid "Snapnab — webcam"
 msgstr "Snapnab — ویب کیم"
 
-#: src/capture/CaptureEngine.cpp:553
+#: src/capture/CaptureEngine.cpp:725
 msgid ""
 "Não foi possível iniciar a gravação.\n"
 "\n"
@@ -111,11 +115,11 @@ msgstr ""
 "ریکارڈنگ شروع نہیں ہو سکی۔\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:596
+#: src/capture/CaptureEngine.cpp:771
 msgid "Vídeo salvo na biblioteca: "
 msgstr "ویڈیو لائبریری میں محفوظ ہو گئی: "
 
-#: src/capture/CaptureEngine.cpp:598
+#: src/capture/CaptureEngine.cpp:773
 msgid ""
 "A gravação falhou.\n"
 "\n"
@@ -123,15 +127,15 @@ msgstr ""
 "ریکارڈنگ ناکام ہو گئی۔\n"
 "\n"
 
-#: src/capture/CaptureEngine.cpp:606
+#: src/capture/CaptureEngine.cpp:781
 msgid "Snapnab — pouco espaço em disco"
 msgstr "Snapnab — ڈسک میں کم جگہ"
 
-#: src/capture/CaptureEngine.cpp:606
+#: src/capture/CaptureEngine.cpp:781
 msgid "Restam menos de 1 GB livres na unidade da biblioteca."
 msgstr "لائبریری کی ڈرائیو پر 1 GB سے کم جگہ باقی ہے۔"
 
-#: src/capture/CaptureEngine.cpp:609
+#: src/capture/CaptureEngine.cpp:784
 msgid "Gravação interrompida: espaço em disco insuficiente."
 msgstr "ریکارڈنگ رک گئی: ڈسک میں کافی جگہ نہیں۔"
 
@@ -156,7 +160,7 @@ msgstr "کیپچر ہو رہا ہے: %d × %d px"
 msgid "Concluir"
 msgstr "مکمل کریں"
 
-#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:249 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
+#: src/capture/Panoramic.cpp:205 src/common/Ui.cpp:262 src/editor/Panels.cpp:527 src/editor/Panels.cpp:818
 msgid "Cancelar"
 msgstr "منسوخ کریں"
 
@@ -208,71 +212,87 @@ msgstr "مینو"
 msgid "Arquivo gráfico"
 msgstr "گرافک فائل"
 
-#: src/capture/Presets.cpp:150
+#: src/capture/Presets.cpp:155
 msgid "Imagem — Região"
 msgstr "تصویر — حصہ"
 
-#: src/capture/Presets.cpp:151
+#: src/capture/Presets.cpp:156
 msgid "Imagem — Janela"
 msgstr "تصویر — ونڈو"
 
-#: src/capture/Presets.cpp:152
+#: src/capture/Presets.cpp:157
 msgid "Tela inteira → Área de transferência"
 msgstr "پوری اسکرین ← کلپ بورڈ"
 
-#: src/capture/Presets.cpp:154
+#: src/capture/Presets.cpp:159
 msgid "Rolagem (página inteira)"
 msgstr "اسکرول (پورا صفحہ)"
 
-#: src/capture/Presets.cpp:155
+#: src/capture/Presets.cpp:160
 msgid "Vídeo — Região"
 msgstr "ویڈیو — حصہ"
 
-#: src/capture/Presets.cpp:156
+#: src/capture/Presets.cpp:161
 msgid "Vídeo — Tela inteira"
 msgstr "ویڈیو — پوری اسکرین"
 
-#: src/capture/Presets.cpp:164
+#: src/capture/Presets.cpp:169
 msgid "Captura com rolagem panorâmica"
 msgstr "پینورامک اسکرول کے ساتھ کیپچر"
 
-#: src/capture/Presets.cpp:166
+#: src/capture/Presets.cpp:171
 msgid "Capturar texto"
 msgstr "متن نکالیں"
 
-#: src/capture/Recorder.cpp:252
+#: src/capture/Recorder.cpp:286
 msgid "Área de gravação muito pequena."
 msgstr "ریکارڈنگ کا حصہ بہت چھوٹا ہے۔"
 
-#: src/capture/Recorder.cpp:259
+#: src/capture/Recorder.cpp:293
 msgid "Media Foundation indisponível."
 msgstr "Media Foundation دستیاب نہیں ہے۔"
 
-#: src/capture/Recorder.cpp:274
+#: src/capture/Recorder.cpp:308
 #, c-format
 msgid "Não foi possível iniciar o codificador MP4 (0x%08X)."
 msgstr "MP4 انکوڈر شروع نہیں ہو سکا (0x%08X)۔"
 
-#: src/capture/Recorder.cpp:386
+#: src/capture/Recorder.cpp:420
 msgid "Falha ao gravar quadro de vídeo."
 msgstr "ویڈیو فریم ریکارڈ کرنے میں ناکامی۔"
 
-#: src/capture/Recorder.cpp:478
+#: src/capture/Recorder.cpp:517
 #, c-format
 msgid "Falha ao finalizar o MP4 (0x%08X)."
 msgstr "MP4 مکمل کرنے میں ناکامی (0x%08X)۔"
 
-#: src/capture/RecorderHud.cpp:60
+#: src/capture/RecorderHud.cpp:62
 msgid "Snapnab — gravação"
 msgstr "Snapnab — ریکارڈنگ"
 
-#: src/capture/RecorderHud.cpp:153
+#: src/capture/RecorderHud.cpp:159
 msgid "Pronto"
 msgstr "تیار"
 
-#: src/capture/RecorderHud.cpp:273
+#: src/capture/RecorderHud.cpp:283
 msgid "Pular"
 msgstr "چھوڑیں"
+
+#: src/capture/RecorderHud.cpp:392
+msgid "Volume"
+msgstr "آواز"
+
+#: src/capture/RecorderHud.cpp:429
+msgid "Microfone"
+msgstr "مائیکروفون"
+
+#: src/capture/RecorderHud.cpp:429
+msgid "Áudio do sistema"
+msgstr "سسٹم آڈیو"
+
+#: src/capture/RecorderHud.cpp:459 src/capture/main.cpp:520
+msgid "Ganho automático do microfone"
+msgstr "مائیکروفون کا خودکار گین"
 
 #: src/capture/SelectOverlay.cpp:244
 msgid "Arraste para selecionar uma região • clique para capturar a janela/área destacada • Enter = monitor • Esc = cancelar"
@@ -349,377 +369,401 @@ msgstr "ویب کیم نہیں کھولا جا سکا (0x%08X)۔"
 msgid "A webcam não oferece um formato compatível (0x%08X)."
 msgstr "ویب کیم کوئی موزوں فارمیٹ فراہم نہیں کرتا (0x%08X)۔"
 
-#: src/capture/main.cpp:120
+#: src/capture/main.cpp:122
 msgid "Snapnab — clique para capturar"
 msgstr "Snapnab — کیپچر کے لیے کلک کریں"
 
-#: src/capture/main.cpp:147 src/capture/main.cpp:511
+#: src/capture/main.cpp:149 src/capture/main.cpp:541
 msgid "Conflito de atalho"
 msgstr "شارٹ کٹ کا ٹکراؤ"
 
-#: src/capture/main.cpp:147
+#: src/capture/main.cpp:149
 #, c-format
 msgid "O atalho do preset \"%s\" já está em uso por outra ação."
 msgstr "پری سیٹ \"%s\" کا شارٹ کٹ پہلے ہی کسی اور عمل میں استعمال ہو رہا ہے۔"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1440 src/editor/main.cpp:1667
+#: src/capture/main.cpp:191 src/editor/main.cpp:1663 src/editor/main.cpp:1890
 msgid "Borda"
 msgstr "بارڈر"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1459
+#: src/capture/main.cpp:191 src/editor/main.cpp:1682
 msgid "Filtros"
 msgstr "فلٹر"
 
-#: src/capture/main.cpp:188 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:498
+#: src/capture/main.cpp:191 src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:556 src/editor/PropsPanel.cpp:566
 msgid "Sombra"
 msgstr "سایہ"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1480
+#: src/capture/main.cpp:191 src/editor/main.cpp:1703
 msgid "Informações da captura"
 msgstr "کیپچر کی معلومات"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:1469
+#: src/capture/main.cpp:191 src/editor/main.cpp:1692
 msgid "Substituição de cor"
 msgstr "رنگ کی تبدیلی"
 
-#: src/capture/main.cpp:188 src/editor/main.cpp:362
+#: src/capture/main.cpp:191 src/editor/main.cpp:372
 msgid "Redimensionar imagem"
 msgstr "تصویر کا سائز بدلیں"
 
-#: src/capture/main.cpp:189 src/editor/main.cpp:1667
+#: src/capture/main.cpp:192 src/editor/main.cpp:1890
 msgid "Bordas especiais"
 msgstr "خاص کنارے"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Cortar bordas"
 msgstr "کنارے تراشیں"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Ajuste de cor"
 msgstr "رنگ کی ترتیب"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Girar imagem"
 msgstr "تصویر گھمائیں"
 
-#: src/capture/main.cpp:189 src/editor/main.cpp:1477
+#: src/capture/main.cpp:192 src/editor/main.cpp:1700
 msgid "Marca d'água"
 msgstr "واٹر مارک"
 
-#: src/capture/main.cpp:189
+#: src/capture/main.cpp:192
 msgid "Resolução da imagem"
 msgstr "تصویر کی ریزولیوشن"
 
-#: src/capture/main.cpp:208 src/capture/main.cpp:449 src/editor/Video.cpp:643 src/editor/main.cpp:360
+#: src/capture/main.cpp:211 src/capture/main.cpp:463 src/editor/Video.cpp:643 src/editor/main.cpp:370
 msgid "Largura (px)"
 msgstr "چوڑائی (px)"
 
-#: src/capture/main.cpp:208 src/editor/PropsPanel.cpp:479 src/editor/PropsPanel.cpp:488 src/editor/PropsPanel.cpp:494
+#: src/capture/main.cpp:211 src/editor/Popups.cpp:236 src/editor/Popups.cpp:239 src/editor/PropsPanel.cpp:542
 msgid "Cor"
 msgstr "رنگ"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Filtro"
 msgstr "فلٹر"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Tons de cinza"
 msgstr "گرے اسکیل"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Sépia"
 msgstr "سیپیا"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Inverter cores"
 msgstr "رنگ الٹیں"
 
-#: src/capture/main.cpp:209 src/editor/main.cpp:1460
+#: src/capture/main.cpp:212 src/editor/main.cpp:1683
 msgid "Preto e branco"
 msgstr "سیاہ و سفید"
 
-#: src/capture/main.cpp:211
+#: src/capture/main.cpp:214
 msgid "Deslocamento (px)"
 msgstr "ہٹاؤ (px)"
 
-#: src/capture/main.cpp:211
+#: src/capture/main.cpp:214
 msgid "Desfoque (px)"
 msgstr "دھندلاہٹ (px)"
 
-#: src/capture/main.cpp:212 src/capture/main.cpp:241
+#: src/capture/main.cpp:215 src/capture/main.cpp:244
 msgid "Opacidade (%)"
 msgstr "دھندلا پن (%)"
 
-#: src/capture/main.cpp:215 src/capture/main.cpp:241 src/editor/Canvas.cpp:19 src/editor/main.cpp:1477
+#: src/capture/main.cpp:218 src/capture/main.cpp:244 src/editor/Canvas.cpp:20 src/editor/LayersPanel.cpp:48
 msgid "Texto"
 msgstr "متن"
 
-#: src/capture/main.cpp:215
+#: src/capture/main.cpp:218
 msgid "Campos: {date} {time} {computer} {user}"
 msgstr "فیلڈز: {date} {time} {computer} {user}"
 
-#: src/capture/main.cpp:216 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/editor/main.cpp:1704
 msgid "Posição"
 msgstr "مقام"
 
-#: src/capture/main.cpp:216 src/capture/main.cpp:227 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/capture/main.cpp:230 src/editor/main.cpp:1680 src/editor/main.cpp:1704
 msgid "Embaixo"
 msgstr "نیچے"
 
-#: src/capture/main.cpp:216 src/capture/main.cpp:226 src/editor/main.cpp:1457 src/editor/main.cpp:1481
+#: src/capture/main.cpp:219 src/capture/main.cpp:229 src/editor/main.cpp:1680 src/editor/main.cpp:1704
 msgid "Em cima"
 msgstr "اوپر"
 
-#: src/capture/main.cpp:219
+#: src/capture/main.cpp:222
 msgid "Cor a substituir"
 msgstr "بدلا جانے والا رنگ"
 
-#: src/capture/main.cpp:219 src/editor/main.cpp:1470
+#: src/capture/main.cpp:222 src/editor/main.cpp:1693
 msgid "Nova cor"
 msgstr "نیا رنگ"
 
-#: src/capture/main.cpp:220 src/capture/main.cpp:230 src/editor/PropsPanel.cpp:536 src/editor/PropsPanel.cpp:576
+#: src/capture/main.cpp:223 src/capture/main.cpp:233 src/editor/PropsPanel.cpp:607 src/editor/PropsPanel.cpp:656
 msgid "Tolerância"
 msgstr "رواداری"
 
-#: src/capture/main.cpp:222
+#: src/capture/main.cpp:225
 msgid "Escala (%)"
 msgstr "پیمانہ (%)"
 
-#: src/capture/main.cpp:224 src/editor/PropsPanel.cpp:459 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/PropsPanel.cpp:521 src/editor/main.cpp:1678
 msgid "Estilo"
 msgstr "انداز"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Rasgada"
 msgstr "پھٹا ہوا"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1575
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678 src/editor/main.cpp:1798
 msgid "Onda"
 msgstr "لہر"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Dente de serra"
 msgstr "آری کے دانت"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Dente de tubarão"
 msgstr "شارک کے دانت"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455 src/editor/main.cpp:1577
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678 src/editor/main.cpp:1800
 msgid "Esmaecer"
 msgstr "مدھم ہونا"
 
-#: src/capture/main.cpp:224 src/editor/main.cpp:1455
+#: src/capture/main.cpp:227 src/editor/main.cpp:1678
 msgid "Chanfrada"
 msgstr "ڈھلوان"
 
-#: src/capture/main.cpp:225
+#: src/capture/main.cpp:228
 msgid "Tamanho (px)"
 msgstr "سائز (px)"
 
-#: src/capture/main.cpp:226 src/editor/main.cpp:380 src/editor/main.cpp:1457
+#: src/capture/main.cpp:229 src/editor/main.cpp:390 src/editor/main.cpp:1680
 msgid "Direita"
 msgstr "دائیں"
 
-#: src/capture/main.cpp:227 src/editor/main.cpp:379 src/editor/main.cpp:1457
+#: src/capture/main.cpp:230 src/editor/main.cpp:389 src/editor/main.cpp:1680
 msgid "Esquerda"
 msgstr "بائیں"
 
-#: src/capture/main.cpp:230
+#: src/capture/main.cpp:233
 msgid "Remove as faixas de cor uniforme em volta da captura."
 msgstr "کیپچر کے گرد ایک جیسے رنگ کی پٹیاں ہٹاتا ہے۔"
 
-#: src/capture/main.cpp:233 src/editor/main.cpp:1464
+#: src/capture/main.cpp:236 src/editor/main.cpp:1687
 msgid "Brilho"
 msgstr "چمک"
 
-#: src/capture/main.cpp:233 src/editor/main.cpp:1465
+#: src/capture/main.cpp:236 src/editor/main.cpp:1688
 msgid "Contraste"
 msgstr "تضاد"
 
-#: src/capture/main.cpp:234
+#: src/capture/main.cpp:237
 msgid "Matiz (graus)"
 msgstr "رنگت (ڈگری)"
 
-#: src/capture/main.cpp:234 src/editor/main.cpp:1468
+#: src/capture/main.cpp:237 src/editor/main.cpp:1691
 msgid "Saturação"
 msgstr "سیرابی"
 
-#: src/capture/main.cpp:237 src/editor/main.cpp:354 src/editor/main.cpp:822
+#: src/capture/main.cpp:240 src/editor/main.cpp:364 src/editor/main.cpp:956
 msgid "Girar"
 msgstr "گھمائیں"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "90° à direita"
 msgstr "90° دائیں"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "90° à esquerda"
 msgstr "90° بائیں"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "Espelhar na horizontal"
 msgstr "افقی پلٹیں"
 
-#: src/capture/main.cpp:237
+#: src/capture/main.cpp:240
 msgid "Espelhar na vertical"
 msgstr "عمودی پلٹیں"
 
-#: src/capture/main.cpp:242
+#: src/capture/main.cpp:245
 msgid "Repetir por toda a imagem"
 msgstr "پوری تصویر پر دہرائیں"
 
-#: src/capture/main.cpp:245
+#: src/capture/main.cpp:248
 msgid "Resolução (DPI)"
 msgstr "ریزولیوشن (DPI)"
 
-#: src/capture/main.cpp:245
+#: src/capture/main.cpp:248
 msgid "Gravada nos arquivos salvos (PNG, JPEG, TIFF, BMP)."
 msgstr "محفوظ فائلوں میں لکھا جاتا ہے (PNG، JPEG، TIFF، BMP)۔"
 
-#: src/capture/main.cpp:278 src/capture/main.cpp:300 src/capture/main.cpp:781
+#: src/capture/main.cpp:281 src/capture/main.cpp:303 src/capture/main.cpp:864
 msgid "Nenhum"
 msgstr "کوئی نہیں"
 
-#: src/capture/main.cpp:303
+#: src/capture/main.cpp:306
 msgid "Adicionar outro efeito"
 msgstr "دوسرا اثر شامل کریں"
 
-#: src/capture/main.cpp:304
+#: src/capture/main.cpp:307
 msgid "Remover este efeito"
 msgstr "یہ اثر ہٹائیں"
 
-#: src/capture/main.cpp:339 src/capture/main.cpp:600 src/capture/main.cpp:846 src/capture/main.cpp:999
+#: src/capture/main.cpp:342 src/capture/main.cpp:683 src/capture/main.cpp:929 src/capture/main.cpp:1087
 msgid "Desligado"
 msgstr "بند"
 
-#: src/capture/main.cpp:339
+#: src/capture/main.cpp:342
 #, c-format
 msgid "%d s"
 msgstr "%d سیکنڈ"
 
-#: src/capture/main.cpp:384 src/capture/main.cpp:890
+#: src/capture/main.cpp:398 src/capture/main.cpp:973
 msgid "Ligada"
 msgstr "آن"
 
-#: src/capture/main.cpp:384 src/capture/main.cpp:890 src/capture/main.cpp:1033
+#: src/capture/main.cpp:398 src/capture/main.cpp:973 src/capture/main.cpp:1121
 msgid "Desligada"
 msgstr "بند"
 
-#: src/capture/main.cpp:420 src/capture/main.cpp:1046
+#: src/capture/main.cpp:434 src/capture/main.cpp:1134
 msgid "Formato"
 msgstr "فارمیٹ"
 
-#: src/capture/main.cpp:421
+#: src/capture/main.cpp:435
 msgid "Prefixo do nome"
 msgstr "نام کا سابقہ"
 
-#: src/capture/main.cpp:422
+#: src/capture/main.cpp:436
 msgid "Pasta"
 msgstr "فولڈر"
 
-#: src/capture/main.cpp:423
+#: src/capture/main.cpp:437
 msgid "Nome automático: <Prefixo><Número>, ex.: Captura001.png"
 msgstr "خودکار نام: <سابقہ><نمبر>، مثلاً: Capture001.png"
 
-#: src/capture/main.cpp:427
+#: src/capture/main.cpp:441
 msgid "O prefixo contém caracteres inválidos."
 msgstr "سابقے میں غلط حروف ہیں۔"
 
-#: src/capture/main.cpp:430
+#: src/capture/main.cpp:444
 msgid "Salvar em arquivo"
 msgstr "فائل میں محفوظ کریں"
 
-#: src/capture/main.cpp:437 src/editor/main.cpp:637 src/editor/main.cpp:813
+#: src/capture/main.cpp:451 src/editor/main.cpp:660 src/editor/main.cpp:947
 msgid "Programa"
 msgstr "پروگرام"
 
-#: src/capture/main.cpp:438
+#: src/capture/main.cpp:452
 msgid "A captura é aberta nesse programa (ex.: mspaint.exe)."
 msgstr "کیپچر اس پروگرام میں کھلتا ہے (مثلاً: mspaint.exe)۔"
 
-#: src/capture/main.cpp:439 src/editor/main.cpp:813
+#: src/capture/main.cpp:453 src/editor/main.cpp:947
 msgid "Abrir em um programa externo"
 msgstr "بیرونی پروگرام میں کھولیں"
 
-#: src/capture/main.cpp:450 src/editor/main.cpp:360 src/editor/main.cpp:378 src/editor/main.cpp:482
+#: src/capture/main.cpp:464 src/editor/main.cpp:370 src/editor/main.cpp:388 src/editor/main.cpp:505
 msgid "Altura (px)"
 msgstr "اونچائی (px)"
 
-#: src/capture/main.cpp:451
+#: src/capture/main.cpp:465
 msgid "Capturar sempre na mesma posição"
 msgstr "ہمیشہ ایک ہی جگہ کیپچر کریں"
 
-#: src/capture/main.cpp:452
+#: src/capture/main.cpp:466
 msgid "Esquerda (X)"
 msgstr "بائیں (X)"
 
-#: src/capture/main.cpp:453
+#: src/capture/main.cpp:467
 msgid "Topo (Y)"
 msgstr "اوپر (Y)"
 
-#: src/capture/main.cpp:454
+#: src/capture/main.cpp:468
 msgid "Sem posição fixa, você arrasta o retângulo até o lugar na hora da captura."
 msgstr "مقررہ جگہ کے بغیر، آپ کیپچر کے وقت مستطیل کو اس کی جگہ گھسیٹتے ہیں۔"
 
-#: src/capture/main.cpp:468
+#: src/capture/main.cpp:483
 msgid "Selecionar a região na captura"
 msgstr "کیپچر کے وقت حصہ منتخب کریں"
 
-#: src/capture/main.cpp:469
+#: src/capture/main.cpp:484
 msgid "Região fixa…"
 msgstr "مقررہ حصہ…"
 
-#: src/capture/main.cpp:490 src/editor/Video.cpp:642
+#: src/capture/main.cpp:490
+msgid "Cada janela como um objeto separado"
+msgstr "ہر ونڈو الگ آبجیکٹ کے طور پر"
+
+#: src/capture/main.cpp:491
+msgid "Guardar os links da página (clicáveis, também no PDF)"
+msgstr "صفحے کے لنک محفوظ رکھیں (کلک کے قابل، PDF میں بھی)"
+
+#: src/capture/main.cpp:514 src/editor/Video.cpp:642
 msgid "Quadros por segundo"
 msgstr "فریم فی سیکنڈ"
 
-#: src/capture/main.cpp:491
+#: src/capture/main.cpp:515
 msgid "Reduzir para 1080p"
 msgstr "1080p تک چھوٹا کریں"
 
-#: src/capture/main.cpp:492
+#: src/capture/main.cpp:516
 msgid "Codificação por hardware"
 msgstr "ہارڈ ویئر انکوڈنگ"
 
-#: src/capture/main.cpp:494
+#: src/capture/main.cpp:517
+msgid "Áudio"
+msgstr "آڈیو"
+
+#: src/capture/main.cpp:518
+msgid "Volume do microfone (%)"
+msgstr "مائیکروفون کی آواز (%)"
+
+#: src/capture/main.cpp:519
+msgid "Volume do áudio do sistema (%)"
+msgstr "سسٹم آڈیو کی آواز (%)"
+
+#: src/capture/main.cpp:521
+msgid "Também ajustáveis no painel da gravação."
+msgstr "ریکارڈنگ پینل میں بھی قابلِ تبدیل۔"
+
+#: src/capture/main.cpp:523
 msgid "Opções de vídeo"
 msgstr "ویڈیو کے اختیارات"
 
-#: src/capture/main.cpp:503
+#: src/capture/main.cpp:533
 msgid "Atalho do preset"
 msgstr "پری سیٹ کا شارٹ کٹ"
 
-#: src/capture/main.cpp:504
+#: src/capture/main.cpp:534
 msgid "Deixe vazio (Backspace) para remover."
 msgstr "ہٹانے کے لیے خالی چھوڑیں (Backspace)۔"
 
-#: src/capture/main.cpp:505
+#: src/capture/main.cpp:535
 msgid "Atalho — "
 msgstr "شارٹ کٹ — "
 
-#: src/capture/main.cpp:511
+#: src/capture/main.cpp:541
 msgid "Esse atalho já está em uso por outra ação do Snapnab."
 msgstr "یہ شارٹ کٹ پہلے ہی Snapnab کے کسی اور عمل میں استعمال ہو رہا ہے۔"
 
-#: src/capture/main.cpp:516
+#: src/capture/main.cpp:546
 msgid "Outro programa já usa esse atalho. O Snapnab vai interceptá-lo por um gancho de teclado."
 msgstr "کوئی اور پروگرام یہ شارٹ کٹ استعمال کر رہا ہے۔ Snapnab اسے کی بورڈ ہک سے پکڑے گا۔"
 
-#: src/capture/main.cpp:517
+#: src/capture/main.cpp:547
 msgid "Atalho"
 msgstr "شارٹ کٹ"
 
-#: src/capture/main.cpp:523
+#: src/capture/main.cpp:553
 msgid "Nome do preset"
 msgstr "پری سیٹ کا نام"
 
-#: src/capture/main.cpp:531
+#: src/capture/main.cpp:561
 msgid "Renomear preset"
 msgstr "پری سیٹ کا نام بدلیں"
 
-#: src/capture/main.cpp:551
+#: src/capture/main.cpp:581
 msgid ""
 "Um preset guarda tudo o que a janela de captura mostra: tipo (imagem ou vídeo), seleção, efeitos, destino e opções de gravação.\n"
 "\n"
@@ -735,91 +779,131 @@ msgstr ""
 "•  قطار کا گیئر پری سیٹ کا نام بدلتا ہے، اس کی نقل بناتا ہے یا اسے حذف کرتا ہے۔\n"
 "•  \"موجودہ ترتیبات سے نیا پری سیٹ\" ابھی ونڈو میں موجود چیز محفوظ کرتا ہے۔"
 
-#: src/capture/main.cpp:557 src/capture/main.cpp:679 src/capture/main.cpp:798 src/capture/main.cpp:970
+#: src/capture/main.cpp:587 src/capture/main.cpp:762 src/capture/main.cpp:881 src/capture/main.cpp:1058
 msgid "Presets"
 msgstr "پری سیٹس"
 
-#: src/capture/main.cpp:588
+#: src/capture/main.cpp:609 src/capture/main.cpp:620
+msgid "Configurações do Snapnab (*.snapsettings)|*.snapsettings|"
+msgstr "Snapnab ترتیبات (*.snapsettings)|*.snapsettings|"
+
+#: src/capture/main.cpp:612
+msgid "Exportar configurações"
+msgstr "ترتیبات برآمد کریں"
+
+#: src/capture/main.cpp:615
+msgid "Configurações exportadas: presets, temas, estilos rápidos, favoritos, efeitos rápidos, ordem dos carimbos e barra de ferramentas."
+msgstr "ترتیبات برآمد ہو گئیں: پری سیٹس، تھیمز، فوری اسٹائل، پسندیدہ، فوری اثرات، مہروں کی ترتیب اور ٹول بار۔"
+
+#: src/capture/main.cpp:623 src/capture/main.cpp:632
+msgid "Importar configurações"
+msgstr "ترتیبات درآمد کریں"
+
+#: src/capture/main.cpp:624 src/common/Settings.cpp:142
+msgid "Arquivo de configurações inválido."
+msgstr "ترتیبات کی فائل درست نہیں۔"
+
+#: src/capture/main.cpp:625
+msgid ""
+"Substituir\n"
+"As configurações atuais dão lugar às do arquivo."
+msgstr ""
+"تبدیل کریں\n"
+"موجودہ ترتیبات کی جگہ فائل کی ترتیبات آ جائیں گی۔"
+
+#: src/capture/main.cpp:626
+msgid ""
+"Mesclar\n"
+"Mantém as configurações atuais e acrescenta o que faltar (presets, temas, favoritos, efeitos rápidos…)."
+msgstr ""
+"ضم کریں\n"
+"موجودہ ترتیبات رکھتا ہے اور جو کمی ہو وہ شامل کرتا ہے (پری سیٹس، تھیمز، پسندیدہ، فوری اثرات…)۔"
+
+#: src/capture/main.cpp:633
+msgid "O Snapnab e o Editor reiniciam com as configurações importadas. Uma cópia das configurações atuais fica na pasta de backups."
+msgstr "Snapnab اور ایڈیٹر درآمد شدہ ترتیبات کے ساتھ دوبارہ شروع ہوں گے۔ موجودہ ترتیبات کی ایک کاپی بیک اپ فولڈر میں رہے گی۔"
+
+#: src/capture/main.cpp:671
 msgid "Automático (idioma do Windows)"
 msgstr "خودکار (Windows کی زبان)"
 
-#: src/capture/main.cpp:593
+#: src/capture/main.cpp:676
 msgid "Atalhos globais"
 msgstr "عالمی شارٹ کٹس"
 
-#: src/capture/main.cpp:594 src/capture/main.cpp:675 src/capture/main.cpp:966
+#: src/capture/main.cpp:677 src/capture/main.cpp:758 src/capture/main.cpp:1054
 msgid "Capturar imagem"
 msgstr "تصویر کیپچر کریں"
 
-#: src/capture/main.cpp:595 src/capture/main.cpp:676 src/capture/main.cpp:967
+#: src/capture/main.cpp:678 src/capture/main.cpp:759 src/capture/main.cpp:1055
 msgid "Gravar vídeo"
 msgstr "ویڈیو ریکارڈ کریں"
 
-#: src/capture/main.cpp:596
+#: src/capture/main.cpp:679
 msgid "Pausar/retomar vídeo"
 msgstr "ویڈیو روکیں/جاری رکھیں"
 
-#: src/capture/main.cpp:597
+#: src/capture/main.cpp:680
 msgid "Parar vídeo"
 msgstr "ویڈیو بند کریں"
 
-#: src/capture/main.cpp:598
+#: src/capture/main.cpp:681
 msgid "Geral"
 msgstr "عمومی"
 
-#: src/capture/main.cpp:599
+#: src/capture/main.cpp:682
 msgid "Pasta de saída"
 msgstr "آؤٹ پٹ فولڈر"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Monitorar área de transferência"
 msgstr "کلپ بورڈ پر نظر رکھیں"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Só a Ferramenta de Captura do Windows"
 msgstr "صرف Windows اسنپنگ ٹول"
 
-#: src/capture/main.cpp:600
+#: src/capture/main.cpp:683
 msgid "Qualquer aplicativo"
 msgstr "کوئی بھی ایپلیکیشن"
 
-#: src/capture/main.cpp:602
+#: src/capture/main.cpp:685
 msgid "Iniciar com o Windows"
 msgstr "Windows کے ساتھ شروع کریں"
 
-#: src/capture/main.cpp:603
+#: src/capture/main.cpp:686
 msgid "Mostrar a janela de captura ao iniciar"
 msgstr "شروع ہونے پر کیپچر ونڈو دکھائیں"
 
-#: src/capture/main.cpp:604
+#: src/capture/main.cpp:687
 msgid "Idioma"
 msgstr "زبان"
 
-#: src/capture/main.cpp:605 src/editor/main.cpp:1269
+#: src/capture/main.cpp:688 src/editor/main.cpp:1485
 msgid "Biblioteca: "
 msgstr "لائبریری: "
 
-#: src/capture/main.cpp:611
+#: src/capture/main.cpp:694
 msgid "Dois atalhos iguais: "
 msgstr "دو ایک جیسے شارٹ کٹ: "
 
-#: src/capture/main.cpp:616
+#: src/capture/main.cpp:699
 msgid "Opções do Snapnab"
 msgstr "Snapnab کے اختیارات"
 
-#: src/capture/main.cpp:632
+#: src/capture/main.cpp:715
 msgid "O novo idioma vale depois que o Snapnab e o Editor reiniciarem. Reiniciar agora?"
 msgstr "نئی زبان Snapnab اور ایڈیٹر کے دوبارہ شروع ہونے کے بعد لاگو ہوگی۔ ابھی دوبارہ شروع کریں؟"
 
-#: src/capture/main.cpp:655
+#: src/capture/main.cpp:738
 msgid " — captura de tela e gravação de vídeo"
 msgstr " — اسکرین کیپچر اور ویڈیو ریکارڈنگ"
 
-#: src/capture/main.cpp:656 src/editor/main.cpp:1269
+#: src/capture/main.cpp:739 src/editor/main.cpp:1485
 msgid "Software livre sob a GNU General Public License versão 3."
 msgstr "GNU General Public License ورژن 3 کے تحت آزاد سافٹ ویئر۔"
 
-#: src/capture/main.cpp:657
+#: src/capture/main.cpp:740
 msgid ""
 "Processo de captura (Snapnab.exe) + Editor (SnapnabEditor.exe), comunicando-se por memória\n"
 "compartilhada (canal IPC) e WM_COPYDATA. Capturas ficam na biblioteca:\n"
@@ -827,19 +911,19 @@ msgstr ""
 "کیپچر عمل (Snapnab.exe) + ایڈیٹر (SnapnabEditor.exe)، مشترکہ میموری\n"
 "(IPC چینل) اور WM_COPYDATA کے ذریعے رابطہ کرتے ہیں۔ کیپچر لائبریری میں رکھے جاتے ہیں:\n"
 
-#: src/capture/main.cpp:659
+#: src/capture/main.cpp:742
 msgid "Sobre o Snapnab"
 msgstr "Snapnab کے بارے میں"
 
-#: src/capture/main.cpp:681 src/capture/main.cpp:972
+#: src/capture/main.cpp:764 src/capture/main.cpp:1060
 msgid "Abrir a janela de captura"
 msgstr "کیپچر ونڈو کھولیں"
 
-#: src/capture/main.cpp:682
+#: src/capture/main.cpp:765
 msgid "Ocultar o One Click"
 msgstr "One Click چھپائیں"
 
-#: src/capture/main.cpp:735
+#: src/capture/main.cpp:818
 msgid ""
 "Snapnab.exe [opções]\n"
 "\n"
@@ -859,318 +943,334 @@ msgstr ""
 "/clipboard       کلپ بورڈ کی تصویر کیپچر کریں\n"
 "/exit            چلتا ہوا Snapnab بند کریں"
 
-#: src/capture/main.cpp:741
+#: src/capture/main.cpp:824
 msgid "Snapnab — linha de comando"
 msgstr "Snapnab — کمانڈ لائن"
 
-#: src/capture/main.cpp:770 src/capture/main.cpp:1222 src/editor/main.cpp:1841 src/editor/main.cpp:1841
+#: src/capture/main.cpp:853 src/capture/main.cpp:1310 src/editor/LayersPanel.cpp:56 src/editor/main.cpp:2133
 msgid "Imagem"
 msgstr "تصویر"
 
-#: src/capture/main.cpp:771 src/capture/main.cpp:1222
+#: src/capture/main.cpp:854 src/capture/main.cpp:1310
 msgid "Vídeo"
 msgstr "ویڈیو"
 
-#: src/capture/main.cpp:772
+#: src/capture/main.cpp:855
 msgid "Seleção:"
 msgstr "انتخاب:"
 
-#: src/capture/main.cpp:775
+#: src/capture/main.cpp:858
 msgid "Efeitos:"
 msgstr "اثرات:"
 
-#: src/capture/main.cpp:778
+#: src/capture/main.cpp:861
 msgid "Compartilhar:"
 msgstr "شیئر:"
 
-#: src/capture/main.cpp:781 src/capture/main.cpp:831 src/editor/main.cpp:812 src/editor/main.cpp:1839
+#: src/capture/main.cpp:864 src/capture/main.cpp:914 src/editor/main.cpp:946 src/editor/main.cpp:2131
 msgid "Arquivo"
 msgstr "فائل"
 
-#: src/capture/main.cpp:781
+#: src/capture/main.cpp:864
 msgid "Programa externo"
 msgstr "بیرونی پروگرام"
 
-#: src/capture/main.cpp:781
+#: src/capture/main.cpp:864
 msgid "Texto (OCR)"
 msgstr "متن (OCR)"
 
-#: src/capture/main.cpp:782
+#: src/capture/main.cpp:865
 msgid "Qualidade:"
 msgstr "معیار:"
 
-#: src/capture/main.cpp:785
+#: src/capture/main.cpp:868
 msgid "Muito baixa"
 msgstr "بہت کم"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1685
 msgid "Baixa"
 msgstr "کم"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1452 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1675 src/editor/main.cpp:1685
 msgid "Média"
 msgstr "درمیانہ"
 
-#: src/capture/main.cpp:785 src/editor/main.cpp:1462
+#: src/capture/main.cpp:868 src/editor/main.cpp:1685
 msgid "Alta"
 msgstr "اعلیٰ"
 
-#: src/capture/main.cpp:786
+#: src/capture/main.cpp:869
 msgid "Webcam:"
 msgstr "ویب کیم:"
 
-#: src/capture/main.cpp:789
+#: src/capture/main.cpp:872
 msgid "Visualizar no Editor"
 msgstr "ایڈیٹر میں پیش نظارہ"
 
-#: src/capture/main.cpp:790
+#: src/capture/main.cpp:873
 msgid "Copiar para a área de transferência"
 msgstr "کلپ بورڈ پر کاپی کریں"
 
-#: src/capture/main.cpp:791
+#: src/capture/main.cpp:874
 msgid "Capturar o cursor"
 msgstr "کرسر کیپچر کریں"
 
-#: src/capture/main.cpp:792 src/capture/main.cpp:846
+#: src/capture/main.cpp:875 src/capture/main.cpp:929
 msgid "Atraso"
 msgstr "تاخیر"
 
-#: src/capture/main.cpp:794
+#: src/capture/main.cpp:877
 msgid "Gravar microfone"
 msgstr "مائیکروفون ریکارڈ کریں"
 
-#: src/capture/main.cpp:795
+#: src/capture/main.cpp:878
 msgid "Gravar áudio do sistema"
 msgstr "سسٹم آڈیو ریکارڈ کریں"
 
-#: src/capture/main.cpp:796 src/capture/main.cpp:1245 src/editor/main.cpp:1712
+#: src/capture/main.cpp:879 src/capture/main.cpp:1333 src/editor/main.cpp:1983
 msgid "Capturar"
 msgstr "کیپچر"
 
-#: src/capture/main.cpp:802
+#: src/capture/main.cpp:885
 msgid "Abrir Editor"
 msgstr "ایڈیٹر کھولیں"
 
-#: src/capture/main.cpp:831 src/editor/main.cpp:436
+#: src/capture/main.cpp:914 src/editor/main.cpp:450
 msgid "Captura"
 msgstr "کیپچر"
 
-#: src/capture/main.cpp:831 src/editor/main.cpp:1842
+#: src/capture/main.cpp:914 src/editor/main.cpp:2134
 msgid "Exibir"
 msgstr "منظر"
 
-#: src/capture/main.cpp:831 src/capture/main.cpp:1071 src/editor/main.cpp:1843 src/editor/main.cpp:1843
+#: src/capture/main.cpp:914 src/capture/main.cpp:1159 src/editor/main.cpp:2135 src/editor/main.cpp:2135
 msgid "Ajuda"
 msgstr "مدد"
 
-#: src/capture/main.cpp:933
+#: src/capture/main.cpp:1016
 msgid "Abrir o &Editor"
 msgstr "ایڈیٹر کھولیں(&E)"
 
-#: src/capture/main.cpp:934 src/editor/main.cpp:710
+#: src/capture/main.cpp:1017 src/editor/main.cpp:827
 msgid "Abrir a pasta da &biblioteca"
 msgstr "لائبریری فولڈر کھولیں(&L)"
 
-#: src/capture/main.cpp:935
+#: src/capture/main.cpp:1018
 msgid "Abrir a pasta de &logs"
 msgstr "لاگ فولڈر کھولیں(&G)"
 
-#: src/capture/main.cpp:937
+#: src/capture/main.cpp:1020
 msgid "&Importar presets…"
 msgstr "پری سیٹس درآمد کریں(&I)…"
 
-#: src/capture/main.cpp:938
+#: src/capture/main.cpp:1021
 msgid "E&xportar presets…"
 msgstr "پری سیٹس برآمد کریں(&X)…"
 
-#: src/capture/main.cpp:940
+#: src/capture/main.cpp:1023
+msgid "Exportar &todas as configurações…"
+msgstr "&تمام ترتیبات برآمد کریں…"
+
+#: src/capture/main.cpp:1024
+msgid "Importar t&odas as configurações…"
+msgstr "تمام ترتیبات &درآمد کریں…"
+
+#: src/capture/main.cpp:1025
+msgid "Abrir a pasta de &backups"
+msgstr "&بیک اپ فولڈر کھولیں"
+
+#: src/capture/main.cpp:1027
 msgid "&Opções…"
 msgstr "اختیارات(&O)…"
 
-#: src/capture/main.cpp:942
+#: src/capture/main.cpp:1029
 msgid "&Sair do Snapnab"
 msgstr "Snapnab سے باہر نکلیں(&Q)"
 
-#: src/capture/main.cpp:944
+#: src/capture/main.cpp:1031
 msgid "Capturar &imagem"
 msgstr "تصویر کیپچر کریں(&I)"
 
-#: src/capture/main.cpp:945
+#: src/capture/main.cpp:1032
 msgid "Gravar &vídeo"
 msgstr "ویڈیو ریکارڈ کریں(&V)"
 
-#: src/capture/main.cpp:946
+#: src/capture/main.cpp:1033
 msgid "&Repetir a última captura"
 msgstr "پچھلا کیپچر دہرائیں(&R)"
 
-#: src/capture/main.cpp:948
+#: src/capture/main.cpp:1035
 msgid "Da área de &transferência"
 msgstr "کلپ بورڈ سے(&C)"
 
-#: src/capture/main.cpp:949
+#: src/capture/main.cpp:1036
 msgid "De um &arquivo gráfico…"
 msgstr "گرافک فائل سے(&F)…"
 
-#: src/capture/main.cpp:951
+#: src/capture/main.cpp:1038
 msgid "Mostrar o &One Click"
 msgstr "One Click دکھائیں(&O)"
 
-#: src/capture/main.cpp:952
+#: src/capture/main.cpp:1039
 msgid "Lista de &presets"
 msgstr "پری سیٹس کی فہرست(&P)"
 
-#: src/capture/main.cpp:954
+#: src/capture/main.cpp:1041 src/editor/main.cpp:893
+msgid "&Manual do Snapnab\tF1"
+msgstr "Snapnab &دستی رہنما\tF1"
+
+#: src/capture/main.cpp:1042
 msgid "Como usar os &presets"
 msgstr "پری سیٹس کیسے استعمال کریں(&H)"
 
-#: src/capture/main.cpp:956
+#: src/capture/main.cpp:1044
 msgid "&Sobre o Snapnab"
 msgstr "Snapnab کے بارے میں(&A)"
 
-#: src/capture/main.cpp:973
+#: src/capture/main.cpp:1061
 msgid "Mostrar o One Click"
 msgstr "One Click دکھائیں"
 
-#: src/capture/main.cpp:974
+#: src/capture/main.cpp:1062
 msgid "Abrir o Editor"
 msgstr "ایڈیٹر کھولیں"
 
-#: src/capture/main.cpp:975
+#: src/capture/main.cpp:1063
 msgid "Opções…"
 msgstr "اختیارات…"
 
-#: src/capture/main.cpp:977
+#: src/capture/main.cpp:1065
 msgid "Sair"
 msgstr "باہر نکلیں"
 
-#: src/capture/main.cpp:999
+#: src/capture/main.cpp:1087
 msgid "1 segundo"
 msgstr "1 سیکنڈ"
 
-#: src/capture/main.cpp:999
+#: src/capture/main.cpp:1087
 #, c-format
 msgid "%d segundos"
 msgstr "%d سیکنڈ"
 
-#: src/capture/main.cpp:1011
+#: src/capture/main.cpp:1099
 msgid "Remover o fundo da webcam"
 msgstr "ویب کیم کا پس منظر ہٹائیں"
 
-#: src/capture/main.cpp:1012
+#: src/capture/main.cpp:1100
 msgid "Cor do fundo"
 msgstr "پس منظر کا رنگ"
 
-#: src/capture/main.cpp:1013
+#: src/capture/main.cpp:1101
 msgid "Tolerância (0–100)"
 msgstr "رواداری (0–100)"
 
-#: src/capture/main.cpp:1014
+#: src/capture/main.cpp:1102
 msgid "Use um fundo liso e bem iluminado (tela verde é o ideal)."
 msgstr "سادہ اور اچھی روشنی والا پس منظر استعمال کریں (گرین اسکرین بہترین ہے)۔"
 
-#: src/capture/main.cpp:1015
+#: src/capture/main.cpp:1103
 msgid "Com o fundo removido, a webcam aparece sem moldura."
 msgstr "پس منظر ہٹنے پر ویب کیم بغیر فریم کے دکھائی دیتا ہے۔"
 
-#: src/capture/main.cpp:1017
+#: src/capture/main.cpp:1105
 msgid "Remover o fundo (chroma key)"
 msgstr "پس منظر ہٹائیں (کروما کی)"
 
-#: src/capture/main.cpp:1035
+#: src/capture/main.cpp:1123
 msgid "Nenhuma webcam encontrada"
 msgstr "کوئی ویب کیم نہیں ملا"
 
-#: src/capture/main.cpp:1047
+#: src/capture/main.cpp:1135
 msgid "Remover o fundo (chroma key)…"
 msgstr "پس منظر ہٹائیں (کروما کی)…"
 
-#: src/capture/main.cpp:1068 src/capture/main.cpp:1260
+#: src/capture/main.cpp:1156 src/capture/main.cpp:1348
 msgid "Novo preset com as configurações atuais"
 msgstr "موجودہ ترتیبات سے نیا پری سیٹ"
 
-#: src/capture/main.cpp:1069
+#: src/capture/main.cpp:1157
 msgid "Novo preset…"
 msgstr "نیا پری سیٹ…"
 
-#: src/capture/main.cpp:1080
+#: src/capture/main.cpp:1168
 msgid "Capturar com este preset"
 msgstr "اس پری سیٹ سے کیپچر کریں"
 
-#: src/capture/main.cpp:1082
+#: src/capture/main.cpp:1170
 msgid "Renomear…"
 msgstr "نام بدلیں…"
 
-#: src/capture/main.cpp:1083
+#: src/capture/main.cpp:1171
 msgid "Atalho…"
 msgstr "شارٹ کٹ…"
 
-#: src/capture/main.cpp:1084 src/editor/PropsPanel.cpp:1028 src/editor/main.cpp:819
+#: src/capture/main.cpp:1172 src/editor/PropsPanel.cpp:1207 src/editor/main.cpp:953
 msgid "Duplicar"
 msgstr "نقل بنائیں"
 
-#: src/capture/main.cpp:1086 src/editor/PropsPanel.cpp:1031
+#: src/capture/main.cpp:1174 src/editor/PropsPanel.cpp:1210
 msgid "Excluir"
 msgstr "حذف کریں"
 
-#: src/capture/main.cpp:1094
+#: src/capture/main.cpp:1182
 msgid "Adicionar atalho"
 msgstr "شارٹ کٹ شامل کریں"
 
-#: src/capture/main.cpp:1245 src/editor/main.cpp:1713
+#: src/capture/main.cpp:1333 src/editor/main.cpp:1984
 msgid "Gravar"
 msgstr "ریکارڈ کریں"
 
-#: src/capture/main.cpp:1260 src/capture/main.cpp:1270 src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1047
+#: src/capture/main.cpp:1348 src/capture/main.cpp:1358 src/editor/PropsPanel.cpp:1215 src/editor/PropsPanel.cpp:1226
 msgid " (cópia)"
 msgstr " (نقل)"
 
-#: src/capture/main.cpp:1262
+#: src/capture/main.cpp:1350
 #, c-format
 msgid "Preset %zu"
 msgstr "پری سیٹ %zu"
 
-#: src/capture/main.cpp:1264
+#: src/capture/main.cpp:1352
 msgid "Novo preset"
 msgstr "نیا پری سیٹ"
 
-#: src/capture/main.cpp:1277
+#: src/capture/main.cpp:1365
 msgid "É preciso manter pelo menos um preset."
 msgstr "کم از کم ایک پری سیٹ رکھنا ضروری ہے۔"
 
-#: src/capture/main.cpp:1278
+#: src/capture/main.cpp:1366
 #, c-format
 msgid "Excluir o preset \"%s\"?"
 msgstr "پری سیٹ \"%s\" حذف کریں؟"
 
-#: src/capture/main.cpp:1337
+#: src/capture/main.cpp:1425
 msgid "Presets do Snapnab (*.snappresets;*.xml)|*.snappresets;*.xml|"
 msgstr "Snapnab پری سیٹس (*.snappresets;*.xml)|*.snappresets;*.xml|"
 
-#: src/capture/main.cpp:1341
+#: src/capture/main.cpp:1429
 msgid "Presets importados."
 msgstr "پری سیٹس درآمد ہو گئے۔"
 
-#: src/capture/main.cpp:1342
+#: src/capture/main.cpp:1430
 msgid "Arquivo de presets inválido."
 msgstr "غلط پری سیٹ فائل۔"
 
-#: src/capture/main.cpp:1347
+#: src/capture/main.cpp:1435
 msgid "Presets do Snapnab (*.snappresets)|*.snappresets|"
 msgstr "Snapnab پری سیٹس (*.snappresets)|*.snappresets|"
 
-#: src/capture/main.cpp:1351
+#: src/capture/main.cpp:1439
 msgid "Não foi possível exportar."
 msgstr "برآمد نہیں کیا جا سکا۔"
 
-#: src/capture/main.cpp:1360
+#: src/capture/main.cpp:1452
 msgid "Há uma gravação em andamento. Parar e sair?"
 msgstr "ریکارڈنگ جاری ہے۔ روک کر باہر نکلیں؟"
 
-#: src/capture/main.cpp:1461
+#: src/capture/main.cpp:1553
 msgid "Gravar vídeo  ("
 msgstr "ویڈیو ریکارڈ کریں  ("
 
-#: src/capture/main.cpp:1461
+#: src/capture/main.cpp:1553
 msgid "Capturar imagem  ("
 msgstr "تصویر کیپچر کریں  ("
 
@@ -1182,7 +1282,7 @@ msgstr "تصاویر اور دستاویزات (*.snap;*.png;*.jpg;*.jpeg;*.bmp;
 msgid "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Documento Snapnab (*.snap)|*.snap|"
 msgstr "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|TIFF (*.tif)|*.tif|PDF (*.pdf)|*.pdf|Snapnab دستاویز (*.snap)|*.snap|"
 
-#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:9
+#: src/common/Ocr.cpp:14 src/editor/Pdf.cpp:21
 msgid "Imagem vazia."
 msgstr "خالی تصویر۔"
 
@@ -1194,114 +1294,228 @@ msgstr "Windows میں کوئی OCR زبان انسٹال نہیں ہے (ترت�
 msgid "Falha desconhecida no OCR."
 msgstr "نامعلوم OCR خرابی۔"
 
-#: src/common/Ui.cpp:247
+#: src/common/Settings.cpp:130
+msgid "Não foi possível gravar o arquivo."
+msgstr "فائل نہیں لکھی جا سکی۔"
+
+#: src/common/Settings.cpp:168
+msgid "Não foi possível gravar "
+msgstr "نہیں لکھا جا سکا: "
+
+#: src/common/Ui.cpp:260
 msgid "OK"
 msgstr "ٹھیک ہے"
 
-#: src/common/Ui.cpp:312 src/editor/main.cpp:1714
+#: src/common/Ui.cpp:325 src/editor/main.cpp:1985
 msgid "Copiar tudo"
 msgstr "سب کاپی کریں"
 
-#: src/common/Util.cpp:340
+#: src/common/Util.cpp:322
+msgid "O manual não foi encontrado:\n"
+msgstr "دستی رہنما نہیں ملا:\n"
+
+#: src/common/Util.cpp:398
 msgid "(nenhum)"
 msgstr "(کوئی نہیں)"
 
-#: src/common/Util.cpp:349
+#: src/common/Util.cpp:407
 msgid "Print Screen"
 msgstr "Print Screen"
 
-#: src/editor/Canvas.cpp:13
+#: src/editor/Canvas.cpp:14
 msgid "Mover"
 msgstr "منتقل کریں"
 
-#: src/editor/Canvas.cpp:14
+#: src/editor/Canvas.cpp:15 src/editor/LayersPanel.cpp:44 src/editor/LayersPanel.cpp:44
 msgid "Seta"
 msgstr "تیر"
 
-#: src/editor/Canvas.cpp:15
+#: src/editor/Canvas.cpp:16 src/editor/LayersPanel.cpp:45
 msgid "Linha"
 msgstr "لکیر"
 
-#: src/editor/Canvas.cpp:16 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:540
+#: src/editor/Canvas.cpp:17 src/editor/PropsPanel.cpp:562 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596
 msgid "Forma"
 msgstr "شکل"
 
-#: src/editor/Canvas.cpp:17
+#: src/editor/Canvas.cpp:18 src/editor/LayersPanel.cpp:46
 msgid "Caneta"
 msgstr "قلم"
 
-#: src/editor/Canvas.cpp:18
+#: src/editor/Canvas.cpp:19 src/editor/LayersPanel.cpp:47
 msgid "Marcador"
 msgstr "ہائی لائٹر"
 
-#: src/editor/Canvas.cpp:20
+#: src/editor/Canvas.cpp:21 src/editor/LayersPanel.cpp:49
 msgid "Balão"
 msgstr "کال آؤٹ"
 
-#: src/editor/Canvas.cpp:21
+#: src/editor/Canvas.cpp:22
 msgid "Passos"
 msgstr "مراحل"
 
-#: src/editor/Canvas.cpp:22
+#: src/editor/Canvas.cpp:23 src/editor/LayersPanel.cpp:51
 msgid "Carimbo"
 msgstr "مہر"
 
-#: src/editor/Canvas.cpp:23
+#: src/editor/Canvas.cpp:24
 msgid "Ocultar"
 msgstr "چھپائیں"
 
-#: src/editor/Canvas.cpp:24 src/editor/main.cpp:1472
+#: src/editor/Canvas.cpp:25 src/editor/LayersPanel.cpp:54 src/editor/main.cpp:1695
 msgid "Destaque"
 msgstr "اسپاٹ لائٹ"
 
-#: src/editor/Canvas.cpp:25
+#: src/editor/Canvas.cpp:26 src/editor/LayersPanel.cpp:55
 msgid "Lupa"
 msgstr "محدب عدسہ"
 
-#: src/editor/Canvas.cpp:26
+#: src/editor/Canvas.cpp:27
 msgid "Preencher"
 msgstr "بھریں"
 
-#: src/editor/Canvas.cpp:27
+#: src/editor/Canvas.cpp:28
 msgid "Borracha"
 msgstr "ربڑ"
 
-#: src/editor/Canvas.cpp:28
+#: src/editor/Canvas.cpp:29
 msgid "Cortar"
 msgstr "کراپ"
 
-#: src/editor/Canvas.cpp:29
+#: src/editor/Canvas.cpp:30
 msgid "Seleção"
 msgstr "انتخاب"
 
-#: src/editor/Canvas.cpp:30
+#: src/editor/Canvas.cpp:31
 msgid "Recortar faixa"
 msgstr "پٹی کاٹیں"
 
-#: src/editor/Canvas.cpp:31 src/editor/PropsPanel.cpp:534
+#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:605
 msgid "Conta-gotas"
 msgstr "رنگ چننے والا"
 
-#: src/editor/Canvas.cpp:32 src/editor/PropsPanel.cpp:866
+#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:1017
 msgid "Favoritos"
 msgstr "پسندیدہ"
 
-#: src/editor/Canvas.cpp:33 src/editor/PropsPanel.cpp:257
+#: src/editor/Canvas.cpp:34 src/editor/PropsPanel.cpp:294
 msgid "Varinha mágica"
 msgstr "جادو کی چھڑی"
 
-#: src/editor/Canvas.cpp:325
+#: src/editor/Canvas.cpp:684
 msgid "Nenhuma captura aberta — use “Capturar” ou abra um arquivo (Ctrl+O)."
 msgstr "کوئی کیپچر کھلا نہیں — “کیپچر” استعمال کریں یا کوئی فائل کھولیں (Ctrl+O)۔"
 
-#: src/editor/Canvas.cpp:350
+#: src/editor/Canvas.cpp:709
 msgid "Prévia — Aplicar ou Cancelar no painel"
 msgstr "پیش نظارہ — پینل میں لاگو یا منسوخ کریں"
 
-#: src/editor/Canvas.cpp:452
+#: src/editor/Canvas.cpp:758
+msgid "(duplo clique abre)"
+msgstr "(ڈبل کلک سے کھلتا ہے)"
+
+#: src/editor/Canvas.cpp:845
 #, c-format
 msgid "%d × %d  — Enter aplica, Esc cancela"
 msgstr "%d × %d  — Enter لاگو کرتا ہے، Esc منسوخ کرتا ہے"
+
+#: src/editor/Canvas.cpp:1054
+msgid "Objetos bloqueados não são excluídos (desbloqueie pelo menu de contexto ou pelo painel Camadas)."
+msgstr "لاک شدہ آبجیکٹ حذف نہیں ہوتے (سیاق مینو یا لیئرز پینل سے ان لاک کریں)۔"
+
+#: src/editor/Canvas.cpp:1197
+msgid "Selecione 3 ou mais objetos para distribuir."
+msgstr "تقسیم کرنے کے لیے 3 یا زیادہ آبجیکٹ منتخب کریں۔"
+
+#: src/editor/Canvas.cpp:1855
+msgid "Clique nos cantos do polígono; clique no primeiro ponto, dê um duplo clique ou tecle Enter para fechar (Esc cancela)."
+msgstr "کثیر الاضلاع کے کونوں پر کلک کریں؛ بند کرنے کے لیے پہلے نقطے پر کلک، ڈبل کلک یا Enter دبائیں (Esc منسوخ کرتا ہے)۔"
+
+#: src/editor/Canvas.cpp:1941
+msgid "Objeto bloqueado: desbloqueie para mover."
+msgstr "لاک شدہ آبجیکٹ: منتقل کرنے کے لیے ان لاک کریں۔"
+
+#: src/editor/Canvas.cpp:2096
+msgid "Digite para escrever um texto na ponta inicial da seta."
+msgstr "تیر کے آغاز پر متن لکھنے کے لیے ٹائپ کریں۔"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53 src/editor/PropsPanel.cpp:294
+msgid "Retângulo"
+msgstr "مستطیل"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53
+msgid "Retângulo arredondado"
+msgstr "گول کونوں والا مستطیل"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53 src/editor/PropsPanel.cpp:294
+msgid "Elipse"
+msgstr "بیضوی"
+
+#: src/editor/LayersPanel.cpp:41 src/editor/PropsPanel.cpp:53
+msgid "Triângulo"
+msgstr "مثلث"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:53
+msgid "Losango"
+msgstr "معین"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Paralelogramo"
+msgstr "متوازی الاضلاع"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Hexágono"
+msgstr "مسدس"
+
+#: src/editor/LayersPanel.cpp:42 src/editor/PropsPanel.cpp:54
+msgid "Estrela"
+msgstr "ستارہ"
+
+#: src/editor/LayersPanel.cpp:50
+#, c-format
+msgid "Passo %s"
+msgstr "مرحلہ %s"
+
+#: src/editor/LayersPanel.cpp:52 src/editor/PropsPanel.cpp:300 src/editor/PropsPanel.cpp:590 src/editor/PropsPanel.cpp:1285
+msgid "Desfoque"
+msgstr "دھندلا"
+
+#: src/editor/LayersPanel.cpp:53 src/editor/PropsPanel.cpp:300
+msgid "Pixelado"
+msgstr "پکسلیٹ"
+
+#: src/editor/LayersPanel.cpp:56
+msgid "Peça solta"
+msgstr "الگ کیا گیا ٹکڑا"
+
+#: src/editor/LayersPanel.cpp:57
+#, c-format
+msgid "Grupo (%zu)"
+msgstr "گروپ (%zu)"
+
+#: src/editor/LayersPanel.cpp:58
+msgid "Link: "
+msgstr "لنک: "
+
+#: src/editor/LayersPanel.cpp:222
+msgid "Fundo (imagem)"
+msgstr "پس منظر (تصویر)"
+
+#: src/editor/LayersPanel.cpp:248 src/editor/main.cpp:1632
+msgid "Camadas"
+msgstr "لیئرز"
+
+#: src/editor/LayersPanel.cpp:257
+msgid "Nenhuma imagem aberta."
+msgstr "کوئی تصویر کھلی نہیں۔"
+
+#: src/editor/LayersPanel.cpp:262
+msgid "Os objetos desenhados (setas, textos, formas…) aparecem aqui, do mais à frente ao mais atrás."
+msgstr "بنائے گئے آبجیکٹ (تیر، متن، شکلیں…) یہاں سب سے آگے سے سب سے پیچھے تک دکھائی دیتے ہیں۔"
+
+#: src/editor/LayersPanel.cpp:366
+msgid "Objeto oculto: clique no olho para mostrá-lo."
+msgstr "چھپا ہوا آبجیکٹ: دکھانے کے لیے آنکھ پر کلک کریں۔"
 
 #: src/editor/Panels.cpp:251
 msgid "Mais"
@@ -1367,1962 +1581,2195 @@ msgstr "شامل کریں"
 msgid "Excluir este efeito rápido"
 msgstr "یہ فوری اثر حذف کریں"
 
-#: src/editor/Panels.cpp:1650 src/editor/main.cpp:1357
+#: src/editor/Panels.cpp:1145
+msgid "Pesquisar por nome"
+msgstr "نام سے تلاش کریں"
+
+#: src/editor/Panels.cpp:1158 src/editor/PropsPanel.cpp:1215 src/editor/PropsPanel.cpp:1585 src/editor/main.cpp:1408
+msgid "Nome"
+msgstr "نام"
+
+#: src/editor/Panels.cpp:1159
+msgid "Aparece na bandeja e na biblioteca. Vazio mostra a data."
+msgstr "ٹرے اور لائبریری میں دکھائی دیتا ہے۔ خالی ہو تو تاریخ دکھتی ہے۔"
+
+#: src/editor/Panels.cpp:1160
+msgid "Renomear captura"
+msgstr "کیپچر کا نام تبدیل کریں"
+
+#: src/editor/Panels.cpp:1687 src/editor/main.cpp:1575
 msgid "Capturas recentes"
 msgstr "حالیہ کیپچرز"
 
-#: src/editor/Panels.cpp:1650
+#: src/editor/Panels.cpp:1687
 #, c-format
 msgid "Biblioteca  •  %zu capturas"
 msgstr "لائبریری  •  %zu کیپچرز"
 
-#: src/editor/Panels.cpp:1651
+#: src/editor/Panels.cpp:1688
 #, c-format
 msgid "  •  %d selecionadas"
 msgstr "  •  %d منتخب"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 #, c-format
 msgid "Exportar (%d)…"
 msgstr "برآمد (%d)…"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 #, c-format
 msgid "Excluir (%d)"
 msgstr "حذف (%d)"
 
-#: src/editor/Panels.cpp:1660
+#: src/editor/Panels.cpp:1697
 msgid "Limpar seleção"
 msgstr "انتخاب صاف کریں"
 
-#: src/editor/Panels.cpp:1661
+#: src/editor/Panels.cpp:1698
 msgid "Biblioteca"
 msgstr "لائبریری"
 
-#: src/editor/Panels.cpp:1661
+#: src/editor/Panels.cpp:1698
 msgid "Voltar ao editor"
 msgstr "ایڈیٹر پر واپس"
 
-#: src/editor/Panels.cpp:1666
+#: src/editor/Panels.cpp:1703
 msgid "Nenhuma captura recente. Capture com o Snapnab (Print Screen) ou solte arquivos aqui."
 msgstr "کوئی حالیہ کیپچر نہیں۔ Snapnab سے کیپچر کریں (Print Screen) یا فائلیں یہاں چھوڑیں۔"
 
-#: src/editor/Panels.cpp:1667
+#: src/editor/Panels.cpp:1704
+msgid "Nenhuma captura com esse nome."
+msgstr "اس نام کا کوئی کیپچر نہیں۔"
+
+#: src/editor/Panels.cpp:1704
 msgid "A biblioteca está vazia."
 msgstr "لائبریری خالی ہے۔"
 
-#: src/editor/Panels.cpp:1821 src/editor/main.cpp:818
+#: src/editor/Panels.cpp:1898 src/editor/main.cpp:952
 msgid "Abrir"
 msgstr "کھولیں"
 
-#: src/editor/Panels.cpp:1822
+#: src/editor/Panels.cpp:1899
 msgid "Mostrar na pasta"
 msgstr "فولڈر میں دکھائیں"
 
-#: src/editor/Panels.cpp:1825
+#: src/editor/Panels.cpp:1902
 #, c-format
 msgid "Exportar %zu itens…"
 msgstr "%zu آئٹمز برآمد کریں…"
 
-#: src/editor/Panels.cpp:1825 src/editor/PropsPanel.cpp:1029
+#: src/editor/Panels.cpp:1902 src/editor/PropsPanel.cpp:1208
 msgid "Exportar…"
 msgstr "برآمد کریں…"
 
-#: src/editor/Panels.cpp:1826
+#: src/editor/Panels.cpp:1903
 msgid "Selecionar tudo\tCtrl+A"
 msgstr "سب منتخب کریں\tCtrl+A"
 
-#: src/editor/Panels.cpp:1827
+#: src/editor/Panels.cpp:1904
+msgid "Renomear…\tF2"
+msgstr "نام تبدیل کریں…\tF2"
+
+#: src/editor/Panels.cpp:1905
 msgid "Remover da bandeja"
 msgstr "ٹرے سے ہٹائیں"
 
-#: src/editor/Panels.cpp:1827
+#: src/editor/Panels.cpp:1905
 msgid "Remover da bandeja (continua na biblioteca)"
 msgstr "ٹرے سے ہٹائیں (لائبریری میں رہے گا)"
 
-#: src/editor/Panels.cpp:1829
+#: src/editor/Panels.cpp:1907
 #, c-format
 msgid "Excluir %zu itens (Lixeira)\tDel"
 msgstr "%zu آئٹمز حذف کریں (ری سائیکل بن)\tDel"
 
-#: src/editor/Panels.cpp:1829
+#: src/editor/Panels.cpp:1907
 msgid "Excluir (Lixeira)\tDel"
 msgstr "حذف کریں (ری سائیکل بن)\tDel"
 
-#: src/editor/Pdf.cpp:11
+#: src/editor/Panels.cpp:1994
+#, c-format
+msgid "Vídeo  •  %lld:%02lld  •  %d × %d"
+msgstr "ویڈیو  •  %lld:%02lld  •  %d × %d"
+
+#: src/editor/Pdf.cpp:23
 msgid "Falha ao codificar a imagem."
 msgstr "تصویر انکوڈ کرنے میں ناکامی۔"
 
-#: src/editor/Pdf.cpp:44
+#: src/editor/Pdf.cpp:71
 msgid "Não foi possível criar o arquivo."
 msgstr "فائل نہیں بنائی جا سکی۔"
 
-#: src/editor/Pdf.cpp:48
+#: src/editor/Pdf.cpp:75
 msgid "Falha ao gravar o arquivo."
 msgstr "فائل لکھنے میں ناکامی۔"
 
-#: src/editor/Popups.cpp:253
+#: src/editor/Popups.cpp:231 src/editor/PropsPanel.cpp:613 src/editor/PropsPanel.cpp:636
+msgid "Tipo"
+msgstr "قسم"
+
+#: src/editor/Popups.cpp:231
+msgid "Linear"
+msgstr "خطی"
+
+#: src/editor/Popups.cpp:231
+msgid "Radial (do centro)"
+msgstr "شعاعی (مرکز سے)"
+
+#: src/editor/Popups.cpp:232
+msgid "Ângulo (graus)"
+msgstr "زاویہ (ڈگری)"
+
+#: src/editor/Popups.cpp:233
+msgid "Cor inicial"
+msgstr "ابتدائی رنگ"
+
+#: src/editor/Popups.cpp:234
+msgid "Cor final"
+msgstr "آخری رنگ"
+
+#: src/editor/Popups.cpp:235
+msgid "Cor intermediária"
+msgstr "درمیانی رنگ"
+
+#: src/editor/Popups.cpp:237 src/editor/Popups.cpp:240
+msgid "Posição (%)"
+msgstr "مقام (%)"
+
+#: src/editor/Popups.cpp:238
+msgid "Segunda cor intermediária"
+msgstr "دوسرا درمیانی رنگ"
+
+#: src/editor/Popups.cpp:241
+msgid "O ângulo vale para o gradiente linear: 0° da esquerda para a direita, 90° de cima para baixo."
+msgstr "زاویہ خطی گریڈیئنٹ پر لاگو ہوتا ہے: 0° بائیں سے دائیں، 90° اوپر سے نیچے۔"
+
+#: src/editor/Popups.cpp:242
+msgid "Gradiente"
+msgstr "گریڈیئنٹ"
+
+#: src/editor/Popups.cpp:308
 msgid "Cores do tema"
 msgstr "تھیم کے رنگ"
 
-#: src/editor/Popups.cpp:255
+#: src/editor/Popups.cpp:310
 msgid "Cores padrão"
 msgstr "معیاری رنگ"
 
-#: src/editor/Popups.cpp:256
+#: src/editor/Popups.cpp:311
 msgid "Recentes"
 msgstr "حالیہ"
 
-#: src/editor/Popups.cpp:265
+#: src/editor/Popups.cpp:312
+msgid "Gradientes"
+msgstr "گریڈیئنٹس"
+
+#: src/editor/Popups.cpp:335
 msgid "Sem cor"
 msgstr "کوئی رنگ نہیں"
 
-#: src/editor/Popups.cpp:265
+#: src/editor/Popups.cpp:335
+msgid "Editar gradiente…"
+msgstr "گریڈیئنٹ میں ترمیم…"
+
+#: src/editor/Popups.cpp:335
 msgid "Mais cores…"
 msgstr "مزید رنگ…"
 
-#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
-msgid "Retângulo"
-msgstr "مستطیل"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Retângulo arredondado"
-msgstr "گول کونوں والا مستطیل"
-
-#: src/editor/PropsPanel.cpp:32 src/editor/PropsPanel.cpp:257
-msgid "Elipse"
-msgstr "بیضوی"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Triângulo"
-msgstr "مثلث"
-
-#: src/editor/PropsPanel.cpp:32
-msgid "Losango"
-msgstr "معین"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Paralelogramo"
-msgstr "متوازی الاضلاع"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Hexágono"
-msgstr "مسدس"
-
-#: src/editor/PropsPanel.cpp:33
-msgid "Estrela"
-msgstr "ستارہ"
-
-#: src/editor/PropsPanel.cpp:97
+#: src/editor/PropsPanel.cpp:118
 msgid "Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar."
 msgstr "تیر بنانے کے لیے گھسیٹیں۔ Shift 45° پر روکتا ہے۔ “بیزیئر خم” کے ساتھ، موڑنے کے لیے درمیانی ہینڈل گھسیٹیں۔"
 
-#: src/editor/PropsPanel.cpp:98
+#: src/editor/PropsPanel.cpp:119
 msgid "Arraste para desenhar uma linha. Shift trava em 45°."
 msgstr "لکیر بنانے کے لیے گھسیٹیں۔ Shift 45° پر روکتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:99
-msgid "Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo)."
-msgstr "شکل بنانے کے لیے گھسیٹیں۔ Shift تناسب برقرار رکھتا ہے (مربع، دائرہ)۔"
+#: src/editor/PropsPanel.cpp:120
+msgid "Arraste para desenhar a forma. Shift deixa a forma perfeita (quadrado, círculo, triângulo equilátero, hexágono regular)."
+msgstr "شکل بنانے کے لیے گھسیٹیں۔ Shift اسے بالکل درست بناتا ہے (مربع، دائرہ، مساوی الاضلاع مثلث، باقاعدہ مسدس)۔"
 
-#: src/editor/PropsPanel.cpp:100
+#: src/editor/PropsPanel.cpp:121
 msgid "Arraste para desenhar à mão livre."
 msgstr "آزاد ہاتھ سے بنانے کے لیے گھسیٹیں۔"
 
-#: src/editor/PropsPanel.cpp:101
-msgid "Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades."
-msgstr "جسے نمایاں کرنا ہے اس پر مستطیل گھسیٹیں۔ رنگ اور دھندلا پن خصوصیات سے آتے ہیں۔"
+#: src/editor/PropsPanel.cpp:122
+msgid "Arraste sobre o que quer destacar. Em Forma, escolha retângulo, elipse, polígono (clique nos cantos) ou mão livre; Shift deixa a forma perfeita."
+msgstr "جسے نمایاں کرنا ہے اس پر گھسیٹیں۔ شکل میں مستطیل، بیضوی، کثیر الاضلاع (کونوں پر کلک کریں) یا آزاد ہاتھ منتخب کریں؛ Shift شکل کو بالکل درست بناتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:102
+#: src/editor/PropsPanel.cpp:123
 msgid "Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto."
 msgstr "متن کا خانہ بنانے کے لیے کلک کریں یا گھسیٹیں۔ ڈبل کلک متن میں ترمیم کرتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:103
+#: src/editor/PropsPanel.cpp:124
 msgid "Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas)."
 msgstr "کال آؤٹ بنانے کے لیے گھسیٹیں اور ٹائپ کریں۔ پیلا ہینڈل نوک (یا تیروں کی سمت) کو حرکت دیتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:104
+#: src/editor/PropsPanel.cpp:125
 msgid "Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos."
 msgstr "مراحل کو ترتیب سے نمبر دینے کے لیے کلک کریں۔ قسم ہندسے، حروف یا رومن ہندسے چنتی ہے۔"
 
-#: src/editor/PropsPanel.cpp:105
+#: src/editor/PropsPanel.cpp:126
 msgid "Escolha um carimbo na galeria e clique ou arraste na imagem. “Importar…” acrescenta imagens suas."
 msgstr "گیلری میں مہر چنیں اور تصویر پر کلک کریں یا گھسیٹیں۔ “درآمد کریں…” آپ کی اپنی تصاویر شامل کرتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:106
+#: src/editor/PropsPanel.cpp:127
 msgid "Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem."
 msgstr "ملتے جلتے رنگ والے حصے کو بھرنے کے لیے کلک کریں۔ رنگ چننے والا تصویر سے بھرائی کا رنگ لیتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:107
+#: src/editor/PropsPanel.cpp:128
 msgid "Arraste para apagar pixels da imagem (ficam transparentes)."
 msgstr "تصویر کے پکسلز مٹانے کے لیے گھسیٹیں (وہ شفاف ہو جاتے ہیں)۔"
 
-#: src/editor/PropsPanel.cpp:108
+#: src/editor/PropsPanel.cpp:129
 msgid "Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada."
 msgstr "محدب عدسہ بنانے کے لیے گھسیٹیں۔ الگ لینز کے ساتھ، پیلا ہینڈل بڑا کیا جانے والا حصہ چنتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:109
-msgid "Arraste sobre a área a ocultar (desfoque ou pixelado)."
-msgstr "چھپانے والے حصے پر گھسیٹیں (دھندلا یا پکسلیٹ)۔"
+#: src/editor/PropsPanel.cpp:130
+msgid "Arraste sobre a área a ocultar (desfoque ou pixelado). Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita."
+msgstr "چھپانے والے حصے پر گھسیٹیں (دھندلا یا پکسلیٹ)۔ شکل میں بیضوی، کثیر الاضلاع یا آزاد ہاتھ منتخب کریں؛ Shift شکل کو بالکل درست بناتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:110
-msgid "Arraste a área em destaque; o resto da imagem escurece."
-msgstr "نمایاں کرنے والا حصہ گھسیٹیں؛ باقی تصویر گہری ہو جاتی ہے۔"
+#: src/editor/PropsPanel.cpp:131
+msgid "Arraste a área em destaque; o resto escurece. Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita."
+msgstr "نمایاں کرنے والا حصہ گھسیٹیں؛ باقی گہرا ہو جاتا ہے۔ شکل میں بیضوی، کثیر الاضلاع یا آزاد ہاتھ منتخب کریں؛ Shift شکل کو بالکل درست بناتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:111
+#: src/editor/PropsPanel.cpp:132
 msgid "Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido."
 msgstr "کسی آبجیکٹ کو منتخب کرنے اور گھسیٹنے کے لیے اس پر کلک کریں۔ Smart Move کے ساتھ، تصویر کا کوئی حصہ منتقل کرنے کے لیے اسے گھسیٹیں؛ پس منظر بھر دیا جاتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:112 src/editor/PropsPanel.cpp:571
+#: src/editor/PropsPanel.cpp:133 src/editor/PropsPanel.cpp:651
 msgid "Arraste a área a manter; Enter ou duplo clique aplica."
 msgstr "رکھا جانے والا حصہ گھسیٹیں؛ Enter یا ڈبل کلک لاگو کرتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:113
+#: src/editor/PropsPanel.cpp:134
 msgid "Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia."
 msgstr "منتقل کرنے کے لیے منتخب کر کے گھسیٹیں (Smart Move)؛ Del مٹاتا ہے؛ Ctrl+C کاپی کرتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:114
+#: src/editor/PropsPanel.cpp:135
 msgid "Arraste sobre a faixa a remover; as partes são unidas."
 msgstr "ہٹائی جانے والی پٹی پر گھسیٹیں؛ باقی حصے جڑ جاتے ہیں۔"
 
-#: src/editor/PropsPanel.cpp:115
+#: src/editor/PropsPanel.cpp:136
 msgid "Clique na imagem para pegar a cor."
 msgstr "رنگ لینے کے لیے تصویر پر کلک کریں۔"
 
-#: src/editor/PropsPanel.cpp:250
+#: src/editor/PropsPanel.cpp:287
 msgid "Pesquisar carimbos"
 msgstr "مہریں تلاش کریں"
 
-#: src/editor/PropsPanel.cpp:255
+#: src/editor/PropsPanel.cpp:292
 msgid "I, II, III…"
 msgstr "I, II, III…"
 
-#: src/editor/PropsPanel.cpp:255
+#: src/editor/PropsPanel.cpp:292
 msgid "i, ii, iii…"
 msgstr "i, ii, iii…"
 
-#: src/editor/PropsPanel.cpp:257
+#: src/editor/PropsPanel.cpp:294
 msgid "Laço (mão livre)"
 msgstr "لاسو (آزاد ہاتھ)"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Transparência"
 msgstr "شفافیت"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Cor do canvas (branco)"
 msgstr "کینوس کا رنگ (سفید)"
 
-#: src/editor/PropsPanel.cpp:259
+#: src/editor/PropsPanel.cpp:296
 msgid "Preenchimento inteligente"
 msgstr "اسمارٹ بھرائی"
 
-#: src/editor/PropsPanel.cpp:261
+#: src/editor/PropsPanel.cpp:298
 msgid "Horizontal (remove linhas)"
 msgstr "افقی (قطاریں ہٹاتا ہے)"
 
-#: src/editor/PropsPanel.cpp:261
+#: src/editor/PropsPanel.cpp:298
 msgid "Vertical (remove colunas)"
 msgstr "عمودی (کالم ہٹاتا ہے)"
 
-#: src/editor/PropsPanel.cpp:263 src/editor/PropsPanel.cpp:1102 src/editor/main.cpp:1445 src/editor/main.cpp:1460
-msgid "Desfoque"
-msgstr "دھندلا"
-
-#: src/editor/PropsPanel.cpp:263
-msgid "Pixelado"
-msgstr "پکسلیٹ"
-
-#: src/editor/PropsPanel.cpp:264
+#: src/editor/PropsPanel.cpp:301
 msgid "Organizar carimbos…"
 msgstr "مہریں ترتیب دیں…"
 
-#: src/editor/PropsPanel.cpp:265 src/editor/PropsPanel.cpp:295
+#: src/editor/PropsPanel.cpp:302 src/editor/PropsPanel.cpp:337
 msgid "Importar…"
 msgstr "درآمد کریں…"
 
-#: src/editor/PropsPanel.cpp:269
+#: src/editor/PropsPanel.cpp:306
 msgid "Trazer para a frente"
 msgstr "آگے لائیں"
 
-#: src/editor/PropsPanel.cpp:270
+#: src/editor/PropsPanel.cpp:307
 msgid "Enviar para trás"
 msgstr "پیچھے بھیجیں"
 
-#: src/editor/PropsPanel.cpp:271 src/editor/main.cpp:820
+#: src/editor/PropsPanel.cpp:308 src/editor/main.cpp:954
 msgid "Excluir objeto"
 msgstr "آبجیکٹ حذف کریں"
 
-#: src/editor/PropsPanel.cpp:272
+#: src/editor/PropsPanel.cpp:309
 msgid "Agrupar"
 msgstr "گروپ بنائیں"
 
-#: src/editor/PropsPanel.cpp:273
+#: src/editor/PropsPanel.cpp:310
 msgid "Desagrupar"
 msgstr "گروپ ختم کریں"
 
-#: src/editor/PropsPanel.cpp:294
+#: src/editor/PropsPanel.cpp:311 src/editor/PropsPanel.cpp:702 src/editor/main.cpp:966
+msgid "Bloquear"
+msgstr "لاک کریں"
+
+#: src/editor/PropsPanel.cpp:312
+msgid "Levantar a seleção (peça solta)"
+msgstr "انتخاب اٹھائیں (الگ ٹکڑا)"
+
+#: src/editor/PropsPanel.cpp:313
+msgid "Soltar a peça na imagem"
+msgstr "ٹکڑا تصویر میں رکھیں"
+
+#: src/editor/PropsPanel.cpp:336
 msgid "Novo tema…"
 msgstr "نئی تھیم…"
 
-#: src/editor/PropsPanel.cpp:351
+#: src/editor/PropsPanel.cpp:412
 msgid "Aplicar recorte"
 msgstr "کٹائی لاگو کریں"
 
-#: src/editor/PropsPanel.cpp:351 src/editor/main.cpp:823
+#: src/editor/PropsPanel.cpp:412 src/editor/main.cpp:957
 msgid "Corte automático"
 msgstr "خودکار تراش"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Cortar para a seleção"
 msgstr "انتخاب تک کراپ کریں"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Copiar seleção"
 msgstr "انتخاب کاپی کریں"
 
-#: src/editor/PropsPanel.cpp:352
+#: src/editor/PropsPanel.cpp:413
 msgid "Excluir seleção"
 msgstr "انتخاب حذف کریں"
 
-#: src/editor/PropsPanel.cpp:378
+#: src/editor/PropsPanel.cpp:439
 msgid "Tema:"
 msgstr "تھیم:"
 
-#: src/editor/PropsPanel.cpp:446
+#: src/editor/PropsPanel.cpp:508
 msgid "Ponta inicial"
 msgstr "ابتدائی سرا"
 
-#: src/editor/PropsPanel.cpp:447 src/editor/PropsPanel.cpp:450 src/editor/PropsPanel.cpp:451 src/editor/PropsPanel.cpp:514
+#: src/editor/PropsPanel.cpp:509 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:513 src/editor/PropsPanel.cpp:582
 msgid "Tracejado"
 msgstr "ڈیش"
 
-#: src/editor/PropsPanel.cpp:448
+#: src/editor/PropsPanel.cpp:510
 msgid "Ponta final"
 msgstr "آخری سرا"
 
-#: src/editor/PropsPanel.cpp:456
+#: src/editor/PropsPanel.cpp:518
 msgid "Avançado"
 msgstr "اعلیٰ درجے کا"
 
-#: src/editor/PropsPanel.cpp:462
+#: src/editor/PropsPanel.cpp:524
 msgid "Alinhamento"
 msgstr "صف بندی"
 
-#: src/editor/PropsPanel.cpp:466 src/editor/PropsPanel.cpp:482 src/editor/PropsPanel.cpp:491 src/editor/PropsPanel.cpp:495
+#: src/editor/PropsPanel.cpp:528 src/editor/PropsPanel.cpp:545 src/editor/PropsPanel.cpp:559 src/editor/PropsPanel.cpp:563
 msgid "Opacidade"
 msgstr "دھندلا پن"
 
-#: src/editor/PropsPanel.cpp:467
+#: src/editor/PropsPanel.cpp:529
 msgid "Margem interna"
 msgstr "اندرونی حاشیہ"
 
-#: src/editor/PropsPanel.cpp:468
+#: src/editor/PropsPanel.cpp:530
+msgid "Espaçamento entre linhas (%)"
+msgstr "سطری فاصلہ (%)"
+
+#: src/editor/PropsPanel.cpp:531
 msgid "Sombreado (degradê)"
 msgstr "سایہ دار (گریڈیئنٹ)"
 
-#: src/editor/PropsPanel.cpp:474
+#: src/editor/PropsPanel.cpp:537
 #, c-format
 msgid "%d objetos selecionados. As mudanças de estilo valem para os do mesmo tipo do último clicado."
 msgstr "%d آبجیکٹس منتخب۔ انداز کی تبدیلیاں آخری کلک کیے گئے آبجیکٹ کی قسم والے آبجیکٹس پر لاگو ہوتی ہیں۔"
 
-#: src/editor/PropsPanel.cpp:475
+#: src/editor/PropsPanel.cpp:538
 #, c-format
 msgid "Grupo com %zu objetos: arraste para mover, use as alças para redimensionar."
 msgstr "%zu آبجیکٹس کا گروپ: منتقل کرنے کے لیے گھسیٹیں، سائز بدلنے کے لیے ہینڈل استعمال کریں۔"
 
-#: src/editor/PropsPanel.cpp:481 src/editor/PropsPanel.cpp:490 src/editor/PropsPanel.cpp:546 src/editor/main.cpp:1441
+#: src/editor/PropsPanel.cpp:544 src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:622 src/editor/main.cpp:1664
 msgid "Largura"
 msgstr "چوڑائی"
 
-#: src/editor/PropsPanel.cpp:483
+#: src/editor/PropsPanel.cpp:546
 msgid "Tamanho inicial"
 msgstr "ابتدائی سائز"
 
-#: src/editor/PropsPanel.cpp:484
+#: src/editor/PropsPanel.cpp:547
 msgid "Tamanho final"
 msgstr "آخری سائز"
 
-#: src/editor/PropsPanel.cpp:485
+#: src/editor/PropsPanel.cpp:548
 msgid "Curva de Bézier"
 msgstr "بیزیئر خم"
 
-#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:534
+#: src/editor/PropsPanel.cpp:550
+msgid "Fonte do texto"
+msgstr "متن کا فونٹ"
+
+#: src/editor/PropsPanel.cpp:551
+msgid "Tamanho do texto"
+msgstr "متن کا سائز"
+
+#: src/editor/PropsPanel.cpp:552
+msgid "Depois de desenhar a seta, digite para escrever um texto na ponta inicial; duplo clique edita."
+msgstr "تیر بنانے کے بعد اس کے آغاز پر متن لکھنے کے لیے ٹائپ کریں؛ ڈبل کلک سے ترمیم کریں۔"
+
+#: src/editor/PropsPanel.cpp:566 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596 src/editor/PropsPanel.cpp:605
 msgid "Preenchimento"
 msgstr "بھرائی"
 
-#: src/editor/PropsPanel.cpp:498 src/editor/PropsPanel.cpp:506 src/editor/PropsPanel.cpp:525 src/editor/PropsPanel.cpp:551
+#: src/editor/PropsPanel.cpp:566 src/editor/PropsPanel.cpp:574 src/editor/PropsPanel.cpp:596 src/editor/PropsPanel.cpp:616
 msgid "Contorno"
 msgstr "خاکہ"
 
-#: src/editor/PropsPanel.cpp:499 src/editor/PropsPanel.cpp:507
+#: src/editor/PropsPanel.cpp:567 src/editor/PropsPanel.cpp:575
 msgid "Fonte"
 msgstr "فونٹ"
 
-#: src/editor/PropsPanel.cpp:500 src/editor/PropsPanel.cpp:511
+#: src/editor/PropsPanel.cpp:568 src/editor/PropsPanel.cpp:579
 msgid "Tamanho da fonte"
 msgstr "فونٹ سائز"
 
-#: src/editor/PropsPanel.cpp:501 src/editor/PropsPanel.cpp:512 src/editor/PropsPanel.cpp:526 src/editor/PropsPanel.cpp:553
+#: src/editor/PropsPanel.cpp:569 src/editor/PropsPanel.cpp:580 src/editor/PropsPanel.cpp:597 src/editor/PropsPanel.cpp:629
 msgid "Espessura"
 msgstr "موٹائی"
 
-#: src/editor/PropsPanel.cpp:513
+#: src/editor/PropsPanel.cpp:581
 msgid "Estilo da seta"
 msgstr "تیر کا انداز"
 
-#: src/editor/PropsPanel.cpp:515
+#: src/editor/PropsPanel.cpp:583
 msgid "Ponta"
 msgstr "سرا"
 
-#: src/editor/PropsPanel.cpp:517
+#: src/editor/PropsPanel.cpp:585
 msgid "Cor da seta"
 msgstr "تیر کا رنگ"
 
-#: src/editor/PropsPanel.cpp:520
+#: src/editor/PropsPanel.cpp:588
 msgid "Tamanho da seta"
 msgstr "تیر کا سائز"
 
-#: src/editor/PropsPanel.cpp:537
+#: src/editor/PropsPanel.cpp:589
+msgid "Desfocar o fundo (vidro fosco)"
+msgstr "پس منظر دھندلا کریں (فراسٹڈ گلاس)"
+
+#: src/editor/PropsPanel.cpp:591
+msgid "Opacidade do preenchimento"
+msgstr "بھرائی کا دھندلا پن"
+
+#: src/editor/PropsPanel.cpp:608
 msgid "Mesma cor em toda a imagem"
 msgstr "پوری تصویر میں ایک ہی رنگ"
 
-#: src/editor/PropsPanel.cpp:540 src/editor/main.cpp:1483
+#: src/editor/PropsPanel.cpp:611 src/editor/main.cpp:1706
 msgid "Cor do texto"
 msgstr "متن کا رنگ"
 
-#: src/editor/PropsPanel.cpp:542 src/editor/PropsPanel.cpp:557
-msgid "Tipo"
-msgstr "قسم"
-
-#: src/editor/PropsPanel.cpp:543
+#: src/editor/PropsPanel.cpp:614
 msgid "Reiniciar a sequência"
 msgstr "ترتیب دوبارہ شروع کریں"
 
-#: src/editor/PropsPanel.cpp:548
+#: src/editor/PropsPanel.cpp:619
+msgid "Espessura do contorno"
+msgstr "خاکے کی موٹائی"
+
+#: src/editor/PropsPanel.cpp:624
 msgid "Suavizar as bordas"
 msgstr "کنارے ہموار کریں"
 
-#: src/editor/PropsPanel.cpp:552
+#: src/editor/PropsPanel.cpp:628
 msgid "Ampliação (%)"
 msgstr "بڑا کرنا (%)"
 
-#: src/editor/PropsPanel.cpp:554
+#: src/editor/PropsPanel.cpp:630
 msgid "Lente separada da área ampliada"
 msgstr "لینز بڑے کیے گئے حصے سے الگ"
 
-#: src/editor/PropsPanel.cpp:558 src/editor/PropsPanel.cpp:561 src/editor/main.cpp:1462
+#: src/editor/PropsPanel.cpp:631
+msgid "Lupa realista (aro e reflexo)"
+msgstr "حقیقت نما عدسہ (فریم اور عکس)"
+
+#: src/editor/PropsPanel.cpp:632
+msgid "Com cabo"
+msgstr "دستے کے ساتھ"
+
+#: src/editor/PropsPanel.cpp:637 src/editor/PropsPanel.cpp:641 src/editor/main.cpp:1685
 msgid "Intensidade"
 msgstr "شدت"
 
-#: src/editor/PropsPanel.cpp:565
+#: src/editor/PropsPanel.cpp:645
 msgid "Smart Move"
 msgstr "Smart Move"
 
-#: src/editor/PropsPanel.cpp:567
+#: src/editor/PropsPanel.cpp:647
 msgid "Arraste uma área da imagem e depois arraste-a para outro lugar; o fundo é preenchido."
 msgstr "تصویر کا کوئی حصہ گھسیٹیں، پھر اسے کسی اور جگہ لے جائیں؛ پس منظر بھر دیا جاتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:568
+#: src/editor/PropsPanel.cpp:648
 msgid "Clique num objeto para selecionar. Ctrl+clique ou arraste um retângulo para selecionar vários."
 msgstr "منتخب کرنے کے لیے آبجیکٹ پر کلک کریں۔ کئی منتخب کرنے کے لیے Ctrl+کلک کریں یا مستطیل گھسیٹیں۔"
 
-#: src/editor/PropsPanel.cpp:575
+#: src/editor/PropsPanel.cpp:655
 msgid "Modo"
 msgstr "موڈ"
 
-#: src/editor/PropsPanel.cpp:577
+#: src/editor/PropsPanel.cpp:657
 msgid "Seleção global (mesma cor)"
 msgstr "عالمی انتخاب (ایک جیسا رنگ)"
 
-#: src/editor/PropsPanel.cpp:578
+#: src/editor/PropsPanel.cpp:658
 msgid "Ao mover, preencher"
 msgstr "منتقل کرتے وقت بھریں"
 
-#: src/editor/PropsPanel.cpp:582
+#: src/editor/PropsPanel.cpp:664
 msgid "Direção"
 msgstr "سمت"
 
-#: src/editor/PropsPanel.cpp:583
+#: src/editor/PropsPanel.cpp:665
 msgid "Arraste sobre a faixa a remover; as partes da imagem são unidas."
 msgstr "ہٹائی جانے والی پٹی پر گھسیٹیں؛ تصویر کے باقی حصے جڑ جاتے ہیں۔"
 
-#: src/editor/PropsPanel.cpp:587
+#: src/editor/PropsPanel.cpp:669
 msgid "Clique na imagem para pegar a cor; ela vai para as ferramentas de desenho."
 msgstr "رنگ لینے کے لیے تصویر پر کلک کریں؛ یہ ڈرائنگ ٹولز میں چلا جاتا ہے۔"
 
-#: src/editor/PropsPanel.cpp:681
+#: src/editor/PropsPanel.cpp:679
+msgid "Área de corte (px)"
+msgstr "کراپ کا علاقہ (px)"
+
+#: src/editor/PropsPanel.cpp:679
+msgid "Seleção (px)"
+msgstr "انتخاب (px)"
+
+#: src/editor/PropsPanel.cpp:679
+msgid "Posição e tamanho (px)"
+msgstr "مقام اور سائز (px)"
+
+#: src/editor/PropsPanel.cpp:695
+msgid "L"
+msgstr "چ"
+
+#: src/editor/PropsPanel.cpp:695
+msgid "A"
+msgstr "ا"
+
+#: src/editor/PropsPanel.cpp:696 src/editor/main.cpp:371
+msgid "Manter proporção"
+msgstr "تناسب برقرار رکھیں"
+
+#: src/editor/PropsPanel.cpp:702
+msgid "Desbloquear"
+msgstr "ان لاک کریں"
+
+#: src/editor/PropsPanel.cpp:828
 msgid "Sombra ▾"
 msgstr "سایہ ▾"
 
-#: src/editor/PropsPanel.cpp:866
+#: src/editor/PropsPanel.cpp:1017
 msgid "Carimbos"
 msgstr "مہریں"
 
-#: src/editor/PropsPanel.cpp:866
+#: src/editor/PropsPanel.cpp:1017
 msgid "Estilos rápidos"
 msgstr "فوری انداز"
 
-#: src/editor/PropsPanel.cpp:884
+#: src/editor/PropsPanel.cpp:1035
 msgid "Clique na estrela de um estilo rápido para adicioná-lo aos favoritos."
 msgstr "کسی فوری انداز کو پسندیدہ میں شامل کرنے کے لیے اس کے ستارے پر کلک کریں۔"
 
-#: src/editor/PropsPanel.cpp:885
+#: src/editor/PropsPanel.cpp:1036
 msgid "Nenhum carimbo nesta categoria. Use “Importar…” para acrescentar imagens."
 msgstr "اس زمرے میں کوئی مہر نہیں۔ تصاویر شامل کرنے کے لیے “درآمد کریں…” استعمال کریں۔"
 
-#: src/editor/PropsPanel.cpp:886
+#: src/editor/PropsPanel.cpp:1037
 msgid "Nenhum carimbo encontrado."
 msgstr "کوئی مہر نہیں ملی۔"
 
-#: src/editor/PropsPanel.cpp:952
+#: src/editor/PropsPanel.cpp:1115
 msgid "Propriedades da ferramenta"
 msgstr "ٹول کی خصوصیات"
 
-#: src/editor/PropsPanel.cpp:1012
+#: src/editor/PropsPanel.cpp:1173
+msgid "Desafixar"
+msgstr "پن ہٹائیں"
+
+#: src/editor/PropsPanel.cpp:1173
+msgid "Fixar no topo"
+msgstr "اوپر پن کریں"
+
+#: src/editor/PropsPanel.cpp:1182
+msgid "Carimbo desafixado."
+msgstr "مہر سے پن ہٹا دیا گیا۔"
+
+#: src/editor/PropsPanel.cpp:1182
+msgid "Carimbo fixado: aparece primeiro na categoria e em “Fixados”."
+msgstr "مہر پن ہو گئی: یہ اپنی زمرے اور «پن شدہ» میں سب سے پہلے آئے گی۔"
+
+#: src/editor/PropsPanel.cpp:1191
 msgid "Aplicar este estilo"
 msgstr "یہ انداز لاگو کریں"
 
-#: src/editor/PropsPanel.cpp:1013
+#: src/editor/PropsPanel.cpp:1192
 msgid "Remover dos favoritos"
 msgstr "پسندیدہ سے ہٹائیں"
 
-#: src/editor/PropsPanel.cpp:1013
+#: src/editor/PropsPanel.cpp:1192
 msgid "Adicionar aos favoritos"
 msgstr "پسندیدہ میں شامل کریں"
 
-#: src/editor/PropsPanel.cpp:1014
+#: src/editor/PropsPanel.cpp:1193
 msgid "Excluir este estilo rápido"
 msgstr "یہ فوری انداز حذف کریں"
 
-#: src/editor/PropsPanel.cpp:1027
+#: src/editor/PropsPanel.cpp:1206
 msgid "Editar uma cópia do tema…"
 msgstr "تھیم کی نقل میں ترمیم کریں…"
 
-#: src/editor/PropsPanel.cpp:1027
+#: src/editor/PropsPanel.cpp:1206
 msgid "Editar o tema…"
 msgstr "تھیم میں ترمیم کریں…"
 
-#: src/editor/PropsPanel.cpp:1036 src/editor/PropsPanel.cpp:1364 src/editor/main.cpp:1665
-msgid "Nome"
-msgstr "نام"
-
-#: src/editor/PropsPanel.cpp:1037 src/editor/PropsPanel.cpp:1365
+#: src/editor/PropsPanel.cpp:1216 src/editor/PropsPanel.cpp:1586
 #, c-format
 msgid "Cor %d"
 msgstr "رنگ %d"
 
-#: src/editor/PropsPanel.cpp:1038 src/editor/PropsPanel.cpp:1366
+#: src/editor/PropsPanel.cpp:1217 src/editor/PropsPanel.cpp:1587
 msgid "Os estilos rápidos de todas as ferramentas são gerados com estas cores."
 msgstr "تمام ٹولز کے فوری انداز ان رنگوں سے بنائے جاتے ہیں۔"
 
-#: src/editor/PropsPanel.cpp:1039 src/editor/PropsPanel.cpp:1367
+#: src/editor/PropsPanel.cpp:1218 src/editor/PropsPanel.cpp:1588
 msgid "Novo tema"
 msgstr "نئی تھیم"
 
-#: src/editor/PropsPanel.cpp:1039
+#: src/editor/PropsPanel.cpp:1218
 msgid "Editar tema"
 msgstr "تھیم میں ترمیم"
 
-#: src/editor/PropsPanel.cpp:1051
+#: src/editor/PropsPanel.cpp:1230
 msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|"
 msgstr "Snapnab تھیم (*.snaptheme)|*.snaptheme|"
 
-#: src/editor/PropsPanel.cpp:1051
+#: src/editor/PropsPanel.cpp:1230
 msgid "Exportar tema"
 msgstr "تھیم برآمد کریں"
 
-#: src/editor/PropsPanel.cpp:1052
+#: src/editor/PropsPanel.cpp:1231
 msgid "Não foi possível exportar o tema."
 msgstr "تھیم برآمد نہیں کی جا سکی۔"
 
-#: src/editor/PropsPanel.cpp:1056
+#: src/editor/PropsPanel.cpp:1235
 #, c-format
 msgid "Excluir o tema \"%s\"?"
 msgstr "تھیم \"%s\" حذف کریں؟"
 
-#: src/editor/PropsPanel.cpp:1079
+#: src/editor/PropsPanel.cpp:1258
 msgid "Conta-gotas: clique na imagem para pegar a cor de preenchimento."
 msgstr "رنگ چننے والا: بھرائی کا رنگ لینے کے لیے تصویر پر کلک کریں۔"
 
-#: src/editor/PropsPanel.cpp:1099
+#: src/editor/PropsPanel.cpp:1282
 msgid "Mostrar sombra"
 msgstr "سایہ دکھائیں"
 
-#: src/editor/PropsPanel.cpp:1100
+#: src/editor/PropsPanel.cpp:1283
 msgid "Cor da sombra…"
 msgstr "سائے کا رنگ…"
 
-#: src/editor/PropsPanel.cpp:1103
+#: src/editor/PropsPanel.cpp:1286
 msgid "Distância"
 msgstr "فاصلہ"
 
-#: src/editor/PropsPanel.cpp:1201
+#: src/editor/PropsPanel.cpp:1349
+msgid "Polígono: clique nos cantos; clique no primeiro ponto ou dê um duplo clique para fechar."
+msgstr "کثیر الاضلاع: کونوں پر کلک کریں؛ بند کرنے کے لیے پہلے نقطے پر کلک یا ڈبل کلک کریں۔"
+
+#: src/editor/PropsPanel.cpp:1349
+msgid "Mão livre: arraste contornando a área."
+msgstr "فری ہینڈ: علاقے کے گرد گھسیٹیں۔"
+
+#: src/editor/PropsPanel.cpp:1391
 msgid "A sequência de passos recomeça em 1."
 msgstr "مراحل کی ترتیب دوبارہ 1 سے شروع ہوگی۔"
 
-#: src/editor/PropsPanel.cpp:1363
+#: src/editor/PropsPanel.cpp:1584
 msgid "Meu tema"
 msgstr "میری تھیم"
 
-#: src/editor/PropsPanel.cpp:1374
+#: src/editor/PropsPanel.cpp:1595
 msgid "Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|"
 msgstr "Snapnab تھیم (*.snaptheme)|*.snaptheme|تمام فائلیں|*.*|"
 
-#: src/editor/PropsPanel.cpp:1374
+#: src/editor/PropsPanel.cpp:1595
 msgid "Importar tema"
 msgstr "تھیم درآمد کریں"
 
-#: src/editor/PropsPanel.cpp:1408
+#: src/editor/PropsPanel.cpp:1630
 #, c-format
 msgid "%d carimbo(s) importado(s) para Meus carimbos."
 msgstr "%d مہریں «میری مہریں» میں درآمد ہو گئیں۔"
 
-#: src/editor/QuickStyles.cpp:200
+#: src/editor/PropsPanel.cpp:1641 src/editor/main.cpp:1376
+msgid "Selecione uma área com a ferramenta Seleção para levantá-la."
+msgstr "اٹھانے کے لیے انتخاب ٹول سے ایک علاقہ منتخب کریں۔"
+
+#: src/editor/PropsPanel.cpp:1642 src/editor/main.cpp:1377
+msgid "Peça solta: ajuste o resto da imagem (cortar, recortar faixa…), posicione a peça e tecle Enter para soltá-la."
+msgstr "الگ ٹکڑا: باقی تصویر درست کریں (کراپ، پٹی کاٹیں…)، ٹکڑا رکھیں اور چھوڑنے کے لیے Enter دبائیں۔"
+
+#: src/editor/PropsPanel.cpp:1646 src/editor/main.cpp:1379
+msgid "Peça solta na imagem."
+msgstr "ٹکڑا تصویر میں رکھ دیا گیا۔"
+
+#: src/editor/QuickStyles.cpp:229
 msgid "Básico"
 msgstr "بنیادی"
 
-#: src/editor/QuickStyles.cpp:201
+#: src/editor/QuickStyles.cpp:230
 msgid "Industrial"
 msgstr "صنعتی"
 
-#: src/editor/QuickStyles.cpp:218 src/editor/QuickStyles.cpp:310
+#: src/editor/QuickStyles.cpp:247 src/editor/QuickStyles.cpp:339
 msgid "Tema"
 msgstr "تھیم"
 
-#: src/editor/QuickStyles.cpp:323
+#: src/editor/QuickStyles.cpp:352
 msgid "O arquivo não é um tema do Snapnab (.snaptheme)."
 msgstr "یہ فائل Snapnab تھیم (.snaptheme) نہیں ہے۔"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "Negócios"
 msgstr "کاروبار"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "Interface"
 msgstr "انٹرفیس"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "Atividades"
 msgstr "سرگرمیاں"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "Comida e bebida"
 msgstr "کھانا اور مشروبات"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "Feriados"
 msgstr "تہوار"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "Smileys e pessoas"
 msgstr "مسکراہٹیں اور لوگ"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "Adesivos"
 msgstr "اسٹیکرز"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "Símbolos"
 msgstr "علامات"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "Viagem e lugares"
 msgstr "سفر اور مقامات"
 
-#: src/editor/Stamps.cpp:92
+#: src/editor/Stamps.cpp:64
+msgid "Antes"
+msgstr "پہلے"
+
+#: src/editor/Stamps.cpp:64
+msgid "Depois"
+msgstr "بعد میں"
+
+#: src/editor/Stamps.cpp:64
+msgid "Errado"
+msgstr "غلط"
+
+#: src/editor/Stamps.cpp:64
+msgid "Certo"
+msgstr "درست"
+
+#: src/editor/Stamps.cpp:65
+msgid "Novo"
+msgstr "نیا"
+
+#: src/editor/Stamps.cpp:65
+msgid "Atualizado"
+msgstr "اپ ڈیٹ شدہ"
+
+#: src/editor/Stamps.cpp:65
+msgid "Incorreto"
+msgstr "نادرست"
+
+#: src/editor/Stamps.cpp:65
+msgid "Correto"
+msgstr "صحیح"
+
+#: src/editor/Stamps.cpp:66
+msgid "Sim"
+msgstr "ہاں"
+
+#: src/editor/Stamps.cpp:66
+msgid "Não"
+msgstr "نہیں"
+
+#: src/editor/Stamps.cpp:66
+msgid "Faça"
+msgstr "کریں"
+
+#: src/editor/Stamps.cpp:66
+msgid "Não faça"
+msgstr "نہ کریں"
+
+#: src/editor/Stamps.cpp:67
+msgid "Importante"
+msgstr "اہم"
+
+#: src/editor/Stamps.cpp:67
+msgid "Dica"
+msgstr "مشورہ"
+
+#: src/editor/Stamps.cpp:67
+msgid "Nota"
+msgstr "نوٹ"
+
+#: src/editor/Stamps.cpp:67
+msgid "Exemplo"
+msgstr "مثال"
+
+#: src/editor/Stamps.cpp:68
+msgid "Rascunho"
+msgstr "مسودہ"
+
+#: src/editor/Stamps.cpp:68
+msgid "Beta"
+msgstr "بیٹا"
+
+#: src/editor/Stamps.cpp:68
+msgid "Obsoleto"
+msgstr "متروک"
+
+#: src/editor/Stamps.cpp:68
+msgid "Em breve"
+msgstr "جلد آ رہا ہے"
+
+#: src/editor/Stamps.cpp:184
 msgid "Meus carimbos"
 msgstr "میری مہریں"
 
-#: src/editor/Stamps.cpp:100
+#: src/editor/Stamps.cpp:192
 msgid "Meus carimbos › "
 msgstr "میری مہریں › "
 
-#: src/editor/Stamps.cpp:125
+#: src/editor/Stamps.cpp:198
+msgid "Rótulos"
+msgstr "لیبل"
+
+#: src/editor/Stamps.cpp:208
+msgid "Fixados"
+msgstr "پن شدہ"
+
+#: src/editor/Stamps.cpp:229
 msgid "Importar carimbos"
 msgstr "مہریں درآمد کریں"
 
-#: src/editor/Stamps.cpp:126
+#: src/editor/Stamps.cpp:230
 msgid "Imagens"
 msgstr "تصاویر"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "clipe anexo"
 msgstr "پیپر کلپ اٹیچمنٹ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lupa pesquisar"
 msgstr "محدب عدسہ تلاش"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "engrenagem configurações"
 msgstr "گیئر ترتیبات"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "relógio hora"
 msgstr "گھڑی وقت"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "usuário pessoa"
 msgstr "صارف شخص"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "equipe pessoas"
 msgstr "ٹیم لوگ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cadeado fechado segurança"
 msgstr "بند تالا سیکیورٹی"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cadeado aberto"
 msgstr "کھلا تالا"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "marcador"
 msgstr "بک مارک"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "sinal wi-fi"
 msgstr "وائی فائی سگنل"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "notebook código"
 msgstr "لیپ ٹاپ کوڈ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "baixar download"
 msgstr "ڈاؤن لوڈ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "enviar upload"
 msgstr "اپ لوڈ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "mesclar"
 msgstr "ضم کریں"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "repetir"
 msgstr "دہرائیں"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "gráfico barras"
 msgstr "بار چارٹ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "crescimento"
 msgstr "ترقی"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "queda"
 msgstr "کمی"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lista concluído"
 msgstr "فہرست مکمل"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "link compartilhar"
 msgstr "لنک شیئر"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "reproduzir play"
 msgstr "چلائیں پلے"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "parar"
 msgstr "روکیں"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "pausar"
 msgstr "وقفہ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "avançar"
 msgstr "آگے بڑھائیں"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "voltar"
 msgstr "پیچھے جائیں"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "dinheiro moedas"
 msgstr "پیسے سکے"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "cartão pagamento"
 msgstr "کارڈ ادائیگی"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "globo internet"
 msgstr "گلوب انٹرنیٹ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "prêmio medalha"
 msgstr "انعام تمغہ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "caneta"
 msgstr "قلم"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lápis"
 msgstr "پنسل"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "documento"
 msgstr "دستاویز"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "nota"
 msgstr "نوٹ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "telefone"
 msgstr "فون"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "e-mail carta"
 msgstr "ای میل خط"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "conversa comentário"
 msgstr "گفتگو تبصرہ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "monitor computador"
 msgstr "مانیٹر کمپیوٹر"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "celular"
 msgstr "موبائل فون"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "mouse"
 msgstr "ماؤس"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "nuvem"
 msgstr "بادل"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "pasta"
 msgstr "فولڈر"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "calendário"
 msgstr "کیلنڈر"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "maleta trabalho"
 msgstr "بریف کیس کام"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "alfinete"
 msgstr "پن"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "lixeira"
 msgstr "کوڑے دان"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "sino notificação"
 msgstr "گھنٹی اطلاع"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "ideia lâmpada"
 msgstr "خیال بلب"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "alvo meta"
 msgstr "نشانہ ہدف"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "foguete lançamento"
 msgstr "راکٹ لانچ"
 
-#: src/editor/Stamps.cpp:16
+#: src/editor/Stamps.cpp:17
 msgid "troféu"
 msgstr "ٹرافی"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "concluído certo"
 msgstr "مکمل درست"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "errado fechar"
 msgstr "غلط بند"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "atenção aviso"
 msgstr "توجہ انتباہ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "informação"
 msgstr "معلومات"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "pergunta dúvida"
 msgstr "سوال شک"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "exclamação importante"
 msgstr "فجائیہ اہم"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "estrela favorito"
 msgstr "ستارہ پسندیدہ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "coração"
 msgstr "دل"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "positivo curtir"
 msgstr "انگوٹھا اوپر پسند"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "negativo"
 msgstr "انگوٹھا نیچے"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta direita"
 msgstr "دایاں تیر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta esquerda"
 msgstr "بایاں تیر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta cima"
 msgstr "اوپر تیر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta baixo"
 msgstr "نیچے تیر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "seta diagonal"
 msgstr "ترچھا تیر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "atualizar"
 msgstr "تازہ کریں"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "adicionar mais"
 msgstr "شامل جمع"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "remover menos"
 msgstr "ہٹائیں تفریق"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "marca certo"
 msgstr "درست کا نشان"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "multiplicar fechar"
 msgstr "ضرب بند"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "vermelho"
 msgstr "سرخ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "laranja"
 msgstr "نارنجی"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "amarelo"
 msgstr "پیلا"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "verde"
 msgstr "سبز"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "azul"
 msgstr "نیلا"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "roxo"
 msgstr "جامنی"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "preto"
 msgstr "سیاہ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "branco"
 msgstr "سفید"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado vermelho"
 msgstr "سرخ مربع"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado verde"
 msgstr "سبز مربع"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "quadrado azul"
 msgstr "نیلا مربع"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "botão rádio"
 msgstr "ریڈیو بٹن"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa"
 msgstr "خانہ"
 
-#: src/editor/Stamps.cpp:23 src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:24 src/editor/Stamps.cpp:50
 msgid "caixa marcada"
 msgstr "نشان زدہ خانہ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "som alto"
 msgstr "اونچی آواز"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "sem som mudo"
 msgstr "آواز بند میوٹ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "início casa"
 msgstr "ہوم گھر"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "chave senha"
 msgstr "چابی پاس ورڈ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "carrinho compras"
 msgstr "شاپنگ کارٹ"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa de entrada"
 msgstr "ان باکس"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "caixa de saída"
 msgstr "آؤٹ باکس"
 
-#: src/editor/Stamps.cpp:23
+#: src/editor/Stamps.cpp:24
 msgid "zoom pesquisa"
 msgstr "زوم تلاش"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "futebol"
 msgstr "فٹ بال"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "basquete"
 msgstr "باسکٹ بال"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "futebol americano"
 msgstr "امریکی فٹ بال"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "beisebol"
 msgstr "بیس بال"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "tênis"
 msgstr "ٹینس"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "vôlei"
 msgstr "والی بال"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pingue-pongue"
 msgstr "ٹیبل ٹینس"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "badminton"
 msgstr "بیڈمنٹن"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "boxe"
 msgstr "باکسنگ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "boliche"
 msgstr "بولنگ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "golfe"
 msgstr "گولف"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pesca"
 msgstr "مچھلی پکڑنا"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "esqui"
 msgstr "اسکیئنگ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "snowboard"
 msgstr "اسنو بورڈ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "surfe"
 msgstr "سرفنگ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "ciclismo bicicleta"
 msgstr "سائیکلنگ سائیکل"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "natação"
 msgstr "تیراکی"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "musculação"
 msgstr "ویٹ لفٹنگ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "videogame jogo"
 msgstr "ویڈیو گیم کھیل"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "dado"
 msgstr "پانسہ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "quebra-cabeça"
 msgstr "پہیلی"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "pintura arte"
 msgstr "مصوری فن"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "teatro"
 msgstr "تھیٹر"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "microfone"
 msgstr "مائیکروفون"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "fone"
 msgstr "ہیڈ فون"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "guitarra"
 msgstr "گٹار"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "piano"
 msgstr "پیانو"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "bateria"
 msgstr "ڈرم"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "cinema filme"
 msgstr "سینما فلم"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "primeiro lugar"
 msgstr "پہلی پوزیشن"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "ingresso"
 msgstr "ٹکٹ"
 
-#: src/editor/Stamps.cpp:29
+#: src/editor/Stamps.cpp:30
 msgid "foto câmera"
 msgstr "تصویر کیمرہ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "maçã"
 msgstr "سیب"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "banana"
 msgstr "کیلا"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "uva"
 msgstr "انگور"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "morango"
 msgstr "اسٹرابیری"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "melancia"
 msgstr "تربوز"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cereja"
 msgstr "چیری"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pêssego"
 msgstr "آڑو"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "abacaxi"
 msgstr "انناس"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "abacate"
 msgstr "ایووکاڈو"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cenoura"
 msgstr "گاجر"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "milho"
 msgstr "مکئی"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pão"
 msgstr "روٹی"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "queijo"
 msgstr "پنیر"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "hambúrguer"
 msgstr "ہیمبرگر"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "batata frita"
 msgstr "فرنچ فرائز"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pizza"
 msgstr "پیزا"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cachorro-quente"
 msgstr "ہاٹ ڈاگ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "taco"
 msgstr "ٹاکو"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "sushi"
 msgstr "سوشی"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "lámen sopa"
 msgstr "رامن سوپ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "rosquinha"
 msgstr "ڈونٹ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "biscoito"
 msgstr "بسکٹ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "bolo aniversário"
 msgstr "سالگرہ کا کیک"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "torta"
 msgstr "پائی"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "chocolate"
 msgstr "چاکلیٹ"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "pipoca"
 msgstr "پاپ کارن"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "café"
 msgstr "کافی"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "chá"
 msgstr "چائے"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "refrigerante"
 msgstr "سوڈا"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "cerveja"
 msgstr "بیئر"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "vinho"
 msgstr "وائن"
 
-#: src/editor/Stamps.cpp:33
+#: src/editor/Stamps.cpp:34
 msgid "brinde"
 msgstr "جام ٹکرانا"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "natal árvore"
 msgstr "کرسمس ٹری"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "papai noel"
 msgstr "سانتا کلاز"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "presente"
 msgstr "تحفہ"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "abóbora halloween"
 msgstr "کدو ہیلووین"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "fantasma"
 msgstr "بھوت"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "peru"
 msgstr "ٹرکی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "coelho páscoa"
 msgstr "ایسٹر خرگوش"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "ovo"
 msgstr "انڈا"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "coração presente"
 msgstr "دل تحفہ"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "flores"
 msgstr "پھول"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "fogos"
 msgstr "آتش بازی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "estrelinha"
 msgstr "پھلجھڑی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "festa"
 msgstr "پارٹی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "confete"
 msgstr "کنفیٹی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "balão"
 msgstr "غبارہ"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "vela"
 msgstr "موم بتی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "estrela brilhante"
 msgstr "چمکتا ستارہ"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "neve floco"
 msgstr "برف کا گالا"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "boneco de neve"
 msgstr "برف کا آدمی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "laço"
 msgstr "ربن"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "envelope"
 msgstr "لفافہ"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "trevo sorte"
 msgstr "سہ پتی خوش قسمتی"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "piñata"
 msgstr "پیناٹا"
 
-#: src/editor/Stamps.cpp:37
+#: src/editor/Stamps.cpp:38
 msgid "menorá"
 msgstr "مینورا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorriso feliz"
 msgstr "مسکراہٹ خوش"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "alegre"
 msgstr "خوشگوار"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "rindo"
 msgstr "ہنستا ہوا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorrisão"
 msgstr "بڑی مسکراہٹ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "gargalhada"
 msgstr "قہقہہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "aliviado"
 msgstr "سکون"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "chorando de rir"
 msgstr "ہنسی کے آنسو"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "sorriso leve"
 msgstr "ہلکی مسکراہٹ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "piscada"
 msgstr "آنکھ مارنا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "contente"
 msgstr "مطمئن"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apaixonado"
 msgstr "محبت میں"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "beijo"
 msgstr "بوسہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "legal óculos"
 msgstr "زبردست دھوپ کا چشمہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "pensando"
 msgstr "سوچتا ہوا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "neutro"
 msgstr "غیر جانبدار"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "dormindo"
 msgstr "سوتا ہوا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "surpreso"
 msgstr "حیران"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "espantado"
 msgstr "ششدر"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "triste"
 msgstr "اداس"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "chorando"
 msgstr "روتا ہوا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "bravo"
 msgstr "غصے میں"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "cabeça explodindo"
 msgstr "دماغ پھٹنا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "comemorando"
 msgstr "جشن"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "encantado"
 msgstr "شادمان"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "anjo"
 msgstr "فرشتہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "de cabeça para baixo"
 msgstr "الٹا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "abraço"
 msgstr "گلے ملنا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "revirando olhos"
 msgstr "آنکھیں گھمانا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "careta"
 msgstr "منہ بنانا"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "olá tchau"
 msgstr "ہیلو خدا حافظ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "palmas"
 msgstr "تالیاں"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "viva"
 msgstr "ہُرّے"
 
-#: src/editor/Stamps.cpp:40 src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:41 src/editor/Stamps.cpp:47
 msgid "ok"
 msgstr "ٹھیک"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "paz"
 msgstr "امن"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "dedos cruzados"
 msgstr "انگلیاں کراس"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando direita"
 msgstr "دائیں اشارہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando esquerda"
 msgstr "بائیں اشارہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando cima"
 msgstr "اوپر اشارہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "apontando baixo"
 msgstr "نیچے اشارہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "força"
 msgstr "طاقت"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "por favor obrigado"
 msgstr "براہ کرم شکریہ"
 
-#: src/editor/Stamps.cpp:40
+#: src/editor/Stamps.cpp:41
 msgid "acordo aperto de mão"
 msgstr "معاہدہ مصافحہ"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "cem pontos"
 msgstr "سو نمبر"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "fogo"
 msgstr "آگ"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "brilho"
 msgstr "چمک"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "explosão"
 msgstr "دھماکا"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "tontura"
 msgstr "چکر"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "raiva"
 msgstr "غضب"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "sono"
 msgstr "نیند"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "gotas"
 msgstr "قطرے"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "novo"
 msgstr "نیا"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "legal"
 msgstr "زبردست"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "grátis"
 msgstr "مفت"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "up"
 msgstr "up"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "topo"
 msgstr "سرفہرست"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "em breve"
 msgstr "جلد آ رہا ہے"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "arco-íris"
 msgstr "قوس قزح"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "coroa"
 msgstr "تاج"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "diamante"
 msgstr "ہیرا"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bandeira"
 msgstr "جھنڈا"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "chegada"
 msgstr "اختتامی لکیر"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "megafone"
 msgstr "میگا فون"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "anúncio"
 msgstr "اعلان"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "etiqueta"
 msgstr "لیبل"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "medalha"
 msgstr "تمغہ"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "ímã"
 msgstr "مقناطیس"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bola de cristal"
 msgstr "کرسٹل بال"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "varinha mágica"
 msgstr "جادو کی چھڑی"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "bomba"
 msgstr "بم"
 
-#: src/editor/Stamps.cpp:46
+#: src/editor/Stamps.cpp:47
 msgid "trevo"
 msgstr "سہ پتی"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seta dupla horizontal"
 msgstr "افقی دوہرا تیر"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seta dupla vertical"
 msgstr "عمودی دوہرا تیر"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "girar"
 msgstr "گھمائیں"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dividir"
 msgstr "تقسیم"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "infinito"
 msgstr "لامتناہی"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dupla exclamação"
 msgstr "دوہرا فجائیہ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "exclamação pergunta"
 msgstr "فجائیہ سوالیہ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "proibido"
 msgstr "ممنوع"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "entrada proibida"
 msgstr "داخلہ ممنوع"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "círculo"
 msgstr "دائرہ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "losango laranja"
 msgstr "نارنجی معین"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "losango azul"
 msgstr "نیلا معین"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "reciclar"
 msgstr "ری سائیکل"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "raio energia"
 msgstr "بجلی توانائی"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "radioativo"
 msgstr "تابکار"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "risco biológico"
 msgstr "حیاتیاتی خطرہ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "copyright"
 msgstr "کاپی رائٹ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "marca registrada"
 msgstr "رجسٹرڈ ٹریڈ مارک"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "marca"
 msgstr "ٹریڈ مارک"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "hashtag"
 msgstr "ہیش ٹیگ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "um"
 msgstr "ایک"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dois"
 msgstr "دو"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "três"
 msgstr "تین"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "quatro"
 msgstr "چار"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "cinco"
 msgstr "پانچ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "seis"
 msgstr "چھ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "sete"
 msgstr "سات"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "oito"
 msgstr "آٹھ"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "nove"
 msgstr "نو"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "dez"
 msgstr "دس"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "letra a"
 msgstr "حرف a"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "letra b"
 msgstr "حرف b"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "ab"
 msgstr "ab"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "abc"
 msgstr "abc"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "cifrão"
 msgstr "ڈالر کا نشان"
 
-#: src/editor/Stamps.cpp:49
+#: src/editor/Stamps.cpp:50
 msgid "câmbio"
 msgstr "کرنسی کا تبادلہ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "carro"
 msgstr "کار"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "táxi"
 msgstr "ٹیکسی"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ônibus"
 msgstr "بس"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ambulância"
 msgstr "ایمبولینس"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bombeiros"
 msgstr "فائر بریگیڈ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "polícia"
 msgstr "پولیس"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bicicleta"
 msgstr "سائیکل"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "moto"
 msgstr "اسکوٹر"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "trem"
 msgstr "ٹرین"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "avião"
 msgstr "ہوائی جہاز"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "navio"
 msgstr "بحری جہاز"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "veleiro"
 msgstr "بادبانی کشتی"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "helicóptero"
 msgstr "ہیلی کاپٹر"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "mapa"
 msgstr "نقشہ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "bússola"
 msgstr "قطب نما"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "montanha"
 msgstr "پہاڑ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "praia"
 msgstr "ساحل"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "ilha"
 msgstr "جزیرہ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "acampamento"
 msgstr "کیمپنگ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "cidade"
 msgstr "شہر"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "prédio escritório"
 msgstr "دفتری عمارت"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "hospital"
 msgstr "اسپتال"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "banco"
 msgstr "بینک"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "hotel"
 msgstr "ہوٹل"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "escola"
 msgstr "اسکول"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "igreja"
 msgstr "گرجا"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "estátua"
 msgstr "مجسمہ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "torre"
 msgstr "مینار"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "terra mundo"
 msgstr "زمین دنیا"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "posto combustível"
 msgstr "پیٹرول پمپ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "semáforo"
 msgstr "ٹریفک لائٹ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "estacionamento"
 msgstr "پارکنگ"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "mala"
 msgstr "سوٹ کیس"
 
-#: src/editor/Stamps.cpp:54
+#: src/editor/Stamps.cpp:55
 msgid "local pino"
 msgstr "مقام پن"
 
@@ -3480,7 +3927,7 @@ msgstr "حد: نشان زدہ انتخاب۔"
 msgid "Intervalo: o vídeo inteiro (marque início/fim para limitar)."
 msgstr "حد: پوری ویڈیو (محدود کرنے کے لیے آغاز/اختتام نشان زد کریں)۔"
 
-#: src/editor/Video.cpp:644 src/editor/main.cpp:1459 src/editor/main.cpp:1463 src/editor/main.cpp:1469
+#: src/editor/Video.cpp:644 src/editor/main.cpp:1682 src/editor/main.cpp:1686 src/editor/main.cpp:1692
 msgid "Cores"
 msgstr "رنگ"
 
@@ -3524,20 +3971,20 @@ msgstr "GIF نہیں بنایا جا سکا۔\n"
 msgid "Marque o início e o fim do trecho a remover."
 msgstr "ہٹائے جانے والے حصے کا آغاز اور اختتام نشان زد کریں۔"
 
-#: src/editor/main.cpp:96
+#: src/editor/main.cpp:101
 msgid " — Snapnab Editor"
 msgstr " — Snapnab Editor"
 
-#: src/editor/main.cpp:112
+#: src/editor/main.cpp:117
 msgid "Vídeo: "
 msgstr "ویڈیو: "
 
-#: src/editor/main.cpp:113
+#: src/editor/main.cpp:118
 #, c-format
 msgid "%d × %d px"
 msgstr "%d × %d px"
 
-#: src/editor/main.cpp:114
+#: src/editor/main.cpp:119
 msgid ""
 "\n"
 "Captura: "
@@ -3545,7 +3992,7 @@ msgstr ""
 "\n"
 "کیپچر: "
 
-#: src/editor/main.cpp:115
+#: src/editor/main.cpp:120
 msgid ""
 "\n"
 "Aplicativo: "
@@ -3553,7 +4000,7 @@ msgstr ""
 "\n"
 "ایپلیکیشن: "
 
-#: src/editor/main.cpp:116
+#: src/editor/main.cpp:121
 msgid ""
 "\n"
 "Janela: "
@@ -3561,7 +4008,7 @@ msgstr ""
 "\n"
 "ونڈو: "
 
-#: src/editor/main.cpp:117
+#: src/editor/main.cpp:122
 #, c-format
 msgid ""
 "\n"
@@ -3570,7 +4017,7 @@ msgstr ""
 "\n"
 "آبجیکٹس: %zu"
 
-#: src/editor/main.cpp:118
+#: src/editor/main.cpp:123
 msgid ""
 "\n"
 "Etiquetas: "
@@ -3578,814 +4025,950 @@ msgstr ""
 "\n"
 "ٹیگز: "
 
-#: src/editor/main.cpp:255
+#: src/editor/main.cpp:264
 msgid "Arquivo não encontrado:\n"
 msgstr "فائل نہیں ملی:\n"
 
-#: src/editor/main.cpp:258
+#: src/editor/main.cpp:267
 msgid "Não foi possível abrir:\n"
 msgstr "کھولا نہیں جا سکا:\n"
 
-#: src/editor/main.cpp:262
+#: src/editor/main.cpp:271
 msgid "Arquivo importado"
 msgstr "درآمد شدہ فائل"
 
-#: src/editor/main.cpp:283
+#: src/editor/main.cpp:293
 #, c-format
 msgid "%d × %d px  •  %zu objeto(s)  •  %zu passo(s) para desfazer"
 msgstr "%d × %d px  •  %zu آبجیکٹس  •  واپس لینے کے %zu مراحل"
 
-#: src/editor/main.cpp:348
+#: src/editor/main.cpp:358
 msgid "Faça uma seleção (ferramenta Seleção) ou um recorte primeiro."
 msgstr "پہلے انتخاب کریں (انتخاب ٹول) یا کٹائی کریں۔"
 
-#: src/editor/main.cpp:351
+#: src/editor/main.cpp:361
 msgid "Ângulo (graus, horário)"
 msgstr "زاویہ (ڈگری، گھڑی کی سمت)"
 
-#: src/editor/main.cpp:351 src/editor/main.cpp:483
+#: src/editor/main.cpp:361 src/editor/main.cpp:506
 msgid "Cor de fundo"
 msgstr "پس منظر کا رنگ"
 
-#: src/editor/main.cpp:352
+#: src/editor/main.cpp:362
 msgid "Fundo transparente"
 msgstr "شفاف پس منظر"
 
-#: src/editor/main.cpp:353
+#: src/editor/main.cpp:363
 msgid "Os objetos serão mesclados à imagem."
 msgstr "آبجیکٹس تصویر میں ضم کر دیے جائیں گے۔"
 
-#: src/editor/main.cpp:361
+#: src/editor/main.cpp:371
 msgid "ou escala (%)"
 msgstr "یا پیمانہ (%)"
 
-#: src/editor/main.cpp:361
-msgid "Manter proporção"
-msgstr "تناسب برقرار رکھیں"
-
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Âncora"
 msgstr "اینکر"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior esquerda"
 msgstr "اوپر بائیں"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior"
 msgstr "اوپر"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Superior direita"
 msgstr "اوپر دائیں"
 
-#: src/editor/main.cpp:379
+#: src/editor/main.cpp:389
 msgid "Centro"
 msgstr "درمیان"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior esquerda"
 msgstr "نیچے بائیں"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior"
 msgstr "نیچے"
 
-#: src/editor/main.cpp:380
+#: src/editor/main.cpp:390
 msgid "Inferior direita"
 msgstr "نیچے دائیں"
 
-#: src/editor/main.cpp:381
+#: src/editor/main.cpp:391
 msgid "Cor do canvas"
 msgstr "کینوس کا رنگ"
 
-#: src/editor/main.cpp:381 src/editor/main.cpp:483
+#: src/editor/main.cpp:391 src/editor/main.cpp:506
 msgid "Transparente"
 msgstr "شفاف"
 
-#: src/editor/main.cpp:382
+#: src/editor/main.cpp:392
 msgid "Tamanho do canvas"
 msgstr "کینوس کا سائز"
 
-#: src/editor/main.cpp:402
+#: src/editor/main.cpp:416
 msgid "Nada a cortar: as bordas não são uniformes."
 msgstr "تراشنے کو کچھ نہیں: کنارے یکساں نہیں ہیں۔"
 
-#: src/editor/main.cpp:438 src/editor/main.cpp:819 src/editor/main.cpp:1715
+#: src/editor/main.cpp:452 src/editor/main.cpp:953 src/editor/main.cpp:1986
 msgid "Salvar como"
 msgstr "بطور محفوظ کریں"
 
-#: src/editor/main.cpp:446
+#: src/editor/main.cpp:460
 msgid "Qualidade JPEG (1–100)"
 msgstr "JPEG معیار (1–100)"
 
-#: src/editor/main.cpp:457
+#: src/editor/main.cpp:471
 msgid "Não foi possível salvar:\n"
 msgstr "محفوظ نہیں کیا جا سکا:\n"
 
-#: src/editor/main.cpp:458
+#: src/editor/main.cpp:472
 msgid "Salvo em "
 msgstr "یہاں محفوظ کیا گیا: "
 
-#: src/editor/main.cpp:469
+#: src/editor/main.cpp:492
 msgid "Salvo na biblioteca: "
 msgstr "لائبریری میں محفوظ کیا گیا: "
 
-#: src/editor/main.cpp:477
+#: src/editor/main.cpp:500
 msgid "Da área de transferência"
 msgstr "کلپ بورڈ سے"
 
-#: src/editor/main.cpp:478
+#: src/editor/main.cpp:501
 msgid "Imagem nova criada a partir da área de transferência."
 msgstr "کلپ بورڈ سے نئی تصویر بنائی گئی۔"
 
-#: src/editor/main.cpp:484 src/editor/main.cpp:485 src/editor/main.cpp:817
+#: src/editor/main.cpp:507 src/editor/main.cpp:508 src/editor/main.cpp:951
 msgid "Nova imagem"
 msgstr "نئی تصویر"
 
-#: src/editor/main.cpp:485
+#: src/editor/main.cpp:508
 msgid "Imagem nova"
 msgstr "نئی تصویر"
 
-#: src/editor/main.cpp:510
+#: src/editor/main.cpp:533
 msgid "Enviar para a Lixeira?\n"
 msgstr "ری سائیکل بن میں بھیجیں؟\n"
 
-#: src/editor/main.cpp:511
+#: src/editor/main.cpp:534
 #, c-format
 msgid "Enviar %zu itens da biblioteca para a Lixeira?"
 msgstr "لائبریری کے %zu آئٹمز ری سائیکل بن میں بھیجیں؟"
 
-#: src/editor/main.cpp:524
+#: src/editor/main.cpp:547
 msgid "Item enviado para a Lixeira."
 msgstr "آئٹم ری سائیکل بن میں بھیج دیا گیا۔"
 
-#: src/editor/main.cpp:524
+#: src/editor/main.cpp:547
 #, c-format
 msgid "%zu itens enviados para a Lixeira."
 msgstr "%zu آئٹمز ری سائیکل بن میں بھیج دیے گئے۔"
 
-#: src/editor/main.cpp:534
+#: src/editor/main.cpp:557
 msgid "Exportar para a pasta"
 msgstr "فولڈر میں برآمد کریں"
 
-#: src/editor/main.cpp:552
+#: src/editor/main.cpp:575
 msgid "Formato das imagens"
 msgstr "تصاویر کا فارمیٹ"
 
-#: src/editor/main.cpp:553
+#: src/editor/main.cpp:576
 msgid "Vídeos são copiados em MP4."
 msgstr "ویڈیوز MP4 میں کاپی کی جاتی ہیں۔"
 
-#: src/editor/main.cpp:554
+#: src/editor/main.cpp:577
 #, c-format
 msgid "Exportar %zu item(ns)"
 msgstr "%zu آئٹمز برآمد کریں"
 
-#: src/editor/main.cpp:576
+#: src/editor/main.cpp:599
 #, c-format
 msgid "%d item(ns) exportado(s) para %s"
 msgstr "%d آئٹمز %s میں برآمد ہو گئے"
 
-#: src/editor/main.cpp:576
+#: src/editor/main.cpp:599
 #, c-format
 msgid " — %d falha(s)"
 msgstr " — %d ناکام"
 
-#: src/editor/main.cpp:621
+#: src/editor/main.cpp:644
 msgid "Nenhum cliente de e-mail MAPI está configurado. A imagem foi salva em:\n"
 msgstr "کوئی MAPI ای میل کلائنٹ ترتیب نہیں دیا گیا۔ تصویر یہاں محفوظ کی گئی:\n"
 
-#: src/editor/main.cpp:627
+#: src/editor/main.cpp:650
 msgid "Captura: "
 msgstr "کیپچر: "
 
-#: src/editor/main.cpp:631
+#: src/editor/main.cpp:654
 #, c-format
 msgid "Falha ao enviar e-mail (MAPI %u)."
 msgstr "ای میل بھیجنے میں ناکامی (MAPI %u)۔"
 
-#: src/editor/main.cpp:638
+#: src/editor/main.cpp:661
 msgid "Abrir em programa externo"
 msgstr "بیرونی پروگرام میں کھولیں"
 
-#: src/editor/main.cpp:651
+#: src/editor/main.cpp:674
 msgid "OCR indisponível: "
 msgstr "OCR دستیاب نہیں: "
 
-#: src/editor/main.cpp:651 src/editor/main.cpp:820
+#: src/editor/main.cpp:674 src/editor/main.cpp:954
 msgid "Grab Text"
 msgstr "متن نکالیں"
 
-#: src/editor/main.cpp:652
+#: src/editor/main.cpp:675
 msgid "(nenhum texto reconhecido)"
 msgstr "(کوئی متن شناخت نہیں ہوا)"
 
-#: src/editor/main.cpp:653
+#: src/editor/main.cpp:676
 msgid "Grab Text — texto reconhecido"
 msgstr "متن نکالیں — شناخت شدہ متن"
 
-#: src/editor/main.cpp:668
+#: src/editor/main.cpp:718
+msgid "Objetos bloqueados não são recortados."
+msgstr "لاک شدہ آبجیکٹ کاٹے نہیں جاتے۔"
+
+#: src/editor/main.cpp:743 src/editor/main.cpp:777
 msgid "Nada para colar."
 msgstr "چسپاں کرنے کو کچھ نہیں۔"
 
-#: src/editor/main.cpp:669
+#: src/editor/main.cpp:749
+msgid "O texto copiado não tem formatação; colado com o estilo do objeto."
+msgstr "کاپی شدہ متن میں فارمیٹنگ نہیں؛ آبجیکٹ کے اسٹائل کے ساتھ چسپاں کیا گیا۔"
+
+#: src/editor/main.cpp:759
+msgid "Colado no mesmo lugar."
+msgstr "اسی جگہ چسپاں کیا گیا۔"
+
+#: src/editor/main.cpp:759
+msgid "Colado."
+msgstr "چسپاں کیا گیا۔"
+
+#: src/editor/main.cpp:780
 msgid "Colado"
 msgstr "چسپاں ہو گیا"
 
-#: src/editor/main.cpp:705
+#: src/editor/main.cpp:822
 msgid "Nova &captura\tCtrl+Shift+N"
 msgstr "نیا کیپچر(&C)\tCtrl+Shift+N"
 
-#: src/editor/main.cpp:705
+#: src/editor/main.cpp:822
 msgid "Nova &gravação de vídeo"
 msgstr "نئی ویڈیو ریکارڈنگ(&R)"
 
-#: src/editor/main.cpp:706
+#: src/editor/main.cpp:823
 msgid "Novo da área de &transferência"
 msgstr "کلپ بورڈ سے نیا(&B)"
 
-#: src/editor/main.cpp:706
+#: src/editor/main.cpp:823
 msgid "Nova &imagem…"
 msgstr "نئی تصویر(&I)…"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "&Abrir…\tCtrl+O"
 msgstr "کھولیں(&O)…\tCtrl+O"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "&Salvar\tCtrl+S"
 msgstr "محفوظ کریں(&S)\tCtrl+S"
 
-#: src/editor/main.cpp:707
+#: src/editor/main.cpp:824
 msgid "Salvar &como…\tCtrl+Shift+S"
 msgstr "بطور محفوظ کریں(&A)…\tCtrl+Shift+S"
 
-#: src/editor/main.cpp:708
+#: src/editor/main.cpp:825
 msgid "&Duplicar"
 msgstr "نقل بنائیں(&D)"
 
-#: src/editor/main.cpp:708
+#: src/editor/main.cpp:825
 msgid "&Excluir (Lixeira)"
 msgstr "حذف کریں (ری سائیکل بن)(&L)"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "&Imprimir…\tCtrl+P"
 msgstr "پرنٹ کریں(&P)…\tCtrl+P"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "Enviar por &e-mail…"
 msgstr "ای میل سے بھیجیں(&E)…"
 
-#: src/editor/main.cpp:709
+#: src/editor/main.cpp:826
 msgid "Abrir em &programa externo…"
 msgstr "بیرونی پروگرام میں کھولیں(&G)…"
 
-#: src/editor/main.cpp:710
+#: src/editor/main.cpp:827
 msgid "&Fechar documento\tCtrl+W"
 msgstr "دستاویز بند کریں(&W)\tCtrl+W"
 
-#: src/editor/main.cpp:710
+#: src/editor/main.cpp:827
 msgid "Sai&r"
 msgstr "باہر نکلیں(&X)"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "&Desfazer\tCtrl+Z"
 msgstr "واپس لیں(&U)\tCtrl+Z"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "&Refazer\tCtrl+Y"
 msgstr "دوبارہ کریں(&R)\tCtrl+Y"
 
-#: src/editor/main.cpp:711
+#: src/editor/main.cpp:828
 msgid "Desfazer &tudo"
 msgstr "سب واپس لیں(&L)"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829 src/editor/main.cpp:1944
 msgid "Recor&tar\tCtrl+X"
 msgstr "کاٹیں(&T)\tCtrl+X"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829 src/editor/main.cpp:1944 src/editor/main.cpp:1967
 msgid "&Copiar\tCtrl+C"
 msgstr "کاپی کریں(&C)\tCtrl+C"
 
-#: src/editor/main.cpp:712
+#: src/editor/main.cpp:829
 msgid "Copiar t&udo\tCtrl+Shift+C"
 msgstr "سب کاپی کریں(&O)\tCtrl+Shift+C"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:830 src/editor/main.cpp:1945 src/editor/main.cpp:1964
 msgid "C&olar\tCtrl+V"
 msgstr "چسپاں کریں(&P)\tCtrl+V"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:830 src/editor/main.cpp:1945 src/editor/main.cpp:1964
+msgid "Colar no &mesmo lugar\tCtrl+Shift+V"
+msgstr "اسی &جگہ چسپاں کریں\tCtrl+Shift+V"
+
+#: src/editor/main.cpp:831 src/editor/main.cpp:1946
 msgid "E&xcluir\tDel"
 msgstr "حذف کریں(&D)\tDel"
 
-#: src/editor/main.cpp:713
+#: src/editor/main.cpp:831 src/editor/main.cpp:1972
 msgid "Selecionar tu&do\tCtrl+A"
 msgstr "سب منتخب کریں(&A)\tCtrl+A"
 
-#: src/editor/main.cpp:714
+#: src/editor/main.cpp:832 src/editor/main.cpp:1967
 msgid "Cortar para a &seleção"
 msgstr "انتخاب تک کراپ کریں(&S)"
 
-#: src/editor/main.cpp:715
+#: src/editor/main.cpp:832 src/editor/main.cpp:1968
+msgid "&Levantar a seleção (peça solta)\tCtrl+Shift+L"
+msgstr "انتخاب &اٹھائیں (الگ ٹکڑا)\tCtrl+Shift+L"
+
+#: src/editor/main.cpp:833
+msgid "Soltar a &peça na imagem\tEnter"
+msgstr "&ٹکڑا تصویر میں رکھیں\tEnter"
+
+#: src/editor/main.cpp:834
+msgid "Colar texto sem &formatação"
+msgstr "بغیر &فارمیٹنگ متن چسپاں کریں"
+
+#: src/editor/main.cpp:834
+msgid "Seleção encaixa nas &bordas da imagem"
+msgstr "انتخاب تصویر کے &کناروں سے جڑتا ہے"
+
+#: src/editor/main.cpp:835
 msgid "&Grab Text (OCR)\tCtrl+Shift+O"
 msgstr "متن نکالیں (OCR)(&G)\tCtrl+Shift+O"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "&Borda"
 msgstr "بارڈر(&B)"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "Bor&das"
 msgstr "کنارے(&E)"
 
-#: src/editor/main.cpp:717
+#: src/editor/main.cpp:837
 msgid "&Informações da captura"
 msgstr "کیپچر کی معلومات(&I)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "&Perspectiva"
 msgstr "تناظر(&P)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "D&obra de página"
 msgstr "مڑا ہوا کونا(&U)"
 
-#: src/editor/main.cpp:718
+#: src/editor/main.cpp:838
 msgid "&Sombra"
 msgstr "سایہ(&S)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "&Filtros"
 msgstr "فلٹر(&F)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "&Ajuste de cores"
 msgstr "رنگ کی ترتیب(&A)"
 
-#: src/editor/main.cpp:719
+#: src/editor/main.cpp:839
 msgid "Substituição de co&r"
 msgstr "رنگ کی تبدیلی(&R)"
 
-#: src/editor/main.cpp:720
+#: src/editor/main.cpp:840
 msgid "Spotlight e &lupa"
 msgstr "اسپاٹ لائٹ اور محدب عدسہ(&M)"
 
-#: src/editor/main.cpp:720
+#: src/editor/main.cpp:840
 msgid "&Marca d'água"
 msgstr "واٹر مارک(&W)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "À &esquerda"
 msgstr "بائیں(&L)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "Ao &centro"
 msgstr "درمیان(&C)"
 
-#: src/editor/main.cpp:726
+#: src/editor/main.cpp:846
 msgid "À &direita"
 msgstr "دائیں(&R)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "Em &cima"
 msgstr "اوپر(&T)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "No &meio"
 msgstr "وسط(&M)"
 
-#: src/editor/main.cpp:727
+#: src/editor/main.cpp:847
 msgid "Em&baixo"
 msgstr "نیچے(&B)"
 
-#: src/editor/main.cpp:728
+#: src/editor/main.cpp:848
+msgid "Distribuir na &horizontal"
+msgstr "&افقی تقسیم کریں"
+
+#: src/editor/main.cpp:848
+msgid "Distribuir na &vertical"
+msgstr "&عمودی تقسیم کریں"
+
+#: src/editor/main.cpp:853 src/editor/main.cpp:1952
 msgid "Trazer para a &frente\tCtrl+Shift+F"
 msgstr "آگے لائیں(&F)\tCtrl+Shift+F"
 
-#: src/editor/main.cpp:728
+#: src/editor/main.cpp:853 src/editor/main.cpp:1952
 msgid "Trazer para o &primeiro plano"
 msgstr "سب سے آگے لائیں(&O)"
 
-#: src/editor/main.cpp:729
+#: src/editor/main.cpp:854 src/editor/main.cpp:1953
 msgid "Enviar para &trás\tCtrl+Shift+B"
 msgstr "پیچھے بھیجیں(&B)\tCtrl+Shift+B"
 
-#: src/editor/main.cpp:729
+#: src/editor/main.cpp:854 src/editor/main.cpp:1953
 msgid "Enviar para o plano de &fundo"
 msgstr "سب سے پیچھے بھیجیں(&K)"
 
-#: src/editor/main.cpp:731
+#: src/editor/main.cpp:856
 msgid "&Alinhar"
 msgstr "صف بندی کریں(&A)"
 
-#: src/editor/main.cpp:733
+#: src/editor/main.cpp:858
 msgid "Espelhar na &vertical"
 msgstr "عمودی پلٹیں(&V)"
 
-#: src/editor/main.cpp:734
+#: src/editor/main.cpp:859
 msgid "Espelhar na &horizontal"
 msgstr "افقی پلٹیں(&H)"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "Sentido &horário\tCtrl+R"
 msgstr "گھڑی کی سمت(&C)\tCtrl+R"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "Sentido &anti-horário"
 msgstr "گھڑی کی الٹی سمت(&W)"
 
-#: src/editor/main.cpp:735
+#: src/editor/main.cpp:860
 msgid "&180 graus"
 msgstr "180 ڈگری(&1)"
 
-#: src/editor/main.cpp:736
+#: src/editor/main.cpp:861
 msgid "Ângulo &personalizado…"
 msgstr "حسب ضرورت زاویہ(&A)…"
 
-#: src/editor/main.cpp:738
+#: src/editor/main.cpp:863
 msgid "Ferramen&tas"
 msgstr "ٹولز(&T)"
 
-#: src/editor/main.cpp:739
+#: src/editor/main.cpp:864
 msgid "&Efeitos"
 msgstr "اثرات(&E)"
 
-#: src/editor/main.cpp:741
+#: src/editor/main.cpp:866
 msgid "&Organizar"
 msgstr "ترتیب دیں(&R)"
 
-#: src/editor/main.cpp:742
+#: src/editor/main.cpp:867 src/editor/main.cpp:1960
 msgid "A&grupar\tCtrl+Shift+G"
 msgstr "گروپ بنائیں(&G)\tCtrl+Shift+G"
 
-#: src/editor/main.cpp:743
+#: src/editor/main.cpp:868 src/editor/main.cpp:1962
 msgid "Desagr&upar\tCtrl+Shift+U"
 msgstr "گروپ ختم کریں(&U)\tCtrl+Shift+U"
 
-#: src/editor/main.cpp:745
+#: src/editor/main.cpp:869
+msgid "&Bloquear objeto\tCtrl+L"
+msgstr "آبجیکٹ &لاک کریں\tCtrl+L"
+
+#: src/editor/main.cpp:870
+msgid "Desblo&quear objeto\tCtrl+Shift+K"
+msgstr "آبجیکٹ &ان لاک کریں\tCtrl+Shift+K"
+
+#: src/editor/main.cpp:874
 msgid "&Mesclar\tCtrl+T"
 msgstr "ضم کریں(&M)\tCtrl+T"
 
-#: src/editor/main.cpp:746
+#: src/editor/main.cpp:875
 msgid "Mesclar t&udo\tCtrl+Shift+T"
 msgstr "سب ضم کریں(&L)\tCtrl+Shift+T"
 
-#: src/editor/main.cpp:748
+#: src/editor/main.cpp:877
 msgid "A&parar"
 msgstr "تراشیں(&P)"
 
-#: src/editor/main.cpp:749
+#: src/editor/main.cpp:878
 msgid "&Redimensionar imagem…"
 msgstr "تصویر کا سائز بدلیں(&R)…"
 
-#: src/editor/main.cpp:750
+#: src/editor/main.cpp:879
 msgid "Redimensionar &canvas…"
 msgstr "کینوس کا سائز بدلیں(&C)…"
 
-#: src/editor/main.cpp:751
+#: src/editor/main.cpp:880
 msgid "Aplicar mode&lo…\tCtrl+Alt+C"
 msgstr "ٹیمپلیٹ لاگو کریں(&L)…\tCtrl+Alt+C"
 
-#: src/editor/main.cpp:753
+#: src/editor/main.cpp:882
 msgid "&Girar"
 msgstr "گھمائیں(&O)"
 
-#: src/editor/main.cpp:754
+#: src/editor/main.cpp:883
 msgid "Encai&xe no canvas\tCtrl+;"
 msgstr "کینوس پر اسنیپ(&X)\tCtrl+;"
 
-#: src/editor/main.cpp:755
+#: src/editor/main.cpp:884
 msgid "Cor do canva&s…"
 msgstr "کینوس کا رنگ(&S)…"
 
-#: src/editor/main.cpp:757
+#: src/editor/main.cpp:886
 msgid "Etiquetar &imagem…"
 msgstr "تصویر کو ٹیگ کریں(&I)…"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Ampliar\tCtrl++"
 msgstr "زوم ان(&I)\tCtrl++"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Reduzir\tCtrl+-"
 msgstr "زوم آؤٹ(&O)\tCtrl+-"
 
-#: src/editor/main.cpp:758
+#: src/editor/main.cpp:887
 msgid "&Tamanho real\tCtrl+1"
 msgstr "اصل سائز(&A)\tCtrl+1"
 
-#: src/editor/main.cpp:759
+#: src/editor/main.cpp:888
 msgid "A&justar à janela\tCtrl+0"
 msgstr "ونڈو میں فٹ کریں(&F)\tCtrl+0"
 
-#: src/editor/main.cpp:759
+#: src/editor/main.cpp:888
 msgid "&Cor de fundo da área…"
 msgstr "حصے کا پس منظر رنگ(&B)…"
 
-#: src/editor/main.cpp:760
+#: src/editor/main.cpp:889
+msgid "Ré&guas e guias\tCtrl+Shift+R"
+msgstr "&رولر اور گائیڈز\tCtrl+Shift+R"
+
+#: src/editor/main.cpp:889
+msgid "Remover as gu&ias"
+msgstr "گائیڈز &ہٹائیں"
+
+#: src/editor/main.cpp:890
 msgid "Painel de &efeitos"
 msgstr "اثرات کا پینل(&E)"
 
-#: src/editor/main.cpp:760
+#: src/editor/main.cpp:890
+msgid "Painel de ca&madas"
+msgstr "&لیئرز پینل"
+
+#: src/editor/main.cpp:890
 msgid "&Biblioteca"
 msgstr "لائبریری(&L)"
 
-#: src/editor/main.cpp:761
+#: src/editor/main.cpp:891
 msgid "Capturas &recentes (bandeja)"
 msgstr "حالیہ کیپچرز (ٹرے)(&R)"
 
-#: src/editor/main.cpp:762
+#: src/editor/main.cpp:892
 msgid "&Personalizar a barra de ferramentas…"
 msgstr "ٹول بار کی تخصیص(&C)…"
 
-#: src/editor/main.cpp:763
+#: src/editor/main.cpp:893
 msgid "&Atalhos de teclado"
 msgstr "کی بورڈ شارٹ کٹس(&K)"
 
-#: src/editor/main.cpp:763
+#: src/editor/main.cpp:894
 msgid "&Sobre o Snapnab Editor"
 msgstr "Snapnab Editor کے بارے میں(&A)"
 
-#: src/editor/main.cpp:764
+#: src/editor/main.cpp:895
 msgid "&Arquivo"
 msgstr "فائل(&F)"
 
-#: src/editor/main.cpp:765
+#: src/editor/main.cpp:896
 msgid "&Editar"
 msgstr "ترمیم(&E)"
 
-#: src/editor/main.cpp:766
+#: src/editor/main.cpp:897
 msgid "&Imagem"
 msgstr "تصویر(&I)"
 
-#: src/editor/main.cpp:767
+#: src/editor/main.cpp:898
 msgid "E&xibir"
 msgstr "منظر(&V)"
 
-#: src/editor/main.cpp:768
+#: src/editor/main.cpp:899
 msgid "A&juda"
 msgstr "مدد(&H)"
 
-#: src/editor/main.cpp:796
+#: src/editor/main.cpp:930
 msgid "Favoritos: seus estilos favoritos de todas as ferramentas"
 msgstr "پسندیدہ: تمام ٹولز کے آپ کے پسندیدہ انداز"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Seta (A)"
 msgstr "تیر (A)"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Texto (T)"
 msgstr "متن (T)"
 
-#: src/editor/main.cpp:797
+#: src/editor/main.cpp:931
 msgid "Balão (C)"
 msgstr "کال آؤٹ (C)"
 
-#: src/editor/main.cpp:798
+#: src/editor/main.cpp:932
 msgid "Forma: retângulo, elipse… (R)"
 msgstr "شکل: مستطیل، بیضوی… (R)"
 
-#: src/editor/main.cpp:798
+#: src/editor/main.cpp:932
 msgid "Carimbo (K)"
 msgstr "مہر (K)"
 
-#: src/editor/main.cpp:799
+#: src/editor/main.cpp:933
 msgid "Preencher (F)"
 msgstr "بھریں (F)"
 
-#: src/editor/main.cpp:799
+#: src/editor/main.cpp:933
 msgid "Seleção e Smart Move (S)"
 msgstr "انتخاب اور Smart Move (S)"
 
-#: src/editor/main.cpp:800
+#: src/editor/main.cpp:934
 msgid "Varinha mágica: seleciona pela cor"
 msgstr "جادو کی چھڑی: رنگ کے لحاظ سے منتخب کرتی ہے"
 
-#: src/editor/main.cpp:800
+#: src/editor/main.cpp:934
 msgid "Cortar (X)"
 msgstr "کراپ (X)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Recortar faixa (U)"
 msgstr "پٹی کاٹیں (U)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Caneta (P)"
 msgstr "قلم (P)"
 
-#: src/editor/main.cpp:801
+#: src/editor/main.cpp:935
 msgid "Linha (L)"
 msgstr "لکیر (L)"
 
-#: src/editor/main.cpp:802
-msgid "Marcador: arraste um retângulo na cor e opacidade escolhidas (H)"
-msgstr "ہائی لائٹر: منتخب رنگ اور دھندلے پن میں مستطیل گھسیٹیں (H)"
+#: src/editor/main.cpp:936
+msgid "Marcador: retângulo, elipse, polígono ou mão livre (H)"
+msgstr "ہائی لائٹر: مستطیل، بیضوی، کثیر الاضلاع یا آزاد ہاتھ (H)"
 
-#: src/editor/main.cpp:803
+#: src/editor/main.cpp:937
 msgid "Passos numerados (N)"
 msgstr "نمبر والے مراحل (N)"
 
-#: src/editor/main.cpp:803
+#: src/editor/main.cpp:937
 msgid "Borracha (E)"
 msgstr "ربڑ (E)"
 
-#: src/editor/main.cpp:804
+#: src/editor/main.cpp:938
 msgid "Ocultar: desfoque/pixelado (B)"
 msgstr "چھپائیں: دھندلا/پکسلیٹ (B)"
 
-#: src/editor/main.cpp:804
+#: src/editor/main.cpp:938
 msgid "Mover e Smart Move (V)"
 msgstr "منتقل کریں اور Smart Move (V)"
 
-#: src/editor/main.cpp:805
+#: src/editor/main.cpp:939
 msgid "Lupa (Z)"
 msgstr "محدب عدسہ (Z)"
 
-#: src/editor/main.cpp:805
+#: src/editor/main.cpp:939
 msgid "Destaque/spotlight (G)"
 msgstr "اسپاٹ لائٹ (G)"
 
-#: src/editor/main.cpp:806
+#: src/editor/main.cpp:940
 msgid "Conta-gotas (I)"
 msgstr "رنگ چننے والا (I)"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "Salvar como arquivo (PNG, JPG, PDF…)"
 msgstr "بطور فائل محفوظ کریں (PNG، JPG، PDF…)"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "E-mail"
 msgstr "ای میل"
 
-#: src/editor/main.cpp:812
+#: src/editor/main.cpp:946
 msgid "Enviar por e-mail"
 msgstr "ای میل سے بھیجیں"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Copiar a imagem inteira"
 msgstr "پوری تصویر کاپی کریں"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Impressora"
 msgstr "پرنٹر"
 
-#: src/editor/main.cpp:814
+#: src/editor/main.cpp:948
 msgid "Imprimir a imagem"
 msgstr "تصویر پرنٹ کریں"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Desfazer"
 msgstr "واپس لیں"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Desfazer (Ctrl+Z)"
 msgstr "واپس لیں (Ctrl+Z)"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Refazer"
 msgstr "دوبارہ کریں"
 
-#: src/editor/main.cpp:816
+#: src/editor/main.cpp:950
 msgid "Refazer (Ctrl+Y)"
 msgstr "دوبارہ کریں (Ctrl+Y)"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Nova imagem em branco"
 msgstr "نئی خالی تصویر"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Da área de transf."
 msgstr "کلپ بورڈ سے"
 
-#: src/editor/main.cpp:817
+#: src/editor/main.cpp:951
 msgid "Nova imagem da área de transferência"
 msgstr "کلپ بورڈ سے نئی تصویر"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Abrir arquivo (Ctrl+O)"
 msgstr "فائل کھولیں (Ctrl+O)"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Salvar"
 msgstr "محفوظ کریں"
 
-#: src/editor/main.cpp:818
+#: src/editor/main.cpp:952
 msgid "Salvar na biblioteca (Ctrl+S)"
 msgstr "لائبریری میں محفوظ کریں (Ctrl+S)"
 
-#: src/editor/main.cpp:819 src/editor/main.cpp:1715
+#: src/editor/main.cpp:953 src/editor/main.cpp:1986
 msgid "Salvar como arquivo (Ctrl+Shift+S)"
 msgstr "بطور فائل محفوظ کریں (Ctrl+Shift+S)"
 
-#: src/editor/main.cpp:819
+#: src/editor/main.cpp:953
 msgid "Duplicar a imagem"
 msgstr "تصویر کی نقل بنائیں"
 
-#: src/editor/main.cpp:820
+#: src/editor/main.cpp:954
 msgid "Excluir o objeto selecionado (Del)"
 msgstr "منتخب آبجیکٹ حذف کریں (Del)"
 
-#: src/editor/main.cpp:820
+#: src/editor/main.cpp:954
 msgid "Reconhecer o texto da imagem (Ctrl+Shift+T)"
 msgstr "تصویر کا متن شناخت کریں (Ctrl+Shift+T)"
 
-#: src/editor/main.cpp:821
+#: src/editor/main.cpp:955
 msgid "Excluir imagem"
 msgstr "تصویر حذف کریں"
 
-#: src/editor/main.cpp:821
+#: src/editor/main.cpp:955
 msgid "Enviar a imagem para a Lixeira"
 msgstr "تصویر ری سائیکل بن میں بھیجیں"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Mesclar tudo"
 msgstr "سب ضم کریں"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Mesclar todos os objetos na imagem"
 msgstr "تمام آبجیکٹس تصویر میں ضم کریں"
 
-#: src/editor/main.cpp:822
+#: src/editor/main.cpp:956
 msgid "Girar 90° no sentido horário (Ctrl+R)"
 msgstr "گھڑی کی سمت 90° گھمائیں (Ctrl+R)"
 
-#: src/editor/main.cpp:823
+#: src/editor/main.cpp:957
 msgid "Cortar as bordas de cor uniforme"
 msgstr "یکساں رنگ کے کنارے تراشیں"
 
-#: src/editor/main.cpp:854
+#: src/editor/main.cpp:958 src/editor/main.cpp:1956
+msgid "Alinhar à esquerda"
+msgstr "بائیں سیدھ"
+
+#: src/editor/main.cpp:958
+msgid "Alinhar os objetos à esquerda"
+msgstr "آبجیکٹس کو بائیں سیدھ کریں"
+
+#: src/editor/main.cpp:959 src/editor/main.cpp:1956
+msgid "Alinhar ao centro"
+msgstr "مرکز میں سیدھ"
+
+#: src/editor/main.cpp:959
+msgid "Alinhar os objetos ao centro"
+msgstr "آبجیکٹس کو مرکز میں سیدھ کریں"
+
+#: src/editor/main.cpp:960 src/editor/main.cpp:1956
+msgid "Alinhar à direita"
+msgstr "دائیں سیدھ"
+
+#: src/editor/main.cpp:960
+msgid "Alinhar os objetos à direita"
+msgstr "آبجیکٹس کو دائیں سیدھ کریں"
+
+#: src/editor/main.cpp:961 src/editor/main.cpp:1957
+msgid "Alinhar em cima"
+msgstr "اوپر سیدھ"
+
+#: src/editor/main.cpp:961
+msgid "Alinhar os objetos em cima"
+msgstr "آبجیکٹس کو اوپر سیدھ کریں"
+
+#: src/editor/main.cpp:962 src/editor/main.cpp:1957
+msgid "Alinhar no meio"
+msgstr "درمیان میں سیدھ"
+
+#: src/editor/main.cpp:962
+msgid "Alinhar os objetos no meio"
+msgstr "آبجیکٹس کو درمیان میں سیدھ کریں"
+
+#: src/editor/main.cpp:963 src/editor/main.cpp:1957
+msgid "Alinhar embaixo"
+msgstr "نیچے سیدھ"
+
+#: src/editor/main.cpp:963
+msgid "Alinhar os objetos embaixo"
+msgstr "آبجیکٹس کو نیچے سیدھ کریں"
+
+#: src/editor/main.cpp:964 src/editor/main.cpp:1958
+msgid "Distribuir na horizontal"
+msgstr "افقی تقسیم"
+
+#: src/editor/main.cpp:964
+msgid "Espaçar 3 ou mais objetos igualmente na horizontal"
+msgstr "3 یا زیادہ آبجیکٹس کو افقی طور پر برابر فاصلے پر رکھیں"
+
+#: src/editor/main.cpp:965 src/editor/main.cpp:1958
+msgid "Distribuir na vertical"
+msgstr "عمودی تقسیم"
+
+#: src/editor/main.cpp:965
+msgid "Espaçar 3 ou mais objetos igualmente na vertical"
+msgstr "3 یا زیادہ آبجیکٹس کو عمودی طور پر برابر فاصلے پر رکھیں"
+
+#: src/editor/main.cpp:966
+msgid "Bloquear o objeto selecionado (Ctrl+L)"
+msgstr "منتخب آبجیکٹ لاک کریں (Ctrl+L)"
+
+#: src/editor/main.cpp:967
+msgid "Réguas"
+msgstr "رولرز"
+
+#: src/editor/main.cpp:967
+msgid "Mostrar réguas, guias e coordenadas (Ctrl+Shift+R)"
+msgstr "رولرز، گائیڈز اور کوآرڈینیٹس دکھائیں (Ctrl+Shift+R)"
+
+#: src/editor/main.cpp:998
 msgid "Efeito: "
 msgstr "اثر: "
 
-#: src/editor/main.cpp:854
+#: src/editor/main.cpp:998
 msgid " — abre os ajustes no painel de efeitos"
 msgstr " — اثرات کے پینل میں ترتیبات کھولتا ہے"
 
-#: src/editor/main.cpp:957
+#: src/editor/main.cpp:1101
 msgid "Ferramenta: "
 msgstr "ٹول: "
 
-#: src/editor/main.cpp:1017 src/editor/main.cpp:1058
+#: src/editor/main.cpp:1161 src/editor/main.cpp:1202
 msgid "Ampliar parte da imagem"
 msgstr "تصویر کا حصہ بڑا کریں"
 
-#: src/editor/main.cpp:1021
+#: src/editor/main.cpp:1165
 msgid "Amplie partes da imagem para destacar os detalhes importantes. Arraste para criar a lupa; com a lente separada, a alça amarela escolhe a área ampliada."
 msgstr "اہم تفصیلات نمایاں کرنے کے لیے تصویر کے حصے بڑے کریں۔ محدب عدسہ بنانے کے لیے گھسیٹیں؛ الگ لینز کے ساتھ، پیلا ہینڈل بڑا کیا جانے والا حصہ چنتا ہے۔"
 
-#: src/editor/main.cpp:1036
+#: src/editor/main.cpp:1180
 msgid "Entendi!"
 msgstr "سمجھ گیا!"
 
-#: src/editor/main.cpp:1083
+#: src/editor/main.cpp:1227
 msgid "Ferramentas de desenho"
 msgstr "ڈرائنگ ٹولز"
 
-#: src/editor/main.cpp:1084
+#: src/editor/main.cpp:1228
 msgid "Itens de menu"
 msgstr "مینو آئٹمز"
 
-#: src/editor/main.cpp:1085
+#: src/editor/main.cpp:1229
 msgid "Destinos de compartilhamento"
 msgstr "شیئر کرنے کی منزلیں"
 
-#: src/editor/main.cpp:1086 src/editor/main.cpp:1409
+#: src/editor/main.cpp:1230 src/editor/main.cpp:1632
 msgid "Efeitos"
 msgstr "اثرات"
 
-#: src/editor/main.cpp:1090
+#: src/editor/main.cpp:1234
 msgid "Diversos"
 msgstr "متفرق"
 
-#: src/editor/main.cpp:1106
+#: src/editor/main.cpp:1250
 msgid "Personalização cancelada."
 msgstr "تخصیص منسوخ ہو گئی۔"
 
-#: src/editor/main.cpp:1113
+#: src/editor/main.cpp:1257
 msgid "Barra de ferramentas personalizada."
 msgstr "حسب ضرورت ٹول بار۔"
 
-#: src/editor/main.cpp:1113
+#: src/editor/main.cpp:1257
 msgid "Barra de ferramentas automática."
 msgstr "خودکار ٹول بار۔"
 
-#: src/editor/main.cpp:1134
+#: src/editor/main.cpp:1278
 msgid "Personalizar a barra…"
 msgstr "بار کی تخصیص…"
 
-#: src/editor/main.cpp:1136
+#: src/editor/main.cpp:1280
 msgid "Voltar ao padrão (automática)"
 msgstr "ڈیفالٹ پر واپس (خودکار)"
 
-#: src/editor/main.cpp:1143
+#: src/editor/main.cpp:1301
 msgid "Atalhos do Snapnab Editor"
 msgstr "Snapnab Editor کے شارٹ کٹس"
 
-#: src/editor/main.cpp:1144
+#: src/editor/main.cpp:1302
 msgid ""
 "Ferramentas (com a área de pintura em foco):\n"
 "  V Mover   A Seta   L Linha   R Forma   P Caneta   H Marcador\n"
@@ -4415,75 +4998,115 @@ msgstr ""
 "تصویر:    Ctrl+Shift+F/B ایک درجہ آگے/پیچھے • Ctrl+T آبجیکٹ ضم کریں • Ctrl+Shift+T سب ضم کریں • Ctrl+; اسنیپ\n"
 "ویڈیو:    Space چلائیں/روکیں • ←/→ فریم • I/O آغاز/اختتام نشان زد کرتے ہیں\n"
 
-#: src/editor/main.cpp:1169
+#: src/editor/main.cpp:1328
 msgid "Imagem inteira copiada para a área de transferência."
 msgstr "پوری تصویر کلپ بورڈ پر کاپی ہو گئی۔"
 
-#: src/editor/main.cpp:1174
+#: src/editor/main.cpp:1333
 msgid "Arquivo…"
 msgstr "فائل…"
 
-#: src/editor/main.cpp:1176
+#: src/editor/main.cpp:1335
 msgid "E-mail…"
 msgstr "ای میل…"
 
-#: src/editor/main.cpp:1177
+#: src/editor/main.cpp:1336
 msgid "Impressora…"
 msgstr "پرنٹر…"
 
-#: src/editor/main.cpp:1178
+#: src/editor/main.cpp:1337
 msgid "Programa externo…"
 msgstr "بیرونی پروگرام…"
 
-#: src/editor/main.cpp:1201
+#: src/editor/main.cpp:1360
 msgid "Copiado."
 msgstr "کاپی ہو گیا۔"
 
-#: src/editor/main.cpp:1226
+#: src/editor/main.cpp:1367
+msgid "Selecione um objeto para bloquear ou desbloquear."
+msgstr "لاک یا ان لاک کرنے کے لیے آبجیکٹ منتخب کریں۔"
+
+#: src/editor/main.cpp:1371
+msgid "Objeto bloqueado: não pode ser movido, redimensionado nem excluído."
+msgstr "آبجیکٹ لاک: اسے نہ منتقل کیا جا سکتا ہے، نہ سائز بدلا جا سکتا ہے، نہ حذف کیا جا سکتا ہے۔"
+
+#: src/editor/main.cpp:1371
+msgid "Objeto desbloqueado."
+msgstr "آبجیکٹ ان لاک ہو گیا۔"
+
+#: src/editor/main.cpp:1387
+msgid "Réguas ligadas: arraste de uma régua para criar uma guia; arraste a guia de volta para removê-la."
+msgstr "رولرز آن: گائیڈ بنانے کے لیے رولر سے گھسیٹیں؛ ہٹانے کے لیے گائیڈ واپس گھسیٹیں۔"
+
+#: src/editor/main.cpp:1387
+msgid "Réguas desligadas."
+msgstr "رولرز بند۔"
+
+#: src/editor/main.cpp:1398
+msgid "A seleção e o corte encaixam nas bordas da imagem (Alt desliga na hora)."
+msgstr "انتخاب اور کراپ تصویر کے کناروں سے جڑتے ہیں (Alt فوراً بند کرتا ہے)۔"
+
+#: src/editor/main.cpp:1398
+msgid "Encaixe nas bordas desligado."
+msgstr "کناروں سے جڑنا بند۔"
+
+#: src/editor/main.cpp:1403
+msgid "Texto colado sem formatação (Ctrl+Shift+V mantém a formatação)."
+msgstr "متن بغیر فارمیٹنگ کے چسپاں ہوتا ہے (Ctrl+Shift+V فارمیٹنگ رکھتا ہے)۔"
+
+#: src/editor/main.cpp:1403
+msgid "Texto colado com a formatação de origem (Ctrl+Shift+V cola sem formatação)."
+msgstr "متن اصل فارمیٹنگ کے ساتھ چسپاں ہوتا ہے (Ctrl+Shift+V بغیر فارمیٹنگ چسپاں کرتا ہے)۔"
+
+#: src/editor/main.cpp:1409
+msgid "Renomear objeto"
+msgstr "آبجیکٹ کا نام تبدیل کریں"
+
+#: src/editor/main.cpp:1441
 msgid "Selecione dois ou mais objetos (Ctrl+clique ou arraste um retângulo com o Mover) para agrupar."
 msgstr "گروپ بنانے کے لیے دو یا زیادہ آبجیکٹس منتخب کریں (Ctrl+کلک کریں یا منتقل ٹول سے مستطیل گھسیٹیں)۔"
 
-#: src/editor/main.cpp:1228
+#: src/editor/main.cpp:1443
 msgid "Objetos agrupados. Imagem › Desagrupar (Ctrl+Shift+U) separa."
 msgstr "آبجیکٹس کا گروپ بن گیا۔ تصویر › گروپ ختم کریں (Ctrl+Shift+U) انہیں الگ کرتا ہے۔"
 
-#: src/editor/main.cpp:1233
+#: src/editor/main.cpp:1448
 msgid "Grupo desfeito."
 msgstr "گروپ ختم ہو گیا۔"
 
-#: src/editor/main.cpp:1236
+#: src/editor/main.cpp:1451
 msgid "Modelos (combinar imagens) ainda não estão disponíveis no Snapnab."
 msgstr "ٹیمپلیٹس (تصاویر جوڑنا) ابھی Snapnab میں دستیاب نہیں ہیں۔"
 
-#: src/editor/main.cpp:1241
+#: src/editor/main.cpp:1456
 msgid "Encaixe no canvas ligado (Alt ao arrastar desliga na hora)."
 msgstr "کینوس پر اسنیپ آن (گھسیٹتے وقت Alt اسے عارضی طور پر بند کرتا ہے)۔"
 
-#: src/editor/main.cpp:1241
+#: src/editor/main.cpp:1456
 msgid "Encaixe no canvas desligado."
 msgstr "کینوس پر اسنیپ بند۔"
 
-#: src/editor/main.cpp:1245
+#: src/editor/main.cpp:1460
 msgid "Etiquetas"
 msgstr "ٹیگز"
 
-#: src/editor/main.cpp:1246
+#: src/editor/main.cpp:1461
 msgid "Separe as etiquetas por vírgula. Elas ficam gravadas na captura."
 msgstr "ٹیگز کو کوما سے الگ کریں۔ یہ کیپچر میں محفوظ ہوتے ہیں۔"
 
-#: src/editor/main.cpp:1247
+#: src/editor/main.cpp:1462
 msgid "Etiquetar imagem"
 msgstr "تصویر کو ٹیگ کریں"
 
-#: src/editor/main.cpp:1250
+#: src/editor/main.cpp:1465
 msgid "Etiquetas removidas."
 msgstr "ٹیگز ہٹا دیے گئے۔"
 
-#: src/editor/main.cpp:1250
+#: src/editor/main.cpp:1465
 msgid "Etiquetas: "
 msgstr "ٹیگز: "
 
-#: src/editor/main.cpp:1267
+#: src/editor/main.cpp:1483
 msgid ""
 "Edição de capturas com objetos vetoriais, efeitos, Smart Move,\n"
 "OCR, exportação PDF e edição de vídeo (cortes e GIF)."
@@ -4491,11 +5114,11 @@ msgstr ""
 "ویکٹر آبجیکٹس، اثرات، Smart Move،\n"
 "OCR، PDF برآمد اور ویڈیو ترمیم (کٹائی اور GIF) کے ساتھ کیپچر کی ترمیم۔"
 
-#: src/editor/main.cpp:1270
+#: src/editor/main.cpp:1486
 msgid "Sobre"
 msgstr "بارے میں"
 
-#: src/editor/main.cpp:1311
+#: src/editor/main.cpp:1529
 msgid ""
 "SnapnabEditor.exe [opções] [arquivo…]\n"
 "\n"
@@ -4509,295 +5132,315 @@ msgstr ""
 "/NewFromClipboard   کلپ بورڈ سے تصویر بناتا ہے\n"
 "/restartwait        پچھلے انسٹینس کے بند ہونے کا انتظار کرتا ہے"
 
-#: src/editor/main.cpp:1371
+#: src/editor/main.cpp:1589
 #, c-format
 msgid "Zoom %d%%  ▾"
 msgstr "زوم %d%%  ▾"
 
-#: src/editor/main.cpp:1371
+#: src/editor/main.cpp:1589
 #, c-format
 msgid "%d × %d px  ▾"
 msgstr "%d × %d px  ▾"
 
-#: src/editor/main.cpp:1409
+#: src/editor/main.cpp:1632
 msgid "Propriedades"
 msgstr "خصوصیات"
 
-#: src/editor/main.cpp:1440
+#: src/editor/main.cpp:1663
 msgid "Contorno sólido em volta da imagem, na largura e cor que você escolher."
 msgstr "تصویر کے گرد ٹھوس خاکہ، آپ کی منتخب کردہ چوڑائی اور رنگ میں۔"
 
-#: src/editor/main.cpp:1440 src/editor/main.cpp:1443 src/editor/main.cpp:1447 src/editor/main.cpp:1451
+#: src/editor/main.cpp:1663 src/editor/main.cpp:1666 src/editor/main.cpp:1670 src/editor/main.cpp:1674
 msgid "Bordas e sombras"
 msgstr "بارڈر اور سائے"
 
-#: src/editor/main.cpp:1443
+#: src/editor/main.cpp:1666
 msgid "Sombra suave atrás da imagem, que destaca a captura do fundo."
 msgstr "تصویر کے پیچھے نرم سایہ، جو کیپچر کو پس منظر سے الگ دکھاتا ہے۔"
 
-#: src/editor/main.cpp:1444
+#: src/editor/main.cpp:1667
 msgid "Deslocamento"
 msgstr "ہٹاؤ"
 
-#: src/editor/main.cpp:1447
+#: src/editor/main.cpp:1670
 msgid "Perspectiva"
 msgstr "تناظر"
 
-#: src/editor/main.cpp:1447
+#: src/editor/main.cpp:1670
 msgid "Inclina a imagem como se estivesse de lado, em pé ou deitada."
 msgstr "تصویر کو ایسے جھکاتا ہے جیسے وہ پہلو پر، کھڑی یا لیٹی ہو۔"
 
-#: src/editor/main.cpp:1448
+#: src/editor/main.cpp:1671
 msgid "Horizontal"
 msgstr "افقی"
 
-#: src/editor/main.cpp:1449
+#: src/editor/main.cpp:1672
 msgid "Vertical"
 msgstr "عمودی"
 
-#: src/editor/main.cpp:1450
+#: src/editor/main.cpp:1673
 msgid "Inclinação"
 msgstr "جھکاؤ"
 
-#: src/editor/main.cpp:1451 src/editor/main.cpp:1574 src/editor/main.cpp:1668
+#: src/editor/main.cpp:1674 src/editor/main.cpp:1797 src/editor/main.cpp:1891
 msgid "Dobra de página"
 msgstr "مڑا ہوا کونا"
 
-#: src/editor/main.cpp:1451
+#: src/editor/main.cpp:1674
 msgid "Dobra um canto da imagem, como a ponta de uma folha de papel."
 msgstr "تصویر کا ایک کونا موڑتا ہے، کاغذ کے صفحے کے سرے کی طرح۔"
 
-#: src/editor/main.cpp:1452 src/editor/main.cpp:1456 src/editor/main.cpp:1482
+#: src/editor/main.cpp:1675 src/editor/main.cpp:1679 src/editor/main.cpp:1705
 msgid "Tamanho"
 msgstr "سائز"
 
-#: src/editor/main.cpp:1452
+#: src/editor/main.cpp:1675
 msgid "Pequena"
 msgstr "چھوٹا"
 
-#: src/editor/main.cpp:1452
+#: src/editor/main.cpp:1675
 msgid "Grande"
 msgstr "بڑا"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Canto"
 msgstr "کونا"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Superior esquerdo"
 msgstr "اوپر بائیں"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Superior direito"
 msgstr "اوپر دائیں"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Inferior direito"
 msgstr "نیچے دائیں"
 
-#: src/editor/main.cpp:1453
+#: src/editor/main.cpp:1676
 msgid "Inferior esquerdo"
 msgstr "نیچے بائیں"
 
-#: src/editor/main.cpp:1454
+#: src/editor/main.cpp:1677
 msgid "Bordas"
 msgstr "کنارے"
 
-#: src/editor/main.cpp:1454
+#: src/editor/main.cpp:1677
 msgid "Rasgada, onda, serrilhada, tubarão, esmaecida ou chanfrada."
 msgstr "پھٹا، لہر، آری، شارک، مدھم یا ڈھلوان۔"
 
-#: src/editor/main.cpp:1459
+#: src/editor/main.cpp:1682
 msgid "Cinza, sépia, inverter, P&B, relevo, mosaico, nitidez, desfoque."
 msgstr "سرمئی، سیپیا، الٹ، سیاہ و سفید، ابھار، موزیک، تیزی، دھندلا۔"
 
-#: src/editor/main.cpp:1460 src/editor/main.cpp:1479
+#: src/editor/main.cpp:1683 src/editor/main.cpp:1702
 msgid "Relevo"
 msgstr "ابھار"
 
-#: src/editor/main.cpp:1460
+#: src/editor/main.cpp:1683
 msgid "Mosaico"
 msgstr "موزیک"
 
-#: src/editor/main.cpp:1460
+#: src/editor/main.cpp:1683
 msgid "Nitidez"
 msgstr "تیزی"
 
-#: src/editor/main.cpp:1463
+#: src/editor/main.cpp:1686
 msgid "Ajuste de cores"
 msgstr "رنگ کی ترتیب"
 
-#: src/editor/main.cpp:1463
+#: src/editor/main.cpp:1686
 msgid "Brilho, contraste, gama, matiz e saturação."
 msgstr "چمک، تضاد، گاما، رنگت اور سیرابی۔"
 
-#: src/editor/main.cpp:1466
+#: src/editor/main.cpp:1689
 msgid "Gama"
 msgstr "گاما"
 
-#: src/editor/main.cpp:1467
+#: src/editor/main.cpp:1690
 msgid "Matiz"
 msgstr "رنگت"
 
-#: src/editor/main.cpp:1469
+#: src/editor/main.cpp:1692
 msgid "Troca uma cor por outra (ou por transparente)."
 msgstr "ایک رنگ کو دوسرے سے (یا شفاف سے) بدلتا ہے۔"
 
-#: src/editor/main.cpp:1470
+#: src/editor/main.cpp:1693
 msgid "Cor atual"
 msgstr "موجودہ رنگ"
 
-#: src/editor/main.cpp:1470
+#: src/editor/main.cpp:1693
 msgid "Tornar transparente"
 msgstr "شفاف بنائیں"
 
-#: src/editor/main.cpp:1472
+#: src/editor/main.cpp:1695
 msgid "Spotlight e lupa"
 msgstr "اسپاٹ لائٹ اور محدب عدسہ"
 
-#: src/editor/main.cpp:1472
+#: src/editor/main.cpp:1695
 msgid "Destaca a seleção (ou o meio da imagem) e escurece o resto."
 msgstr "انتخاب (یا تصویر کے درمیان) کو نمایاں کرتا ہے اور باقی کو گہرا کرتا ہے۔"
 
-#: src/editor/main.cpp:1473
+#: src/editor/main.cpp:1696
 msgid "Escurecer"
 msgstr "گہرا کریں"
 
-#: src/editor/main.cpp:1475
+#: src/editor/main.cpp:1698
 msgid "Ampliar"
 msgstr "بڑا کریں"
 
-#: src/editor/main.cpp:1476
+#: src/editor/main.cpp:1699
 msgid "Sombra na área em foco"
 msgstr "فوکس والے حصے میں سایہ"
 
-#: src/editor/main.cpp:1477
+#: src/editor/main.cpp:1700
 msgid "Texto translúcido sobre a imagem, uma vez ou em mosaico."
 msgstr "تصویر پر نیم شفاف متن، ایک بار یا ٹائل کی صورت میں۔"
 
-#: src/editor/main.cpp:1478
+#: src/editor/main.cpp:1701
 msgid "Confidencial"
 msgstr "خفیہ"
 
-#: src/editor/main.cpp:1479
+#: src/editor/main.cpp:1702
 msgid "Repetir em mosaico"
 msgstr "ٹائل کریں"
 
-#: src/editor/main.cpp:1480
+#: src/editor/main.cpp:1703
 msgid "Faixa de texto em cima ou embaixo; aceita {date} e {time}."
 msgstr "اوپر یا نیچے متن کی پٹی؛ {date} اور {time} قبول کرتی ہے۔"
 
-#: src/editor/main.cpp:1483
+#: src/editor/main.cpp:1706
 msgid "Cor da faixa"
 msgstr "پٹی کا رنگ"
 
-#: src/editor/main.cpp:1572
+#: src/editor/main.cpp:1795
 msgid "Borda e sombra"
 msgstr "بارڈر اور سایہ"
 
-#: src/editor/main.cpp:1573
+#: src/editor/main.cpp:1796
 msgid "Papel rasgado"
 msgstr "پھٹا کاغذ"
 
-#: src/editor/main.cpp:1576
+#: src/editor/main.cpp:1799
 msgid "Serrilhado"
 msgstr "دندانے دار"
 
-#: src/editor/main.cpp:1578
+#: src/editor/main.cpp:1801
 msgid "Chanfrado"
 msgstr "ڈھلوان دار"
 
-#: src/editor/main.cpp:1589
+#: src/editor/main.cpp:1812
 msgid "Efeito"
 msgstr "اثر"
 
-#: src/editor/main.cpp:1636
+#: src/editor/main.cpp:1859
 msgid "Efeito aplicado: "
 msgstr "اثر لاگو ہو گیا: "
 
-#: src/editor/main.cpp:1636
+#: src/editor/main.cpp:1859
 msgid " (Ctrl+Z desfaz)"
 msgstr " (Ctrl+Z واپس لیتا ہے)"
 
-#: src/editor/main.cpp:1644
+#: src/editor/main.cpp:1867
 msgid "Spotlight: sem seleção, o foco é o meio da imagem. Use a ferramenta Seleção para escolher a área."
 msgstr "اسپاٹ لائٹ: انتخاب کے بغیر فوکس تصویر کے درمیان میں ہوتا ہے۔ حصہ منتخب کرنے کے لیے انتخاب ٹول استعمال کریں۔"
 
-#: src/editor/main.cpp:1665
+#: src/editor/main.cpp:1888
 #, c-format
 msgid "Meu efeito %zu"
 msgstr "میرا اثر %zu"
 
-#: src/editor/main.cpp:1666
+#: src/editor/main.cpp:1889
 msgid "Os ajustes vêm dos efeitos do painel (abra cada um para mudar):"
 msgstr "ترتیبات پینل کے اثرات سے آتی ہیں (بدلنے کے لیے ہر ایک کو کھولیں):"
 
-#: src/editor/main.cpp:1670
+#: src/editor/main.cpp:1893
 msgid "Adicionar aos efeitos rápidos"
 msgstr "فوری اثرات میں شامل کریں"
 
-#: src/editor/main.cpp:1682
+#: src/editor/main.cpp:1905
 msgid "Efeito rápido adicionado: "
 msgstr "فوری اثر شامل ہو گیا: "
 
-#: src/editor/main.cpp:1712
+#: src/editor/main.cpp:1942
+msgid "Abrir o link"
+msgstr "لنک کھولیں"
+
+#: src/editor/main.cpp:1943 src/editor/main.cpp:1970
+msgid "Soltar a peça na imagem\tEnter"
+msgstr "ٹکڑا تصویر میں رکھیں\tEnter"
+
+#: src/editor/main.cpp:1948
+msgid "Desblo&quear\tCtrl+Shift+K"
+msgstr "&ان لاک کریں\tCtrl+Shift+K"
+
+#: src/editor/main.cpp:1948
+msgid "&Bloquear\tCtrl+L"
+msgstr "&لاک کریں\tCtrl+L"
+
+#: src/editor/main.cpp:1950
+msgid "Re&nomear…"
+msgstr "نام &تبدیل کریں…"
+
+#: src/editor/main.cpp:1983
 msgid "Nova captura de imagem (pede ao Snapnab)"
 msgstr "نیا تصویری کیپچر (Snapnab سے مانگتا ہے)"
 
-#: src/editor/main.cpp:1713
+#: src/editor/main.cpp:1984
 msgid "Nova gravação de vídeo"
 msgstr "نئی ویڈیو ریکارڈنگ"
 
-#: src/editor/main.cpp:1714
+#: src/editor/main.cpp:1985
 msgid "Copiar a imagem inteira (Ctrl+Shift+C)"
 msgstr "پوری تصویر کاپی کریں (Ctrl+Shift+C)"
 
-#: src/editor/main.cpp:1716
+#: src/editor/main.cpp:1987
 msgid "Compartilhar"
 msgstr "شیئر کریں"
 
-#: src/editor/main.cpp:1716
+#: src/editor/main.cpp:1987
 msgid "Compartilhar: arquivo, área de transferência, e-mail, impressora, programa"
 msgstr "شیئر کریں: فائل، کلپ بورڈ، ای میل، پرنٹر، پروگرام"
 
-#: src/editor/main.cpp:1734
+#: src/editor/main.cpp:2005
 #, c-format
 msgid "Excluir o efeito rápido \"%s\"?"
 msgstr "فوری اثر \"%s\" حذف کریں؟"
 
-#: src/editor/main.cpp:1758
+#: src/editor/main.cpp:2029
 msgid "Barra de ferramentas personalizada. Mais › Voltar ao padrão desfaz."
 msgstr "حسب ضرورت ٹول بار۔ مزید › ڈیفالٹ پر واپس اسے واپس لیتا ہے۔"
 
-#: src/editor/main.cpp:1776
+#: src/editor/main.cpp:2057
 #, c-format
 msgid "%d objetos selecionados  •  Ctrl+Shift+G agrupa  •  Organizar › Alinhar alinha entre si"
 msgstr "%d آبجیکٹس منتخب  •  Ctrl+Shift+G گروپ بناتا ہے  •  ترتیب دیں › صف بندی کریں انہیں آپس میں ترتیب دیتا ہے"
 
-#: src/editor/main.cpp:1783
+#: src/editor/main.cpp:2065
 msgid "Cor capturada: "
 msgstr "لیا گیا رنگ: "
 
-#: src/editor/main.cpp:1783
+#: src/editor/main.cpp:2065
 msgid " (aplicada às ferramentas de desenho)"
 msgstr " (ڈرائنگ ٹولز پر لاگو)"
 
-#: src/editor/main.cpp:1803
+#: src/editor/main.cpp:2088
 msgid "Quadro do vídeo"
 msgstr "ویڈیو کا فریم"
 
-#: src/editor/main.cpp:1803
+#: src/editor/main.cpp:2088
 msgid "Quadro de vídeo"
 msgstr "ویڈیو فریم"
 
-#: src/editor/main.cpp:1804
+#: src/editor/main.cpp:2089
 msgid "Vídeo salvo: "
 msgstr "ویڈیو محفوظ ہو گئی: "
 
-#: src/editor/main.cpp:1840 src/editor/main.cpp:1840
+#: src/editor/main.cpp:2132 src/editor/main.cpp:2132
 msgid "Editar"
 msgstr "ترمیم"
 
-#: src/editor/main.cpp:1865
+#: src/editor/main.cpp:2157
 msgid "Ajustar à janela\tCtrl+0"
 msgstr "ونڈو میں فٹ کریں\tCtrl+0"

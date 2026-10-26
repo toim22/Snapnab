@@ -11,7 +11,7 @@ enum { HitMin = 100, HitMax = 101, HitClose = 102 };
 
 void CaptionBar::Init(HWND frame, std::vector<Menu> menus, bool resizable, bool editorIcon) {
     frame_ = frame; menus_ = std::move(menus); resizable_ = resizable; editorIcon_ = editorIcon;
-    // nomes traduzidos podem repetir a inicial: o menu seguinte fica com outra letra latina do próprio nome
+    // translated names may share an initial: the next menu takes another Latin letter of its own name
     for (size_t i = 1; i < menus_.size(); i++) {
         auto used = [&](wchar_t k) { for (size_t j = 0; j < i; j++) if (menus_[j].key == k) return true; return false; };
         if (!used(menus_[i].key)) continue;
@@ -70,7 +70,7 @@ void CaptionBar::Invalidate() {
 void CaptionBar::Paint(HDC dc) {
     RECT cap{ 0, 0, width_, h_ };
     HBRUSH bg = CreateSolidBrush(th_.bgCaption); FillRect(dc, &cap, bg); DeleteObject(bg);
-    if (!th_.captionAccent) {          // fio de separação embaixo
+    if (!th_.captionAccent) {          // separator line at the bottom
         RECT l{ 0, h_ - 1, width_, h_ };
         HBRUSH lb = CreateSolidBrush(Mix(th_.bgCaption, th_.line, 0.5)); FillRect(dc, &l, lb); DeleteObject(lb);
     }
@@ -98,13 +98,13 @@ void CaptionBar::Paint(HDC dc) {
         RECT r = menuRects_[i];
         DrawTextW(dc, menus_[i].name.c_str(), -1, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX);
     }
-    if (!title_.empty()) {             // título do documento, discreto, depois dos menus
+    if (!title_.empty()) {             // document title, subdued, after the menus
         RECT tr{ titleX_, 0, btn_[0].left - Scale(12, dpi_), h_ };
         SetTextColor(dc, Mix(th_.captionText, th_.bgCaption, 0.35));
         DrawTextW(dc, title_.c_str(), -1, &tr, DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS);
     }
     SelectObject(dc, of);
-    // botões da janela
+    // window buttons
     for (int i = 0; i < 3; i++) {
         if (IsRectEmpty(&btn_[i]) || hot_ != HitMin + i) continue;
         COLORREF c = i == 2 ? (pressed_ == HitClose ? RGB(168, 36, 24) : RGB(196, 43, 28)) : hot;
@@ -117,7 +117,7 @@ void CaptionBar::Paint(HDC dc) {
     gr.DrawLine(&pen, mx - s, my, mx + s, my);
     if (resizable_) {
         float cx = (btn_[1].left + btn_[1].right) / 2.0f;
-        if (IsZoomed(frame_)) {        // restaurar: dois quadrados sobrepostos
+        if (IsZoomed(frame_)) {        // restore: two overlapping squares
             float o = (float)Scale(2, dpi_);
             gr.DrawRectangle(&pen, cx - s + o, my - s, 2 * s - o, 2 * s - o);
             gr.DrawRectangle(&pen, cx - s, my - s + o, 2 * s - o, 2 * s - o);
@@ -133,8 +133,8 @@ void CaptionBar::Paint(HDC dc) {
 bool CaptionBar::NcCalcSize(WPARAM w, LPARAM l, LRESULT& result) {
     if (!w) return false;
     if (resizable_) {
-        // mantém as bordas de redimensionamento do sistema (invisíveis no Windows 11) e tira só a faixa de título;
-        // maximizada, a janela passa da tela pela espessura da moldura, então o topo desce o mesmo tanto
+        // keeps the system resize borders (invisible on Windows 11) and removes only the title strip;
+        // when maximized, the window overflows the screen by the frame thickness, so the top moves down by the same amount
         auto* p = (NCCALCSIZE_PARAMS*)l;
         LONG top = p->rgrc[0].top;
         DefWindowProcW(frame_, WM_NCCALCSIZE, w, l);
@@ -151,12 +151,12 @@ bool CaptionBar::NcCalcSize(WPARAM w, LPARAM l, LRESULT& result) {
 bool CaptionBar::NcHitTest(LPARAM l, LRESULT& result) {
     if (resizable_) {
         LRESULT d = DefWindowProcW(frame_, WM_NCHITTEST, 0, l);
-        if (d != HTCLIENT && d != HTCAPTION && d != HTNOWHERE) { result = d; return true; }   // bordas do sistema
+        if (d != HTCLIENT && d != HTCAPTION && d != HTNOWHERE) { result = d; return true; }   // system borders
     }
     POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
     ScreenToClient(frame_, &p);
     if (p.y < 0 || p.y >= h_) { result = HTCLIENT; return true; }
-    if (resizable_ && !IsZoomed(frame_) && p.y < Scale(5, dpi_)) {     // borda de cima (a faixa de título ocupa o lugar dela)
+    if (resizable_ && !IsZoomed(frame_) && p.y < Scale(5, dpi_)) {     // top border (the title strip takes its place)
         int c = Scale(12, dpi_);
         result = p.x < c ? HTTOPLEFT : p.x >= width_ - c ? HTTOPRIGHT : HTTOP;
         return true;

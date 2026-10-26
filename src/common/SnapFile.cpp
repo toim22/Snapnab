@@ -5,12 +5,12 @@ using Microsoft::WRL::ComPtr;
 
 namespace snap {
 
-// 0xCB + "SNAPNAB" + identificador de formato de 16 bytes  (≙ 0xCB + "TSCSNAG" + 16 B no original)
+// 0xCB + "SNAPNAB" + 16-byte format identifier  (≙ 0xCB + "TSCSNAG" + 16 B in the original)
 static const BYTE kHeader[24] = { 0xCB, 'S', 'N', 'A', 'P', 'N', 'A', 'B',
                                   0x5A, 0x3C, 0x91, 0x0E, 0x6B, 0x2D, 0x4F, 0x18,
                                   0xA7, 0x44, 0xC2, 0x9B, 0x10, 0x7E, 0xD3, 0x55 };
 
-// ILockBytes sobre o arquivo somando o deslocamento do cabeçalho (≙ CHeaderedILockBytes)
+// ILockBytes over the file, adding the header offset (≙ CHeaderedILockBytes)
 class HeaderedLockBytes : public ILockBytes {
 public:
     HeaderedLockBytes(HANDLE f, ULONGLONG off) : file_(f), off_(off) {}
@@ -89,7 +89,7 @@ static bool ReadPng(IStorage* stg, const std::string& name, Image& img) {
 bool SaveSnapFile(const std::wstring& path, const std::vector<SnapFrame>& frames) {
     std::wstring tmp = path + L".saving";
     HANDLE f = CreateFileW(tmp.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-    if (f == INVALID_HANDLE_VALUE) { Log(L"SaveSnapFile: não abriu %s", tmp.c_str()); return false; }
+    if (f == INVALID_HANDLE_VALUE) { Log(L"SaveSnapFile: could not open %s", tmp.c_str()); return false; }
     DWORD wr; WriteFile(f, kHeader, sizeof kHeader, &wr, nullptr);
     bool ok = false;
     {
@@ -120,7 +120,7 @@ bool SaveSnapFile(const std::wstring& path, const std::vector<SnapFrame>& frames
                 ok = WriteStream(root.Get(), L"Index", xml.data(), xml.size()) && SUCCEEDED(root->Commit(STGC_DEFAULT));
             }
         }
-        lb->Release();          // fecha o arquivo quando o IStorage também soltar
+        lb->Release();          // closes the file when the IStorage releases it too
     }
     if (!ok) { DeleteFileW(tmp.c_str()); Log(L"SaveSnapFile falhou: %s", path.c_str()); return false; }
     return MoveFileExW(tmp.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING) != 0;
@@ -160,7 +160,7 @@ bool LoadSnapFile(const std::wstring& path, std::vector<SnapFrame>& frames) {
                         if (ReadStream(fs.Get(), L"Document", xml)) XmlParse(xml, frame.doc);
                         if (is) {
                             ReadPng(is.Get(), frame.doc.get("BaseImage", "Image_0.png"), frame.base);
-                            // imagens embutidas referenciadas por StreamName em qualquer nível
+                            // embedded images referenced by StreamName at any level
                             std::function<void(const XmlNode&)> walk = [&](const XmlNode& n) {
                                 std::string sn = n.get("StreamName");
                                 if (!sn.empty() && !frame.embedded.count(sn)) {

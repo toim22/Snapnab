@@ -1,5 +1,5 @@
-// Painel de propriedades do Editor: estilos rápidos (tema, galeria, favoritos), galeria de carimbos e as
-// propriedades de cada ferramenta como na referência (ToolProperties.*, ShadowPropertiesControl, Quick Styles).
+// Editor properties panel: quick styles (theme, gallery, favorites), stamp gallery and the
+// properties of each tool as in the reference (ToolProperties.*, ShadowPropertiesControl, Quick Styles).
 #include "Panels.h"
 #include "Popups.h"
 #include "QuickStyles.h"
@@ -16,19 +16,40 @@ using ui::Mix;
 
 namespace {
 enum Kind { K_SWATCH, K_SHADOW, K_SHAPE, K_CAPSTART, K_DASH, K_CAPEND, K_SLIDER, K_CHECK, K_TOGGLE, K_EXPANDER, K_TOGGLEBTN,
-            K_LABEL, K_ICONBTN, K_ROWLABEL };
+            K_LABEL, K_ICONBTN, K_ROWLABEL, K_FRAME };
 enum : int {
     C_COLOR = 1, C_FILL, C_OUTLINE, C_TEXTCOLOR, C_TAILCOLOR, C_EYEDROP, C_SHADOW, C_SHAPE, C_CAPSTART, C_DASH, C_CAPEND,
     C_WIDTH, C_OPACITY, C_STARTSIZE, C_ENDSIZE, C_BEZIER, C_FONTSIZE, C_OUTLINEW, C_TAILSIZE, C_PADDING, C_ADVANCED,
     C_BOLD, C_ITALIC, C_UNDERLINE, C_AL_L, C_AL_C, C_AL_R, C_AL_T, C_AL_M, C_AL_B, C_SHADED, C_MAGSCALE, C_MAGLINK,
     C_ANTIALIAS, C_TOLERANCE, C_AMOUNT, C_SMARTMOVE, C_GLOBAL, C_STEPRESET, C_ROWLABEL, C_HINT,
+    C_LINESPACING, C_BGBLUR, C_BGBLURAMT, C_FILLALPHA, C_STEPOUTLINE, C_STEPOUTLINEW, C_AREA, C_LOUPE, C_LOUPEHANDLE, C_ASPECT,
 };
 enum : int {
     H_THEME = 400, H_SEARCH, H_STAMPCAT, H_FONT, H_STEPTYPE, H_SELMODE, H_SELFILL, H_CUTDIR, H_HIDEKIND, H_ORGANIZE, H_IMPORT,
+    H_GX = 412, H_GY, H_GW, H_GH, H_LOCK, H_LIFT, H_DROP,
     H_BTN1 = 324, H_BTN2, H_BTN3, H_FRONT, H_BACK, H_DELETE, H_GROUP, H_UNGROUP, H_EDIT = 600,
 };
-// ordem das pontas na lista (como na referência): seta, seta larga, seta aberta, reta, redonda, ponto, quadrado, losango
+// order of the ends in the list (as in the reference): arrow, wide arrow, open arrow, flat, round, dot, square, diamond
 const int kCapOrder[CapCount] = { CapArrow, CapArrowWide, CapArrowOpen, CapFlat, CapRound, CapDot, CapSquare, CapDiamond };
+// magnifier shapes (MagnifyShape) as ShapeKind outlines
+int MagKind(int m) {
+    static const int k[MagnifyKindCount] = { ShapeEllipse, ShapeRect, ShapeRoundRect, ShapeHexagon, ShapeDiamond, ShapeStar };
+    return k[std::clamp(m, 0, MagnifyKindCount - 1)];
+}
+
+// sample outline of an area shape (Highlighter, Spotlight, Hide): the shapes plus a polygon and a freehand outline
+void AreaSample(Gdiplus::GraphicsPath& gp, int area, Gdiplus::RectF r) {
+    if (area == AreaPolygon) {
+        Gdiplus::PointF p[] = { { r.X + r.Width * 0.1f, r.Y + r.Height * 0.3f }, { r.X + r.Width * 0.55f, r.Y }, { r.GetRight(), r.Y + r.Height * 0.45f },
+                                { r.X + r.Width * 0.7f, r.GetBottom() }, { r.X + r.Width * 0.2f, r.Y + r.Height * 0.85f } };
+        gp.AddPolygon(p, 5);
+    } else if (area == AreaFreehand) {
+        Gdiplus::PointF p[] = { { r.X + r.Width * 0.15f, r.Y + r.Height * 0.4f }, { r.X + r.Width * 0.45f, r.Y + r.Height * 0.05f }, { r.X + r.Width * 0.9f, r.Y + r.Height * 0.2f },
+                                { r.GetRight(), r.Y + r.Height * 0.7f }, { r.X + r.Width * 0.55f, r.GetBottom() }, { r.X, r.Y + r.Height * 0.8f } };
+        gp.AddClosedCurve(p, 6, 0.6f);
+    } else ShapePath(gp, std::clamp(area, 0, ShapeCount - 1), r);
+}
+
 const wchar_t* kShapeNames[ShapeCount] = { TR_NOOP(L"Retângulo"), TR_NOOP(L"Retângulo arredondado"), TR_NOOP(L"Elipse"), TR_NOOP(L"Triângulo"), TR_NOOP(L"Losango"),
                                            TR_NOOP(L"Paralelogramo"), TR_NOOP(L"Hexágono"), TR_NOOP(L"Estrela") };
 
@@ -96,9 +117,9 @@ std::wstring HelpFor(Tool t) {
     switch (t) {
     case Tool::Arrow: return Tr(L"Arraste para desenhar uma seta. Shift trava em 45°. Com “Curva de Bézier”, arraste a alça do meio para curvar.");
     case Tool::Line: return Tr(L"Arraste para desenhar uma linha. Shift trava em 45°.");
-    case Tool::Shape: return Tr(L"Arraste para desenhar a forma. Shift deixa a forma proporcional (quadrado, círculo).");
+    case Tool::Shape: return Tr(L"Arraste para desenhar a forma. Shift deixa a forma perfeita (quadrado, círculo, triângulo equilátero, hexágono regular).");
     case Tool::Pen: return Tr(L"Arraste para desenhar à mão livre.");
-    case Tool::Highlighter: return Tr(L"Arraste um retângulo sobre o que quer destacar. A cor e a opacidade vêm das propriedades.");
+    case Tool::Highlighter: return Tr(L"Arraste sobre o que quer destacar. Em Forma, escolha retângulo, elipse, polígono (clique nos cantos) ou mão livre; Shift deixa a forma perfeita.");
     case Tool::Text: return Tr(L"Clique ou arraste para criar uma caixa de texto. Duplo clique edita o texto.");
     case Tool::Callout: return Tr(L"Arraste para criar o balão e digite. A alça amarela move a ponta (ou a direção das setas).");
     case Tool::Step: return Tr(L"Clique para numerar passos em sequência. O Tipo escolhe números, letras ou algarismos romanos.");
@@ -106,8 +127,8 @@ std::wstring HelpFor(Tool t) {
     case Tool::Fill: return Tr(L"Clique para preencher a área de cor semelhante. O conta-gotas pega a cor de preenchimento da imagem.");
     case Tool::Eraser: return Tr(L"Arraste para apagar pixels da imagem (ficam transparentes).");
     case Tool::Magnify: return Tr(L"Arraste para criar a lupa. Com a lente separada, a alça amarela escolhe a área ampliada.");
-    case Tool::Blur: return Tr(L"Arraste sobre a área a ocultar (desfoque ou pixelado).");
-    case Tool::Spotlight: return Tr(L"Arraste a área em destaque; o resto da imagem escurece.");
+    case Tool::Blur: return Tr(L"Arraste sobre a área a ocultar (desfoque ou pixelado). Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita.");
+    case Tool::Spotlight: return Tr(L"Arraste a área em destaque; o resto escurece. Em Forma, escolha elipse, polígono ou mão livre; Shift deixa a forma perfeita.");
     case Tool::Select: return Tr(L"Clique num objeto para selecionar e arrastar. Com Smart Move, arraste uma área da imagem para movê-la; o fundo é preenchido.");
     case Tool::Crop: return Tr(L"Arraste a área a manter; Enter ou duplo clique aplica.");
     case Tool::Selection: return Tr(L"Selecione e arraste para mover (Smart Move); Del apaga; Ctrl+C copia.");
@@ -118,7 +139,7 @@ std::wstring HelpFor(Tool t) {
 }
 } // namespace
 
-// ================================================================= estado
+// ================================================================= state
 bool PropsPanel::ObjSelected() const {
     return canvas && canvas->doc && canvas->selected >= 0 && canvas->selected < (int)canvas->doc->st.objs.size();
 }
@@ -166,6 +187,14 @@ int PropsPanel::Value(int id) const {
     case C_PADDING: return (int)std::lround(s.padding);
     case C_MAGSCALE: return s.magnifyScale;
     case C_AMOUNT: return s.amount;
+    case C_LINESPACING: return (int)std::lround(s.lineSpacing * 100);
+    case C_BGBLUR: return s.bgBlur;
+    case C_BGBLURAMT: return s.bgBlurAmount;
+    case C_FILLALPHA: return (int)std::lround(CA(s.fill) * 100 / 255.0);
+    case C_STEPOUTLINEW: return (int)std::lround(s.stepOutlineWidth);
+    case C_LOUPE: return s.loupe;
+    case C_LOUPEHANDLE: return s.loupeHandle;
+    case C_ASPECT: return aspectLock_;
     case C_TOLERANCE: return (int)canvas->tolerance;
     case C_BEZIER: return s.bezier;
     case C_SHADED: return s.shaded;
@@ -187,6 +216,7 @@ void PropsPanel::SetValue(int id, int v, bool newStep) {
     case C_TOLERANCE: canvas->tolerance = (float)std::clamp(v, 0, 100); return;
     case C_GLOBAL: canvas->wandGlobal = v != 0; InvalidateRect(hwnd, nullptr, FALSE); return;
     case C_SMARTMOVE: canvas->smartMove = v != 0; if (!v) canvas->ClearRasterSelection(); InvalidateRect(hwnd, nullptr, FALSE); return;
+    case C_ASPECT: aspectLock_ = v != 0; RegSetDword(L"GeometryAspectLock", aspectLock_, L"Editor"); InvalidateRect(hwnd, nullptr, FALSE); return;
     default: break;
     }
     Style s = Cur();
@@ -200,6 +230,13 @@ void PropsPanel::SetValue(int id, int v, bool newStep) {
     case C_PADDING: s.padding = (float)v; break;
     case C_MAGSCALE: s.magnifyScale = std::clamp(v, 110, 1000); break;
     case C_AMOUNT: s.amount = std::max(1, v); break;
+    case C_LINESPACING: s.lineSpacing = std::clamp(v, 80, 300) / 100.0f; break;
+    case C_BGBLUR: s.bgBlur = v != 0; break;
+    case C_BGBLURAMT: s.bgBlurAmount = std::clamp(v, 1, 40); break;
+    case C_FILLALPHA: s.fill = (s.fill & 0x00FFFFFF) | ((uint32_t)std::lround(std::clamp(v, 0, 100) * 2.55) << 24); break;
+    case C_STEPOUTLINEW: s.stepOutlineWidth = (float)std::clamp(v, 0, 40); break;
+    case C_LOUPE: s.loupe = v != 0; break;
+    case C_LOUPEHANDLE: s.loupeHandle = v != 0; break;
     case C_BEZIER: s.bezier = v != 0; break;
     case C_SHADED: s.shaded = v != 0; break;
     case C_MAGLINK: s.magnifyLink = v != 0; break;
@@ -212,10 +249,10 @@ void PropsPanel::SetValue(int id, int v, bool newStep) {
     default: return;
     }
     SetStyle(s, newStep);
-    if (id == C_BEZIER || id == C_MAGLINK) Layout();
+    if (id == C_BEZIER || id == C_MAGLINK || id == C_BGBLUR || id == C_LOUPE || id == C_FILLALPHA) Layout();
 }
 
-// ================================================================= criação
+// ================================================================= creation
 void PropsPanel::ThemeChanged() {
     if (bg_) DeleteObject(bg_);
     bg_ = CreateSolidBrush(EdTheme().bgMain);
@@ -271,6 +308,11 @@ void PropsPanel::Create(HWND parent, Canvas* c) {
     add(H_DELETE, kButton, Tr(L"Excluir objeto"), 0);
     add(H_GROUP, kButton, Tr(L"Agrupar"), 0);
     add(H_UNGROUP, kButton, Tr(L"Desagrupar"), 0);
+    add(H_LOCK, kButton, Tr(L"Bloquear"), 0);
+    add(H_LIFT, kButton, Tr(L"Levantar a seleção (peça solta)"), 0);
+    add(H_DROP, kButton, Tr(L"Soltar a peça na imagem"), 0);
+    for (int id : { H_GX, H_GY, H_GW, H_GH }) add(id, L"EDIT", L"", ES_RIGHT | ES_AUTOHSCROLL);
+    aspectLock_ = RegGetDword(L"GeometryAspectLock", 0, L"Editor") != 0;
     FillThemeCombo();
     FillStampCats();
 }
@@ -288,7 +330,7 @@ HWND PropsPanel::EditFor(int ctlId) {
 void PropsPanel::FillThemeCombo() {
     HWND c = Child(H_THEME);
     ComboBox_ResetContent(c);
-    for (auto& t : QS().themes) ComboBox_AddString(c, Tr(t.name).c_str());     // Básico e Industrial traduzidos
+    for (auto& t : QS().themes) ComboBox_AddString(c, Tr(t.name).c_str());     // Basic and Industrial, translated
     int sep = ComboBox_AddString(c, L"");
     SendMessageW(c, mui::MUI_SETITEMFLAGS, sep, mui::ItemSeparator);
     ComboBox_AddString(c, Tr(L"Novo tema…"));
@@ -299,13 +341,24 @@ void PropsPanel::FillThemeCombo() {
 void PropsPanel::FillStampCats() {
     HWND c = Child(H_STAMPCAT);
     ComboBox_ResetContent(c);
-    for (auto& cat : StampCategories()) ComboBox_AddString(c, cat.name.c_str());
+    stampCats_ = StampCategories();
+    for (auto& cat : stampCats_) ComboBox_AddString(c, cat.name.c_str());
+    // last category by its key (the list may gain "Pinned" at the top); older settings kept only the index
+    std::wstring key = RegGetString(L"LastUsedStampCategoryKey", L"", L"Editor");
     int last = (int)RegGetDword(L"LastUsedStampCategory", 1, L"Editor");
+    if (key.empty()) {                            // older settings: the index in the list without "Pinned" and "Labels"
+        int n = 0;
+        for (auto& c : stampCats_) {
+            if (c.pinned || c.key == L"labels") continue;
+            if (n++ == last) { key = c.key; break; }
+        }
+    }
+    for (int i = 0; i < (int)stampCats_.size(); i++) if (!key.empty() && stampCats_[i].key == key) last = i;
     stampCat_ = std::clamp(last, 0, std::max(0, ComboBox_GetCount(c) - 1));
     ComboBox_SetCurSel(c, stampCat_);
 }
 
-// ================================================================= miniaturas
+// ================================================================= thumbnails
 const Image& PropsPanel::Thumb(Tool t, const Style& s, int px) {
     std::wstring key = std::to_wstring((int)t) + L"|" + std::to_wstring(px) + L"|" + Utf8ToW(XmlSerialize(StyleToXml(s), false));
     auto it = thumbs_.find(key);
@@ -323,6 +376,14 @@ const Image& PropsPanel::StampThumb(const std::wstring& id, int px) {
     if (id.rfind(L"file:", 0) == 0) {
         Image src;
         if (LoadImageFile(id.substr(5), src) && !src.empty()) {
+            double k = std::min((double)px / src.w, (double)px / src.h);
+            Image sc = ScaleImage(src, std::max(1, (int)(src.w * k)), std::max(1, (int)(src.h * k)));
+            img = Image(px, px, 0);
+            img.Blit(sc, (px - sc.w) / 2, (px - sc.h) / 2, false);
+        }
+    } else if (id.rfind(L"label:", 0) == 0) {          // label stamp: the badge fitted to the tile
+        Image src = StampImage(id, px * 3);
+        if (!src.empty()) {
             double k = std::min((double)px / src.w, (double)px / src.h);
             Image sc = ScaleImage(src, std::max(1, (int)(src.w * k)), std::max(1, (int)(src.h * k)));
             img = Image(px, px, 0);
@@ -387,7 +448,8 @@ void PropsPanel::Layout() {
         bool addTile = !fav && !stamps;
         if (fav) { for (auto& f : QS().favorites) tileStyles_.push_back(f.style); n = (int)tileStyles_.size(); }
         else if (stamps) {
-            auto cats = StampCategories();
+            if (stampCats_.empty()) stampCats_ = StampCategories();
+            const auto& cats = stampCats_;
             std::vector<StampItem> items = stampSearch_.empty() ? (stampCat_ < (int)cats.size() ? cats[stampCat_].items : std::vector<StampItem>{})
                                                                 : SearchStamps(cats, stampSearch_);
             for (auto& it : items) stampIds_.push_back(it.id);
@@ -414,7 +476,7 @@ void PropsPanel::Layout() {
             y += S(40);
         }
     }
-    // ---- propriedades da ferramenta
+    // ---- tool properties
     tpHeader_ = { 0, y, W, y + S(34) };
     helpBtn_ = { x1 - S(24), y + S(5), x1, y + S(29) };
     y += S(42);
@@ -423,7 +485,7 @@ void PropsPanel::Layout() {
         int span = (x1 - x0) / std::max(1, n);
         for (int i = 0; i < n; i++) {
             int id = items[i].first, cx = x0 + span * i + span / 2;
-            int kind = id == C_SHADOW ? K_SHADOW : id == C_SHAPE ? K_SHAPE : K_SWATCH;
+            int kind = id == C_SHADOW ? K_SHADOW : id == C_SHAPE || id == C_AREA ? K_SHAPE : K_SWATCH;
             ctls_.push_back({ id, kind, { cx - bw / 2, y, cx + bw / 2, y + lh + bh }, items[i].second });
         }
         y += lh + bh + S(12);
@@ -465,6 +527,7 @@ void PropsPanel::Layout() {
         y += S(36);
         slider(C_OPACITY, Tr(L"Opacidade"), 0, 100);
         slider(C_PADDING, Tr(L"Margem interna"), 0, 60);
+        slider(C_LINESPACING, Tr(L"Espaçamento entre linhas (%)"), 80, 300);
         if (callout) check(C_SHADED, Tr(L"Sombreado (degradê)"));
     };
     auto hint = [&](const std::wstring& t) { ctls_.push_back({ C_HINT, K_LABEL, { x0, y, x1, y + S(46) }, t }); y += S(50); };
@@ -483,6 +546,11 @@ void PropsPanel::Layout() {
         slider(C_STARTSIZE, Tr(L"Tamanho inicial"), 1, 10, startSz);
         slider(C_ENDSIZE, Tr(L"Tamanho final"), 1, 10, endSz);
         check(C_BEZIER, Tr(L"Curva de Bézier"));
+        if (pt == Tool::Arrow) {                  // label at the tail (type right after drawing the arrow)
+            combo(H_FONT, Tr(L"Fonte do texto"));
+            slider(C_FONTSIZE, Tr(L"Tamanho do texto"), 6, 200);
+            hint(Tr(L"Depois de desenhar a seta, digite para escrever um texto na ponta inicial; duplo clique edita."));
+        }
         break;
     case Tool::Pen:
         swatches({ { C_COLOR, Tr(L"Cor") }, { C_SHADOW, Tr(L"Sombra") } });
@@ -491,7 +559,7 @@ void PropsPanel::Layout() {
         slider(C_OPACITY, Tr(L"Opacidade"), 0, 100);
         break;
     case Tool::Highlighter:
-        swatches({ { C_COLOR, Tr(L"Cor") } });
+        swatches({ { C_COLOR, Tr(L"Cor") }, { C_AREA, Tr(L"Forma") } });
         slider(C_OPACITY, Tr(L"Opacidade"), 5, 100);
         break;
     case Tool::Text:
@@ -518,6 +586,9 @@ void PropsPanel::Layout() {
         ctls_.push_back({ C_TAILCOLOR, K_SWATCH, { x1 - S(44), y + S(2), x1, y + S(26) }, L"", 0, 0, leader });
         y += S(34);
         slider(C_TAILSIZE, Tr(L"Tamanho da seta"), 1, 30, leader);
+        check(C_BGBLUR, Tr(L"Desfocar o fundo (vidro fosco)"));
+        slider(C_BGBLURAMT, Tr(L"Desfoque"), 1, 40, st.bgBlur);
+        slider(C_FILLALPHA, Tr(L"Opacidade do preenchimento"), 0, 100);
         advancedText(true);
         break;
     }
@@ -541,6 +612,11 @@ void PropsPanel::Layout() {
         slider(C_OPACITY, Tr(L"Opacidade"), 0, 100);
         combo(H_STEPTYPE, Tr(L"Tipo"), S(34));
         ctls_.push_back({ C_STEPRESET, K_ICONBTN, { x1 - S(28), y - S(36), x1, y - S(6) }, Tr(L"Reiniciar a sequência") });
+        // outline for contrast on light and dark backgrounds (accessibility)
+        ctls_.push_back({ C_ROWLABEL, K_ROWLABEL, { x0, y, x0 + S(92), y + S(28) }, Tr(L"Contorno") });
+        ctls_.push_back({ C_STEPOUTLINE, K_SWATCH, { x1 - S(44), y + S(2), x1, y + S(26) }, L"" });
+        y += S(34);
+        slider(C_STEPOUTLINEW, Tr(L"Espessura do contorno"), 0, 12);
         break;
     case Tool::Eraser:
         slider(C_WIDTH, Tr(L"Largura"), 1, 200);
@@ -552,12 +628,16 @@ void PropsPanel::Layout() {
         slider(C_MAGSCALE, Tr(L"Ampliação (%)"), 110, 800);
         slider(C_WIDTH, Tr(L"Espessura"), 0, 20);
         check(C_MAGLINK, Tr(L"Lente separada da área ampliada"));
+        check(C_LOUPE, Tr(L"Lupa realista (aro e reflexo)"));
+        check(C_LOUPEHANDLE, Tr(L"Com cabo"), st.loupe);
         break;
     case Tool::Blur:
+        swatches({ { C_AREA, Tr(L"Forma") } });
         combo(H_HIDEKIND, Tr(L"Tipo"));
         slider(C_AMOUNT, Tr(L"Intensidade"), 1, 30);
         break;
     case Tool::Spotlight:
+        swatches({ { C_AREA, Tr(L"Forma") } });
         slider(C_AMOUNT, Tr(L"Intensidade"), 1, 14);
         break;
     case Tool::Select:
@@ -577,6 +657,8 @@ void PropsPanel::Layout() {
         check(C_GLOBAL, Tr(L"Seleção global (mesma cor)"));
         combo(H_SELFILL, Tr(L"Ao mover, preencher"));
         buttons({ H_BTN1, H_BTN2, H_BTN3 });
+        buttons({ H_LIFT });
+        if (canvas->HasFloating()) buttons({ H_DROP });
         break;
     case Tool::Cutout:
         combo(H_CUTDIR, Tr(L"Direção"));
@@ -588,11 +670,38 @@ void PropsPanel::Layout() {
         break;
     default: break;
     }
+    // exact position and size (object, raster selection or crop area), in image pixels
+    int gk = canvas->GeometryKind();
+    geomShown_ = gk != 0;
+    if (gk) {
+        y += S(4);
+        ctls_.push_back({ C_ROWLABEL, K_ROWLABEL, { x0, y, x1, y + S(22) },
+                          gk == 3 ? Tr(L"Área de corte (px)") : gk == 2 ? Tr(L"Seleção (px)") : Tr(L"Posição e tamanho (px)") });
+        y += S(26);
+        int lw = S(22), cw = (x1 - x0 - S(40) - 2 * lw - S(10)) / 2;
+        auto field = [&](int id, RECT fr) {              // edit inside a rounded frame
+            ctls_.push_back({ C_ROWLABEL, K_FRAME, fr, L"" });
+            places.push_back({ id, { fr.left + S(6), fr.top + S(5), fr.right - S(6), fr.bottom - S(4) } });
+        };
+        auto row = [&](const wchar_t* a, int ida, const wchar_t* b, int idb) {
+            ctls_.push_back({ C_ROWLABEL, K_ROWLABEL, { x0, y, x0 + lw, y + S(26) }, a });
+            field(ida, { x0 + lw, y, x0 + lw + cw, y + S(26) });
+            ctls_.push_back({ C_ROWLABEL, K_ROWLABEL, { x0 + lw + cw + S(10), y, x0 + 2 * lw + cw + S(10), y + S(26) }, b });
+            field(idb, { x0 + 2 * lw + cw + S(10), y, x0 + 2 * lw + 2 * cw + S(10), y + S(26) });
+            y += S(32);
+        };
+        row(L"X", H_GX, L"Y", H_GY);
+        int ay = y;
+        row(Tr(L"L"), H_GW, Tr(L"A"), H_GH);
+        ctls_.push_back({ C_ASPECT, K_TOGGLEBTN, { x1 - S(32), ay - S(16), x1, ay + S(14) }, Tr(L"Manter proporção") });
+    }
     if (ObjSelected()) {
         y += S(6);
         if (nsel > 1) buttons({ H_GROUP });
         if (canvas->CanUngroup()) buttons({ H_UNGROUP });
-        buttons({ H_FRONT, H_BACK, H_DELETE });
+        SetWindowTextW(Child(H_LOCK), canvas->SelectionLocked() ? Tr(L"Desbloquear") : Tr(L"Bloquear"));
+        buttons({ H_FRONT, H_BACK, H_LOCK, H_DELETE });
+        if (canvas->doc->st.objs[canvas->selected]->floating) buttons({ H_DROP });
     }
     content_ = y + S(12);
     scroll_ = std::clamp(scroll_, 0, std::max(0, content_ - (int)cr.bottom));
@@ -601,13 +710,16 @@ void PropsPanel::Layout() {
     gridSb_.track = { x1 + S(1), gridRect_.top - scroll_, x1 + S(6), gridRect_.bottom - scroll_ };
     gridSb_.content = gridContent_; gridSb_.view = gridRect_.bottom - gridRect_.top; gridSb_.pos = gridScroll_;
     if (!hasQs) gridSb_.content = 0;
-    // filhos: mostra os usados nesta ferramenta (na posição com a rolagem) e esconde o resto
+    // children: shows the ones used by this tool (positioned with the scrolling) and hides the rest
     std::set<int> used;
     for (auto& p : places) {
         HWND h = p.id >= H_EDIT ? EditFor(p.id - H_EDIT) : Child(p.id);
         if (!h) continue;
         used.insert(p.id);
-        MoveWindow(h, p.r.left, p.r.top - scroll_, p.r.right - p.r.left, p.r.bottom - p.r.top, TRUE);
+        // without copying the old pixels: the children overlap while they move, and an edit box painted over a
+        // button would travel with it
+        SetWindowPos(h, nullptr, p.r.left, p.r.top - scroll_, p.r.right - p.r.left, p.r.bottom - p.r.top,
+                     SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS);
         ShowWindow(h, SW_SHOWNA);
     }
     for (auto& [id, h] : children_) if (!used.count(id)) ShowWindow(h, SW_HIDE);
@@ -623,10 +735,33 @@ void PropsPanel::Layout() {
         }
     }
     EnableWindow(Child(H_FONT), true);
+    bool step = ObjSelected() && canvas->doc->st.objs[canvas->selected]->type == ObjType::Step;   // steps: position only
+    EnableWindow(Child(H_GW), !step); EnableWindow(Child(H_GH), !step);
+    UpdateGeometryFields();
     InvalidateRect(hwnd, nullptr, FALSE);
 }
 
-// ================================================================= desenho
+// the fields appear or disappear with the area (layout), otherwise only their values change
+void PropsPanel::AreaChanged() {
+    if (!canvas) return;
+    if (geomShown_ != (canvas->GeometryKind() != 0)) Load();
+    else UpdateGeometryFields();
+}
+
+// geometry fields ← canvas (the field being typed in keeps its text)
+void PropsPanel::UpdateGeometryFields() {
+    if (!geomShown_ || !canvas) return;
+    Gdiplus::RectF r = canvas->Geometry();
+    int v[4] = { (int)std::lround(r.X), (int)std::lround(r.Y), (int)std::lround(r.Width), (int)std::lround(r.Height) };
+    bool old = loading_; loading_ = true;
+    int ids[4] = { H_GX, H_GY, H_GW, H_GH };
+    for (int i = 0; i < 4; i++)
+        if (GetFocus() != Child(ids[i])) SetWindowTextW(Child(ids[i]), std::to_wstring(v[i]).c_str());
+    loading_ = old;
+    if (GetFocus() != Child(H_GW) && GetFocus() != Child(H_GH) && r.Height > 0) geomAspect_ = r.Width / r.Height;
+}
+
+// ================================================================= drawing
 void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
     const auto& th = EdTheme();
     int dpi = DpiForWindow(hwnd);
@@ -642,6 +777,10 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         StrokeRound(g, b, (float)S(5), Mix(th.line, 0, 0.08), 1.0f);
     };
     switch (c.kind) {
+    case K_FRAME:
+        FillRound(g, r, (float)S(4), RGB(255, 255, 255));
+        StrokeRound(g, r, (float)S(4), Mix(th.line, 0, 0.08), 1.0f);
+        break;
     case K_ROWLABEL: case K_LABEL: {
         HGDIOBJ of = SelectObject(dc, ui::UiFont(dpi, c.kind == K_LABEL ? 8 : 9));
         SetBkMode(dc, TRANSPARENT); SetTextColor(dc, c.kind == K_LABEL ? RGB(110, 110, 118) : text);
@@ -650,7 +789,10 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         break;
     }
     case K_SWATCH: {
-        uint32_t col = c.id == C_FILL ? s.fill : c.id == C_TEXTCOLOR ? s.textColor : c.id == C_TAILCOLOR ? s.tailColor : s.stroke;
+        uint32_t col = c.id == C_FILL ? s.fill : c.id == C_TEXTCOLOR ? s.textColor : c.id == C_TAILCOLOR ? s.tailColor :
+                       c.id == C_STEPOUTLINE ? s.stepOutline : s.stroke;
+        if (c.id == C_STEPOUTLINE && s.stepOutlineWidth <= 0) col &= 0x00FFFFFF;
+        bool gradSw = s.grad.Active() && ((c.id == C_FILL && pt == Tool::Shape) || (c.id == C_COLOR && pt == Tool::Fill));
         if (c.id == C_OUTLINE && (pt == Tool::Text || pt == Tool::Callout || pt == Tool::Shape) && s.width <= 0) col &= 0x00FFFFFF;
         RECT b = r;
         bool compact = c.label.empty();
@@ -663,7 +805,12 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         if (c.id == C_EYEDROP) { icons::Draw(g, icons::Eyedropper, Gdiplus::RectF((float)(b.left + b.right) / 2 - S(12), (float)(b.top + b.bottom) / 2 - S(12), (float)S(24), (float)S(24)), GC(RGB(60, 60, 66))); break; }
         RECT sw = compact ? RECT{ b.left + S(5), b.top + S(5), b.right - S(16), b.bottom - S(5) }
                         : RECT{ b.left + S(9), b.top + S(6), b.right - S(9), b.bottom - S(16) };
-        if ((col >> 24) == 0) {
+        if (gradSw) {                                // gradient preview
+            Gdiplus::GraphicsPath rp; RoundPath(rp, RF(sw), (float)S(3));
+            auto br = FillBrush(col, s.grad, RF(sw));
+            g.FillPath(br.get(), &rp);
+            StrokeRound(g, sw, (float)S(3), RGB(150, 150, 158), 1.0f);
+        } else if ((col >> 24) == 0) {
             FillRound(g, sw, (float)S(3), RGB(255, 255, 255));
             StrokeRound(g, sw, (float)S(3), RGB(200, 200, 205), 1.0f);
             Gdiplus::Pen rp(Gdiplus::Color(255, 220, 40, 40), 2.0f);
@@ -704,9 +851,10 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         box(b);
         Gdiplus::RectF ir((float)b.left + S(10), (float)b.top + S(8), (float)(b.right - b.left) - S(20), (float)(b.bottom - b.top) - S(22));
         Gdiplus::GraphicsPath gp(Gdiplus::FillModeWinding);
-        if (pt == Tool::Callout) { CalloutBodyPath(gp, s.calloutShape, ir); gp.Outline(); }
+        if (c.id == C_AREA) AreaSample(gp, s.areaShape, ir);
+        else if (pt == Tool::Callout) { CalloutBodyPath(gp, s.calloutShape, ir); gp.Outline(); }
         else if (pt == Tool::Step) { if (s.stepShape == 2) gp.AddRectangle(ir); else if (s.stepShape == 3) ShapePath(gp, ShapeRoundRect, ir); else gp.AddEllipse(Gdiplus::RectF(ir.X + ir.Width / 2 - ir.Height / 2, ir.Y, ir.Height, ir.Height)); }
-        else if (pt == Tool::Magnify) ShapePath(gp, s.magnifyShape == 1 ? ShapeRect : s.magnifyShape == 2 ? ShapeRoundRect : ShapeEllipse, ir);
+        else if (pt == Tool::Magnify) ShapePath(gp, MagKind(s.magnifyShape), ir);
         else ShapePath(gp, s.shapeKind, ir);
         Gdiplus::Pen p(Gdiplus::Color(255, 70, 70, 76), 1.5f);
         g.DrawPath(&p, &gp);
@@ -802,7 +950,10 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         bool on = Value(c.id) != 0;
         box(r, on);
         Gdiplus::Color col = GC(on ? th.accentText : RGB(60, 60, 66));
-        if (c.id <= C_UNDERLINE) {
+        if (c.id == C_ASPECT) {                      // aspect lock: chain (linked) or broken chain
+            icons::Draw(g, icons::Link, Gdiplus::RectF((float)r.left + S(5), (float)r.top + S(6), (float)(r.right - r.left) - S(10), (float)(r.bottom - r.top) - S(12)), col);
+            if (!on) { Gdiplus::Pen x(GC(RGB(200, 60, 60)), 1.5f); g.DrawLine(&x, (float)r.left + S(8), (float)r.bottom - S(8), (float)r.right - S(8), (float)r.top + S(8)); }
+        } else if (c.id <= C_UNDERLINE) {
             static const wchar_t* t[3] = { L"B", L"I", L"U" };
             LOGFONTW lf{}; lf.lfHeight = -S(15); lf.lfWeight = c.id == C_BOLD ? FW_BOLD : FW_NORMAL;
             lf.lfItalic = c.id == C_ITALIC; lf.lfUnderline = c.id == C_UNDERLINE; wcscpy_s(lf.lfFaceName, L"Georgia");
@@ -812,14 +963,14 @@ void PropsPanel::PaintCtl(Gdiplus::Graphics& g, HDC dc, const Ctl& c) {
         } else {
             Gdiplus::Pen p(col, (float)S(2));
             float x = (float)r.left + S(6), w = (float)(r.right - r.left) - S(12), yy = (float)r.top + S(7), h = (float)(r.bottom - r.top) - S(14);
-            if (c.id <= C_AL_R) {          // linhas alinhadas
+            if (c.id <= C_AL_R) {          // aligned lines
                 int a = c.id - C_AL_L;
                 for (int i = 0; i < 4; i++) {
                     float lw = i % 2 ? w * 0.6f : w;
                     float lx = a == 0 ? x : a == 1 ? x + (w - lw) / 2 : x + w - lw;
                     g.DrawLine(&p, lx, yy + i * h / 3, lx + lw, yy + i * h / 3);
                 }
-            } else {                       // barra + bloco no topo/meio/base
+            } else {                       // bar + block at the top/middle/bottom
                 int a = c.id - C_AL_T;
                 Gdiplus::Pen thin(col, 1.0f);
                 g.DrawLine(&thin, x, yy, x + w, yy); g.DrawLine(&thin, x, yy + h, x + w, yy + h);
@@ -871,7 +1022,7 @@ void PropsPanel::Paint(HDC hdc) {
                 float cx = (a.left + a.right) / 2.0f, cy = (a.top + a.bottom) / 2.0f, k = (float)S(6);
                 g.DrawLine(&p, cx - k, cy, cx + k, cy); g.DrawLine(&p, cx, cy - k, cx, cy + k);
             }
-            // galeria (com rolagem própria)
+            // gallery (with its own scrolling)
             RECT gr = gridRect_; OffsetRect(&gr, 0, -scroll_);
             HRGN clip = CreateRectRgn(gr.left - S(2), gr.top, gr.right + S(2), gr.bottom);
             Gdiplus::Region rg(clip);
@@ -908,7 +1059,19 @@ void PropsPanel::Paint(HDC hdc) {
                     auto bmp = copy.WrapGdip();
                     g.DrawImage(bmp.get(), RF(ir));
                 }
-                if (t.add) {                    // "adicionar o estilo atual": tracejado + "+"
+                if (stamps && t.index < (int)stampIds_.size()) {
+                    if (IsStampPinned(stampIds_[t.index])) {   // pinned: pin on the corner
+                        float ps = (float)S(14);
+                        icons::Draw(g, icons::Pin, Gdiplus::RectF((float)r.right - ps - S(1), (float)r.top + S(1), ps, ps), GC(th.control));
+                    }
+                    if (stampDragging_ && (int)i == stampDropAt_ && stampDropAt_ != stampPress_) {     // drop position
+                        Gdiplus::Pen dp(GC(th.control), (float)S(2));
+                        bool after = stampDropAt_ > stampPress_;
+                        float x = after ? (float)r.right - 1 : (float)r.left + 1;
+                        g.DrawLine(&dp, x, (float)r.top + S(2), x, (float)r.bottom - S(2));
+                    }
+                }
+                if (t.add) {                    // "add the current style": dashed outline + "+"
                     Gdiplus::Pen dp(GC(th.control), 1.5f); dp.SetDashStyle(Gdiplus::DashStyleDash);
                     g.DrawRectangle(&dp, Gdiplus::RectF((float)r.left + 1, (float)r.top + 1, (float)(r.right - r.left) - 3, (float)(r.bottom - r.top) - 3));
                     RECT pb{ r.right - S(18), r.bottom - S(18), r.right - S(2), r.bottom - S(2) };
@@ -938,7 +1101,7 @@ void PropsPanel::Paint(HDC hdc) {
             DeleteObject(clip);
             gridSb_.pos = gridScroll_;
             gridSb_.Paint(g);
-            if (stamps) {                       // caixa da busca
+            if (stamps) {                       // search box
                 for (auto& [id, h] : children_)
                     if (id == H_SEARCH && IsWindowVisible(h)) {
                         RECT er; GetWindowRect(h, &er); MapWindowPoints(nullptr, hwnd, (POINT*)&er, 2);
@@ -960,7 +1123,7 @@ void PropsPanel::Paint(HDC hdc) {
         panelSb_.pos = scroll_;
         panelSb_.Paint(g);
     }
-    // informações do documento no pé, se couber
+    // document information at the bottom, if it fits
     if (!docInfo_.empty() && cr.bottom - S(90) > content_ - scroll_) {
         RECT tr{ S(14), cr.bottom - S(84), cr.right - S(10), cr.bottom - S(8) };
         HGDIOBJ of = SelectObject(mem, ui::UiFont(dpi, 8));
@@ -972,7 +1135,7 @@ void PropsPanel::Paint(HDC hdc) {
     SelectObject(mem, ob); DeleteObject(bb); DeleteDC(mem);
 }
 
-// ================================================================= interação
+// ================================================================= interaction
 void PropsPanel::ClickTile(int i, bool star) {
     if (i < 0 || i >= (int)tiles_.size()) return;
     const Tile& t = tiles_[i];
@@ -1002,7 +1165,23 @@ void PropsPanel::ClickTile(int i, bool star) {
 void PropsPanel::TileMenu(int i, POINT pt) {
     if (i < 0 || i >= (int)tiles_.size() || tiles_[i].add) return;
     Tool qsTool = StyleTool();
-    if (qsTool == Tool::Stamp) return;
+    if (qsTool == Tool::Stamp) {                    // pin a stamp to the top (and the "Pinned" category)
+        if (tiles_[i].index >= (int)stampIds_.size()) return;
+        std::wstring id = stampIds_[tiles_[i].index];
+        bool pinned = IsStampPinned(id);
+        HMENU m = CreatePopupMenu();
+        AppendMenuW(m, MF_STRING, 1, pinned ? Tr(L"Desafixar") : Tr(L"Fixar no topo"));
+        int cmd = TrackPopupMenu(m, TPM_RETURNCMD | TPM_RIGHTBUTTON, pt.x, pt.y, 0, hwnd, nullptr);
+        DestroyMenu(m);
+        if (cmd != 1) return;
+        SetStampPinned(id, !pinned);
+        std::wstring key = stampCat_ < (int)stampCats_.size() ? stampCats_[stampCat_].key : L"";
+        if (!key.empty()) RegSetString(L"LastUsedStampCategoryKey", key, L"Editor");
+        FillStampCats();
+        Layout();
+        if (onHint) onHint(pinned ? Tr(L"Carimbo desafixado.") : Tr(L"Carimbo fixado: aparece primeiro na categoria e em “Fixados”."));
+        return;
+    }
     const Tile& t = tiles_[i];
     bool fav = qsTool == Tool::Favorites;
     Tool tool = fav ? QS().favorites[t.index].tool : qsTool;
@@ -1079,19 +1258,23 @@ void PropsPanel::ClickCtl(const Ctl& c, POINT p) {
             if (onHint) onHint(Tr(L"Conta-gotas: clique na imagem para pegar a cor de preenchimento."));
             return;
         }
-        uint32_t& col = c.id == C_FILL ? s.fill : c.id == C_TEXTCOLOR ? s.textColor : c.id == C_TAILCOLOR ? s.tailColor : s.stroke;
-        bool outline = c.id == C_OUTLINE && (pt == Tool::Text || pt == Tool::Callout || pt == Tool::Shape);
-        uint32_t v = outline && s.width <= 0 ? (col & 0x00FFFFFF) : col;
-        if (!ColorPopup(hwnd, below, v, c.id == C_FILL || outline, QS().Theme().colors)) return;
+        uint32_t& col = c.id == C_FILL ? s.fill : c.id == C_TEXTCOLOR ? s.textColor : c.id == C_TAILCOLOR ? s.tailColor :
+                        c.id == C_STEPOUTLINE ? s.stepOutline : s.stroke;
+        bool outline = (c.id == C_OUTLINE && (pt == Tool::Text || pt == Tool::Callout || pt == Tool::Shape)) || c.id == C_STEPOUTLINE;
+        float& ow = c.id == C_STEPOUTLINE ? s.stepOutlineWidth : s.width;
+        uint32_t v = outline && ow <= 0 ? (col & 0x00FFFFFF) : col;
+        // gradients: shape fill and the Fill tool color
+        Gradient* grad = (c.id == C_FILL && pt == Tool::Shape) || (c.id == C_COLOR && pt == Tool::Fill) ? &s.grad : nullptr;
+        if (!ColorPopup(hwnd, below, v, c.id == C_FILL || outline, QS().Theme().colors, grad)) return;
         col = v;
-        if (outline && (v >> 24) && s.width <= 0) s.width = pt == Tool::Shape ? 4.0f : 3.0f;
-        if (outline && !(v >> 24)) s.width = 0;
+        if (outline && (v >> 24) && ow <= 0) ow = c.id == C_STEPOUTLINE ? 3.0f : pt == Tool::Shape ? 4.0f : 3.0f;
+        if (outline && !(v >> 24)) ow = 0;
         SetStyle(s, true);
         Load();
         return;
     }
     case K_SHADOW: {
-        if (p.y < r.top + S(20)) {          // "Sombra ▾": cor, opacidade, desfoque e distância
+        if (p.y < r.top + S(20)) {          // "Shadow ▾": color, opacity, blur and distance
             HMENU m = CreatePopupMenu(), mo = CreatePopupMenu(), mb = CreatePopupMenu(), md = CreatePopupMenu();
             for (int v : { 20, 30, 45, 60, 80, 100 }) AppendMenuW(mo, MF_STRING | (s.shadowOpacity == v ? MF_CHECKED : 0), 100 + v, (std::to_wstring(v) + L"%").c_str());
             for (int v : { 0, 2, 4, 6, 10, 16 }) AppendMenuW(mb, MF_STRING | (s.shadowBlur == v ? MF_CHECKED : 0), 300 + v, (std::to_wstring(v) + L" px").c_str());
@@ -1122,13 +1305,17 @@ void PropsPanel::ClickCtl(const Ctl& c, POINT p) {
         return;
     }
     case K_SHAPE: {
-        int count = pt == Tool::Callout ? kCalloutShapes : pt == Tool::Step ? 4 : pt == Tool::Magnify ? 3 : ShapeCount;
-        int sel = pt == Tool::Callout ? s.calloutShape : pt == Tool::Step ? s.stepShape : pt == Tool::Magnify ? s.magnifyShape : s.shapeKind;
+        bool area = c.id == C_AREA;
+        int count = area ? AreaShapeCount : pt == Tool::Callout ? kCalloutShapes : pt == Tool::Step ? 4 : pt == Tool::Magnify ? MagnifyKindCount : ShapeCount;
+        int sel = area ? s.areaShape : pt == Tool::Callout ? s.calloutShape : pt == Tool::Step ? s.stepShape : pt == Tool::Magnify ? s.magnifyShape : s.shapeKind;
         SIZE cell{ S(52), S(44) };
         int idx = GridPopup(hwnd, below, 4, count, cell, sel, [&](Gdiplus::Graphics& g, HDC, int i, RECT rc, bool, bool) {
             Gdiplus::RectF ir((float)rc.left + S(10), (float)rc.top + S(9), (float)(rc.right - rc.left) - S(20), (float)(rc.bottom - rc.top) - S(18));
             Gdiplus::Pen pen(Gdiplus::Color(255, 60, 60, 66), 1.5f);
-            if (pt == Tool::Callout) {
+            if (area) {
+                Gdiplus::GraphicsPath gp; AreaSample(gp, i, ir);
+                g.DrawPath(&pen, &gp);
+            } else if (pt == Tool::Callout) {
                 DrawObj o; o.type = ObjType::Callout; o.style.calloutShape = i;
                 o.p1 = Gdiplus::PointF(ir.X, ir.Y); o.p2 = Gdiplus::PointF(ir.GetRight(), ir.GetBottom() - S(6));
                 if (i >= 5 && i <= 11) { o.p2.Y = ir.GetBottom(); o.tail = Gdiplus::PointF(ir.GetRight() + 50, ir.Y + ir.Height / 2); }
@@ -1152,12 +1339,15 @@ void PropsPanel::ClickCtl(const Ctl& c, POINT p) {
                 if (i == 1) { Gdiplus::PointF tri[3] = { { q.X + q.Width / 2, q.Y + 1 }, { q.GetRight() + q.Width * 0.45f, q.Y + q.Height / 2 }, { q.X + q.Width / 2, q.GetBottom() - 1 } }; g.FillPolygon(&b, tri, 3); }
             } else {
                 Gdiplus::GraphicsPath gp;
-                ShapePath(gp, pt == Tool::Magnify ? (i == 1 ? ShapeRect : i == 2 ? ShapeRoundRect : ShapeEllipse) : i, ir);
+                ShapePath(gp, pt == Tool::Magnify ? MagKind(i) : i, ir);
                 g.DrawPath(&pen, &gp);
             }
         });
         if (idx < 0) return;
-        if (pt == Tool::Callout) s.calloutShape = idx; else if (pt == Tool::Step) s.stepShape = idx;
+        if (area) {
+            s.areaShape = idx;
+            if (IsPointArea(idx) && onHint) onHint(idx == AreaPolygon ? Tr(L"Polígono: clique nos cantos; clique no primeiro ponto ou dê um duplo clique para fechar.") : Tr(L"Mão livre: arraste contornando a área."));
+        } else if (pt == Tool::Callout) s.calloutShape = idx; else if (pt == Tool::Step) s.stepShape = idx;
         else if (pt == Tool::Magnify) s.magnifyShape = idx; else s.shapeKind = idx;
         SetStyle(s, true);
         Load();
@@ -1224,7 +1414,7 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
     };
     auto hitCtl = [&](POINT p) {
         for (size_t i = 0; i < ctls_.size(); i++) {
-            if (ctls_[i].kind == K_ROWLABEL || ctls_[i].kind == K_LABEL) continue;
+            if (ctls_[i].kind == K_ROWLABEL || ctls_[i].kind == K_LABEL || ctls_[i].kind == K_FRAME) continue;
             RECT r = ctls_[i].r; OffsetRect(&r, 0, -scroll_);
             if (ctls_[i].kind == K_SLIDER) r.right -= S(52);
             if (PtInRect(&r, p)) return (int)i;
@@ -1254,6 +1444,16 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         {
             bool ph = panelSb_.Hit(p), gh = gridSb_.Hit(p);
             if (ph != panelSb_.hot || gh != gridSb_.hot) { panelSb_.hot = ph; gridSb_.hot = gh; InvalidateRect(hwnd, nullptr, FALSE); }
+        }
+        if (stampPress_ >= 0) {
+            if (!stampDragging_ && stampSearch_.empty() && std::abs(p.x - stampPressPt_.x) + std::abs(p.y - stampPressPt_.y) > S(5)) stampDragging_ = true;
+            if (stampDragging_) {
+                bool st = false;
+                int t = hitTile(p, st);
+                if (t >= 0 && t != stampDropAt_) { stampDropAt_ = t; InvalidateRect(hwnd, nullptr, FALSE); }
+                SetCursor(LoadCursor(nullptr, IDC_SIZEALL));
+            }
+            return 0;
         }
         if (dragCtl_ >= 0 && dragCtl_ < (int)ctls_.size()) {
             int v = sliderValue(ctls_[dragCtl_], p.x);
@@ -1285,6 +1485,11 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         if (gridSb_.Down(p)) { gridScroll_ = gridSb_.pos; if (gridSb_.dragging) SetCapture(hwnd); InvalidateRect(hwnd, nullptr, FALSE); return 0; }
         bool star = false;
         int t = hitTile(p, star);
+        if (t >= 0 && StyleTool() == Tool::Stamp) {         // stamps: click selects, dragging reorders (on release)
+            stampPress_ = t; stampPressPt_ = p; stampDragging_ = false; stampDropAt_ = t;
+            SetCapture(hwnd);
+            return 0;
+        }
         if (t >= 0) { ClickTile(t, star); return 0; }
         RECT a = addBtn_; OffsetRect(&a, 0, -scroll_);
         if (PtInRect(&a, p)) { QS().AddCustom(PropTool(), Cur()); Layout(); return 0; }
@@ -1309,10 +1514,26 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         return 0;
     }
     case WM_LBUTTONUP:
+        if (stampPress_ >= 0) {
+            int from = stampPress_, to = stampDropAt_;
+            bool dragged = stampDragging_;
+            stampPress_ = -1; stampDragging_ = false;
+            ReleaseCapture();
+            if (!dragged) { ClickTile(from, false); return 0; }
+            if (to >= 0 && to != from && stampCat_ < (int)stampCats_.size() && from < (int)tiles_.size() && to < (int)tiles_.size()) {
+                MoveStamp(stampCats_[stampCat_], tiles_[from].index, tiles_[to].index);
+                std::wstring key = stampCats_[stampCat_].key;
+                RegSetString(L"LastUsedStampCategoryKey", key, L"Editor");
+                FillStampCats();
+                Layout();
+            }
+            InvalidateRect(hwnd, nullptr, FALSE);
+            return 0;
+        }
         if (panelSb_.dragging || gridSb_.dragging) { panelSb_.Up(); gridSb_.Up(); ReleaseCapture(); InvalidateRect(hwnd, nullptr, FALSE); return 0; }
         if (dragCtl_ >= 0) { dragCtl_ = -1; ReleaseCapture(); }
         return 0;
-    case WM_CAPTURECHANGED: dragCtl_ = -1; panelSb_.Up(); gridSb_.Up(); return 0;
+    case WM_CAPTURECHANGED: dragCtl_ = -1; panelSb_.Up(); gridSb_.Up(); if (stampPress_ >= 0 && (HWND)l != hwnd) { stampPress_ = -1; stampDragging_ = false; } return 0;
     case WM_RBUTTONUP: {
         POINT p{ GET_X_LPARAM(l), GET_Y_LPARAM(l) };
         bool star = false;
@@ -1359,7 +1580,7 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
                 if (i >= 0 && i < n) { QS().current = i; QS().Save(); Load(); return 0; }
                 HWND owner = GetAncestor(hwnd, GA_ROOT);
                 ComboBox_SetCurSel(Child(H_THEME), QS().current);
-                if (i == n + 1) {              // Novo tema…
+                if (i == n + 1) {              // New theme…
                     ToolTheme t = QS().Theme(); t.custom.clear(); t.name = Tr(L"Meu tema");
                     std::vector<ui::Field> f = { ui::Field::MakeText(Tr(L"Nome"), t.name) };
                     for (int k = 0; k < 4; k++) f.push_back(ui::Field::MakeColor(Format(Tr(L"Cor %d"), k + 1), ToColorref(t.colors[k])));
@@ -1369,7 +1590,7 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
                         for (int k = 0; k < 4; k++) t.colors[k] = FromColorref(f[1 + k].color);
                         QS().AddTheme(t);
                     }
-                } else if (i == n + 2) {       // Importar…
+                } else if (i == n + 2) {       // Import…
                     std::wstring path, err;
                     if (ui::OpenFileDialog(owner, Filter(Tr(L"Tema do Snapnab (*.snaptheme)|*.snaptheme|Todos os arquivos|*.*|")), path, Tr(L"Importar tema")))
                         if (!QS().ImportTheme(path, err)) MessageBoxW(owner, err.c_str(), L"Snapnab Editor", MB_ICONWARNING);
@@ -1389,6 +1610,7 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
             if (code == CBN_SELCHANGE) {
                 stampCat_ = std::max(0, ComboBox_GetCurSel(Child(H_STAMPCAT)));
                 RegSetDword(L"LastUsedStampCategory", stampCat_, L"Editor");
+                if (stampCat_ < (int)stampCats_.size()) RegSetString(L"LastUsedStampCategoryKey", stampCats_[stampCat_].key, L"Editor");
                 SetWindowTextW(Child(H_SEARCH), L"");
                 stampSearch_.clear(); gridScroll_ = 0;
                 Layout();
@@ -1411,6 +1633,47 @@ LRESULT PropsPanel::Handle(UINT m, WPARAM w, LPARAM l) {
         case H_BTN1: case H_BTN2: case H_BTN3: case H_FRONT: case H_BACK: case H_DELETE: case H_GROUP: case H_UNGROUP:
             if (code == BN_CLICKED && onCommand) onCommand(id);
             return 0;
+        case H_LOCK:
+            if (code == BN_CLICKED) { auto v = canvas->SelectedList(); canvas->SetLocked(v, !canvas->SelectionLocked()); Layout(); }
+            return 0;
+        case H_LIFT:
+            if (code != BN_CLICKED) return 0;
+            if (!canvas->HasRasterSelection()) { if (onHint) onHint(Tr(L"Selecione uma área com a ferramenta Seleção para levantá-la.")); return 0; }
+            if (canvas->LiftSelection() && onHint) onHint(Tr(L"Peça solta: ajuste o resto da imagem (cortar, recortar faixa…), posicione a peça e tecle Enter para soltá-la."));
+            Load();
+            return 0;
+        case H_DROP:
+            if (code == BN_CLICKED && canvas->DropFloating()) { if (onHint) onHint(Tr(L"Peça solta na imagem.")); Load(); }
+            return 0;
+        case H_GX: case H_GY: case H_GW: case H_GH: {
+            if (code == EN_SETFOCUS) {
+                geomFirst_ = true;
+                Gdiplus::RectF r0 = canvas->Geometry(); if (r0.Height > 0) geomAspect_ = r0.Width / r0.Height;
+                PostMessageW((HWND)l, EM_SETSEL, 0, -1);           // typing replaces the value
+                return 0;
+            }
+            if (code == EN_KILLFOCUS) { UpdateGeometryFields(); return 0; }
+            if (code != EN_CHANGE) return 0;
+            auto num = [&](int cid, float& out) {
+                wchar_t buf[24]; GetWindowTextW(Child(cid), buf, 24);
+                if (!buf[0] || !wcscmp(buf, L"-")) return false;
+                out = (float)wcstol(buf, nullptr, 10);
+                return true;
+            };
+            Gdiplus::RectF r = canvas->Geometry();
+            float x = r.X, yv = r.Y, w = r.Width, h = r.Height;
+            if (!num(H_GX, x) || !num(H_GY, yv) || !num(H_GW, w) || !num(H_GH, h)) return 0;
+            if (w < 1 || h < 1) return 0;
+            if (aspectLock_ && geomAspect_ > 0) {        // aspect lock: the other side follows
+                bool old = loading_; loading_ = true;
+                if (id == H_GW) { h = std::max(1.0f, std::round(w / geomAspect_)); SetWindowTextW(Child(H_GH), std::to_wstring((int)h).c_str()); }
+                if (id == H_GH) { w = std::max(1.0f, std::round(h * geomAspect_)); SetWindowTextW(Child(H_GW), std::to_wstring((int)w).c_str()); }
+                loading_ = old;
+            }
+            canvas->SetGeometry(Gdiplus::RectF(x, yv, w, h), geomFirst_);
+            geomFirst_ = false;
+            return 0;
+        }
         }
         return 0;
     }

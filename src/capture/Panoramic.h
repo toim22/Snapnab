@@ -1,28 +1,28 @@
-// Captura com rolagem panorâmica (PanoramicCapture, comp_3/comp_1): depois de escolher a região, o usuário rola o
-// conteúdo (página, planilha, conversa…) do jeito que quiser; a região é copiada várias vezes por segundo e cada
-// quadro novo é encaixado no anterior pelo deslocamento detectado. O resultado é uma imagem única, comprida.
+// Panoramic scrolling capture (PanoramicCapture, comp_3/comp_1): after choosing the region, the user scrolls the
+// content (page, spreadsheet, chat…) any way they like; the region is copied several times per second and each
+// new frame is fitted onto the previous one by the detected offset. The result is a single, long image.
 #pragma once
 #include "Image.h"
 
 namespace snap {
 
-// Junta quadros sucessivos da mesma região rolada (vertical ou horizontal). Usado também pelos testes.
+// Stitches successive frames of the same scrolled region (vertical or horizontal). Also used by the tests.
 class PanoramaStitcher {
 public:
-    bool Add(const Image& frame);        // true se o quadro acrescentou conteúdo
+    bool Add(const Image& frame);        // true if the frame added content
     const Image& result() const { return canvas_; }
-    int axis() const { return axis_; }   // 0 = ainda parado, 1 = vertical, 2 = horizontal
+    int axis() const { return axis_; }   // 0 = still idle, 1 = vertical, 2 = horizontal
     static constexpr int kMaxSize = 32000;
 private:
     bool Offset(const Image& a, const Image& b, bool vertical, int& d) const;
     Image canvas_, prev_;
     int axis_ = 0;
-    int posX_ = 0, posY_ = 0;            // posição do último quadro no resultado
+    int posX_ = 0, posY_ = 0;            // position of the last frame in the result
 };
 
 class PanoramicSession {
 public:
-    // done recebe a imagem final (vazia se o usuário cancelar)
+    // done receives the final image (empty if the user cancels)
     void Start(RECT area, std::function<void(Image)> done);
     bool active() const { return bar_ != nullptr; }
 private:

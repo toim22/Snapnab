@@ -56,8 +56,8 @@ const wchar_t* CamShapeName(CamShape s) {
     }
 }
 
-// distância de crominância (Cb/Cr, BT.601) até a cor-chave: a luminância não conta, então sombras e dobras do
-// fundo continuam sendo fundo. Abaixo de t0 some, acima de t0 + faixa fica, no meio é borda suave.
+// chrominance distance (Cb/Cr, BT.601) to the key color: luminance does not count, so shadows and folds in the
+// background are still background. Below t0 it disappears, above t0 + band it stays, in between is a soft edge.
 uint8_t ChromaAlpha(uint32_t px, COLORREF key, int tolerance) {
     auto cbcr = [](double r, double g, double b, double& cb, double& cr) {
         cb = -0.168736 * r - 0.331264 * g + 0.5 * b;
@@ -111,9 +111,9 @@ bool WebcamOverlay::Start(const std::wstring& linkIn, RECT area, const WebcamSty
         } else {
             ComPtr<IMFAttributes> ra;
             MFCreateAttributes(&ra, 1);
-            ra->SetUINT32(MF_SOURCE_READER_ENABLE_VIDEO_PROCESSING, TRUE);       // converte qualquer formato para RGB32
+            ra->SetUINT32(MF_SOURCE_READER_ENABLE_VIDEO_PROCESSING, TRUE);       // converts any format to RGB32
             hr = MFCreateSourceReaderFromMediaSource(src.Get(), ra.Get(), &reader);
-            // formato nativo mais próximo de 640 px de largura (leve e suficiente para a bolha)
+            // native format closest to 640 px wide (light and enough for the bubble)
             ComPtr<IMFMediaType> best;
             UINT32 bestW = 0, bestH = 0;
             for (DWORD i = 0; SUCCEEDED(hr); i++) {
@@ -143,7 +143,7 @@ bool WebcamOverlay::Start(const std::wstring& linkIn, RECT area, const WebcamSty
     });
     err = fut.get();
     if (!err.empty()) { Stop(); return false; }
-    // tamanho pelo formato (com chroma key, a imagem inteira da câmera, sem moldura); canto inferior direito da área
+    // size from the shape (with chroma key, the whole camera image, no frame); bottom-right corner of the area
     int dpi = DpiForWindow(hwnd_);
     int h = Sc(style_.chroma ? 220 : 176, dpi), w = h;
     if (style_.chroma) w = (int)std::lround(h * aspect_);
@@ -155,7 +155,7 @@ bool WebcamOverlay::Start(const std::wstring& linkIn, RECT area, const WebcamSty
     SetWindowPos(hwnd_, HWND_TOPMOST, x, y, W, H, SWP_NOACTIVATE);
     Render();
     ShowWindow(hwnd_, SW_SHOWNOACTIVATE);
-    Log(L"Webcam: iniciada (%s)", link.c_str());
+    Log(L"Webcam: started (%s)", link.c_str());
     return true;
 }
 
@@ -171,7 +171,7 @@ void WebcamOverlay::ReadLoop(void* r) {
         }
     }
     if (!w || !h) return;
-    if (!defStride) defStride = -(INT32)(w * 4);      // RGB32 sem indicação: de baixo para cima
+    if (!defStride) defStride = -(INT32)(w * 4);      // RGB32 without a hint: bottom-up
     while (running_) {
         DWORD idx = 0, flags = 0; LONGLONG ts = 0;
         ComPtr<IMFSample> sample;
@@ -211,7 +211,7 @@ void WebcamOverlay::Render() {
     int dpi = DpiForWindow(hwnd_);
     const bool chroma = style_.chroma;
     int sh = chroma ? 0 : Sc(8, dpi);
-    float cw = (float)(W - 2 * sh), ch = (float)(H - 2 * sh);       // área da câmera
+    float cw = (float)(W - 2 * sh), ch = (float)(H - 2 * sh);       // camera area
     if (cw < 4 || ch < 4) return;
     BITMAPINFO bi{};
     bi.bmiHeader = { sizeof(BITMAPINFOHEADER), W, -H, 1, 32, BI_RGB };
@@ -227,7 +227,7 @@ void WebcamOverlay::Render() {
         g.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBilinear);
         g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
         g.Clear(Gdiplus::Color(0, 0, 0, 0));
-        // contorno do formato escolhido
+        // outline of the chosen shape
         auto shapePath = [&](Gdiplus::GraphicsPath& p, Gdiplus::RectF r) {
             float rad = 0;
             switch (style_.shape) {
@@ -244,7 +244,7 @@ void WebcamOverlay::Render() {
         Gdiplus::RectF cam((float)sh, (float)sh, cw, ch);
         Gdiplus::GraphicsPath outline;
         if (!chroma) {
-            for (int i = sh; i >= 1; i--) {         // sombra
+            for (int i = sh; i >= 1; i--) {         // shadow
                 double t = 1.0 - (double)i / (sh + 1);
                 Gdiplus::RectF s = cam; s.Inflate((float)i, (float)i); s.Offset(0, i * 0.4f);
                 Gdiplus::GraphicsPath sp; shapePath(sp, s);
@@ -258,13 +258,13 @@ void WebcamOverlay::Render() {
         Image f;
         { std::lock_guard<std::mutex> lk(frameMutex_); f = frame_; }
         if (!f.empty()) {
-            // recorte central na proporção da janela, espelhado (como um espelho, igual às chamadas de vídeo)
+            // central crop in the window's aspect ratio, mirrored (like a mirror, as in video calls)
             double want = cw / ch;
             float sw = (float)f.w, shh = (float)f.h;
             if (sw / shh > want) sw = (float)(shh * want); else shh = (float)(sw / want);
             if (chroma) {
-                // fundo removido: alfa por pixel (pré-multiplicado) e cor da borda puxada para o cinza, para não
-                // sobrar halo da cor-chave
+                // background removed: per-pixel alpha (premultiplied) and edge color pulled toward gray, so no
+                // halo of the key color is left
                 for (auto& p : f.px) {
                     uint8_t a = ChromaAlpha(p, style_.key, style_.tolerance);
                     if (a == 255) continue;
@@ -314,12 +314,12 @@ LRESULT CALLBACK WebcamOverlay::Proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     switch (m) {
     case WM_CAM_FRAME:
         if (s && s->hwnd_ == h) {
-            MSG drop;                                   // descarta quadros acumulados: desenha só o mais recente
+            MSG drop;                                   // discards queued frames: draws only the most recent one
             while (PeekMessageW(&drop, h, WM_CAM_FRAME, WM_CAM_FRAME, PM_REMOVE)) {}
             s->Render();
         }
         return 0;
-    case WM_NCHITTEST: return HTCAPTION;                 // arrastar a bolha para qualquer lugar
+    case WM_NCHITTEST: return HTCAPTION;                 // drag the bubble anywhere
     case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
     }
     return DefWindowProcW(h, m, w, l);

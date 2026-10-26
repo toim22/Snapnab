@@ -25,7 +25,7 @@ void CaptureEngine::SetState(State s) {
     if (onBusyChanged && wasBusy != (s != Idle)) onBusyChanged(s != Idle);
 }
 
-// ---------------------------------------------------------------- atraso com contagem
+// ---------------------------------------------------------------- delay with countdown
 namespace {
 struct DelayState { int left; std::function<void()> then; };
 LRESULT CALLBACK DelayProc(HWND h, UINT m, WPARAM w, LPARAM l) {
@@ -75,19 +75,19 @@ void CaptureEngine::ShowDelay(int seconds, std::function<void()> then) {
     SetTimer(h, 1, 1000, nullptr);
 }
 
-// ---------------------------------------------------------------- entrada
+// ---------------------------------------------------------------- input
 bool CaptureEngine::Activate(const Preset& preset) {
     if (state_ != Idle) {
-        Log(L"CaptureEngine: ocupado (%s), ativação ignorada", StateName(state_));
+        Log(L"CaptureEngine: busy (%s), activation ignored", StateName(state_));
         return false;
     }
     preset_ = preset;
     SetState(Activated);
     if (frame_ && IsWindowVisible(frame_)) ShowWindow(frame_, SW_HIDE);
     int delay = preset_.kind == CaptureKind::Image ? preset_.delaySeconds : 0;
-    if (preset_.selection == Selection::Menu && delay == 0) delay = 3;        // tempo para abrir o menu
+    if (preset_.selection == Selection::Menu && delay == 0) delay = 3;        // time to open the menu
     auto go = [this] {
-        // pequena espera para a janela principal sumir antes de congelar a tela
+        // short wait for the main window to disappear before freezing the screen
         SetTimer(frame_, 0x5A, 180, [](HWND h, UINT, UINT_PTR id, DWORD) {
             KillTimer(h, id);
             auto* self = (CaptureEngine*)GetPropW(h, L"SnapnabEngine");
@@ -131,7 +131,7 @@ void CaptureEngine::BeginInput() {
 
     const bool fixedRegion = preset_.selection == Selection::FixedRegion || (preset_.selection == Selection::Region && preset_.regionFixed);
     if (fixedRegion && preset_.regionUsePos) {
-        // região fixa com posição: a entrada fica pronta sem seletor (INPUT_REGION_FIXED, comp_1 §6)
+        // fixed region with a position: the input is ready without a selector (INPUT_REGION_FIXED, comp_1 §6)
         RECT r{ preset_.regionX, preset_.regionY, preset_.regionX + preset_.fixedW, preset_.regionY + preset_.fixedH };
         IntersectRect(&r, &r, &vs_);
         if (IsRectEmpty(&r)) {
@@ -152,7 +152,22 @@ void CaptureEngine::BeginInput() {
         if (video) { StartVideoHud(r); return; }
         SetState(Capturing);
         Image img = FreezeScreen(r, preset_.captureCursor);
-        InputCaptured(std::move(img), info);
+        std::vector<CapturedLink> links = preset_.captureLinks ? FindLinks(r) : std::vector<CapturedLink>{};
+        if (preset_.windowObjects) {
+            // each window as a separate object on top of the desktop background (the outputs get the screen as it was)
+            Layers ly;
+            if (CaptureWindowsAsObjects(r, FreezeScreen(r, false), ly)) {
+                for (auto& l : links)
+                    ly.objects.add("Link").seti("X1", l.r.left - r.left).seti("Y1", l.r.top - r.top).seti("X2", l.r.right - r.left)
+                      .seti("Y2", l.r.bottom - r.top).setW("Url", l.url);
+                info.mode = Tr(L"Janelas como objetos");
+                SetState(Outputting);
+                Output(img, info, &ly);
+                SetState(Idle);
+                return;
+            }
+        }
+        InputCaptured(std::move(img), info, std::move(links), { r.left, r.top });
         return;
     }
     case Selection::Clipboard: {
@@ -179,7 +194,7 @@ void CaptureEngine::BeginInput() {
         Image img;
         if (CaptureMenus(img)) { InputCaptured(std::move(img), info); return; }
         if (notify) notify(L"Snapnab", Tr(L"Nenhum menu aberto encontrado; selecione a região."));
-        break;   // cai na seleção de região
+        break;   // falls back to region selection
     }
     default: break;
     }
@@ -195,7 +210,7 @@ void CaptureEngine::BeginInput() {
     case Selection::Freehand: mode = SelectMode::Freehand; break;
     case Selection::MultiArea: mode = SelectMode::MultiArea; break;
     case Selection::Scrolling: case Selection::ExtendedWindow: mode = SelectMode::PickWindow; break;
-    default: break;          // Panoramic: região comum; a rolagem começa depois da seleção
+    default: break;          // Panoramic: a normal region; scrolling starts after the selection
     }
     RunSelectOverlay(shown, vs_, mode, { preset_.fixedW, preset_.fixedH }, video,
                      [this](const SelectResult& r) { if (r.ok) OnInputSelected(r); else InputCanceled(); });
@@ -216,7 +231,7 @@ void CaptureEngine::OnInputSelected(const SelectResult& r) {
     }
     SetState(Capturing);
     if (preset_.selection == Selection::Panoramic) {
-        // a tela congelada não serve: a região é copiada ao vivo enquanto o usuário rola
+        // the frozen screen is no use: the region is copied live while the user scrolls
         frozen_ = Image();
         pano_.Start(r.rect, [this, info](Image img) {
             if (img.empty()) InputCanceled();
@@ -226,6 +241,10 @@ void CaptureEngine::OnInputSelected(const SelectResult& r) {
     }
     RECT local = r.rect;
     OffsetRect(&local, -vs_.left, -vs_.top);
+    // links of web pages and documents under the captured area (found before the screen changes)
+    std::vector<CapturedLink> links;
+    if (preset_.captureLinks && preset_.selection != Selection::Scrolling && preset_.selection != Selection::ExtendedWindow)
+        links = FindLinks(r.rect);
     Image img;
     switch (preset_.selection) {
     case Selection::Scrolling:
@@ -239,7 +258,7 @@ void CaptureEngine::OnInputSelected(const SelectResult& r) {
         std::vector<POINT> pts;
         for (auto p : r.path) pts.push_back({ p.x - r.rect.left, p.y - r.rect.top });
         cv::Mask m = cv::PolygonMask(img.w, img.h, pts);
-        for (size_t i = 0; i < m.size(); i++) if (!m[i]) img.px[i] = 0;    // fora do contorno = transparente
+        for (size_t i = 0; i < m.size(); i++) if (!m[i]) img.px[i] = 0;    // outside the outline = transparent
         break;
     }
     case Selection::MultiArea: {
@@ -255,7 +274,7 @@ void CaptureEngine::OnInputSelected(const SelectResult& r) {
     }
     frozen_ = Image();
     if (img.empty()) { InputCanceled(); return; }
-    InputCaptured(std::move(img), info);
+    InputCaptured(std::move(img), info, std::move(links), { r.rect.left, r.rect.top });
 }
 
 void CaptureEngine::InputCanceled() {
@@ -263,16 +282,159 @@ void CaptureEngine::InputCanceled() {
     SetState(Idle);
 }
 
-void CaptureEngine::InputCaptured(Image img, const CaptureInfo& info) {
+void CaptureEngine::InputCaptured(Image img, const CaptureInfo& info, std::vector<CapturedLink> links, POINT origin) {
     SetState(HaveInput);
-    Image out = fx::ApplyCaptureEffects(img, preset_.effects);          // efeitos do preset (CEffectSettings*)
+    Image out = fx::ApplyCaptureEffects(img, preset_.effects);          // preset effects (CEffectSettings*)
     SetState(Outputting);
+    // the links follow the image: scale and border move them; other effects that change the geometry drop them
+    const auto& e = preset_.effects;
+    bool keep = !links.empty() && !e.trim && !e.rotate && !e.caption && !e.edge && !e.shadow;
+    if (keep) {
+        Layers ly;
+        ly.base = out;
+        double k = e.scale ? e.scalePercent / 100.0 : 1.0;
+        int off = e.border ? e.borderWidth : 0;
+        for (auto& l : links) {
+            RECT a{ (LONG)std::lround((l.r.left - origin.x) * k) + off, (LONG)std::lround((l.r.top - origin.y) * k) + off,
+                    (LONG)std::lround((l.r.right - origin.x) * k) + off, (LONG)std::lround((l.r.bottom - origin.y) * k) + off };
+            RECT bounds{ 0, 0, out.w, out.h }, vis;
+            if (!IntersectRect(&vis, &a, &bounds)) continue;
+            ly.objects.add("Link").seti("X1", vis.left).seti("Y1", vis.top).seti("X2", vis.right).seti("Y2", vis.bottom).setW("Url", l.url);
+        }
+        if (!ly.objects.children.empty()) { Output(out, info, &ly); SetState(Idle); return; }
+    }
     Output(out, info);
     SetState(Idle);
 }
 
-// ---------------------------------------------------------------- saída (COutputter)
-// Grab Text: reconhece o texto, copia para a área de transferência e mostra numa janela
+// ---------------------------------------------------------------- each window as an object (F31)
+namespace {
+bool IsCloaked(HWND h) { DWORD c = 0; return SUCCEEDED(DwmGetWindowAttribute(h, DWMWA_CLOAKED, &c, sizeof c)) && c; }
+
+// image of one window (even the parts covered by other windows): PrintWindow with the DWM content; if the program
+// does not draw that way (all black), the visible part of the screen capture is used
+Image WindowImage(HWND h, RECT frame, const Image& screen, RECT area) {
+    RECT wr; GetWindowRect(h, &wr);
+    int w = wr.right - wr.left, hh = wr.bottom - wr.top;
+    Image img;
+    if (w > 0 && hh > 0 && (long long)w * hh < 80000000) {
+        HDC sdc = GetDC(nullptr);
+        BITMAPINFO bi{}; bi.bmiHeader = { sizeof(BITMAPINFOHEADER), w, -hh, 1, 32, BI_RGB };
+        void* bits = nullptr;
+        HBITMAP dib = CreateDIBSection(sdc, &bi, DIB_RGB_COLORS, &bits, nullptr, 0);
+        HDC mem = CreateCompatibleDC(sdc);
+        HGDIOBJ o = SelectObject(mem, dib);
+        BOOL ok = PrintWindow(h, mem, PW_RENDERFULLCONTENT);
+        GdiFlush();
+        if (ok && bits) { img = Image(w, hh); memcpy(img.px.data(), bits, img.px.size() * 4); }
+        SelectObject(mem, o); DeleteObject(dib); DeleteDC(mem);
+        ReleaseDC(nullptr, sdc);
+        if (!img.empty()) {
+            img.MakeOpaque();
+            RECT crop{ frame.left - wr.left, frame.top - wr.top, frame.right - wr.left, frame.bottom - wr.top };
+            if (crop.right > crop.left && crop.bottom > crop.top) img = img.Crop(crop);
+            size_t dark = 0;
+            for (uint32_t p : img.px) if ((p & 0x00FFFFFF) == 0) dark++;
+            if (dark > img.px.size() * 97 / 100) img = Image();      // nothing was drawn
+        }
+    }
+    if (img.empty()) {                          // fallback: what was visible on the screen
+        RECT vis;
+        if (!IntersectRect(&vis, &frame, &area)) return {};
+        OffsetRect(&vis, -area.left, -area.top);
+        img = screen.Crop(vis);
+    }
+    // Windows 11 rounded corners (windows that are not maximized)
+    WINDOWPLACEMENT wp{ sizeof wp };
+    OSVERSIONINFOEXW ov{ sizeof ov }; ov.dwBuildNumber = 22000;
+    bool win11 = VerifyVersionInfoW(&ov, VER_BUILDNUMBER, VerSetConditionMask(0, VER_BUILDNUMBER, VER_GREATER_EQUAL)) != 0;
+    if (win11 && GetWindowPlacement(h, &wp) && wp.showCmd != SW_SHOWMAXIMIZED && !img.empty()) {
+        int rad = std::max(4, MulDiv(8, (int)GetDpiForWindow(h), 96));
+        for (int y = 0; y < std::min(rad, img.h); y++)
+            for (int x = 0; x < std::min(rad, img.w); x++) {
+                float dx = rad - x - 0.5f, dy = rad - y - 0.5f, d = std::sqrt(dx * dx + dy * dy);
+                int a = (int)std::clamp((rad - d + 0.5f) * 255.0f, 0.0f, 255.0f);
+                if (a >= 255) continue;
+                for (auto [px, py] : std::initializer_list<std::pair<int, int>>{ { x, y }, { img.w - 1 - x, y }, { x, img.h - 1 - y }, { img.w - 1 - x, img.h - 1 - y } }) {
+                    uint32_t& p = img.at(px, py);
+                    p = (p & 0x00FFFFFF) | ((uint32_t)(CA(p) * a / 255) << 24);
+                }
+            }
+    }
+    return img;
+}
+}
+
+bool CaptureEngine::CaptureWindowsAsObjects(RECT area, const Image& screen, Layers& out) {
+    struct Win { HWND h; RECT frame; };
+    std::vector<Win> wins;                      // top to bottom (EnumWindows order)
+    std::vector<HWND> bars;                     // taskbars: they stay in the background
+    struct Ctx { RECT area; std::vector<Win>* wins; std::vector<HWND>* bars; } ctx{ area, &wins, &bars };
+    EnumWindows([](HWND h, LPARAM p) -> BOOL {
+        auto* c = (Ctx*)p;
+        if (!IsWindowVisible(h) || IsIconic(h) || IsCloaked(h)) return TRUE;
+        DWORD pid = 0; GetWindowThreadProcessId(h, &pid);
+        if (pid == GetCurrentProcessId()) return TRUE;
+        wchar_t cls[64] = L""; GetClassNameW(h, cls, 64);
+        if (!wcscmp(cls, L"Shell_TrayWnd") || !wcscmp(cls, L"Shell_SecondaryTrayWnd")) { c->bars->push_back(h); return TRUE; }
+        if (!wcscmp(cls, L"Progman") || !wcscmp(cls, L"WorkerW")) return TRUE;
+        LONG ex = GetWindowLongW(h, GWL_EXSTYLE);
+        if (ex & WS_EX_TRANSPARENT) return TRUE;
+        if (ex & WS_EX_LAYERED) {
+            BYTE alpha = 255; DWORD flags = 0;
+            if (GetLayeredWindowAttributes(h, nullptr, &alpha, &flags) && (flags & LWA_ALPHA) && alpha < 8) return TRUE;
+        }
+        RECT fr = WindowFrameRect(h), x;
+        if (fr.right - fr.left < 16 || fr.bottom - fr.top < 16 || !IntersectRect(&x, &fr, &c->area)) return TRUE;
+        if (c->wins->size() < 40) c->wins->push_back({ h, fr });
+        return TRUE;
+    }, (LPARAM)&ctx);
+    if (wins.empty()) return false;
+    int w = area.right - area.left, h = area.bottom - area.top;
+    // background: the desktop wallpaper (as Windows paints it) and the taskbars from the screen capture
+    {
+        HDC sdc = GetDC(nullptr);
+        HDC mem = CreateCompatibleDC(sdc);
+        HBITMAP bmp = CreateCompatibleBitmap(sdc, w, h);
+        HGDIOBJ o = SelectObject(mem, bmp);
+        HBRUSH desk = CreateSolidBrush(GetSysColor(COLOR_DESKTOP));
+        RECT all{ 0, 0, w, h }; FillRect(mem, &all, desk); DeleteObject(desk);
+        SetViewportOrgEx(mem, -area.left, -area.top, nullptr);
+        PaintDesktop(mem);
+        SetViewportOrgEx(mem, 0, 0, nullptr);
+        SelectObject(mem, o);
+        out.base = Image::FromHBITMAP(bmp);
+        out.base.MakeOpaque();
+        DeleteObject(bmp); DeleteDC(mem);
+        ReleaseDC(nullptr, sdc);
+    }
+    if (out.base.w != w || out.base.h != h) out.base = Image(w, h, 0xFF000000 | FromColorref(GetSysColor(COLOR_DESKTOP)));
+    for (HWND b : bars) {
+        RECT br; GetWindowRect(b, &br);
+        RECT vis;
+        if (!IntersectRect(&vis, &br, &area)) continue;
+        OffsetRect(&vis, -area.left, -area.top);
+        out.base.Blit(screen.Crop(vis), vis.left, vis.top, false);
+    }
+    // windows from the back to the front, named after their titles (layers panel)
+    int counter = 1;
+    for (auto it = wins.rbegin(); it != wins.rend(); ++it) {
+        Image wi = WindowImage(it->h, it->frame, screen, area);
+        if (wi.empty()) continue;
+        std::string stream = FormatA("Image_%d.png", counter++);
+        out.embedded[stream] = std::move(wi);
+        std::wstring title = WindowTitle(it->h);
+        if (title.empty()) title = WindowProcessName(it->h);
+        out.objects.add("Image").seti("X1", it->frame.left - area.left).seti("Y1", it->frame.top - area.top)
+            .seti("X2", it->frame.right - area.left).seti("Y2", it->frame.bottom - area.top)
+            .set("StreamName", stream).seti("PenWidth", 0).seti("Shadow", 0).setW("Name", title);
+    }
+    Log(L"Windows as objects: %d window(s)", counter - 1);
+    return counter > 1;
+}
+
+// ---------------------------------------------------------------- output (COutputter)
+// Grab Text: recognizes the text, copies it to the clipboard and shows it in a window
 void CaptureEngine::GrabText(const Image& img) {
     std::wstring text, err;
     HCURSOR old = SetCursor(LoadCursor(nullptr, IDC_WAIT));
@@ -293,9 +455,10 @@ void CaptureEngine::GrabText(const Image& img) {
     ui::ShowTextWindow(nullptr, Tr(L"Capturar texto — copiado para a área de transferência"), text);
 }
 
-void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
+void CaptureEngine::Output(const Image& img, const CaptureInfo& info, const Layers* layers) {
     if (preset_.grabText) GrabText(img);
-    std::wstring lib = AddImageToLibrary(img, info);
+    std::wstring lib = layers ? AddLayeredToLibrary(layers->base.empty() ? img : layers->base, img, info, layers->objects, layers->embedded)
+                              : AddImageToLibrary(img, info);
     std::vector<std::wstring> done;
     if (preset_.copyToClipboard && CopyImageToClipboard(frame_, img)) done.push_back(Tr(L"copiada para a área de transferência"));
     std::wstring saved;
@@ -304,7 +467,7 @@ void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
         EnsureDir(folder);
         saved = NextAutoName(folder, preset_.filePrefix, FileFormatExt(preset_.fileFormat));
         if (SaveImageFile(saved, img)) done.push_back(Tr(L"salva em ") + saved);
-        else { Log(L"Saída: falha ao salvar %s", saved.c_str()); saved.clear(); }
+        else { Log(L"Output: failed to save %s", saved.c_str()); saved.clear(); }
     }
     if (preset_.openInProgram && !preset_.programPath.empty()) {
         std::wstring file = saved;
@@ -317,7 +480,7 @@ void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
     }
     if (ipc_) ipc_->SendInt(ipc::kEditor, ipc::LibraryChanged, 0);
     if (preset_.previewInEditor && !lib.empty()) DeliverToEditor(lib);
-    else if (preset_.grabText) {}               // a janela de texto já é o retorno
+    else if (preset_.grabText) {}               // the text window is already the feedback
     else if (notify) {
         std::wstring t = Tr(L"Captura adicionada à biblioteca");
         for (auto& d : done) t += L"; " + d;
@@ -326,7 +489,7 @@ void CaptureEngine::Output(const Image& img, const CaptureInfo& info) {
 }
 
 void CaptureEngine::DeliverToEditor(const std::wstring& path) {
-    // Editor aberto: linha de comando por WM_COPYDATA 0x8010 + IPC 6 (mostrar); fechado: /Open "<arquivo>"
+    // Editor open: command line via WM_COPYDATA 0x8010 + IPC 6 (show); closed: /Open "<file>"
     std::wstring cmd = L"\"" + ExeDir() + L"\\" + kEditorExe + L"\" /Open \"" + path + L"\"";
     HWND ed = FindWindowW(kEditorWndClass, nullptr);
     AllowSetForegroundWindow(ASFW_ANY);
@@ -351,18 +514,18 @@ bool CaptureEngine::CaptureMenus(Image& out) {
     if (rects.empty()) return false;
     RECT u = rects[0];
     for (auto& r : rects) UnionRect(&u, &u, &r);
-    // inclui a barra de menu da janela ativa, se houver
+    // includes the active window's menu bar, if any
     HWND fg = GetForegroundWindow();
     MENUBARINFO mbi{ sizeof(mbi) };
     if (fg && GetMenuBarInfo(fg, OBJID_MENU, 0, &mbi) && !IsRectEmpty(&mbi.rcBar)) UnionRect(&u, &u, &mbi.rcBar);
     Image full = FreezeScreen(u, preset_.captureCursor);
-    out = Image(full.w, full.h, 0);                     // fora dos menus = transparente
+    out = Image(full.w, full.h, 0);                     // outside the menus = transparent
     for (auto r : rects) { OffsetRect(&r, -u.left, -u.top); out.Blit(full.Crop(r), r.left, r.top, false); }
     if (!IsRectEmpty(&mbi.rcBar)) { RECT r = mbi.rcBar; OffsetRect(&r, -u.left, -u.top); out.Blit(full.Crop(r), r.left, r.top, false); }
     return true;
 }
 
-// ---------------------------------------------------------------- rolagem (CScroll::Capture, §3.2)
+// ---------------------------------------------------------------- scrolling (CScroll::Capture, §3.2)
 static bool SameImage(const Image& a, const Image& b) {
     if (a.w != b.w || a.h != b.h) return false;
     size_t diff = 0;
@@ -380,7 +543,7 @@ static void Wheel(int notches, bool horizontal) {
 
 Image CaptureEngine::ScrollCapture(HWND top, HWND child, POINT at) {
     if (!top) return {};
-    // área rolável: o controle sob o clique (ou a área cliente da janela)
+    // scrollable area: the control under the click (or the window's client area)
     HWND area = child && child != top ? child : top;
     RECT r;
     GetClientRect(area, &r);
@@ -389,7 +552,7 @@ Image CaptureEngine::ScrollCapture(HWND top, HWND child, POINT at) {
     IntersectRect(&r, &r, &fr);
     IntersectRect(&r, &r, &vs_);
     if (r.right - r.left < 32 || r.bottom - r.top < 32) return {};
-    const bool horizontal = false;      // rolagem vertical (a direção principal do original)
+    const bool horizontal = false;      // vertical scrolling (the original's main direction)
 
     SetForegroundWindow(top);
     POINT saved; GetCursorPos(&saved);
@@ -399,7 +562,7 @@ Image CaptureEngine::ScrollCapture(HWND top, HWND child, POINT at) {
     auto grab = [&] { return Image::FromDC(screen, r); };
     auto canceled = [] { return (GetAsyncKeyState(VK_ESCAPE) & 0x8000) != 0; };
 
-    // começa do topo
+    // starts from the top
     Image cur = grab();
     for (int i = 0; i < 40 && !canceled(); i++) {
         Wheel(10, horizontal);
@@ -420,9 +583,9 @@ Image CaptureEngine::ScrollCapture(HWND top, HWND child, POINT at) {
         stable = 0;
         double conf = 0;
         POINT t = cv::DetectTranslation(cur, next, &conf);
-        int s = -t.y;                    // conteúdo subiu s pixels: next(y) = cur(y + s)
+        int s = -t.y;                    // content moved up by s pixels: next(y) = cur(y + s)
         if (s <= 0 || s >= cur.h) {
-            Log(L"Rolagem: deslocamento inválido (%d, conf %.1f) — encerrando", s, conf);
+            Log(L"Scrolling: invalid offset (%d, conf %.1f) — stopping", s, conf);
             break;
         }
         Image grown(result.w, result.h + s);
@@ -434,11 +597,11 @@ Image CaptureEngine::ScrollCapture(HWND top, HWND child, POINT at) {
     }
     ReleaseDC(nullptr, screen);
     SetCursorPos(saved.x, saved.y);
-    Log(L"Rolagem: resultado %dx%d", result.w, result.h);
+    Log(L"Scrolling: result %dx%d", result.w, result.h);
     return result;
 }
 
-// ---------------------------------------------------------------- janela estendida (SnapEx64, §6)
+// ---------------------------------------------------------------- extended window (SnapEx64, §6)
 Image CaptureEngine::ExtendedWindowCapture(HWND top) {
     if (!top) return {};
     RECT wr; GetWindowRect(top, &wr);
@@ -462,9 +625,9 @@ Image CaptureEngine::ExtendedWindowCapture(HWND top) {
     if (s5000 && s5001) {
         DWORD tid = GetWindowThreadProcessId(top, nullptr);
         hooked = s5000(msgEnter, msgLeave, tid) != FALSE;
-        if (hooked) SendMessageTimeoutW(top, msgEnter, 0, 0, SMTO_ABORTIFHUNG, 2000, nullptr);    // a janela é sub-classificada
+        if (hooked) SendMessageTimeoutW(top, msgEnter, 0, 0, SMTO_ABORTIFHUNG, 2000, nullptr);    // the window is subclassed
     }
-    if (!hooked) Log(L"Janela estendida: hook indisponível (DLL ou processo 32 bits); tentando sem ele");
+    if (!hooked) Log(L"Extended window: hook unavailable (DLL or 32-bit process); trying without it");
     WINDOWPLACEMENT wp{ sizeof(wp) };
     GetWindowPlacement(top, &wp);
     if (IsZoomed(top)) ShowWindow(top, SW_RESTORE);
@@ -490,7 +653,7 @@ Image CaptureEngine::ExtendedWindowCapture(HWND top) {
         SelectObject(mem, o); DeleteObject(dib); DeleteDC(mem);
         ReleaseDC(nullptr, screen);
     }
-    // remove a borda invisível (sombra do DWM)
+    // removes the invisible border (DWM shadow)
     RECT fr = WindowFrameRect(top);
     RECT crop{ fr.left - big.left, fr.top - big.top, fr.right - big.left, fr.bottom - big.top };
     if (crop.right > crop.left && crop.bottom > crop.top) img = img.Crop(crop);
@@ -498,13 +661,13 @@ Image CaptureEngine::ExtendedWindowCapture(HWND top) {
     SetWindowPos(top, nullptr, wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top, SWP_NOZORDER | SWP_NOACTIVATE);
     if (hooked) { SendMessageTimeoutW(top, msgLeave, 0, 0, SMTO_ABORTIFHUNG, 2000, nullptr); s5001(); }
     if (dll) FreeLibrary(dll);
-    Log(L"Janela estendida: %dx%d", img.w, img.h);
+    Log(L"Extended window: %dx%d", img.w, img.h);
     return img;
 }
 
-// ---------------------------------------------------------------- vídeo
+// ---------------------------------------------------------------- video
 void CaptureEngine::StartVideoHud(RECT area) {
-    // tamanho par
+    // even size
     area.right = area.left + ((area.right - area.left) & ~1);
     area.bottom = area.top + ((area.bottom - area.top) & ~1);
     videoArea_ = area;
@@ -526,6 +689,10 @@ void CaptureEngine::StartVideoHud(RECT area) {
         if (notify) notify(L"Snapnab", Tr(L"Imagem capturada sem parar a gravação."));
     };
     cb.onWebcam = [this](bool on) { webcam_.SetVisible(on); };
+    cb.onVolume = [this](int mic, int sys, bool autoGain) {
+        preset_.micVolume = mic; preset_.sysVolume = sys; preset_.autoGain = autoGain;
+        if (onPresetVolumes) onPresetVolumes(preset_);
+    };
     hud_.camAvailable = hud_.camOn = false;
     if (preset_.webcam) {
         std::wstring err;
@@ -535,6 +702,10 @@ void CaptureEngine::StartVideoHud(RECT area) {
         if (webcam_.Start(preset_.webcamDevice, area, st, err)) hud_.camAvailable = hud_.camOn = true;
         else if (notify) notify(Tr(L"Snapnab — webcam"), err);
     }
+    // volumes of the preset; the meters already work before the recording (monitor of the sources)
+    hud_.micVolume = preset_.micVolume; hud_.sysVolume = preset_.sysVolume; hud_.autoGain = preset_.autoGain;
+    recorder.SetMicVolume(preset_.micVolume); recorder.SetSysVolume(preset_.sysVolume); recorder.SetAutoGain(preset_.autoGain);
+    recorder.StartMonitor(preset_.microphone, preset_.systemAudio);
     hud_.Show(area, &recorder, cb, preset_.microphone, preset_.systemAudio);
 }
 
@@ -546,11 +717,13 @@ void CaptureEngine::StartRecording() {
     rs.cursor = preset_.captureCursor;
     rs.microphone = hud_.micOn;
     rs.systemAudio = hud_.sysOn;
+    rs.micVolume = hud_.micVolume; rs.sysVolume = hud_.sysVolume; rs.autoGain = hud_.autoGain;
     rs.fps = preset_.fps; rs.quality = preset_.quality;
     rs.downscale1080 = preset_.downscale1080; rs.hardware = preset_.hardwareEncode;
     rs.path = NewVideoPath();
     if (!recorder.Start(rs, frame_, WM_SNAP_DONE)) {
         MessageBoxW(nullptr, (Tr(L"Não foi possível iniciar a gravação.\n\n") + recorder.lastError).c_str(), L"Snapnab", MB_ICONERROR);
+        recorder.StopMonitor();
         hud_.Hide();
         StopWebcam();
         SetState(Idle);
@@ -561,7 +734,7 @@ void CaptureEngine::StartRecording() {
 }
 
 void CaptureEngine::VideoStartPauseResume() {
-    if (hud_.counting()) { hud_.SkipCountdown(); return; }       // atalho durante a contagem: começa já
+    if (hud_.counting()) { hud_.SkipCountdown(); return; }       // hotkey during the countdown: start right away
     if (state_ == InputSelected && recorder.state() == Recorder::Idle) {
         hud_.Countdown(3, [this] { StartRecording(); });
         return;
@@ -580,12 +753,14 @@ void CaptureEngine::VideoStop() {
 
 void CaptureEngine::VideoCancel() {
     if (recorder.state() != Recorder::Idle) recorder.Cancel();
+    recorder.StopMonitor();
     hud_.Hide();
     StopWebcam();
     SetState(Idle);
 }
 
 void CaptureEngine::FinishVideo(bool ok) {
+    recorder.StopMonitor();
     hud_.Hide();
     StopWebcam();
     std::wstring path = recorder.path();

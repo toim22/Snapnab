@@ -13,7 +13,7 @@ static std::wstring ThemesFile() { return AppDataDir() + L"\\ToolThemes.xml"; }
 static std::wstring FavoritesFile() { return AppDataDir() + L"\\Favorites.xml"; }
 static std::wstring ToolStylesFile() { return AppDataDir() + L"\\ToolStyles.xml"; }
 
-// ---------------------------------------------------------------- estilo ⇄ XML (campos do .snagtheme)
+// ---------------------------------------------------------------- style ⇄ XML (.snagtheme fields)
 static std::string Hex(uint32_t v) { char b[16]; snprintf(b, sizeof b, "#%08X", v); return b; }
 static uint32_t FromHexA(const std::string& s, uint32_t def) {
     if (s.size() < 2 || s[0] != '#') return def;
@@ -35,6 +35,10 @@ XmlNode StyleToXml(const Style& s, const char* name) {
     n.seti("StepStyle", s.stepShape).seti("StepSequenceType", s.stepType).seti("MagnifyShape", s.magnifyShape);
     n.seti("MagnifyScale", s.magnifyScale).seti("MagnifyLink", s.magnifyLink).seti("HideKind", s.hideKind);
     n.seti("Antialiasing", s.antialias).seti("Amount", s.amount);
+    n.setd("LineSpacing", s.lineSpacing).set("StepOutlineColor", Hex(s.stepOutline)).setd("StepOutlineWidth", s.stepOutlineWidth);
+    n.seti("AreaShape", s.areaShape).seti("BackgroundBlur", s.bgBlur).seti("BackgroundBlurAmount", s.bgBlurAmount);
+    n.seti("Loupe", s.loupe).seti("LoupeHandle", s.loupeHandle);
+    GradToXml(n, s.grad);
     return n;
 }
 
@@ -68,12 +72,21 @@ Style StyleFromXml(const XmlNode& n) {
     s.shapeKind = std::clamp(n.geti("ToolShape", 0), 0, ShapeCount - 1);
     s.stepShape = std::clamp(n.geti("StepStyle", 0), 0, 3);
     s.stepType = std::clamp(n.geti("StepSequenceType", 0), 0, StepTypeCount - 1);
-    s.magnifyShape = std::clamp(n.geti("MagnifyShape", 0), 0, 2);
+    s.magnifyShape = std::clamp(n.geti("MagnifyShape", 0), 0, MagnifyKindCount - 1);
     s.magnifyScale = std::clamp(n.geti("MagnifyScale", 200), 110, 1000);
     s.magnifyLink = n.getb("MagnifyLink");
     s.hideKind = std::clamp(n.geti("HideKind", 0), 0, 1);
     s.antialias = n.getb("Antialiasing", true);
     s.amount = n.geti("Amount", s.amount);
+    s.lineSpacing = std::clamp((float)n.getd("LineSpacing", 1.0), 0.8f, 3.0f);
+    s.stepOutline = FromHexA(n.get("StepOutlineColor"), s.stepOutline);
+    s.stepOutlineWidth = std::clamp((float)n.getd("StepOutlineWidth", 0), 0.0f, 40.0f);
+    s.areaShape = std::clamp(n.geti("AreaShape", ShapeRect), 0, AreaShapeCount - 1);
+    s.bgBlur = n.getb("BackgroundBlur");
+    s.bgBlurAmount = std::clamp(n.geti("BackgroundBlurAmount", 8), 1, 40);
+    s.loupe = n.getb("Loupe");
+    s.loupeHandle = n.getb("LoupeHandle", true);
+    s.grad = GradFromXml(n);
     return s;
 }
 
@@ -81,7 +94,7 @@ bool SameStyle(const Style& a, const Style& b) {
     return XmlSerialize(StyleToXml(a), false) == XmlSerialize(StyleToXml(b), false);
 }
 
-// ---------------------------------------------------------------- geração dos estilos de um tema
+// ---------------------------------------------------------------- generating a theme's styles
 static const uint32_t kBlack = 0xFF1E1E1E, kWhite = 0xFFFFFFFF, kGray = 0xFF9E9E9E;
 
 std::vector<Style> GenerateStyles(Tool t, const std::array<uint32_t, 4>& c) {
@@ -114,6 +127,7 @@ std::vector<Style> GenerateStyles(Tool t, const std::array<uint32_t, 4>& c) {
     case Tool::Highlighter: {
         const uint32_t hl[4] = { 0xFFFFEB3B, 0xFF76FF03, 0xFFFF4081, 0xFF40C4FF };
         for (int i = 0; i < 8; i++) { Style s = b; s.stroke = i < 4 ? hl[i] : c[i - 4]; s.opacity = i < 4 ? 50 : 40; s.shadow = false; v.push_back(s); }
+        for (int i = 0; i < 4; i++) { Style s = b; s.stroke = hl[i]; s.opacity = 45; s.shadow = false; s.areaShape = i < 2 ? ShapeEllipse : ShapeRoundRect; v.push_back(s); }
         break;
     }
     case Tool::Text: {
@@ -161,6 +175,14 @@ std::vector<Style> GenerateStyles(Tool t, const std::array<uint32_t, 4>& c) {
                 s.stepShape = row % 2 ? 1 : 0; s.stepType = row >= 2 ? StepUpper : StepNumbers;
                 v.push_back(s);
             }
+        // with an outline (contrast on light and dark backgrounds): white outline, and white steps outlined in the color
+        for (int row = 0; row < 2; row++)
+            for (int i = 0; i < 4; i++) {
+                Style s = b; s.fontSize = 26; s.stepOutlineWidth = 3;
+                if (row == 0) { s.stroke = c[i]; s.textColor = kWhite; s.stepOutline = kWhite; }
+                else { s.stroke = kWhite; s.textColor = c[i]; s.stepOutline = c[i]; }
+                v.push_back(s);
+            }
         break;
     case Tool::Fill: {
         const uint32_t extra[4] = { kWhite, 0xFFC8C8C8, 0xFF646464, 0xFF000000 };
@@ -179,19 +201,26 @@ std::vector<Style> GenerateStyles(Tool t, const std::array<uint32_t, 4>& c) {
                 s.magnifyShape = row >= 2 ? 1 : 0; s.magnifyLink = row % 2 == 1;
                 v.push_back(s);
             }
+        {                                         // loupe: graphite, silver, gold and the theme's first color, with a handle
+            const uint32_t rim[4] = { 0xFF3C4248, 0xFFB8BEC6, 0xFFC9A227, c[0] };
+            for (int i = 0; i < 4; i++) { Style s = b; s.stroke = rim[i]; s.width = 4; s.magnifyScale = 200; s.loupe = true; s.loupeHandle = true; v.push_back(s); }
+            for (int i = 0; i < 4; i++) { Style s = b; s.stroke = rim[i]; s.width = 4; s.magnifyScale = 250; s.loupe = true; s.loupeHandle = false; s.magnifyShape = i < 2 ? MagRoundRect : MagHexagon; v.push_back(s); }
+        }
         break;
     case Tool::Blur:
         for (int k = 0; k < 6; k++) { Style s = b; s.shadow = false; s.hideKind = k / 3; s.amount = (k % 3 + 1) * 6; v.push_back(s); }
+        for (int k = 0; k < 2; k++) { Style s = b; s.shadow = false; s.hideKind = k; s.amount = 12; s.areaShape = ShapeEllipse; v.push_back(s); }
         break;
     case Tool::Spotlight:
         for (int k = 0; k < 3; k++) { Style s = b; s.shadow = false; s.amount = 6 + k * 4; v.push_back(s); }
+        { Style s = b; s.shadow = false; s.amount = 8; s.areaShape = ShapeEllipse; v.push_back(s); }
         break;
     default: break;
     }
     return v;
 }
 
-// ---------------------------------------------------------------- loja
+// ---------------------------------------------------------------- store
 static ToolTheme MakeTheme(const wchar_t* name, std::array<uint32_t, 4> c, bool builtin) {
     ToolTheme t; t.name = name; t.colors = c; t.builtin = builtin; return t;
 }
@@ -233,7 +262,7 @@ void QuickStyleStore::Load() {
         for (auto& c : root.children) if (c.name == "Theme") themes.push_back(ThemeFromXml(c));
         current = root.geti("Current", 0);
     }
-    for (auto& b : BuiltinThemes()) {           // os temas de fábrica sempre existem (com as cores originais)
+    for (auto& b : BuiltinThemes()) {           // the built-in themes always exist (with the original colors)
         auto it = std::find_if(themes.begin(), themes.end(), [&](auto& t) { return t.builtin && t.name == b.name; });
         if (it == themes.end()) themes.insert(themes.begin() + std::min<size_t>(themes.size(), b.name == L"Básico" ? 0 : 1), b);
         else it->colors = b.colors;
@@ -248,7 +277,7 @@ void QuickStyleStore::Load() {
             if (t < 0 || t >= (int)Tool::Count) continue;
             favorites.push_back({ (Tool)t, StyleFromXml(c.children[0]) });
         }
-    } else {                                    // LoadDefaultFavorites: seta, texto, retângulo e elipse do tema
+    } else {                                    // LoadDefaultFavorites: the theme's arrow, text, rectangle and ellipse
         auto a = GenerateStyles(Tool::Arrow, themes[0].colors), tx = GenerateStyles(Tool::Text, themes[0].colors);
         auto sh = GenerateStyles(Tool::Shape, themes[0].colors);
         favorites = { { Tool::Arrow, a[0] }, { Tool::Text, tx[0] }, { Tool::Shape, sh[0] }, { Tool::Shape, sh[4] } };
@@ -358,8 +387,8 @@ void LoadToolStyles(std::map<Tool, Style>& styles) {
     }
 }
 
-// ---------------------------------------------------------------- miniaturas
-static Image Landscape(int s) {       // fundo das miniaturas da lupa: céu, montanhas e neve
+// ---------------------------------------------------------------- thumbnails
+static Image Landscape(int s) {       // background of the magnifier thumbnails: sky, mountains and snow
     Image img(s, s, 0xFF7FB2E5);
     auto bmp = img.WrapGdip();
     Gdiplus::Graphics g(bmp.get());
@@ -380,7 +409,7 @@ static Image Landscape(int s) {       // fundo das miniaturas da lupa: céu, mon
     return img;
 }
 
-static Image Lines(int s) {           // fundo do desfoque/destaque: "texto" em linhas
+static Image Lines(int s) {           // background of blur/highlight: "text" in lines
     Image img(s, s, 0xFFFFFFFF);
     for (int y = s / 8; y < s - s / 8; y += s / 8)
         for (int x = s / 10; x < s - s / 10; x++)
@@ -411,6 +440,8 @@ Image QuickStylePreview(Tool t, const Style& st, int px) {
     case Tool::Highlighter:
         canvas = Lines(S);
         obj->type = ObjType::Highlighter; obj->p1 = { 8, 30 }; obj->p2 = { 88, 66 };
+        if (s.areaShape != ShapeRect) { obj->p1 = { 12, 16 }; obj->p2 = { 84, 80 }; }      // taller: the shape shows
+        if (IsPointArea(s.areaShape)) obj->pts = { { 10, 40 }, { 46, 22 }, { 86, 34 }, { 74, 70 }, { 22, 72 } };
         break;
     case Tool::Shape:
         obj->type = ObjType::Shape; obj->p1 = { 14, 24 }; obj->p2 = { 82, 72 };
@@ -441,6 +472,7 @@ Image QuickStylePreview(Tool t, const Style& st, int px) {
         canvas = Landscape(S);
         obj->type = ObjType::Magnify; obj->style.width = std::clamp(s.width, 2.0f, 5.0f);
         if (s.magnifyLink) { obj->p1 = { 44, 8 }; obj->p2 = { 88, 52 }; obj->tail = { 26, 70 }; }
+        else if (s.loupe && s.loupeHandle) { obj->p1 = { 10, 10 }; obj->p2 = { 64, 64 }; }
         else { obj->p1 = { 18, 18 }; obj->p2 = { 78, 78 }; }
         break;
     }
@@ -449,6 +481,7 @@ Image QuickStylePreview(Tool t, const Style& st, int px) {
         obj->type = t == Tool::Spotlight ? ObjType::Spotlight : s.hideKind ? ObjType::Pixelate : ObjType::Blur;
         obj->p1 = { 20, 20 }; obj->p2 = { 76, 76 };
         obj->style.amount = std::max(2, s.amount / 2);
+        if (IsPointArea(s.areaShape)) obj->pts = { { 22, 30 }, { 52, 14 }, { 82, 34 }, { 70, 80 }, { 18, 70 } };
         break;
     case Tool::Fill: case Tool::Eraser: draw = false; break;
     default: draw = false; break;
@@ -459,7 +492,7 @@ Image QuickStylePreview(Tool t, const Style& st, int px) {
         g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
         RenderObject(g, canvas, *obj);
         g.Flush(Gdiplus::FlushIntentionSync);
-    } else if (t == Tool::Fill) {      // balde de tinta na cor
+    } else if (t == Tool::Fill) {      // paint bucket in the color
         auto bmp = canvas.WrapGdip();
         Gdiplus::Graphics g(bmp.get());
         g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -467,15 +500,15 @@ Image QuickStylePreview(Tool t, const Style& st, int px) {
         Gdiplus::GraphicsPath gp;
         PointF body[] = { { 20, 46 }, { 48, 18 }, { 76, 46 }, { 48, 74 } };
         gp.AddPolygon(body, 4);
-        Gdiplus::SolidBrush b(c);
-        g.FillPath(&b, &gp);
+        auto b = FillBrush(s.stroke, s.grad, Gdiplus::RectF(20, 18, 56, 56));
+        g.FillPath(b.get(), &gp);
         Gdiplus::Pen pen(Gdiplus::Color(255, std::max(0, c.GetR() - 70), std::max(0, c.GetG() - 70), std::max(0, c.GetB() - 70)), 3);
         if ((s.stroke & 0xFFFFFF) == 0xFFFFFF) pen.SetColor(Gdiplus::Color(255, 150, 150, 150));
         g.DrawPath(&pen, &gp);
-        g.FillEllipse(&b, 70.0f, 56.0f, 14.0f, 20.0f);
+        g.FillEllipse(b.get(), 70.0f, 56.0f, 14.0f, 20.0f);
         g.DrawEllipse(&pen, 70.0f, 56.0f, 14.0f, 20.0f);
         g.Flush(Gdiplus::FlushIntentionSync);
-    } else if (t == Tool::Eraser) {    // tamanho do pincel: xadrez dentro do círculo
+    } else if (t == Tool::Eraser) {    // brush size: checkerboard inside the circle
         float d = std::clamp(s.width * 1.2f, 6.0f, 80.0f);
         for (int y = 0; y < S; y++)
             for (int x = 0; x < S; x++) {

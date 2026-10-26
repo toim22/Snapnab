@@ -21,8 +21,8 @@ bool GifWriter::Open(const std::wstring& path, int w, int h, double fps, int bpp
     delay_ = std::max(2, (int)std::lround(100.0 / std::max(1.0, fps)));
     Put("GIF89a", 6);
     PutWord((uint16_t)w); PutWord((uint16_t)h);
-    PutByte(0x00); PutByte(0); PutByte(0);                 // sem paleta global (cada quadro tem a sua)
-    // NETSCAPE2.0: laço infinito
+    PutByte(0x00); PutByte(0); PutByte(0);                 // no global palette (each frame has its own)
+    // NETSCAPE2.0: infinite loop
     const uint8_t loop[] = { 0x21, 0xFF, 0x0B, 'N','E','T','S','C','A','P','E','2','.','0', 0x03, 0x01, 0x00, 0x00, 0x00 };
     Put(loop, sizeof loop);
     if (!comment.empty()) {
@@ -37,9 +37,9 @@ bool GifWriter::Open(const std::wstring& path, int w, int h, double fps, int bpp
 }
 
 namespace {
-struct Box { int lo, hi; };   // intervalo em vetor de cores
+struct Box { int lo, hi; };   // range in a color vector
 
-// paleta por median cut
+// median cut palette
 std::vector<uint32_t> MedianCut(std::vector<uint32_t>& cols, int maxColors) {
     std::vector<Box> boxes{ { 0, (int)cols.size() } };
     auto rangeOf = [&](const Box& b, int& ch) {
@@ -83,7 +83,7 @@ public:
     Lzw(int minCode, std::vector<uint8_t>& out) : min_(minCode), out_(out) {}
     void Encode(const std::vector<uint8_t>& idx) {
         const int clear = 1 << min_, eoi = clear + 1;
-        std::vector<int> dict((size_t)4096 * 256, -1);    // (prefixo, símbolo) → código
+        std::vector<int> dict((size_t)4096 * 256, -1);    // (prefix, symbol) → code
         int next = eoi + 1, size = min_ + 1;
         Emit(clear, size);
         int prefix = idx.empty() ? 0 : idx[0];
@@ -94,7 +94,7 @@ public:
             Emit(prefix, size);
             slot = next++;
             if (next > (1 << size) && size < 12) size++;
-            if (next == 4096) {                 // dicionário cheio: limpa e recomeça
+            if (next == 4096) {                 // dictionary full: clear and start over
                 Emit(clear, size);
                 std::fill(dict.begin(), dict.end(), -1);
                 next = eoi + 1; size = min_ + 1;
@@ -120,9 +120,9 @@ private:
 bool GifWriter::AddFrame(const Image& frameIn, int delayCs) {
     if (file_ == INVALID_HANDLE_VALUE || failed_) return false;
     Image frame = (frameIn.w == w_ && frameIn.h == h_) ? frameIn : ScaleImage(frameIn, w_, h_);
-    for (auto& p : frame.px) p = BlendOver(0xFFFFFFFF, p);         // GIF não tem alfa parcial
+    for (auto& p : frame.px) p = BlendOver(0xFFFFFFFF, p);         // GIF has no partial alpha
 
-    // retângulo alterado (quadros delta)
+    // changed rectangle (delta frames)
     RECT rc{ 0, 0, w_, h_ };
     bool useDelta = delta_ && !prev_.empty();
     std::vector<uint8_t> changed;
@@ -139,14 +139,14 @@ bool GifWriter::AddFrame(const Image& frameIn, int delayCs) {
                     b.right = std::max<LONG>(b.right, x + 1); b.bottom = std::max<LONG>(b.bottom, y + 1);
                 }
             }
-        if (b.right <= b.left) b = { 0, 0, 1, 1 };   // quadro idêntico: 1 pixel
+        if (b.right <= b.left) b = { 0, 0, 1, 1 };   // identical frame: 1 pixel
         rc = b;
     }
     int fw = rc.right - rc.left, fh = rc.bottom - rc.top;
     int ncolors = 1 << bpp_;
-    int palColors = useDelta ? ncolors - 1 : ncolors;        // reserva um índice para transparente
+    int palColors = useDelta ? ncolors - 1 : ncolors;        // reserves an index for transparency
 
-    // amostra cores do retângulo e monta a paleta
+    // samples colors from the rectangle and builds the palette
     std::vector<uint32_t> sample;
     int step = std::max(1, (int)std::sqrt((double)fw * fh / 40000.0));
     for (int y = rc.top; y < rc.bottom; y += step)
@@ -155,7 +155,7 @@ bool GifWriter::AddFrame(const Image& frameIn, int delayCs) {
     if (sample.empty()) sample.push_back(frame.at(rc.left, rc.top));
     std::vector<uint32_t> pal = MedianCut(sample, palColors);
 
-    // LUT 15 bits → índice mais próximo
+    // 15-bit LUT → nearest index
     std::vector<uint8_t> lut(32768);
     for (int i = 0; i < 32768; i++) {
         int r = ((i >> 10) & 31) * 255 / 31, g = ((i >> 5) & 31) * 255 / 31, b = (i & 31) * 255 / 31;
@@ -199,7 +199,7 @@ bool GifWriter::AddFrame(const Image& frameIn, int delayCs) {
         }
         std::swap(err0, err1);
     }
-    // quadro exibido após este (para o próximo delta)
+    // frame shown after this one (for the next delta)
     if (prev_.empty()) prev_.assign((size_t)w_ * h_, 0);
     for (int y = 0; y < fh; y++)
         for (int x = 0; x < fw; x++) {
@@ -210,10 +210,10 @@ bool GifWriter::AddFrame(const Image& frameIn, int delayCs) {
 
     // Graphic Control Extension
     PutByte(0x21); PutByte(0xF9); PutByte(4);
-    PutByte((uint8_t)((1 << 2) | (useDelta ? 1 : 0)));        // disposal 1 (manter) + flag de transparência
+    PutByte((uint8_t)((1 << 2) | (useDelta ? 1 : 0)));        // disposal 1 (keep) + transparency flag
     PutWord((uint16_t)(delayCs > 0 ? delayCs : delay_));
     PutByte(useDelta ? transIdx : 0); PutByte(0);
-    // Image Descriptor com paleta local
+    // Image Descriptor with a local palette
     PutByte(0x2C);
     PutWord((uint16_t)rc.left); PutWord((uint16_t)rc.top); PutWord((uint16_t)fw); PutWord((uint16_t)fh);
     PutByte((uint8_t)(0x80 | (bpp_ - 1)));

@@ -1,4 +1,4 @@
-// XML mínimo (papel do libxml2/MSXML no original): presets, índice do .snap e objetos do documento
+// Minimal XML (role of libxml2/MSXML in the original): presets, .snap index and document objects
 #pragma once
 #include <string>
 #include <vector>

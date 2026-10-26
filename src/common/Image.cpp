@@ -200,7 +200,7 @@ bool EncodeImage(IStream* stream, const Image& imgIn, ImageFormat fmt, int quali
     case ImageFormat::TIFF: container = GUID_ContainerFormatTiff; break;
     default: return false;
     }
-    // JPEG/BMP não têm alfa: compõe sobre branco
+    // JPEG/BMP have no alpha: composite over white
     const Image* img = &imgIn;
     Image flat;
     if ((fmt == ImageFormat::JPEG || fmt == ImageFormat::BMP) && imgIn.HasTransparency()) {
@@ -228,7 +228,7 @@ bool EncodeImage(IStream* stream, const Image& imgIn, ImageFormat fmt, int quali
     if (pf == GUID_WICPixelFormat32bppBGRA) {
         hr = frame->WritePixels(img->h, img->w * 4, (UINT)img->px.size() * 4, (BYTE*)img->px.data());
     } else {
-        // o codificador pediu outro formato (JPEG: 24bpp; GIF: indexado) → conversor WIC
+        // the encoder asked for another format (JPEG: 24bpp; GIF: indexed) → WIC converter
         ComPtr<IWICBitmap> src;
         f->CreateBitmapFromMemory(img->w, img->h, GUID_WICPixelFormat32bppBGRA, img->w * 4,
                                   (UINT)img->px.size() * 4, (BYTE*)img->px.data(), &src);
@@ -295,14 +295,14 @@ std::wstring ImageSaveFilter() {
     return f;
 }
 
-// ---------------------------------------------------------------- área de transferência
+// ---------------------------------------------------------------- clipboard
 static UINT PngFormat() { static UINT f = RegisterClipboardFormatW(L"PNG"); return f; }
 
 bool CopyImageToClipboard(HWND owner, const Image& img) {
     if (img.empty()) return false;
     std::vector<BYTE> png;
     EncodeToMemory(img, ImageFormat::PNG, png);
-    // CF_DIB: 32 bpp de baixo para cima, composto sobre branco (apps antigos ignoram o alfa)
+    // CF_DIB: 32 bpp bottom-up, composited over white (old apps ignore alpha)
     size_t sz = sizeof(BITMAPINFOHEADER) + img.px.size() * 4;
     HGLOBAL hDib = GlobalAlloc(GMEM_MOVEABLE, sz);
     if (!hDib) return false;
@@ -380,7 +380,7 @@ bool GetClipboardImage(Image& out) {
     return ok;
 }
 
-// ---------------------------------------------------------------- escala
+// ---------------------------------------------------------------- scaling
 Image ScaleImage(const Image& src, int nw, int nh, bool hq) {
     if (src.empty() || nw <= 0 || nh <= 0) return {};
     Image dst(nw, nh, 0);

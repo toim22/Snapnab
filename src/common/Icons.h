@@ -1,4 +1,4 @@
-// Ícones vetoriais desenhados com GDI+ (sem arquivos de recurso)
+// Vector icons drawn with GDI+ (no resource files)
 #pragma once
 #include "Common.h"
 
@@ -11,11 +11,13 @@ enum Id {
     Copy, Save, Share, Ocr, Library, CameraFill, VideoFill, Webcam, WebcamOff,
     Mail, Print, NewDoc, Trash, Layers, Rotate, Effects,
     Star, Clipboard, Program, Duplicate, SaveAs, NewClipboard, AutoTrim, DeleteObject,
-    FxBorder, FxEdges, FxCaption, FxPerspective, FxPageCurl, FxShadow, FxFilters, FxColorAdjust, FxColorReplace, FxSpotlight, FxWatermark
+    FxBorder, FxEdges, FxCaption, FxPerspective, FxPageCurl, FxShadow, FxFilters, FxColorAdjust, FxColorReplace, FxSpotlight, FxWatermark,
+    Lock, Unlock, Eye, EyeOff, Pin, AlignLeft, AlignCenter, AlignRight, AlignTop, AlignMiddle, AlignBottom, DistributeH, DistributeV,
+    Ruler, Link, Group, Sliders
 };
 
 void Draw(Gdiplus::Graphics& g, Id id, Gdiplus::RectF r, Gdiplus::Color c);
 void DrawOnDC(HDC dc, Id id, RECT r, COLORREF c);
-HICON MakeAppIcon(int size, bool editor);     // ícone do app desenhado em tempo de execução
+HICON MakeAppIcon(int size, bool editor);     // app icon drawn at run time
 
 } // namespace snap::icons

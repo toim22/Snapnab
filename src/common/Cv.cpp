@@ -7,14 +7,14 @@
 
 namespace snap::cv {
 
-// ---------------------------------------------------------------- varinha
+// ---------------------------------------------------------------- magic wand
 Mask WandSelect(const Image& img, POINT seed, float tolerance, bool global) {
     Mask m((size_t)img.w * img.h, 0);
     if (img.empty() || seed.x < 0 || seed.y < 0 || seed.x >= img.w || seed.y >= img.h) return m;
     if (!(0.0f < tolerance && tolerance <= 100.0f)) tolerance = std::clamp(tolerance, 0.01f, 100.0f);
     const uint32_t s = img.at(seed.x, seed.y);
     const int limit = (int)std::lround(tolerance * 255.0f / 100.0f);
-    // comparação por canal escalada pela tolerância (lambda eq do original)
+    // per-channel comparison scaled by the tolerance (the original's eq lambda)
     auto cost = [&](uint32_t p) {
         return std::max({ std::abs(CR(p) - CR(s)), std::abs(CG(p) - CG(s)), std::abs(CB(p) - CB(s)), std::abs(CA(p) - CA(s)) });
     };
@@ -22,8 +22,8 @@ Mask WandSelect(const Image& img, POINT seed, float tolerance, bool global) {
         for (size_t i = 0; i < img.px.size(); i++) if (cost(img.px[i]) <= limit) m[i] = 255;
         return m;
     }
-    // fila ordenada por custo (std::set<PixelCost> no original)
-    using Item = std::pair<int, int>;      // (custo, índice)
+    // queue ordered by cost (std::set<PixelCost> in the original)
+    using Item = std::pair<int, int>;      // (cost, index)
     std::priority_queue<Item, std::vector<Item>, std::greater<Item>> pq;
     std::vector<uint8_t> seen(m.size(), 0);
     int si = seed.y * img.w + seed.x;
@@ -48,12 +48,12 @@ Mask WandSelect(const Image& img, POINT seed, float tolerance, bool global) {
 Mask DoWand(const Image& img, POINT pt, float tol, bool global) {
     if (pt.x < 0 || pt.y < 0 || pt.x >= img.w || pt.y >= img.h) return {};
     if (tol >= 0.01f && tol <= 100.0f) {
-        if (tol == 100.0f) return Mask((size_t)img.w * img.h, 255);      // camada inteira
+        if (tol == 100.0f) return Mask((size_t)img.w * img.h, 255);      // whole layer
     } else tol = tol < 0.01f ? 0.01f : 100.0f;
     return WandSelect(img, pt, tol, global);
 }
 
-// ---------------------------------------------------------------- máscaras
+// ---------------------------------------------------------------- masks
 Mask RectMask(int w, int h, RECT r) {
     Mask m((size_t)w * h, 0);
     for (int y = std::max<LONG>(0, r.top); y < std::min<LONG>(h, r.bottom); y++)
@@ -112,7 +112,7 @@ bool MaskEmpty(const Mask& m) {
 }
 
 Mask Dilate(const Mask& m, int w, int h, int k) {
-    // dilatação separável por elemento retangular k×k (getStructuringElement(MORPH_RECT))
+    // separable dilation by a k×k rectangular element (getStructuringElement(MORPH_RECT))
     int r = std::max(1, k / 2);
     Mask t(m.size(), 0), o(m.size(), 0);
     for (int y = 0; y < h; y++) {
@@ -133,14 +133,14 @@ Mask Dilate(const Mask& m, int w, int h, int k) {
 // ---------------------------------------------------------------- inpainting
 bool Dingo7Inpaint(Image& img, const Mask& mask, int kernel, uint32_t* dominantOut, double* shareOut) {
     Mask grown = Dilate(mask, img.w, img.h, kernel);
-    std::map<uint32_t, int> hist;           // chave = BGRA empacotado
+    std::map<uint32_t, int> hist;           // key = packed BGRA
     int total = 0;
     for (size_t i = 0; i < grown.size(); i++)
-        if (grown[i] && !mask[i]) { hist[img.px[i]]++; total++; }  // só o anel em volta (exclui o próprio objeto)
+        if (grown[i] && !mask[i]) { hist[img.px[i]]++; total++; }  // only the surrounding ring (excludes the object itself)
     if (hist.empty()) return false;
     uint32_t dom = 0; int best = -1, bestBright = -1;
     for (auto& [c, n] : hist) {
-        int bright = CA(c) + CR(c) + CG(c) + CB(c);       // desempate pela soma dos 4 bytes
+        int bright = CA(c) + CR(c) + CG(c) + CB(c);       // tie-break by the sum of the 4 bytes
         if (n > best || (n == best && bright > bestBright)) { best = n; dom = c; bestBright = bright; }
     }
     for (size_t i = 0; i < mask.size(); i++) if (mask[i]) img.px[i] = dom;   // setTo(dominant, mask)
@@ -161,7 +161,7 @@ void DiffusionInpaint(Image& img, const Mask& mask, int iterations) {
         uint32_t p = img.px[i];
         c[0][i] = (float)CR(p); c[1][i] = (float)CG(p); c[2][i] = (float)CB(p); c[3][i] = (float)CA(p);
     }
-    // "casca de cebola": preenche da borda para dentro com a média dos vizinhos conhecidos
+    // "onion peel": fills from the border inward with the average of the known neighbors
     std::vector<int> frontier, next;
     for (int y = b.top; y < b.bottom; y++)
         for (int x = b.left; x < b.right; x++) {
@@ -190,7 +190,7 @@ void DiffusionInpaint(Image& img, const Mask& mask, int iterations) {
         for (auto& [i, v] : upd) { for (int q = 0; q < 4; q++) c[q][i] = v[q]; known[i] = 1; }
         frontier.swap(next);
     }
-    // suavização (Jacobi) só dentro da máscara
+    // smoothing (Jacobi) only inside the mask
     if (iterations <= 0) iterations = std::clamp((int)std::max(b.right - b.left, b.bottom - b.top) / 2, 20, 150);
     for (int it = 0; it < iterations; it++)
         for (int y = std::max<LONG>(1, b.top); y < std::min<LONG>(h - 1, b.bottom); y++)
@@ -217,7 +217,7 @@ float SmartMoveAutoTolerance(const Image& m) {
     for (uint32_t p : m.px) { double l = (CR(p) + CG(p) + CB(p)) / 3.0; sum += l; sum2 += l * l; }
     float mean = (float)(sum / n);
     float sigma = (float)std::sqrt(std::max(0.0, sum2 / n - (sum / n) * (sum / n)));
-    return ((sigma * 14.0f / 255.0f) + 1.0f) * (((255.0f - mean) * 3.0f / 255.0f) + 2.0f);   // faixa [2; 75]
+    return ((sigma * 14.0f / 255.0f) + 1.0f) * (((255.0f - mean) * 3.0f / 255.0f) + 2.0f);   // range [2; 75]
 }
 
 float SmartMoveToleranceScaling(float t, float inMin, float inMax, float outMin, float outMax) {
@@ -225,7 +225,7 @@ float SmartMoveToleranceScaling(float t, float inMin, float inMax, float outMin,
     return inMin;
 }
 
-// ---------------------------------------------------------------- correlação de fase
+// ---------------------------------------------------------------- phase correlation
 using cpx = std::complex<double>;
 
 static void Fft1D(cpx* a, int n, bool inv, int stride) {
@@ -280,7 +280,7 @@ POINT DetectTranslation(const Image& a, const Image& b, double* confidence) {
             }
         mean /= g.size();
         for (int y = 0; y < sh; y++) {
-            double wy = 0.5 - 0.5 * std::cos(2 * 3.14159265 * y / std::max(1, sh - 1));     // janela de Hann
+            double wy = 0.5 - 0.5 * std::cos(2 * 3.14159265 * y / std::max(1, sh - 1));     // Hann window
             for (int x = 0; x < sw; x++) {
                 double wx = 0.5 - 0.5 * std::cos(2 * 3.14159265 * x / std::max(1, sw - 1));
                 out[(size_t)y * W + x] = (g[(size_t)y * sw + x] - mean) * wx * wy;
@@ -292,10 +292,10 @@ POINT DetectTranslation(const Image& a, const Image& b, double* confidence) {
     for (size_t i = 0; i < A.size(); i++) {
         cpx c = A[i] * std::conj(B[i]);                  // mulSpectrums(A, conj(B))
         double mag = std::abs(c);
-        A[i] = c / (mag > 0 ? mag : 2.220446049250313e-16);   // DBL_EPSILON evita divisão por zero
+        A[i] = c / (mag > 0 ? mag : 2.220446049250313e-16);   // DBL_EPSILON avoids division by zero
     }
     Fft2D(A, W, H, true);
-    // picos da correlação (cv::minMaxIdx dá só o maior; guardamos os 6 maiores máximos locais como candidatos)
+    // correlation peaks (cv::minMaxIdx gives only the largest; we keep the 6 largest local maxima as candidates)
     double sum = 0;
     for (auto& c : A) sum += std::fabs(c.real());
     struct Peak { double v; int x, y; };
@@ -316,11 +316,11 @@ POINT DetectTranslation(const Image& a, const Image& b, double* confidence) {
     if (peaks.size() > 6) peaks.resize(6);
     if (confidence) *confidence = (sum > 0 && !peaks.empty()) ? peaks[0].v / (sum / A.size()) : 0;
 
-    // SAD em resolução cheia numa faixa central: b(p + d) = a(p)
+    // full-resolution SAD over a central band: b(p + d) = a(p)
     const int x0 = a.w / 4, x1 = a.w * 3 / 4;
     auto sadAt = [&](int dx, int dy) -> long long {
         int y0 = std::max(0, -dy), y1 = std::min(a.h, a.h - dy);
-        if (y1 - y0 < a.h / 8 || std::abs(dx) >= a.w / 2) return LLONG_MAX;     // sobreposição mínima
+        if (y1 - y0 < a.h / 8 || std::abs(dx) >= a.w / 2) return LLONG_MAX;     // minimum overlap
         long long s = 0; int n = 0;
         int ys = std::max(1, (y1 - y0) / 400), xs = std::max(1, (x1 - x0) / 200);
         for (int y = y0; y < y1; y += ys)
@@ -334,9 +334,9 @@ POINT DetectTranslation(const Image& a, const Image& b, double* confidence) {
     std::vector<POINT> cand;
     for (auto& p : peaks) {
         int px = p.x > W / 2 ? p.x - W : p.x, py = p.y > H / 2 ? p.y - H : p.y;
-        cand.push_back({ -px * f, -py * f });          // Translation(-maxLoc.x, -maxLoc.y), em escala cheia
+        cand.push_back({ -px * f, -py * f });          // Translation(-maxLoc.x, -maxLoc.y), at full scale
     }
-    // candidatos extras pelo perfil de linhas (rolagem vertical): média de luminância por linha
+    // extra candidates from the row profile (vertical scrolling): average luminance per row
     {
         std::vector<double> ra(a.h), rb(b.h);
         for (int y = 0; y < a.h; y++) {
@@ -362,7 +362,7 @@ POINT DetectTranslation(const Image& a, const Image& b, double* confidence) {
         for (int dy = c.y - f; dy <= c.y + f; dy++)
             for (int dx = c.x - (c.x ? f : 0); dx <= c.x + (c.x ? f : 0); dx++) {
                 long long s = sadAt(dx, dy);
-                // empate (conteúdo periódico): prefere o menor deslocamento
+                // tie (periodic content): prefers the smallest offset
                 bool tie = best != LLONG_MAX && std::llabs(s - best) * 100 <= best;
                 if (s < best && !(tie && std::abs(dy) + std::abs(dx) > std::abs(bestP.y) + std::abs(bestP.x))) { best = s; bestP = { dx, dy }; }
                 else if (tie && std::abs(dy) + std::abs(dx) < std::abs(bestP.y) + std::abs(bestP.x)) { best = std::min(best, s); bestP = { dx, dy }; }

@@ -42,13 +42,13 @@ struct Overlay {
     HBITMAP bright = nullptr, dim = nullptr;
     HDC brightDC = nullptr, dimDC = nullptr;
     HWND hwnd = nullptr;
-    POINT cur{};                 // cursor em coordenadas de cliente
+    POINT cur{};                 // cursor in client coordinates
     bool dragging = false;
     POINT dragStart{};
-    RECT hover{};                // destaque sob o cursor (cliente)
+    RECT hover{};                // highlight under the cursor (client)
     HWND hoverWnd = nullptr, hoverChild = nullptr;
-    std::vector<POINT> path;     // cliente
-    std::vector<RECT> rects;     // cliente
+    std::vector<POINT> path;     // client
+    std::vector<RECT> rects;     // client
     bool finished = false;
 };
 
@@ -78,7 +78,7 @@ void UpdateHover(Overlay* o) {
         o->hoverWnd = w.h;
         RECT r = w.r;
         if (o->mode == SelectMode::Object || o->mode == SelectMode::Region || o->mode == SelectMode::PickWindow) {
-            // desce até o controle mais interno (ChildWindowFromPointEx)
+            // goes down to the innermost control (ChildWindowFromPointEx)
             HWND cur = w.h;
             for (int depth = 0; depth < 16; depth++) {
                 POINT cp = sp; ScreenToClient(cur, &cp);
@@ -96,7 +96,7 @@ void UpdateHover(Overlay* o) {
         o->hover = r;
         return;
     }
-    // nenhuma janela: monitor inteiro
+    // no window: whole monitor
     RECT m = MonitorRectFromPoint(sp);
     OffsetRect(&m, -o->vs.left, -o->vs.top);
     o->hover = m;
@@ -116,7 +116,7 @@ RECT FixedRect(Overlay* o) {
 void Finish(Overlay* o, bool ok) {
     if (o->finished) return;
     o->finished = true;
-    Log(L"Seleção: concluída (%s)", ok ? L"ok" : L"cancelada");
+    Log(L"Selection: finished (%s)", ok ? L"ok" : L"canceled");
     SelectResult res;
     res.ok = ok;
     if (ok) {
@@ -191,7 +191,7 @@ void Paint(Overlay* o, HDC hdc) {
         else if (!IsRectEmpty(&o->hover)) { sel = o->hover; haveSel = true; lit(sel); }
     }
 
-    // mira
+    // crosshair
     HPEN cross = CreatePen(PS_DOT, 1, RGB(255, 255, 255));
     SelectObject(mem, cross);
     SetBkMode(mem, OPAQUE); SetBkColor(mem, RGB(0, 0, 0));
@@ -203,7 +203,7 @@ void Paint(Overlay* o, HDC hdc) {
     DeleteObject(pen); DeleteObject(cross);
 
     HFONT font = ui::UiFont(dpi, 9, true);
-    // rótulo de tamanho
+    // size label
     if (haveSel) {
         std::wstring t = Format(L" %d × %d ", sel.right - sel.left, sel.bottom - sel.top);
         RECT lr{ sel.left, sel.top - ui::Scale(26, dpi), sel.left + ui::Scale(120, dpi), sel.top - ui::Scale(4, dpi) };
@@ -211,7 +211,7 @@ void Paint(Overlay* o, HDC hdc) {
         ui::FillRoundRect(mem, lr, 8, accent, accent);
         ui::DrawTextCentered(mem, t, lr, RGB(255, 255, 255), font);
     }
-    // lupa
+    // magnifier
     {
         int Z = 8, N = 15, box = Z * N;
         int bx = o->cur.x + ui::Scale(24, dpi), by = o->cur.y + ui::Scale(24, dpi);
@@ -237,7 +237,7 @@ void Paint(Overlay* o, HDC hdc) {
         ui::FillRoundRect(mem, sw, 4, ToColorref(px), RGB(255, 255, 255));
         ui::DrawTextCentered(mem, ColorToHex(ToColorref(px)), t2, RGB(255, 255, 255), ui::UiFont(dpi, 8, true));
     }
-    // dica
+    // hint
     {
         std::wstring hint;
         switch (o->mode) {
@@ -298,7 +298,7 @@ LRESULT CALLBACK OverlayProc(HWND h, UINT m, WPARAM w, LPARAM l) {
             return 0;
         }
         if (o->mode == SelectMode::Freehand) { Finish(o, true); return 0; }
-        if (!moved) o->dragging = false;         // clique simples = área destacada
+        if (!moved) o->dragging = false;         // single click = highlighted area
         Finish(o, true);
         return 0;
     }
@@ -332,12 +332,12 @@ LRESULT CALLBACK OverlayProc(HWND h, UINT m, WPARAM w, LPARAM l) {
         }
         }
         return 0;
-    case WM_CLOSE: Log(L"Seleção: WM_CLOSE"); Finish(o, false); return 0;
-    case WM_ACTIVATE: if (LOWORD(w) == WA_INACTIVE) Log(L"Seleção: janela desativada"); break;
+    case WM_CLOSE: Log(L"Selection: WM_CLOSE"); Finish(o, false); return 0;
+    case WM_ACTIVATE: if (LOWORD(w) == WA_INACTIVE) Log(L"Selection: window deactivated"); break;
     case WM_DESTROY: {
         if (!o->finished) {
-            // destruída por fora (não deve deixar o motor preso em InputSelecting)
-            Log(L"Seleção: destruída sem conclusão");
+            // destroyed from outside (must not leave the engine stuck in InputSelecting)
+            Log(L"Selection: destroyed before finishing");
             o->finished = true;
             auto done = o->done;
             SelectResult res;
@@ -367,7 +367,7 @@ void RunSelectOverlay(const Image& frozen, RECT vs, SelectMode mode, SIZE fixedS
     }
     auto* o = new Overlay();
     o->frozen = frozen; o->vs = vs; o->mode = mode; o->fixed = fixedSize; o->video = video; o->done = std::move(done);
-    // versão clara e escurecida da tela congelada
+    // light and darkened versions of the frozen screen
     o->bright = frozen.ToHBITMAP();
     Image d = frozen;
     for (auto& p : d.px) p = ARGB(255, CR(p) * 45 / 100, CG(p) * 45 / 100, CB(p) * 45 / 100);
@@ -383,7 +383,7 @@ void RunSelectOverlay(const Image& frozen, RECT vs, SelectMode mode, SIZE fixedS
     POINT cp; GetCursorPos(&cp);
     o->cur = { cp.x - vs.left, cp.y - vs.top };
     UpdateHover(o);
-    // Esc registrado como atalho id 3 enquanto a mira está ativa (comp_7 §4.1)
+    // Esc registered as hotkey id 3 while the crosshair is active (comp_7 §4.1)
     RegisterHotKey(o->hwnd, 3, MOD_NOREPEAT, VK_ESCAPE);
     ShowWindow(o->hwnd, SW_SHOW);
     SetForegroundWindow(o->hwnd);
