@@ -1,0 +1,109 @@
+color 000000: [#000000] [0, 0, 0] [hsl(0, 0%, 0%)] [000000] [rgb(0, 0, 0)] [0x000000] [Color.FromArgb(0, 0, 0)] [$00000000] hsl 0 0 0 lum 0 contrast 3.3867151381913838
+color ffffff: [#FFFFFF] [255, 255, 255] [hsl(0, 0%, 100%)] [FFFFFF] [rgb(255, 255, 255)] [0xFFFFFF] [Color.FromArgb(255, 255, 255)] [$00FFFFFF] hsl 0 0 1 lum 1 contrast 6.2006986543352101
+color 0080ff: [#FF8000] [255, 128, 0] [hsl(30, 100%, 50%)] [FF8000] [rgb(255, 128, 0)] [0xFF8000] [Color.FromArgb(255, 128, 0)] [$000080FF] hsl 30.117647058823529 1 0.5 lum 0.36698342968146075 contrast 2.4624653250532518
+color 3fab12: [#12AB3F] [18, 171, 63] [hsl(138, 81%, 37%)] [12AB3F] [rgb(18, 171, 63)] [0x12AB3F] [Color.FromArgb(18, 171, 63)] [$003FAB12] hsl 137.64705882352939 0.80952380952380953 0.37058823529411761 lum 0.29613299551683547 contrast 2.0440632376402448
+color 808080: [#808080] [128, 128, 128] [hsl(0, 0%, 50%)] [808080] [rgb(128, 128, 128)] [0x808080] [Color.FromArgb(128, 128, 128)] [$00808080] hsl 0 0 0.50196078431372548 lum 0.21586050011389923 contrast 1.5700198526639437
+color 030201: [#010203] [1, 2, 3] [hsl(210, 50%, 1%)] [010203] [rgb(1, 2, 3)] [0x010203] [Color.FromArgb(1, 2, 3)] [$00030201] hsl 210 0.5 0.0078431372549019607 lum 0.00056443877860741813 contrast 3.3489100442900801
+color 8205fa: [#FA0582] [250, 5, 130] [hsl(329, 96%, 50%)] [FA0582] [rgb(250, 5, 130)] [0xFA0582] [Color.FromArgb(250, 5, 130)] [$008205FA] hsl 329.38775510204079 0.96078431372549011 0.5 lum 0.22044240591224248 contrast 1.5970779642049702
+color ff0000: [#0000FF] [0, 0, 255] [hsl(240, 100%, 50%)] [0000FF] [rgb(0, 0, 255)] [0x0000FF] [Color.FromArgb(0, 0, 255)] [$00FF0000] hsl 240 1 0.5 lum 0.0722 contrast 1.385726324955558
+color d4ff7f: [#7FFFD4] [127, 255, 212] [hsl(160, 100%, 75%)] [7FFFD4] [rgb(127, 255, 212)] [0x7FFFD4] [Color.FromArgb(127, 255, 212)] [$00D4FF7F] hsl 159.84375 1 0.74901960784313726 lum 0.80785492083380428 contrast 5.0659998602181036
+color 400040: [#400040] [64, 0, 64] [hsl(300, 100%, 13%)] [400040] [rgb(64, 0, 64)] [0x400040] [Color.FromArgb(64, 0, 64)] [$00400040] hsl 300 1 0.12549019607843137 lum 0.014601541744927515 contrast 2.6212339881635311
+format HEX  #RRGGBB
+format RGB  r, g, b
+format HSL  hsl(h, s%, l%)
+format HEX  RRGGBB
+format CSS  rgb(r, g, b)
+format C/C++  0xRRGGBB
+format C#  Color.FromArgb(r, g, b)
+format Delphi  $00BBGGRR
+hex #12AB3F -> 3fab12
+hex #12ab3fzz -> 3fab12
+hex 12AB3F -> 777777
+hex #FFF -> 777777
+hex # 12AB3F -> 3fab12
+hex #0x12AB3F -> 3fab12
+hex #-1 -> 777777
+hex #123456789AB -> ffffff
+half 0000 0
+half 03e5 5.94258308e-05
+half 07ca 0.000118851662
+half 0baf 0.000234484673
+half 0f94 0.000462532043
+half 1379 0.000912189484
+half 175e 0.00179862976
+half 1b43 0.00354576111
+half 1f28 0.00698852539
+half 230d 0.0137710571
+half 26f2 0.027130127
+half 2ad7 0.0534362793
+half 2ebc 0.105224609
+half 32a1 0.20715332
+half 3686 0.407714844
+half 3a6b 0.802246094
+half 3e50 1.578125
+half 4235 3.10351562
+half 461a 6.1015625
+half 49ff 11.9921875
+half 4de4 23.5625
+half 51c9 46.28125
+half 55ae 90.875
+half 5993 178.375
+half 5d78 350
+half 615d 686.5
+half 6542 1346
+half 6927 2638
+half 6d0c 5168
+half 70f1 10120
+half 74d6 19808
+half 78bb 38752
+half 7ca0 0
+half 8085 -7.92741776e-06
+half 846a -6.73532486e-05
+half 884f -0.000131487846
+half 8c34 -0.000256538391
+half 9019 -0.000500202179
+half 93fe -0.000975608826
+half 97e3 -0.00192546844
+half 9bc8 -0.00379943848
+half 9fad -0.00749588013
+half a392 -0.0147857666
+half a777 -0.0291595459
+half ab5c -0.0574951172
+half af41 -0.113342285
+half b326 -0.223388672
+half b70b -0.440185547
+half baf0 -0.8671875
+half bed5 -1.70800781
+half c2ba -3.36328125
+half c69f -6.62109375
+half ca84 -13.03125
+half ce69 -25.640625
+half d24e -50.4375
+half d633 -99.1875
+half da18 -195
+half ddfd -383.25
+half e1e2 -753
+half e5c7 -1479
+half e9ac -2904
+half ed91 -5700
+half f176 -11184
+half f55b -21936
+half f940 -43008
+half fd25 -0
+tonemap 80 413e9b6906eb3072
+tonemap 200 0f37df60255d2c9c
+tonemap 480 da7e33c5bab3d25f
+tonemap 0.5 584e4b67b83408d0
+tone -1: 0 0
+tone 0: 0 0
+tone 0.001: 3 1
+tone 0.5: 188 113
+tone 1: 249 156
+tone 2: 255 213
+tone 12.5: 255 255
+tone 1e+09: 255 255
+ocr 0: 1 [Hello Snapnab 2026|] 1 {Hello Snapnab 2026 154,16,407,45 <Hello 154,16,217,39> <Snapnab 227,16,337,45> <2026 347,17,407,39>}
+ocr 1: 1 [] 1 {4111 1111 1111 1111 144,17,411,38 <41 144,17,170,38> <11 1111 1111 1111 178,17,411,38>}
+ocr 2: 1 [Grab text from the screen|] 1 {Grab text from the screen 118,16,441,39 <Grab 118,16,178,39> <text 187,19,234,39> <from 243,16,302,39> <the 311,16,352,39> <screen 361,23,441,39>}
+ocr 3: 1 [ABC-123 xyz|] 1 {ABC-123 xyz 201,16,360,43 <ABC-123 201,16,310,43> <xyz 320,19,360,42>}
+faces 1 0

@@ -1,4 +1,4 @@
-"""The capture window (src/capture/main.cpp): tabs, switches, combo boxes, the capture button, preset management,
+"""The capture window (rust/snapnab/src/window.rs): tabs, switches, combo boxes, the capture button, preset management,
 Options, preset and settings export/import, One Click, About and the folder shortcuts."""
 import re
 import time
@@ -7,7 +7,7 @@ import pytest
 import win32con
 import win32gui
 
-from snapnab_e2e import apps, filedialog, presets, regs, win
+from snapnab_e2e import apps, filedialog, presets, regs, uia, win
 from snapnab_e2e.apps import CaptureCmd as C
 from snapnab_e2e.config import DATA_DIR
 from snapnab_e2e.logs import RELOAD_CONFIG, ipc_received, ipc_sent
@@ -46,39 +46,65 @@ def box_text(box):
     return " ".join(win.title(c) for c in win.children(box))
 
 
+@pytest.fixture
+def window_with_list(capture):
+    """The window with the preset list open below the bottom bar."""
+    regs.set_dword("CapturePresetsOpen", 1)
+    presets.write(presets.preset("e2e one", "Region", editor=False),
+                  presets.preset("e2e two", "FullScreen", editor=False))
+    capture.start("/hide")
+    capture.show()
+    win.foreground(capture.hwnd)
+    return capture
+
+
+def open_dropdown(capture, name, n_items=None):
+    uia.click(capture.hwnd, name)
+    return win.wait_until(lambda: (lambda it: it if it and (n_items is None or len(it) == n_items) else None)(uia.items(capture.hwnd, name)),
+                          what=f"{name} open")
+
+
 @pytest.mark.smoke
 def test_controls_exist(window):
-    for cid in (C.IDC_TAB_IMAGE, C.IDC_TAB_VIDEO, C.IDC_SELECTION, C.IDC_EFFECTS, C.IDC_SHARE, C.IDC_PREVIEW,
-                C.IDC_CLIPBOARD, C.IDC_CURSOR, C.IDC_DELAY, C.IDC_CAPTURE, C.IDC_PRESETS_LABEL, C.IDC_PRESET_ADD,
-                C.IDC_OPEN_EDITOR, C.IDC_PRESETS):
-        assert window.ctl(cid), f"control {cid} missing"
-    assert win.class_name(window.ctl(C.IDC_PREVIEW)) == "SnapnabToggle"
-    assert win.class_name(window.ctl(C.IDC_SELECTION)) == "SnapnabCombo"
-    assert win.combo_count(window.ctl(C.IDC_SELECTION)) == 13, "image selections (SelectionsFor)"
+    """egui draws the controls; UI Automation finds them by the C++ control names (AutomationId)."""
+    for aid in ("IDC_TAB_IMAGE", "IDC_TAB_VIDEO", "IDC_SELECTION", "IDC_EFFECTS", "IDC_SHARE", "IDC_PREVIEW", "IDC_CLIPBOARD",
+                "IDC_CURSOR", "IDC_DELAY", "IDC_CAPTURE", "IDC_PRESETS_LABEL", "IDC_PRESET_ADD", "IDC_OPEN_EDITOR"):
+        uia.find(window.hwnd, aid)
+    assert len(open_dropdown(window, "IDC_SELECTION")) == 13, "image selections (SelectionsFor)"
+    win.keys("{ESC}")
 
 
 def test_video_tab_switches_the_preset_kind(window):
+    uia.click(window.hwnd, "IDC_TAB_VIDEO")
+    win.wait_until(lambda: cur_preset().get("CaptureMode") == "Video", what="preset saved as video")
+    uia.find(window.hwnd, "IDC_MIC")
+    uia.find(window.hwnd, "IDC_SYS")
+    assert len(open_dropdown(window, "IDC_SELECTION")) == 4, "video selections: region, window, full screen, monitor"
+    win.keys("{ESC}")
+    uia.click(window.hwnd, "IDC_TAB_IMAGE")
+    win.wait_until(lambda: cur_preset().get("CaptureMode") == "Image", what="back to image")
+
+
+def test_tab_commands_still_work(window):
+    """The tabs answer the C++ control ids as WM_COMMAND too (automation posts them)."""
     win.send_command(window.hwnd, C.IDC_TAB_VIDEO)
     win.wait_until(lambda: cur_preset().get("CaptureMode") == "Video", what="preset saved as video")
-    assert win.combo_count(window.ctl(C.IDC_SELECTION)) == 4, "video selections: region, window, full screen, monitor"
-    assert win.is_visible(window.ctl(C.IDC_MIC)) and win.is_visible(window.ctl(C.IDC_SYS))
     win.send_command(window.hwnd, C.IDC_TAB_IMAGE)
     win.wait_until(lambda: cur_preset().get("CaptureMode") == "Image", what="back to image")
 
 
 def test_selection_combo_is_saved(window):
-    win.set_combo(window.hwnd, C.IDC_SELECTION, 2)            # Full screen
+    open_dropdown(window, "IDC_SELECTION", 13)
+    uia.click(window.hwnd, "IDC_SELECTION.2")                 # Full screen
     win.wait_until(lambda: cur_preset().get("SelectionMode") == str(presets.SEL["FullScreen"]), what="selection saved")
 
 
-@pytest.mark.parametrize("cid,attr", [(C.IDC_CLIPBOARD, "CopyToClipboard"), (C.IDC_PREVIEW, "PreviewInEditor"),
-                                      (C.IDC_CURSOR, "CaptureCursor")])
-def test_switch_click_toggles_and_saves(window, cid, attr):
-    h = window.ctl(cid)
-    before = win.get_check(h)
-    l, t, r, b = win.rect(h)
-    win.click(r - 20, (t + b) // 2)                            # the switch itself is on the right of the row
-    win.wait_until(lambda: win.get_check(h) != before, what="switch flipped")
+@pytest.mark.parametrize("aid,attr", [("IDC_CLIPBOARD", "CopyToClipboard"), ("IDC_PREVIEW", "PreviewInEditor"),
+                                      ("IDC_CURSOR", "CaptureCursor")])
+def test_switch_click_toggles_and_saves(window, aid, attr):
+    before = uia.toggled(window.hwnd, aid)
+    uia.click(window.hwnd, aid)
+    win.wait_until(lambda: uia.toggled(window.hwnd, aid) != before, what="switch flipped")
     win.wait_until(lambda: cur_preset().get(attr) == str(int(not before)), what=f"{attr} saved")
 
 
@@ -89,29 +115,43 @@ def test_switch_click_toggles_and_saves(window, cid, attr):
     (0, lambda p: p.find("ShareSettingsFile").get("Enabled") == "0" and p.find("ShareSettingsProgram").get("Enabled") == "0"),
 ], ids=["file", "program", "text", "none"])
 def test_share_destination(window, index, check):
-    win.set_combo(window.hwnd, C.IDC_SHARE, index)
+    open_dropdown(window, "IDC_SHARE", 11)
+    uia.click(window.hwnd, f"IDC_SHARE.{index}")
     win.wait_until(lambda: check(cur_preset()), what="share destination saved")
 
 
-def test_capture_button(window, lib):
-    lb = window.ctl(C.IDC_PRESETS)
-    win.send(lb, LB_SETCURSEL, 1)
-    win.send_command(window.hwnd, C.IDC_PRESETS, LBN_SELCHANGE, lb)     # "e2e two": full screen
+def test_delay_menu(window):
+    uia.click(window.hwnd, "IDC_DELAY")
+    uia.click(window.hwnd, "IDC_DELAY.3")
+    win.wait_until(lambda: cur_preset().get("DelayDuration") == "3", what="delay saved")
+
+
+def test_capture_button(window_with_list, lib):
+    window = window_with_list
+    uia.click(window.hwnd, "IDC_PRESETS.1")                   # "e2e two": full screen
     win.wait_until(lambda: preset_xml().get("SelectedMode") == "1", what="preset selected")
-    l, t, r, b = win.rect(window.ctl(C.IDC_CAPTURE))
-    win.click((l + r) // 2, (t + b) // 2)
+    uia.click(window.hwnd, "IDC_CAPTURE")
     lib.wait_new()
 
 
-def test_preset_list_selection_loads_controls(window):
-    lb = window.ctl(C.IDC_PRESETS)
-    assert win.send(lb, LB_GETCOUNT) == 2
-    win.send(lb, LB_SETCURSEL, 1)
-    win.send_command(window.hwnd, C.IDC_PRESETS, LBN_SELCHANGE, lb)
-    win.wait_until(lambda: win.combo_sel(window.ctl(C.IDC_SELECTION)) == 2, what="selection of 'e2e two' shown")
-    win.send(lb, LB_SETCURSEL, 0)
-    win.send_command(window.hwnd, C.IDC_PRESETS, LBN_SELCHANGE, lb)
-    win.wait_until(lambda: win.combo_sel(window.ctl(C.IDC_SELECTION)) == 0, what="selection of 'e2e one' shown")
+def test_preset_list_selection_loads_controls(window_with_list):
+    window = window_with_list
+    rows = win.wait_until(lambda: uia.items(window.hwnd, "IDC_PRESETS"), what="preset rows")
+    assert len(rows) == 2
+    first = uia.value(window.hwnd, "IDC_SELECTION")
+    uia.click(window.hwnd, "IDC_PRESETS.1")
+    win.wait_until(lambda: uia.value(window.hwnd, "IDC_SELECTION") != first, what="selection of 'e2e two' shown")
+    uia.click(window.hwnd, "IDC_PRESETS.0")
+    win.wait_until(lambda: uia.value(window.hwnd, "IDC_SELECTION") == first, what="selection of 'e2e one' shown")
+
+
+def test_presets_button_opens_the_list(window):
+    before = regs.get("CapturePresetsOpen", default=0)
+    uia.click(window.hwnd, "IDC_PRESETS_LABEL")
+    win.wait_until(lambda: regs.get("CapturePresetsOpen") == 1 - before, what="list toggled")
+    win.wait_until(lambda: len(uia.items(window.hwnd, "IDC_PRESETS")) == (0 if before else 2), what="preset rows shown or hidden")
+    uia.click(window.hwnd, "IDC_PRESETS_LABEL")
+    win.wait_until(lambda: regs.get("CapturePresetsOpen") == before, what="list toggled back")
 
 
 def test_preset_new_rename_duplicate_delete(window):

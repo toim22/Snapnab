@@ -1,8 +1,8 @@
-# Generates src/resources/Snapnab.ico and SnapnabEditor.ico (PNG embedded in ICO) without external dependencies.
+# Generates rust/resources/Snapnab.ico and SnapnabEditor.ico (PNG embedded in ICO) without external dependencies.
 #   python scripts/make_icons.py
 import zlib, struct, math, os
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'resources')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'rust', 'resources')
 
 def png(w, h, px):
     raw = b''.join(b'\x00' + bytes(px[y*w*4:(y+1)*w*4]) for y in range(h))

@@ -1,0 +1,110 @@
+sha e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 b64u  url  urlslash /a%20b/ esc 
+hmac eb08c1f56d5ddee07f7bdf80468083da06b64cf4fac64fe3a90883df5feacae4 d46761768ee3c864fc76c08b3d73c8092853ae3fefa01b990963dfa2d56e7334
+sha ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad b64u YWJj url abc urlslash abc/a%20b/ esc abc
+hmac 859cc656e12c0ecd0afdd7e3d034c3ee81609fcac1b454c231211c7ac69895e8 b58b2b694fdba0dd76da3ebe99174f728d327560f36ece224e90867972479922
+sha d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592 b64u VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw url The%20quick%20brown%20fox%20jumps%20over%20the%20lazy%20dog urlslash The%20quick%20brown%20fox%20jumps%20over%20the%20lazy%20dog/a%20b/ esc The quick brown fox jumps over the lazy dog
+hmac e9e4b33a8e77c87da0220f326e363b63ba30aec72957c60d5307808c34320e49 d545ebc800857f4b734cbdc38712fe226d36a8ac3469cad63650e5bc872cd76d
+sha c998754614122a159e9e97f80d02ab426a8ad65c5e65e0ceeab1b7e33df9c673 b64u Y8OpIMOxIOaXpSDwn5mC url c%C3%A9%20%C3%B1%20%E6%97%A5%20%F0%9F%99%82 urlslash c%C3%A9%20%C3%B1%20%E6%97%A5%20%F0%9F%99%82/a%20b/ esc c\xc3\xa9 \xc3\xb1 \xe6\x97\xa5 \xf0\x9f\x99\x82
+hmac 048f0d19d9754f2f3e39ca95e5371301db20082ca7cb6f2be468284601aababe f093281467c16f5f9c4818926c1241257f2b0080fdf4ca8af28a646bf7422787
+sha aa20c23e3201834050679e1d88941b9a6fed0557c9a705cb2c315e2e63fd486d b64u eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg url xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx urlslash xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/a%20b/ esc xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+hmac fba3a5e10c0c7afb56bc5c8714f5239d40e3c99800e278d22dd10857d8777b48 e326f00ce14194bb85e2683fe9b1a78851753f77479303f94c2c3cd1998bdda3
+sha a1535abde40f3fbfd4402ef900f1b0d3f8c53f5aca95d29b5aa295d726cfe81e b64u AAEff_8iXAoNCX4tXy4qJygp url %00%01%1F%7F%FF%22%5C%0A%0D%09~-_.%2A%27%28%29 urlslash %00%01%1F%7F%FF%22%5C%0A%0D%09~-_.%2A%27%28%29/a%20b/ esc \\u0000\\u0001\\u001f\x7f\xff\\"\\\\\\n\\r\\t~-_.*'()
+hmac 4ad9b88ef55736e5c8b8dcf89b46d989326f65be828c383b17bcdbe8d0b60553 ab7de88e03c512a78fc87cd172b3e05289b04f097e15c51606049e8a5d6b3480
+json [{"a":[1,2,{"b":"c\\u00e9"}],"t":true,"f":false,"n":null}] -> {"a":[1,2,{"b":"c\xc3\xa9"}],"t":true,"f":false,"n":null}
+json [  [ 1 , -2.5e3 , 0.1, 1e15, 1e14, 123456789012345678, -0, 3.0000000001, 1.00000000001, 2.5e-7, 1e300, 5e-324 ]  ] -> [1,-2500,0.10000000000000001,1000000000000000,100000000000000,1.2345678901234568e+17,0,3,1,2.4999999999999999e-07,1.0000000000000001e+300,0]
+json ["\\ud83d\\ude42 \\u0041\\n\\t\\"\\\\\\/ \\b\\f\\r \\x"] -> "\xf0\x9f\x99\x82 A\\n\\t\\"\\\\/ \\u0008\\u000c\\r x"
+json [["\\u0000x", "\\u00ff", "\\u0800", "\\uFFFF"]] -> ["\\u0000x","\xc3\xbf","\xe0\xa0\x80","\xef\xbf\xbf"]
+json [{"k":"v",}] -> FAIL
+json [[1,]] -> FAIL
+json [{}] -> {}
+json [[]] -> []
+json [{"a":{}}] -> {"a":{}}
+json ["unterminated] -> FAIL
+json [tru] -> FAIL
+json [nul] -> FAIL
+json [01] -> 1
+json [.5] -> 0.5
+json [+1] -> 1
+json [1.] -> 1
+json [-] -> FAIL
+json [1e] -> FAIL
+json [[1 2]] -> FAIL
+json [{"a" 1}] -> FAIL
+json [{"dup":1,"dup":2}] -> {"dup":1,"dup":2}
+json [[inf, -inf, nan, infinity, INF]] -> [inf,-inf,nan,inf,inf]
+json [0x10] -> 16
+json [[0x1F, 0X0a]] -> [31,10]
+json [  ] -> FAIL
+json [] -> FAIL
+json [[1]x] -> FAIL
+json [\x09{\x0d\x0a}\x0a] -> {}
+json [{"a":"b"} ] -> {"a":"b"}
+json [[true,false,null]] -> [true,false,null]
+json [[-1.5e+2, 1E-2, 0.000001, 1234567.125, 999999999999999, 1000000000000001]] -> [-150,0.01,9.9999999999999995e-07,1234567.125,999999999999999,1000000000000001]
+json depth 1 0
+path data.link -> 3 L
+path $.data.link -> 3 L
+path $ -> 5 
+path data.list[1].x -> 3 two
+path data['it's'] -> 2 5
+path data["list"][0].x -> 2 1
+path data.list[5] -> null
+path nope -> null
+path data..link -> 3 L
+path data.list[-1] -> null
+path n -> 2 2.5
+path b -> 1 false
+path data -> 5 
+path data.list[0 -> null
+path [0] -> null
+path s -> 3 \xc3\xa9
+path $.n -> 2 2.5
+path .n -> 2 2.5
+path data.list[1] -> 5 
+path data.list.x -> null
+build {"s":"x\\"y","n":2048,"f":0.5,"t":true,"a":[null,{},[]]}
+ai gemini {"contents":[{"parts":[{"text":"Explain\\n\\"this\\" \xc3\xa9"},{"inline_data":{"mime_type":"image/png","data":"QUJD"}}]}]}
+ai anthropic {"model":"m-1","max_tokens":2048,"messages":[{"role":"user","content":[{"type":"image","source":{"type":"base64","media_type":"image/png","data":"QUJD"}},{"type":"text","text":"Explain\\n\\"this\\" \xc3\xa9"}]}]}
+ai openai {"model":"m-1","messages":[{"role":"user","content":[{"type":"text","text":"Explain\\n\\"this\\" \xc3\xa9"},{"type":"image_url","image_url":{"url":"data:image/png;base64,QUJD"}}]}]}
+multipart boundary 43 ----SnapnabBoundary
+multipart --B\x0d\x0aContent-Disposition: form-data; name="a"\x0d\x0a\x0d\x0a1\x0d\x0a--B\x0d\x0aContent-Disposition: form-data; name="\xc3\xbc"\x0d\x0a\x0d\x0ax\x0d\x0ay\x0d\x0a--B\x0d\x0aContent-Disposition: form-data; name="file"; filename="a b.png"\x0d\x0aContent-Type: image/png\x0d\x0a\x0d\x0a\x89PNG\x00\x01\x0d\x0a--B--\x0d\x0a Content-Type: multipart/form-data; boundary=B
+sigv4 AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request,SignedHeaders=host;range;x-amz-content-sha256;x-amz-date,Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41
+sigv4 AWS4-HMAC-SHA256 Credential=AK/20260102/eu-west-2/s3/aws4_request,SignedHeaders=content-type;host;x-amz-acl;x-amz-content-sha256;x-amz-date,Signature=84ed8450dfe2279ab7e887dbc1522278c2228ebc5ca52411eaf0a83577572866
+expand [{json:data.link}] -> [https://i.example/abc.png]
+expand [{json:data.id}] -> [7]
+expand [{json:\\{"a":1\\}|a}] -> [1]
+expand [name={filename}] -> [name=sh\xc3\xb3t 1.png]
+expand [{FileName}] -> [sh\xc3\xb3t 1.png]
+expand [[{input}]] -> [[]]
+expand [{response}] -> [{"data":{"link":"https://i.example/abc.png","id":7},"ok":true,"list":["a","b"]}]
+expand [{base64:user:pass}] -> [dXNlcjpwYXNz]
+expand [{header:Location}] -> [https://x/y]
+expand [[{header:missing}]] -> [[]]
+expand [{regex:"id":([0-9]+)}] -> [7]
+expand [{regex:ok"?:(t)(r)|2}] -> [r]
+expand [{regex:abc}] -> [abc]
+expand [[{regex:(}]] -> [[]]
+expand [{regex:link":"([^"]+)|0}] -> [link":"https://i.example/abc.png]
+expand [{regex:LINK}] -> []
+expand [{unknown}] -> [{unknown}]
+expand [{unknown:x|y}] -> [{unknown}]
+expand [a\\{b\\}c\\\\d] -> [a{b}c\\d]
+expand [{json:data.link] -> [https://i.example/abc.png]
+expand [x}y|z] -> [x}y|z]
+expand [{base64:{filename}}] -> [c2jDs3QgMS5wbmc=]
+expand [{random:only}] -> [only]
+expand [{json:list[1]}] -> [b]
+expand [{json:$.ok}] -> [true]
+expand [{JSON:data.id} {Json:nope}] -> [7 ]
+expand [{}] -> [{}]
+expand [{:a}] -> [{}]
+expand [{json:}] -> []
+expand [{filename:ignored}] -> [sh\xc3\xb3t 1.png]
+expand [tail\\] -> [tail\\]
+expand [{regex:[0-9]|5}] -> []
+expand [{xml:a}] -> []
+expand [{xml:r/item}] -> [val]
+expand [{xml:/r/list/item}] -> [val]
+expand [{xml:e}] -> []
+expand [{xml:none}] -> []
+expand [{xml:list}] -> [<item>two</item>]

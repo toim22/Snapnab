@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from . import win
-from .config import ACTION_TIMEOUT, LIBRARY_DIR, TESTS_EXE
+from .config import ACTION_TIMEOUT, LIBRARY_DIR, TOOL_EXE
 
 
 def files(pattern="*"):
@@ -35,10 +35,10 @@ class LibraryWatcher:
 
 
 def dump(path) -> ET.Element:
-    """XML of a .snap through 'SnapnabTests.exe dump' (the same reader the program uses)."""
-    assert TESTS_EXE.exists(), f"{TESTS_EXE} not found: run build.bat test, or set SNAPNAB_TESTS_EXE"
+    """XML of a .snap through 'SnapnabTool.exe dump' (the same reader the program uses)."""
+    assert TOOL_EXE.exists(), f"{TOOL_EXE} not found: run build.bat, or set SNAPNAB_TOOL_EXE"
     for _ in range(20):   # the program may be writing the file right now
-        r = subprocess.run([str(TESTS_EXE), "dump", str(path)], capture_output=True, timeout=30)
+        r = subprocess.run([str(TOOL_EXE), "dump", str(path)], capture_output=True, timeout=30)
         out = r.stdout.decode("utf-8", "replace")
         if r.returncode == 0 and "<Document" in out:
             return ET.fromstring(out[out.index("<?xml"):] if "<?xml" in out else out)

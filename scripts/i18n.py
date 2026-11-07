@@ -5,10 +5,11 @@
     python scripts/i18n.py update     adds the new .pot strings to lang/*.po (and marks the ones that were removed)
     python scripts/i18n.py check      checks the catalogs: missing strings and %d/%s markers that differ from the original
 
-The strings in the code are Brazilian Portuguese. Mark them with Tr(L"...") where the string is shown or with
-TR_NOOP(L"...") in static tables (which call Tr() when showing it). The names of the built-in stamps
-(src/editor/Stamps.cpp) are extracted too, one by one. The msgid is the literal's text as it is in the code (the \\n,
-\\t, \\" and \\\\ escapes are the same as in the .po).
+The strings in the code (rust/) are Brazilian Portuguese. Mark them with tr("...") or tr!("...") where the string is
+shown. A string in a static table, translated when it is shown (tr(label)), is extracted while it is already in
+lang/snapnab.pot; a new one in a table also needs a tr("...") call somewhere, or it is not extracted. The names of
+the built-in stamps (rust/snapedit/src/stamp_data.rs, "emoji name|emoji name|…") are extracted too, one by one. The
+msgid is the literal's text as it is in the code (the \\n, \\t, \\" and \\\\ escapes are the same as in the .po).
 """
 import os
 import re
@@ -18,13 +19,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANG_DIR = os.path.join(ROOT, 'lang')
 POT = os.path.join(LANG_DIR, 'snapnab.pot')
 
-CALL = re.compile(r'\b(Tr|TR_NOOP)\(\s*((?:L"(?:[^"\\]|\\.)*"\s*)+)\)')
-LIT = re.compile(r'L"((?:[^"\\]|\\.)*)"')
+RUST_CALL = re.compile(r'\btr!?\(\s*"((?:[^"\\]|\\.)*)"\s*\)', re.S)
+RUST_LIT = re.compile(r'"((?:[^"\\]|\\.)*)"', re.S)
+CONTINUATION = re.compile(r'\\\n\s*')      # a backslash at the end of a line joins the next one, minus its indent
 SPEC = re.compile(r'%(?:\d+\$)?[-+ #0]*(?:\d+|\*)?(?:\.\d+)?(?:hh|h|ll|l|z|j|t|I64|I32|L)?([diouxXeEfgGaAcspSn%])')
 
 
-def strip_comments(src):
-    # replaces comments with spaces of the same length (keeps the line numbers)
+def strip_rust_comments(src):
+    # replaces comments and character literals with spaces of the same length (keeps the line numbers); raw strings
+    # r#"…"# and lifetimes ('a) are not character literals
     out, i, n = [], 0, len(src)
     while i < n:
         if src.startswith('//', i):
@@ -35,19 +38,32 @@ def strip_comments(src):
             j = src.find('*/', i + 2)
             j = n if j < 0 else j + 2
             out.append(re.sub(r'[^\n]', ' ', src[i:j])); i = j
+        elif re.match(r'b?r#*"', src[i:i + 8]) and (i == 0 or not (src[i - 1].isalnum() or src[i - 1] == '_')):
+            m = re.match(r'b?r(#*)"', src[i:])
+            end = '"' + m.group(1)
+            j = src.find(end, i + m.end())
+            j = n if j < 0 else j + len(end)
+            # a raw string with quotes inside would throw the literal scan off; no msgid is a raw string
+            body = src[i + m.end():j - len(end)]
+            out.append(re.sub(r'[^\n]', ' ', src[i:j]) if '"' in body else src[i:j]); i = j
         elif src[i] == '"':
             j = i + 1
             while j < n and src[j] != '"':
                 j += 2 if src[j] == '\\' else 1
             out.append(src[i:j + 1]); i = j + 1
-        elif src[i] == "'":
-            j = i + 1
-            while j < n and src[j] != "'":
-                j += 2 if src[j] == '\\' else 1
-            out.append(src[i:j + 1]); i = j + 1
+        elif src[i] == "'" and re.match(r"'(?:\\.[^']*|[^\\'\n])'", src[i:i + 12]):
+            m = re.match(r"'(?:\\.[^']*|[^\\'\n])'", src[i:])
+            out.append(' ' * m.end()); i += m.end()      # a char literal such as '"' must not open a string
         else:
             out.append(src[i]); i += 1
     return ''.join(out)
+
+
+def known_msgids():
+    """The msgids of the current lang/snapnab.pot."""
+    if not os.path.exists(POT):
+        return set()
+    return {msgid for _, msgid, _, _ in parse_po(POT)[1]}
 
 
 def extract():
@@ -57,26 +73,28 @@ def extract():
         if msgid not in entries:
             entries[msgid] = []
             order.append(msgid)
-        entries[msgid].append(ref)
-    for dp, dn, fn in os.walk(os.path.join(ROOT, 'src')):
+        if ref not in entries[msgid]:        # a tr("…") is also a literal of a known string: one reference
+            entries[msgid].append(ref)
+    known = known_msgids()
+    for dp, dn, fn in os.walk(os.path.join(ROOT, 'rust')):
+        dn[:] = sorted(d for d in dn if d != 'target')
         for f in sorted(fn):
-            if not f.endswith(('.cpp', '.h')):
+            if not f.endswith('.rs'):
                 continue
             path = os.path.join(dp, f)
             rel = os.path.relpath(path, ROOT).replace('\\', '/')
-            src = strip_comments(open(path, encoding='utf-8').read())
-            for m in CALL.finditer(src):
-                msgid = ''.join(LIT.findall(m.group(2)))
-                if msgid:
-                    add(msgid, f'{rel}:{src.count(chr(10), 0, m.start()) + 1}')
-            if f == 'Stamps.cpp':          # names of the built-in stamps: "emoji name|emoji name|…"
-                start = src.find('kStock[]')
-                end = src.find('\n};', start)
-                for m in re.finditer(r'TR_NOOP\(L"[^"]*"\),\s*((?:L"(?:[^"\\]|\\.)*"\s*)+)\}', src[start:end]):
-                    line = src.count('\n', 0, start + m.start()) + 1
-                    for item in ''.join(LIT.findall(m.group(1))).split('|'):
+            src = strip_rust_comments(open(path, encoding='utf-8').read())
+            line = lambda pos: src.count(chr(10), 0, pos) + 1
+            for m in RUST_CALL.finditer(src):
+                add(CONTINUATION.sub('', m.group(1)), f'{rel}:{line(m.start())}')
+            for m in RUST_LIT.finditer(src):
+                text = CONTINUATION.sub('', m.group(1))
+                if f == 'stamp_data.rs' and '|' in text:      # names of the built-in stamps
+                    for item in text.split('|'):
                         if ' ' in item:
-                            add(item.split(' ', 1)[1], f'{rel}:{line}')
+                            add(item.split(' ', 1)[1], f'{rel}:{line(m.start())}')
+                elif text in known:
+                    add(text, f'{rel}:{line(m.start())}')
     return order, entries
 
 

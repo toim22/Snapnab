@@ -25,7 +25,11 @@ Don't touch the mouse or keyboard while it runs: the tests draw, click and type,
 | Variable | Default | |
 |---|---|---|
 | `SNAPNAB_DIR` | `C:\Program Files\Snapnab` | the program under test (e.g. `dist\Snapnab` for a fresh build) |
-| `SNAPNAB_TESTS_EXE` | `out\build\release\bin\SnapnabTests.exe` | engine tests and `dump file.snap` |
+| `SNAPNAB_TOOL_EXE` | `rust\target\release\SnapnabTool.exe` | `dump file.snap` and `audio file.mp4` |
+| `SNAPNAB_UPLOADERS_FILE` | (set by `test_11_share.py`) | the upload settings the app reads instead of `Uploaders.xml`: the upload tests send to a fake server on 127.0.0.1 and never touch the user's destinations |
+
+If a run is killed before it puts your data back, its backup stays in `artifacts/backup-*` and the next run refuses to
+start until it is restored (see the backup's `README.txt`).
 
 Results: `artifacts/report.html`, plus a full-screen screenshot of each failure (`artifacts/FAIL_*.png`).
 
@@ -43,18 +47,18 @@ the evidence of the run). Side effects outside that: the clipboard is restored a
 | Oracle | Used for |
 |---|---|
 | `Logs\Snapnab.log`, `Logs\SnapnabEditor.log` | IPC between the two programs (`IPC: sent/received code=0x..`), capture engine states, recorder, hotkeys |
-| `.snap` XML through `SnapnabTests.exe dump` | Editor objects, sizes, tags, groups, names |
+| `.snap` XML through `SnapnabTool.exe dump` | Editor objects, sizes, tags, groups, names |
 | Copy all (composed image on the clipboard) | raster tools and effects, pixel by pixel |
 | Saved files | output formats (magic bytes, size, DPI), MP4 duration and frame size (Windows property system), GIF frames, audio track |
 
 Controls are reached by control ID and commands by `WM_COMMAND` with the program's own IDs (`snapnab_e2e/apps.py`
-mirrors the enums of `src/capture/main.cpp` and `src/editor/main.cpp`); if they change, update that file.
+mirrors the command IDs of `rust/snapnab/src/lib.rs` (`id`) and `rust/snapedit/src/ids.rs`); if they change, update that file.
 
 ## Layout
 
 | File | Covers |
 |---|---|
-| `tests/test_00_engine_suite.py` | runs `SnapnabTests.exe` |
+| `tests/test_00_rust_tests.py` | runs `cargo test --workspace` in `rust/` |
 | `tests/test_01_lifecycle_ipc.py` | single instance, command line, IPC 0x02/0x06/0x0C/0x12/0x13/0x1E/0x31, clipboard monitor |
 | `tests/test_02_capture.py` | every selection mode, delay, repeat, windows as objects, hotkeys, outputs (Editor, clipboard, files, program, OCR) |
 | `tests/test_03_capture_effects.py` | the 12 capture effects, alone and together |

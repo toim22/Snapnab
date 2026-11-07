@@ -1,11 +1,11 @@
-"""Screen recording through the HUD (src/capture/RecorderHud.cpp): its buttons are clicked like a user would; the
+"""Screen recording through the HUD (rust/snapnab/src/hud.rs): its buttons are clicked like a user would; the
 Shift+F9 / Shift+F10 hotkeys are tested separately because another program may own them."""
 import ctypes
 import subprocess
 import time
 
 from . import presets, win
-from .config import TESTS_EXE
+from .config import TOOL_EXE
 from .library import LibraryWatcher
 from .logs import Logs
 
@@ -93,5 +93,5 @@ def frame_size(path):
 
 
 def audio_report(path):
-    r = subprocess.run([str(TESTS_EXE), "audio", str(path)], capture_output=True, timeout=60)
+    r = subprocess.run([str(TOOL_EXE), "audio", str(path)], capture_output=True, timeout=60)
     return r.stdout.decode("utf-8", "replace")

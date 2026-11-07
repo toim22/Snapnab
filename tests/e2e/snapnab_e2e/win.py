@@ -208,7 +208,7 @@ def class_name(h):
         return ""
 
 
-# ---------- SnapnabForm (src/common/Ui.cpp RunForm: field i = control 1000 + i, OK = 1, Cancel = 2) ----------
+# ---------- SnapnabForm (rust/snapui/src/form.rs: field i = control 1000 + i, OK = 1, Cancel = 2) ----------
 
 def wait_form(pid=None, timeout=ACTION_TIMEOUT):
     return wait_window("SnapnabForm", timeout, pid=pid)

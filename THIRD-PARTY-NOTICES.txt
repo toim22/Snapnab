@@ -1,12 +1,27 @@
 Third-party software included in Snapnab
 ========================================
 
-Snapnab is distributed under the GNU General Public License version 3 (see LICENSE). It includes the
-following libraries, compiled into Snapnab.exe and SnapnabEditor.exe, under their own licenses.
+Snapnab is distributed under the GNU General Public License version 3 (see LICENSE). Snapnab.exe,
+SnapnabEditor.exe and SnapEx64.dll are built from Rust code that includes the following libraries
+(Rust crates, plus the libwebp C library), each under its own license.
+
+How to read this file:
+  - Each section has a dashed header. Crates that share one license text share one section: each
+    crate is listed with its version, repository, the license expression it declares and its
+    copyright lines, and the license text follows once at the end of the section.
+  - A crate offered under a choice of licenses (for example "MIT OR Apache-2.0") is used under the
+    license named in its section header ("used under ..." when it differs).
+  - "(macro)" marks a procedural macro: it runs while the programs are compiled and generates code
+    for them, but is not linked into them itself. These are listed for completeness.
+
+Sections: libwebp; Rust crates used under the MIT license; windows-rs; libm; the Apache License
+2.0; the BSD 3-Clause license; encoding_rs's WHATWG data; the Unicode License v3; the Boost
+Software License 1.0; libloading (ISC); foldhash (Zlib).
 
 
 -------------------------------------------------------------------------------
 libwebp 1.5.0 - https://github.com/webmproject/libwebp
+(built from the copy in the libwebp-sys crate, rust/snapcore)
 -------------------------------------------------------------------------------
 
 Copyright (c) 2010, Google Inc. All rights reserved.
@@ -65,9 +80,604 @@ for these implementations of WebM shall terminate as of the date such
 litigation is filed.
 
 
+
 -------------------------------------------------------------------------------
-ZXing-C++ 2.2.1 - https://github.com/zxing-cpp/zxing-cpp
+Rust crates used under the MIT license
+(MIT, or a choice of licenses that includes MIT)
 -------------------------------------------------------------------------------
+
+The interface: egui, its winit and wgpu glue, AccessKit (screen readers), the clipboard
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  egui 0.37.0, emath 0.37.0, epaint 0.37.0, egui-winit 0.37.0
+      https://github.com/emilk/egui  (MIT OR Apache-2.0; used under MIT)
+      (Emil Ernerfeldt)
+
+  ecolor 0.37.0
+      https://github.com/emilk/egui  (MIT OR Apache-2.0; used under MIT)
+      (Emil Ernerfeldt, Andreas Reich)
+
+  egui-wgpu 0.37.0
+      https://github.com/emilk/egui  (MIT OR Apache-2.0; used under MIT)
+      (Nils Hasenbanck, embotech, Emil Ernerfeldt)
+
+  accesskit 0.25.2, accesskit_consumer 0.39.2, accesskit_windows 0.35.2
+      https://github.com/AccessKit/accesskit  (MIT OR Apache-2.0; used under MIT)
+      Copyright 2021-2026 The AccessKit Authors
+
+  arboard 3.7.0
+      https://github.com/1Password/arboard  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2022 The Arboard contributors
+
+  webbrowser 1.2.6
+      https://github.com/amodm/webbrowser-rs  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015-2022 Amod Malviya
+
+  cursor-icon 1.2.0
+      https://github.com/rust-windowing/cursor-icon  (MIT OR Apache-2.0 OR Zlib; used under MIT)
+      Copyright (c) 2023 Kirill Chibisov
+
+  raw-window-handle 0.6.2
+      https://github.com/rust-windowing/raw-window-handle  (MIT OR Apache-2.0 OR Zlib; used under MIT)
+      Copyright (c) 2019 Osspial
+
+  smol_str 0.2.2
+      https://github.com/rust-analyzer/smol_str  (MIT OR Apache-2.0; used under MIT)
+      (Aleksey Kladov)
+
+  type-map 0.5.1
+      https://github.com/kardeiz/type-map  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2017-NOW Actix Team
+      Copyright (c) 2022 Jacob Brown
+
+  nohash-hasher 0.2.0
+      https://github.com/paritytech/nohash-hasher  (Apache-2.0 OR MIT; used under MIT)
+      Copyright 2018 Parity Technologies (UK) Ltd.
+
+  profiling 1.0.18
+      https://github.com/aclysma/profiling  (MIT OR Apache-2.0; used under MIT)
+      (Philip Degarmo)
+
+  document-features 0.2.12 (macro)
+      https://github.com/slint-ui/document-features  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2020 Olivier Goffart <ogoffart@sixtyfps.io>
+
+  litrs 1.0.1 (macro)
+      https://github.com/LukasKalbertodt/litrs  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2020 Project Developers (Lukas Kalbertodt)
+
+  web-time 1.1.0
+      https://github.com/daxpedda/web-time  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2023 dAxpeDDa
+
+  pollster 1.0.1
+      https://github.com/zesterer/pollster  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2020-2021 Joshua Barretto
+
+
+Graphics: wgpu, the shader translator naga and the GPU back ends
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  wgpu 30.0.1, wgpu-core 30.0.1, wgpu-core-deps-windows-linux-android 30.0.1,
+  wgpu-hal 30.0.1, wgpu-naga-bridge 30.0.1, wgpu-types 30.0.1, naga 30.0.1,
+  naga-types 30.0.1
+      https://github.com/gfx-rs/wgpu  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2025 The gfx-rs developers
+
+  ash 0.38.0+1.3.281
+      https://github.com/ash-rs/ash  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2016 ASH (Maik Klein and contributors)
+
+  glow 0.17.0
+      https://github.com/grovesNL/glow  (MIT OR Apache-2.0 OR Zlib; used under MIT)
+      (Joshua Groves, Dzmitry Malyshau)
+
+  khronos-egl 6.0.0
+      https://github.com/timothee-haudebourg/khronos-egl  (MIT OR Apache-2.0; used under MIT)
+      (Timothée Haudebourg, Sean Kerr)
+
+  gpu-allocator 0.28.0
+      https://github.com/Traverse-Research/gpu-allocator  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2021 Traverse Research B.V.
+
+  presser 0.3.1
+      https://github.com/EmbarkStudios/presser  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2019 Embark Studios
+
+  range-alloc 0.1.5
+      https://github.com/gfx-rs/range-alloc  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2023 The gfx-rs developers
+
+  renderdoc-sys 1.1.0
+      https://github.com/ebkalderon/renderdoc-rs  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2022 Eyal Kalderon
+
+  half 2.7.1
+      https://github.com/VoidStarKat/half-rs  (MIT OR Apache-2.0; used under MIT)
+      (Kathryn Long)
+
+  bit-set 0.10.0
+      https://github.com/contain-rs/bit-set  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2026 The Rust Project Developers
+
+  bit-vec 0.9.1
+      https://github.com/contain-rs/bit-vec  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2023 The Rust Project Developers
+
+
+Text shaping, fonts and 2D drawing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  harfrust 0.12.0
+      https://github.com/harfbuzz/harfrust  (MIT)
+      Copyright (c) HarfBuzz developers
+      Copyright (c) 2020 Yevhenii Reizner
+
+  read-fonts 0.41.0, skrifa 0.44.0, font-types 0.12.7
+      https://github.com/googlefonts/fontations  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2019 Fontations Developers
+
+  vello_common 0.2.0, vello_cpu 0.2.0
+      https://github.com/linebender/vello  (Apache-2.0 OR MIT; used under MIT)
+      Copyright 2020 the Vello Authors
+
+  peniko 0.6.1
+      https://github.com/linebender/peniko  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2018 Raph Levien
+
+  kurbo 0.13.1
+      https://github.com/linebender/kurbo  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2018 Raph Levien
+
+  polycool 0.4.0
+      https://github.com/linebender/kurbo  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2018 Raph Levien
+
+  color 0.3.3
+      https://github.com/linebender/color  (Apache-2.0 OR MIT; used under MIT)
+      Copyright 2024 the Color Authors
+
+  fearless_simd 0.4.1
+      https://github.com/linebender/fearless_simd  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2018 Raph Levien
+
+  linebender_resource_handle 0.1.1
+      https://github.com/linebender/raw_resource_handle  (Apache-2.0 OR MIT; used under MIT)
+      Copyright 2022 the Raw Resource Handle Authors (Google LLC, Chad Brokaw)
+
+  guillotiere 0.7.0
+      https://github.com/nical/guillotiere  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2019 Nicolas Silva
+
+  euclid 0.22.14
+      https://github.com/servo/euclid  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2012-2013 Mozilla Foundation
+
+  ordered-float 5.5.1
+      https://github.com/reem/rust-ordered-float  (MIT)
+      Copyright (c) 2015 Jonathan Reem
+
+
+Images, compression and file formats
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  image 0.25.10
+      https://github.com/image-rs/image  (MIT OR Apache-2.0; used under MIT)
+      (The image-rs Developers)
+
+  png 0.18.1
+      https://github.com/image-rs/image-png  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015 nwin
+
+  fdeflate 0.3.7
+      https://github.com/image-rs/fdeflate  (MIT OR Apache-2.0; used under MIT)
+      (The image-rs Developers)
+
+  flate2 1.1.11
+      https://github.com/rust-lang/flate2-rs  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014-2026 Alex Crichton
+
+  miniz_oxide 0.8.9, 0.9.1
+      https://github.com/Frommi/miniz_oxide  (MIT OR Zlib OR Apache-2.0; used under MIT)
+      Copyright 2013-2014 RAD Game Tools and Valve Software
+      Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
+      Copyright (c) 2017 Frommi
+      Copyright (c) 2017-2024 oyvindln
+
+  adler2 2.0.1
+      https://github.com/oyvindln/adler2  (0BSD OR MIT OR Apache-2.0; used under MIT)
+      Copyright (C) Jonas Schievink
+
+  simd-adler32 0.3.10
+      https://github.com/mcountryman/simd-adler32  (MIT)
+      Copyright (c) 2021 Marvin Countryman
+
+  crc32fast 1.5.4
+      https://github.com/srijs/rust-crc32fast  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2018 Sam Rijs, Alex Crichton and contributors
+
+  byteorder-lite 0.1.0
+      https://github.com/image-rs/byteorder-lite  (Unlicense OR MIT; used under MIT)
+      Copyright (c) 2015 Andrew Gallant
+
+  bytemuck 1.25.2, bytemuck_derive 1.12.1 (macro)
+      https://github.com/Lokathor/bytemuck  (Zlib OR Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2019 Daniel "Lokathor" Gee.
+
+  libwebp-sys 0.12.1
+      https://github.com/NoXF/libwebp-sys  (MIT)
+      (XianYou, Kornel Lesiński)
+
+  cfb 0.16.0
+      https://github.com/mdsteele/rust-cfb  (MIT)
+      Copyright (c) 2017 Matthew D. Steele
+
+
+Unicode, text encodings, URLs and regular expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  url 2.5.8, idna 1.1.0, percent-encoding 2.3.2
+      https://github.com/servo/rust-url  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2013-2025 The rust-url developers
+
+  idna_adapter 1.2.2
+      https://github.com/hsivonen/idna_adapter  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) The rust-url developers
+
+  form_urlencoded 1.2.2
+      https://github.com/servo/rust-url  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2013-2016 The rust-url developers
+
+  utf8_iter 1.1.0
+      https://github.com/hsivonen/utf8_iter  (Apache-2.0 OR MIT; used under MIT)
+      Copyright Mozilla Foundation
+
+  utf_types 1.0.0
+      https://github.com/hsivonen/utf_types  (Apache-2.0 OR MIT; used under MIT)
+      Copyright Mozilla Foundation
+
+  unicode-segmentation 1.13.3
+      https://github.com/unicode-rs/unicode-segmentation  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015 The Rust Project Developers
+
+  unicode-width 0.2.3
+      https://github.com/unicode-rs/unicode-width  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015 The Rust Project Developers
+
+  unicode-ident 1.0.27
+      https://github.com/dtolnay/unicode-ident  ((MIT OR Apache-2.0) AND Unicode-3.0)
+      (David Tolnay)
+      Unicode data: see the Unicode License section
+
+  unicode-properties 0.1.5
+      https://github.com/unicode-rs/unicode-properties  ((MIT OR Apache-2.0) AND Unicode-3.0)
+      Copyright (c) 2015 The Rust Project Developers
+      Unicode data: see the Unicode License section
+
+  encoding_rs 0.8.44
+      https://github.com/hsivonen/encoding_rs  ((Apache-2.0 OR MIT) AND BSD-3-Clause)
+      Copyright Mozilla Foundation
+      WHATWG Encoding Standard data: see the BSD 3-Clause section below
+
+  codepage-437 0.1.0
+      https://github.com/nabijaczleweli/codepage-437  (MIT)
+      Copyright (c) 2018 nabijaczleweli
+
+  regex 1.13.1, regex-automata 0.4.18, regex-syntax 0.8.11
+      https://github.com/rust-lang/regex  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  aho-corasick 1.1.5
+      https://github.com/BurntSushi/aho-corasick  (Unlicense OR MIT; used under MIT)
+      Copyright (c) 2015 Andrew Gallant
+
+  memchr 2.8.3
+      https://github.com/BurntSushi/memchr  (Unlicense OR MIT; used under MIT)
+      Copyright (c) 2015 Andrew Gallant
+
+  simdutf8 0.1.5
+      https://github.com/rusticstuff/simdutf8  (MIT OR Apache-2.0; used under MIT)
+      (Hans Kratz)
+
+
+Barcode reading (rxing's dependencies), dates and IDs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  num 0.4.3
+      https://github.com/rust-num/num  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-bigint 0.4.8
+      https://github.com/rust-num/num-bigint  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-complex 0.4.6
+      https://github.com/rust-num/num-complex  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-integer 0.1.47
+      https://github.com/rust-num/num-integer  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-iter 0.1.46
+      https://github.com/rust-num/num-iter  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-rational 0.4.2
+      https://github.com/rust-num/num-rational  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  num-traits 0.2.19
+      https://github.com/rust-num/num-traits  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  chrono 0.4.45
+      https://github.com/chronotope/chrono  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014--2026, Kang Seonghoon and contributors
+
+  core_detect 1.0.0
+      https://github.com/thomcc/core_detect  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2017-2020 The Rust Project Developers
+
+  multiversion_no_op 1.0.0 (macro)
+      https://github.com/hsivonen/multiversion_no_op  (Apache-2.0 OR MIT; used under MIT)
+      Copyright Mozilla Foundation
+
+  uuid 1.29.0
+      https://github.com/uuid-rs/uuid  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+      Copyright (c) 2018 Ashley Mannix, Christopher Armstrong, Dylan DPC, Hunar Roop Kahlon
+
+
+General-purpose Rust crates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ahash 0.8.12
+      https://github.com/tkaitchuck/ahash  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2018 Tom Kaitchuck
+
+  allocator-api2 0.2.21
+      https://github.com/zakarumych/allocator-api2  (MIT OR Apache-2.0; used under MIT)
+      (Zakarum)
+
+  arrayvec 0.7.8
+      https://github.com/bluss/arrayvec  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) Ulrik Sverdrup "bluss" 2015-2023
+
+  bitflags 2.13.2
+      https://github.com/bitflags/bitflags  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  cfg-if 1.0.5
+      https://github.com/rust-lang/cfg-if  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 Alex Crichton
+
+  displaydoc 0.2.7 (macro)
+      https://github.com/yaahc/displaydoc  (MIT OR Apache-2.0; used under MIT)
+      (Jane Lusby)
+
+  either 1.19.0
+      https://github.com/rayon-rs/either  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015 (bluss)
+
+  equivalent 1.0.3
+      https://github.com/indexmap-rs/equivalent  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2016--2023 (the indexmap developers)
+
+  hashbrown 0.16.1, 0.17.1
+      https://github.com/rust-lang/hashbrown  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2016 Amanieu d'Antras
+
+  indexmap 2.14.2
+      https://github.com/indexmap-rs/indexmap  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2016--2017 (bluss and the indexmap developers)
+
+  itertools 0.15.0
+      https://github.com/rust-itertools/itertools  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2015 (bluss)
+
+  libc 0.2.191
+      https://github.com/rust-lang/libc  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) The Rust Project Developers
+
+  lock_api 0.4.14, parking_lot 0.12.5, parking_lot_core 0.9.12
+      https://github.com/Amanieu/parking_lot  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2016 The Rust Project Developers
+
+  log 0.4.35
+      https://github.com/rust-lang/log  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2014 The Rust Project Developers
+
+  once_cell 1.21.4
+      https://github.com/matklad/once_cell  (MIT OR Apache-2.0; used under MIT)
+      (Aleksey Kladov)
+
+  pin-project-lite 0.2.17
+      https://github.com/taiki-e/pin-project-lite  (Apache-2.0 OR MIT; used under MIT)
+      (Taiki Endo and contributors)
+
+  rustc-hash 1.1.0
+      https://github.com/rust-lang-nursery/rustc-hash  (Apache-2.0 OR MIT; used under MIT)
+      (The Rust Project Developers)
+
+  rustc-hash 2.1.3
+      https://github.com/rust-lang/rustc-hash  (Apache-2.0 OR MIT; used under MIT)
+      (The Rust Project Developers)
+
+  fnv 1.0.7
+      https://github.com/servo/rust-fnv  (Apache-2.0 OR MIT; used under MIT)
+      Copyright (c) 2017 Contributors
+
+  scopeguard 1.2.0
+      https://github.com/bluss/scopeguard  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2016-2019 Ulrik Sverdrup "bluss" and scopeguard developers
+
+  smallvec 1.16.5
+      https://github.com/servo/rust-smallvec  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2018 The Servo Project Developers
+
+  stable_deref_trait 1.2.1
+      https://github.com/storyyeller/stable_deref_trait  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2017 Robert Grosse
+
+  static_assertions 1.1.0
+      https://github.com/nvzqz/static-assertions-rs  (MIT OR Apache-2.0; used under MIT)
+      Copyright (c) 2017 Nikolai Vazquez
+
+  thiserror 2.0.21, thiserror-impl 2.0.21 (macro)
+      https://github.com/dtolnay/thiserror  (MIT OR Apache-2.0; used under MIT)
+      (David Tolnay)
+
+  tracing 0.1.44, tracing-core 0.1.36
+      https://github.com/tokio-rs/tracing  (MIT)
+      Copyright (c) 2019 Tokio Contributors
+
+  zerocopy 0.8.63, zerocopy-derive 0.8.63 (macro)
+      https://github.com/google/zerocopy  (BSD-2-Clause OR Apache-2.0 OR MIT; used under MIT)
+      Copyright 2023 The Fuchsia Authors
+
+  proc-macro2 1.0.107 (macro)
+      https://github.com/dtolnay/proc-macro2  (MIT OR Apache-2.0; used under MIT)
+      (David Tolnay, Alex Crichton)
+
+  quote 1.0.47 (macro)
+      https://github.com/dtolnay/quote  (MIT OR Apache-2.0; used under MIT)
+      (David Tolnay)
+
+  syn 2.0.119 (macro), 3.0.9 (macro)
+      https://github.com/dtolnay/syn  (MIT OR Apache-2.0; used under MIT)
+      (David Tolnay)
+
+  synstructure 0.14.0 (macro)
+      https://github.com/mystor/synstructure  (MIT)
+      Copyright 2016 Nika Layzell
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+-------------------------------------------------------------------------------
+windows 0.62.2, windows-core 0.62.2, windows-link 0.2.1, windows-result 0.4.1,
+windows-strings 0.5.1, windows-threading 0.2.1, windows-collections 0.3.2,
+windows-future 0.3.2, windows-numerics 0.3.1, windows-implement 0.60.2 (macro),
+windows-interface 0.59.3 (macro), windows-sys 0.52.0, windows-sys 0.61.2,
+windows-targets 0.52.6, windows_x86_64_msvc 0.52.6
+https://github.com/microsoft/windows-rs  (MIT OR Apache-2.0; used under MIT)
+-------------------------------------------------------------------------------
+
+Copyright (c) Microsoft Corporation.
+
+The MIT license text is printed at the end of the previous section.
+
+
+-------------------------------------------------------------------------------
+libm 0.2.16 - https://github.com/rust-lang/compiler-builtins  (MIT)
+(math functions; dpi, listed in the Apache section, contains a copy of part of it)
+-------------------------------------------------------------------------------
+
+  This Rust library contains the following copyrights:
+
+      Copyright (c) 2018 Jorge Aparicio
+
+  Portions of this software are derived from third-party works licensed under
+  terms compatible with the above MIT license:
+
+  * musl libc https://www.musl-libc.org/. This library contains the following
+    copyright:
+
+        Copyright © 2005-2020 Rich Felker, et al.
+
+  * The CORE-MATH project https://core-math.gitlabpages.inria.fr/. CORE-MATH
+    routines are available under the MIT license on a per-file basis.
+
+  The musl libc COPYRIGHT file also includes the following notice relevant to
+  math portions of the library:
+
+  ------------------------------------------------------------------------------
+  Much of the math library code (src/math/* and src/complex/*) is
+  Copyright © 1993,2004 Sun Microsystems or
+  Copyright © 2003-2011 David Schultz or
+  Copyright © 2003-2009 Steven G. Kargl or
+  Copyright © 2003-2009 Bruce D. Evans or
+  Copyright © 2008 Stephen L. Moshier or
+  Copyright © 2017-2018 Arm Limited
+  and labelled as such in comments in the individual source files. All
+  have been licensed under extremely permissive terms.
+  ------------------------------------------------------------------------------
+
+  Copyright notices are retained in src/* files where relevant.
+
+The MIT license text is printed at the end of the "Rust crates used under the MIT
+license" section above.
+
+
+-------------------------------------------------------------------------------
+Rust crates under the Apache License, Version 2.0
+(rxing is a Rust port of the ZXing barcode library, compiled into snapcore)
+-------------------------------------------------------------------------------
+
+  rxing 0.9.3
+      https://github.com/rxing-core/rxing  (Apache-2.0)
+      Copyright 2019-2026 rxing developers
+      Ported from ZXing, Copyright 2007-2008 ZXing authors
+
+  rxing-one-d-proc-derive 0.9.1 (macro)
+      https://github.com/rxing-core/rxing  (Apache-2.0)
+      Copyright 2019-2026 rxing developers
+
+  winit 0.30.13
+      https://github.com/rust-windowing/winit  (Apache-2.0)
+      (The winit contributors, Pierre Krieger)
+      Its keyboard documentation quotes the W3C UI Events Specification,
+      Copyright © 2017 W3C® (MIT, ERCIM, Keio, Beihang)
+
+  dpi 0.1.2
+      https://github.com/rust-windowing/winit  (Apache-2.0 AND MIT)
+      (The winit contributors)
+      Contains code from libm (MIT), see the libm section
+
+  accesskit_winit 0.34.2
+      https://github.com/AccessKit/accesskit  (Apache-2.0)
+      Copyright 2021-2026 The AccessKit Authors
+
+  codespan-reporting 0.13.1
+      https://github.com/brendanzab/codespan  (Apache-2.0)
+      (Brendan Zabarauskas)
+
+  glutin_wgl_sys 0.6.1
+      https://github.com/rust-windowing/glutin  (Apache-2.0)
+      Copyright 2022 Kirill Chibisov
+
+  spirv 0.4.0+sdk-1.4.341.0
+      https://github.com/gfx-rs/rspirv  (Apache-2.0)
+      (Lei Zhang)
+
+  unicode-general-category 1.1.0
+      https://github.com/yeslogic/unicode-general-category  (Apache-2.0)
+      (YesLogic Pty. Ltd.)
+
+  self_cell 1.3.0
+      https://github.com/Voultapher/self_cell  (Apache-2.0 OR GPL-2.0-only; used under Apache-2.0)
+      (Lukas Bergdoll)
+
+None of these crates ships a NOTICE file.
 
                                  Apache License
                            Version 2.0, January 2004
@@ -271,3 +881,218 @@ ZXing-C++ 2.2.1 - https://github.com/zxing-cpp/zxing-cpp
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+-------------------------------------------------------------------------------
+Rust crates under the BSD 3-Clause license
+(color management and math for the image crate)
+-------------------------------------------------------------------------------
+
+  moxcms 0.8.1
+      https://github.com/awxkee/moxcms  (BSD-3-Clause OR Apache-2.0; used under BSD-3-Clause)
+      Copyright (c) Radzivon Bartoshyk. All rights reserved.
+
+  pxfm 0.1.30
+      https://github.com/awxkee/pxfm  (BSD-3-Clause OR Apache-2.0; used under BSD-3-Clause)
+      Copyright (c) Radzivon Bartoshyk. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+1.  Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+
+2.  Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+3.  Neither the name of the copyright holder nor the names of its
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+-------------------------------------------------------------------------------
+encoding_rs 0.8.44 - the WHATWG Encoding Standard data it includes (BSD-3-Clause)
+-------------------------------------------------------------------------------
+
+Copyright © WHATWG (Apple, Google, Mozilla, Microsoft).
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+-------------------------------------------------------------------------------
+Rust crates under the Unicode License v3
+(ICU4X, used by the url crate for international domain names)
+-------------------------------------------------------------------------------
+
+  icu_collections 2.4.0, icu_locale_core 2.4.0, icu_normalizer 2.4.0,
+  icu_normalizer_data 2.4.0, icu_properties 2.4.0, icu_properties_data 2.4.0,
+  icu_provider 2.4.0, litemap 0.8.3, potential_utf 0.1.6, tinystr 0.8.5,
+  writeable 0.6.4, yoke 0.8.4, yoke-derive 0.8.4 (macro), zerofrom 0.1.8,
+  zerofrom-derive 0.1.8 (macro), zerotrie 0.2.5, zerovec 0.11.9,
+  zerovec-derive 0.11.7 (macro)
+      https://github.com/unicode-org/icu4x  (Unicode-3.0)
+      Copyright © 2020-2024 Unicode, Inc.
+
+  The Unicode data tables in unicode-ident 1.0.27 and unicode-properties 0.1.5 (their code is
+  listed in the MIT section), (MIT OR Apache-2.0) AND Unicode-3.0
+      Copyright © 1991-2026 Unicode, Inc.
+
+UNICODE LICENSE V3
+
+COPYRIGHT AND PERMISSION NOTICE
+
+NOTICE TO USER: Carefully read the following legal agreement. BY
+DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING DATA FILES, AND/OR
+SOFTWARE, YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE
+TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT
+DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE THE DATA FILES OR SOFTWARE.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of data files and any associated documentation (the "Data Files") or
+software and any associated documentation (the "Software") to deal in the
+Data Files or Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, and/or sell
+copies of the Data Files or Software, and to permit persons to whom the
+Data Files or Software are furnished to do so, provided that either (a)
+this copyright and permission notice appear with all copies of the Data
+Files or Software, or (b) this copyright and permission notice appear in
+associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+THIRD PARTY RIGHTS.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE
+BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES,
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA
+FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall
+not be used in advertising or otherwise to promote the sale, use or other
+dealings in these Data Files or Software without prior written
+authorization of the copyright holder.
+
+SPDX-License-Identifier: Unicode-3.0
+
+—
+
+Portions of ICU4X may have been adapted from ICU4C and/or ICU4J.
+ICU 1.8.1 to ICU 57.1 © 1995-2016 International Business Machines Corporation and others.
+
+
+-------------------------------------------------------------------------------
+Rust crates under the Boost Software License 1.0
+(the Windows clipboard access used by arboard)
+-------------------------------------------------------------------------------
+
+  clipboard-win 5.4.3
+      https://github.com/DoumanAsh/clipboard-win  (BSL-1.0)
+      (Douman)
+
+  error-code 3.4.0
+      https://github.com/DoumanAsh/error-code  (BSL-1.0)
+      (Douman)
+
+Boost Software License - Version 1.0 - August 17th, 2003
+
+Permission is hereby granted, free of charge, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by
+this license (the "Software") to use, reproduce, display, distribute,
+execute, and transmit the Software, and to prepare derivative works of the
+Software, and to permit third-parties to whom the Software is furnished to
+do so, all subject to the following:
+
+The copyright notices in the Software and this entire statement, including
+the above license grant, this restriction and the following disclaimer,
+must be included in all copies of the Software, in whole or in part, and
+all derivative works of the Software, unless such copies or derivative
+works are solely in the form of machine-executable object code generated by
+a source language processor.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+
+-------------------------------------------------------------------------------
+libloading 0.8.9 - https://github.com/nagisa/rust_libloading  (ISC)
+-------------------------------------------------------------------------------
+
+Copyright © 2015, Simonas Kazlauskas
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without
+fee is hereby granted, provided that the above copyright notice and this permission notice appear
+in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+
+-------------------------------------------------------------------------------
+foldhash 0.2.0 - https://github.com/orlp/foldhash  (Zlib)
+-------------------------------------------------------------------------------
+
+Copyright (c) 2024 Orson Peters
+
+This software is provided 'as-is', without any express or implied warranty. In
+no event will the authors be held liable for any damages arising from the use of
+this software.
+
+Permission is granted to anyone to use this software for any purpose, including
+commercial applications, and to alter it and redistribute it freely, subject to
+the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not claim
+    that you wrote the original software. If you use this software in a product,
+    an acknowledgment in the product documentation would be appreciated but is
+    not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source distribution.

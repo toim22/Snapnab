@@ -1,0 +1,198 @@
+== default
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== custom
+<CaptureSettings DisplayName="Região ç → 中文 😀 &quot;&lt;&amp;&gt;&quot;" CaptureMode="Video" SelectionMode="3" RegionWidth="1280" RegionHeight="720" CaptureCursor="1" DelayDuration="5" WindowsAsObjects="1" CaptureLinks="0" PreviewInEditor="0" CopyToClipboard="1" Builtin="grabtext" HotKey="80" HotKeyModifiers="6">
+  <SelectionSettingsRegion RegionSelectionType="1" RegionLeft="-50" RegionTop="30" SetPosition="1"/>
+  <ShareSettingsFile Enabled="1" OutputFileType="5" Prefix="Shot" FolderName="C:\Caps\ü"/>
+  <ShareSettingsProgram Enabled="1" Program="C:\Tools\x.exe"/>
+  <ShareSettingsGrabText Enabled="1"/>
+  <ShareSettingsPin Enabled="1"/>
+  <ShareSettingsQRCode Enabled="1"/>
+  <ShareSettingsOffice Target="2"/>
+  <ShareSettingsUpload Enabled="1"/>
+  <CaptureEffects Border="1" BorderWidth="9" BorderColor="#010203" Filter="1" FilterKind="2" Shadow="1" ShadowOffset="11" ShadowBlur="12" ShadowOpacity="77" Caption="1" CaptionText="{date} ✓" CaptionTop="1" ReplaceColor="1" ReplaceFrom="#0A141E" ReplaceTo="#C86400" ReplaceTolerance="33" ScaleEnabled="1" Scale="150" Edge="1" EdgeStyle="3" EdgeSize="20" EdgeSides="9" Trim="1" TrimTolerance="4" Adjust="1" Brightness="-20" Contrast="15" Hue="-90" Saturation="40" Rotate="1" RotateKind="4" Watermark="1" WatermarkText="© Me" WatermarkOpacity="60" WatermarkTiled="0" Resolution="1" Dpi="600" Beautify="1">
+    <Beautify Background="3" Color1="#050607" Color2="#764BA2" Angle="135" Image="C:\bg.png" Padding="100" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="2" AutoBalance="0"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="0" EnableSystemAudio="0" FrameRate="60" MicrophoneVolume="150" SystemAudioVolume="20" AutomaticGain="0" Quality="3" Downscale1080="0" HardwareEncoding="0" EnableWebcam="1" SelectedWebcam="usb#vid&amp;pid" SelectedWebcamName="Cam" WebcamShape="3" ChromaKey="1" ChromaColor="#00FF00" ChromaTolerance="70" AudioOnly="1" AudioFormat="1"/>
+</CaptureSettings>
+== custom read
+<CaptureSettings DisplayName="Região ç → 中文 😀 &quot;&lt;&amp;&gt;&quot;" CaptureMode="Video" SelectionMode="3" RegionWidth="1280" RegionHeight="720" CaptureCursor="1" DelayDuration="5" WindowsAsObjects="1" CaptureLinks="0" PreviewInEditor="0" CopyToClipboard="1" Builtin="grabtext" HotKey="80" HotKeyModifiers="6">
+  <SelectionSettingsRegion RegionSelectionType="1" RegionLeft="-50" RegionTop="30" SetPosition="1"/>
+  <ShareSettingsFile Enabled="1" OutputFileType="5" Prefix="Shot" FolderName="C:\Caps\ü"/>
+  <ShareSettingsProgram Enabled="1" Program="C:\Tools\x.exe"/>
+  <ShareSettingsGrabText Enabled="1"/>
+  <ShareSettingsPin Enabled="1"/>
+  <ShareSettingsQRCode Enabled="1"/>
+  <ShareSettingsOffice Target="2"/>
+  <ShareSettingsUpload Enabled="1"/>
+  <CaptureEffects Border="1" BorderWidth="9" BorderColor="#010203" Filter="1" FilterKind="2" Shadow="1" ShadowOffset="11" ShadowBlur="12" ShadowOpacity="77" Caption="1" CaptionText="{date} ✓" CaptionTop="1" ReplaceColor="1" ReplaceFrom="#0A141E" ReplaceTo="#C86400" ReplaceTolerance="33" ScaleEnabled="1" Scale="150" Edge="1" EdgeStyle="3" EdgeSize="20" EdgeSides="9" Trim="1" TrimTolerance="4" Adjust="1" Brightness="-20" Contrast="15" Hue="-90" Saturation="40" Rotate="1" RotateKind="4" Watermark="1" WatermarkText="© Me" WatermarkOpacity="60" WatermarkTiled="0" Resolution="1" Dpi="600" Beautify="1">
+    <Beautify Background="3" Color1="#050607" Color2="#764BA2" Angle="135" Image="C:\bg.png" Padding="100" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="2" AutoBalance="0"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="0" EnableSystemAudio="0" FrameRate="60" MicrophoneVolume="150" SystemAudioVolume="20" AutomaticGain="0" Quality="3" Downscale1080="0" HardwareEncoding="0" EnableWebcam="1" SelectedWebcam="usb#vid&amp;pid" SelectedWebcamName="Cam" WebcamShape="3" ChromaKey="1" ChromaColor="#00FF00" ChromaTolerance="70" AudioOnly="1" AudioFormat="1"/>
+</CaptureSettings>
+== read 0 1
+<CaptureSettings DisplayName="Old" CaptureMode="Image" SelectionMode="0" RegionWidth="300" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="1" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 1 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Video" SelectionMode="13" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="1" FilterKind="0" Shadow="0" ShadowOffset="0" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="1" Scale="150" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="15" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="36" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 2 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="12" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="1" OutputFileType="6" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="3"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="60" MicrophoneVolume="200" SystemAudioVolume="100" AutomaticGain="1" Quality="0" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="4" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="1"/>
+</CaptureSettings>
+== read 3 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="1">
+    <Beautify Background="4" Color1="#667EEA" Color2="#00FF00" Angle="40" Image="" Padding="0" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 4 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 5 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="" FolderName="D:\x"/>
+  <ShareSettingsProgram Enabled="1" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#123456" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 6 1
+<CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="13" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="0" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== read 7 1
+<CaptureSettings DisplayName="x" CaptureMode="Image" SelectionMode="0" RegionWidth="0" RegionHeight="0" CaptureCursor="1" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="0" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+  <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+  <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+  <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+  <ShareSettingsGrabText Enabled="0"/>
+  <ShareSettingsPin Enabled="0"/>
+  <ShareSettingsQRCode Enabled="0"/>
+  <ShareSettingsOffice Target="-1"/>
+  <ShareSettingsUpload Enabled="0"/>
+  <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+    <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+  </CaptureEffects>
+  <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+</CaptureSettings>
+== file 1 1
+<SavedPresets Version="1" SelectedMode="1">
+  <Presets>
+    <CaptureSettings DisplayName="Novo preset" CaptureMode="Image" SelectionMode="0" RegionWidth="640" RegionHeight="480" CaptureCursor="0" DelayDuration="0" WindowsAsObjects="0" CaptureLinks="1" PreviewInEditor="1" CopyToClipboard="0" HotKey="0" HotKeyModifiers="0">
+      <SelectionSettingsRegion RegionSelectionType="0" RegionLeft="0" RegionTop="0" SetPosition="0"/>
+      <ShareSettingsFile Enabled="0" OutputFileType="0" Prefix="Captura" FolderName=""/>
+      <ShareSettingsProgram Enabled="0" Program="mspaint.exe"/>
+      <ShareSettingsGrabText Enabled="0"/>
+      <ShareSettingsPin Enabled="0"/>
+      <ShareSettingsQRCode Enabled="0"/>
+      <ShareSettingsOffice Target="-1"/>
+      <ShareSettingsUpload Enabled="0"/>
+      <CaptureEffects Border="0" BorderWidth="4" BorderColor="#282828" Filter="0" FilterKind="0" Shadow="0" ShadowOffset="6" ShadowBlur="6" ShadowOpacity="50" Caption="0" CaptionText="{date} {time} — {computer}" CaptionTop="0" ReplaceColor="0" ReplaceFrom="#FFFFFF" ReplaceTo="#FFFF00" ReplaceTolerance="10" ScaleEnabled="0" Scale="100" Edge="0" EdgeStyle="0" EdgeSize="14" EdgeSides="6" Trim="0" TrimTolerance="8" Adjust="0" Brightness="0" Contrast="0" Hue="0" Saturation="0" Rotate="0" RotateKind="0" Watermark="0" WatermarkText="Snapnab" WatermarkOpacity="35" WatermarkTiled="1" Resolution="0" Dpi="300" Beautify="0">
+        <Beautify Background="1" Color1="#667EEA" Color2="#764BA2" Angle="135" Image="" Padding="64" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="0" AutoBalance="1"/>
+      </CaptureEffects>
+      <Video EnableMicrophone="1" EnableSystemAudio="1" FrameRate="30" MicrophoneVolume="100" SystemAudioVolume="100" AutomaticGain="1" Quality="2" Downscale1080="1" HardwareEncoding="1" EnableWebcam="0" SelectedWebcam="" SelectedWebcamName="" WebcamShape="0" ChromaKey="0" ChromaColor="#00B140" ChromaTolerance="40" AudioOnly="0" AudioFormat="0"/>
+    </CaptureSettings>
+    <CaptureSettings DisplayName="Região ç → 中文 😀 &quot;&lt;&amp;&gt;&quot;" CaptureMode="Video" SelectionMode="3" RegionWidth="1280" RegionHeight="720" CaptureCursor="1" DelayDuration="5" WindowsAsObjects="1" CaptureLinks="0" PreviewInEditor="0" CopyToClipboard="1" Builtin="grabtext" HotKey="80" HotKeyModifiers="6">
+      <SelectionSettingsRegion RegionSelectionType="1" RegionLeft="-50" RegionTop="30" SetPosition="1"/>
+      <ShareSettingsFile Enabled="1" OutputFileType="5" Prefix="Shot" FolderName="C:\Caps\ü"/>
+      <ShareSettingsProgram Enabled="1" Program="C:\Tools\x.exe"/>
+      <ShareSettingsGrabText Enabled="1"/>
+      <ShareSettingsPin Enabled="1"/>
+      <ShareSettingsQRCode Enabled="1"/>
+      <ShareSettingsOffice Target="2"/>
+      <ShareSettingsUpload Enabled="1"/>
+      <CaptureEffects Border="1" BorderWidth="9" BorderColor="#010203" Filter="1" FilterKind="2" Shadow="1" ShadowOffset="11" ShadowBlur="12" ShadowOpacity="77" Caption="1" CaptionText="{date} ✓" CaptionTop="1" ReplaceColor="1" ReplaceFrom="#0A141E" ReplaceTo="#C86400" ReplaceTolerance="33" ScaleEnabled="1" Scale="150" Edge="1" EdgeStyle="3" EdgeSize="20" EdgeSides="9" Trim="1" TrimTolerance="4" Adjust="1" Brightness="-20" Contrast="15" Hue="-90" Saturation="40" Rotate="1" RotateKind="4" Watermark="1" WatermarkText="© Me" WatermarkOpacity="60" WatermarkTiled="0" Resolution="1" Dpi="600" Beautify="1">
+        <Beautify Background="3" Color1="#050607" Color2="#764BA2" Angle="135" Image="C:\bg.png" Padding="100" Radius="12" Shadow="45" ShadowSize="24" Align="4" Aspect="2" AutoBalance="0"/>
+      </CaptureEffects>
+      <Video EnableMicrophone="0" EnableSystemAudio="0" FrameRate="60" MicrophoneVolume="150" SystemAudioVolume="20" AutomaticGain="0" Quality="3" Downscale1080="0" HardwareEncoding="0" EnableWebcam="1" SelectedWebcam="usb#vid&amp;pid" SelectedWebcamName="Cam" WebcamShape="3" ChromaKey="1" ChromaColor="#00FF00" ChromaTolerance="70" AudioOnly="1" AudioFormat="1"/>
+    </CaptureSettings>
+  </Presets>
+</SavedPresets>

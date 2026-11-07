@@ -1,5 +1,5 @@
 ﻿; Snapnab installer (Inno Setup 6.5 or later) — packages dist\Snapnab\ produced by build.bat.
-; build.bat compiles it automatically when it finds Inno Setup, passing the version from CMakeLists.txt:
+; build.bat compiles it automatically when it finds Inno Setup, passing the version from rust\Cargo.toml:
 ;   ISCC.exe /DAppVersion=0.4.1 packaging\installer\Snapnab.iss   →   dist\Snapnab-0.4.1-setup.exe
 ;
 ; Installs for the current user only (no administrator prompt, in %LOCALAPPDATA%\Programs\Snapnab) or, if the user
@@ -33,7 +33,7 @@ DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 OutputDir=..\..\dist
 OutputBaseFilename=Snapnab-{#AppVersion}-setup
-SetupIconFile=..\..\src\resources\Snapnab.ico
+SetupIconFile=..\..\rust\resources\Snapnab.ico
 UninstallDisplayIcon={app}\Snapnab.exe
 UninstallDisplayName={#AppName}
 LicenseFile=..\..\LICENSE

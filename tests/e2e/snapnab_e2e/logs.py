@@ -69,7 +69,7 @@ class Logs:
         self.editor.mark()
 
 
-# IPC codes (src/common/Ipc.h)
+# IPC codes (rust/snapcore/src/ipc.rs)
 SHOW_EDITOR = 0x06
 CLOSE_EDITOR_IF_HIDDEN = 0x0A
 RELOAD_CONFIG = 0x0C

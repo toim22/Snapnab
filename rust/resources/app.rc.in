@@ -1,0 +1,34 @@
+// Resources of Snapnab.exe and SnapnabEditor.exe (the former src/capture/Snapnab.rc and src/editor/SnapnabEditor.rc):
+// the icon, the manifest (per-monitor DPI v2, Common Controls 6, asInvoker) and the version information. build.rs
+// fills the @…@ fields and compiles it with rc.exe.
+#pragma code_page(65001)
+#include <winres.h>
+
+1 ICON "@ICON@"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "@MANIFEST@"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION @VERSION_RC@
+ PRODUCTVERSION @VERSION_RC@
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "041604B0"
+    BEGIN
+      VALUE "CompanyName", "Antonio Rezende"
+      VALUE "FileDescription", "@DESCRIPTION@"
+      VALUE "FileVersion", "@VERSION@"
+      VALUE "InternalName", "@NAME@"
+      VALUE "OriginalFilename", "@NAME@.exe"
+      VALUE "LegalCopyright", "Copyright © 2026 Antonio Rezende"
+      VALUE "ProductName", "Snapnab"
+      VALUE "ProductVersion", "@VERSION@"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x416, 1200
+  END
+END

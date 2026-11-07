@@ -1,0 +1,3 @@
+# Static C runtime: the programs run without installing the Visual C++ Redistributable (as the C++ build did).
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

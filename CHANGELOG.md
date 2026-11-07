@@ -3,6 +3,29 @@
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- **Snapnab is now written in Rust.** Both programs, `Snapnab.exe` (capture) and `SnapnabEditor.exe` (Editor), and
+  `SnapEx64.dll` were rewritten in Rust; the interface is drawn with egui on the GPU (wgpu) and stays accessible to
+  screen readers and UI Automation (AccessKit), with the controls under the names of the former Win32 controls. The C++
+  code is gone. Same features, same files: captures, presets, settings, the library and the `.snap` documents written
+  by earlier versions open as before, and the same command line, hotkeys and window classes work as before. The move
+  went one part at a time behind the unchanged end-to-end suite, and the parts that compute something (effects,
+  Beautify, the Editor's drawings, the `.snap` and clipboard XML, WebP, PDF, OCR, the network layer, presets) are
+  checked against what the C++ code gave for the same input.
+- A damaged or hostile `.snap`, image or upload response is now parsed by memory-safe code.
+- QR codes and barcodes are read by rxing, a Rust port of ZXing, instead of ZXing-C++; several codes in one picture
+  are listed top to bottom.
+- The `{regex:…}` of a custom uploader (.sxcu) uses Rust's regular expressions: no look-around or backreferences.
+- Building needs Rust (the MSVC toolchain) and the Visual Studio build tools instead of CMake: `build.bat` runs
+  `cargo build` and packages `dist\` as before. The C runtime is linked statically, so the programs need no Visual C++
+  redistributable.
+
+### Added
+- `SnapnabTool.exe` (not shipped): prints a `.snap` document's XML or reads a recording's audio track, for the tests
+  and for debugging.
+
 ## [0.4.1] — 2026-11-03
 
 ### Added

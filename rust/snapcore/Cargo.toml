@@ -1,0 +1,70 @@
+[package]
+name = "snapcore"
+version = "0.1.0"
+description = "Snapnab's shared Rust layer: the .snap documents, the capture library, the log, the registry settings, the translations, XML, image files, animated GIF, the image effects, computer vision, Beautify, PDF export, color texts, HDR capture, OCR, barcode reading, the uploads and the AI assistant's request"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+cfb = "0.16.0"
+libwebp-sys = "=0.12.1"
+regex = "1.13.1"
+rxing = { version = "=0.9.3", default-features = false, features = ["decoders", "multi_barcode_readers", "full_barcode_format_support", "encoding_rs"] }
+
+[dependencies.windows]
+version = "0.62.2"
+features = [
+    "Foundation",
+    "Foundation_Collections",
+    "Graphics_Imaging",
+    "Media_FaceAnalysis",
+    "Media_Ocr",
+    "Storage_Streams",
+    "Win32_Devices_Display",
+    "Win32_Foundation",
+    "Win32_Globalization",
+    "Win32_Graphics_Direct2D",
+    "Win32_Graphics_Direct2D_Common",
+    "Win32_Graphics_Direct3D",
+    "Win32_Graphics_Direct3D11",
+    "Win32_Graphics_DirectWrite",
+    "Win32_Graphics_Dwm",
+    "Win32_Graphics_Dxgi",
+    "Win32_Graphics_Dxgi_Common",
+    "Win32_Graphics_Gdi",
+    "Win32_Graphics_GdiPlus",
+    "Win32_Graphics_Imaging",
+    "Win32_Media",
+    "Win32_Media_Audio",
+    "Win32_Media_MediaFoundation",
+    "Win32_Networking_WinHttp",
+    "Win32_Networking_WinInet",
+    "Win32_Security_Credentials",
+    "Win32_Security_Cryptography",
+    "Win32_Storage_FileSystem",
+    "Win32_Storage_Xps",
+    "Win32_System_Com",
+    "Win32_System_Com_StructuredStorage",
+    "Win32_System_DataExchange",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Environment",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Memory",
+    "Win32_System_Ole",
+    "Win32_System_Performance",
+    "Win32_System_Power",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_System_Time",
+    "Win32_System_Variant",
+    "Win32_System_WinRT",
+    "Win32_System_WindowsProgramming",
+    "Win32_UI_Accessibility",
+    "Win32_UI_HiDpi",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_Common",
+    "Win32_UI_WindowsAndMessaging",
+]

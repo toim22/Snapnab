@@ -13,7 +13,7 @@ from .config import (ACTION_TIMEOUT, CAPTURE_CLASS, CAPTURE_EXE, CAPTURE_MUTEX, 
 
 SYNCHRONIZE = 0x00100000
 
-# command IDs (src/capture/main.cpp)
+# command IDs (rust/snapnab/src/lib.rs, mod id)
 class CaptureCmd:
     IDC_PRESETS, IDC_TAB_IMAGE, IDC_TAB_VIDEO, IDC_SEL_LABEL, IDC_SELECTION, IDC_EFFECTS_TITLE, IDC_EFFECTS = range(100, 107)
     (IDC_SHARE_LABEL, IDC_SHARE, IDC_QUALITY_LABEL, IDC_QUALITY, IDC_WEBCAM_LABEL, IDC_WEBCAM, IDC_PREVIEW, IDC_CLIPBOARD,
@@ -27,7 +27,7 @@ class CaptureCmd:
     IDM_REGION_INTERACTIVE, IDM_REGION_FIXED, IDM_WINDOW_OBJECTS, IDM_CAPTURE_LINKS = range(3400, 3404)
 
 
-# command IDs (src/editor/main.cpp)
+# command IDs (rust/snapedit/src/ids.rs)
 class EditorCmd:
     T_CAPTURE, T_RECORD, T_COPYALL, T_SAVE, T_SHARE = range(1, 6)
     T_TOOL_BASE = 100
@@ -49,7 +49,7 @@ class EditorCmd:
 for _i, _n in enumerate(EditorCmd._names):
     setattr(EditorCmd, _n, 1000 + _i)
 
-# Tool enum (src/editor/Canvas.h)
+# Tool enum (rust/snapedit/src/canvas.rs)
 TOOLS = ["Select", "Arrow", "Line", "Shape", "Pen", "Highlighter", "Text", "Callout", "Step", "Stamp", "Blur",
          "Spotlight", "Magnify", "Fill", "Eraser", "Crop", "Selection", "Cutout", "Eyedropper", "Favorites", "MagicWand"]
 
@@ -182,10 +182,11 @@ class Editor:
     def tool(self, name):
         self.send_command(EditorCmd.T_TOOL_BASE + TOOLS.index(name))
 
-    def canvas(self):
-        c = win.children(self.hwnd, "SnapnabCanvas")
-        assert c, "canvas not found"
-        return c[0]
+    def canvas_rect(self):
+        """The canvas area on the screen (egui draws it inside the main window; UI Automation finds it)."""
+        from . import uia
+        r = uia.find(self.hwnd, "SnapnabCanvas").rectangle()
+        return r.left, r.top, r.right, r.bottom
 
     def popups(self, cls=None):
         return win.owned_popups(self.pid, cls) if self.pid else []

@@ -1,4 +1,4 @@
-"""Editor drawing tools (src/editor/Canvas.cpp): every tool is used on the canvas with the real mouse and the result is
+"""Editor drawing tools (rust/snapedit/src/canvas.rs and tools.rs): every tool is used on the canvas with the real mouse and the result is
 read from the saved .snap (objects) or from the composed image (raster tools)."""
 import pytest
 import win32con
@@ -153,12 +153,16 @@ def test_eyedropper_picks_the_color_for_the_next_object(s):
 def test_move_tool_moves_an_object(s):
     s.tool("Shape")
     s.drag((300, 300), (500, 450))
-    before = s.objects()[0].attrib
+    obj = s.objects()[0]
+    before = obj.attrib
     s.tool("Select")
-    s.drag((300, 375), (400, 450), (900, 700))                # grabbed by its outline: a hollow shape (as the saved
-                                                              # style may be) is not picked by its inside
+    # grabbed by its outline (a hollow shape, as the saved style may be, is not picked by its inside) and away from
+    # the handles (a resize): an ellipse (ToolShape 2) at 45°, a rectangle on its top edge
+    ellipse = obj.tag == "Ellipse" or before.get("ToolShape") == "2"
+    x, y = (469, 322) if ellipse else (350, 300)
+    s.drag((x, y), (x + 100, y + 75), (x + 600, y + 325))
     after = s.objects()[0].attrib
-    assert float(after["X1"]) > float(before["X1"]) + 200, (before, after)
+    assert float(after["X1"]) > float(before["X1"]) + 200, (obj.tag, before, after)
 
 
 def test_pen_draws_next_to_its_last_stroke(s):

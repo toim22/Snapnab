@@ -1,0 +1,23 @@
+qr_url: [QRCode|https://snapnab.example/a?b=1&c=ç|16,16,133,133|1]
+qr_unicode: [QRCode|Olá, mundo — 中文 ✓|12,12,88,88|0]
+qr_one_pixel: [QRCode|tiny|4,4,26,26|0]
+qr_inverted: [QRCode|inverted|16,16,101,101|0]
+qr_transparent: [QRCode|alpha|16,16,101,101|0]
+qr_rot90: [QRCode|rotated 90|16,16,101,101|0]
+qr_rot15: [QRCode|rotated 15|30,29,159,159|0]
+datamatrix: [DataMatrix|DataMatrix 123|16,16,80,80|0]
+aztec: [Aztec|Aztec code|16,16,77,77|0]
+pdf417: [PDF417|PDF417 text|16,16,223,88|0]
+code128: [Code128|Code-128 abc|20,20,354,100|0]
+code39: [Code39|CODE39|20,20,226,100|0]
+code93: [Code93|CODE93|20,20,202,100|0]
+ean13: [EAN-13|5901234123457|20,20,210,100|0]
+ean8: [EAN-8|96385074|20,20,154,100|0]
+upca: [UPC-A|036000291452|20,20,210,100|0]
+upce: [UPC-E|01234565|20,20,122,100|0]
+itf: [ITF|12345678901231|20,20,290,100|0]
+codabar: [Codabar|40156|20,20,162,100|0]
+several: [QRCode|first|36,36,121,121|0] [Code128|second|320,60,522,140|0] [EAN-13|4006381333931|320,280,510,360|0] [DataMatrix|third|710,310,771,371|0]
+qr_noise:
+nothing:
+blank:

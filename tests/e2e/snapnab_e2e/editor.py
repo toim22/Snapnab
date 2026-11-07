@@ -1,16 +1,16 @@
 """Editor driver: opens a known image, draws on the canvas with the real mouse, saves and reads the result back.
 
-Oracles: the .snap written by File › Save (objects as XML through `SnapnabTests.exe dump`) and the composed image that
+Oracles: the .snap written by File › Save (objects as XML through `SnapnabTool.exe dump`) and the composed image that
 Copy all (Ctrl+Shift+C) puts on the clipboard (pixels)."""
 import time
 
 from PIL import Image, ImageDraw, ImageFont
 
-from . import apps, library, regs, win
+from . import apps, library, regs, uia, win
 from .apps import EditorCmd as M
 from .library import LibraryWatcher
 
-KMARGIN = 40          # Canvas.cpp kMargin
+KMARGIN = 40          # canvas.rs MARGIN
 
 # the test picture: white, a blue block, a green block and dark text (OCR / magic wand / fill targets)
 W, H = 1600, 1000
@@ -47,6 +47,7 @@ class EditorSession:
         lib = LibraryWatcher()
         self.ed.start("/Open", str(picture))
         self.path = lib.wait_new("*.snap")[-1]
+        self._canvas = None
         win.wait_until(lambda: picture.stem in self.ed.title(), what="document shown")
         self.focus()
         apps.wait_quiet(0.5)
@@ -90,10 +91,11 @@ class EditorSession:
     # ---------- canvas geometry ----------
     def to_screen(self, ix, iy, doc_size=None):
         """Image coordinates → screen, for the fit-to-window zoom the Editor uses for a new document."""
-        c = self.ed.canvas()
-        l, t, r, b = win.rect(c)
-        cl = win.win32gui.ClientToScreen(c, (0, 0))
-        cw, ch = win.win32gui.GetClientRect(c)[2:]
+        if self._canvas is None:
+            self._canvas = self.ed.canvas_rect()
+        l, t, r, b = self._canvas
+        cl = (l, t)
+        cw, ch = r - l, b - t
         w, h = doc_size or self.size_cached
         z = min(1.0, min((cw - 2 * KMARGIN) / w, (ch - 2 * KMARGIN) / h))
         iw, ih = round(w * z), round(h * z)
@@ -102,6 +104,7 @@ class EditorSession:
         return int(cl[0] + ox + ix * z), int(cl[1] + oy + iy * z)
 
     size_cached = (W, H)
+    _canvas = None          # the canvas rectangle, read once per document (the layout does not move during a test)
 
     def fit(self):
         self.cmd(M.M_ZOOM_FIT)
@@ -126,20 +129,15 @@ class EditorSession:
         apps.wait_quiet(0.3)
 
     # ---------- side panels ----------
-    def effects_panel(self):
-        p = win.children(self.ed.hwnd, "SnapnabEffects")
-        assert p, "effects panel not found"
-        return p[0]
+    def effects_panel_shown(self):
+        return uia.exists(self.ed.hwnd, "SnapnabEffects")
 
     def apply_effect(self, cmd_id):
         """Image › Effects › <effect>: opens its settings in the panel, then Apply (one undo step)."""
         self.cmd(cmd_id, 0.6)
         if not self.ed.running:
             raise AssertionError("SnapnabEditor crashed when the effect settings opened (see the Application event log)")
-        panel = self.effects_panel()
-        apply_btn = win.wait_until(lambda: win.child_by_id(panel, 90) if win.is_visible(win.child_by_id(panel, 90)) else 0,
-                                   what="Apply button")
-        win.click_control(apply_btn)
+        uia.click(self.ed.hwnd, "SnapnabEffects.Apply")
         apps.wait_quiet(0.8)
 
     def form(self):

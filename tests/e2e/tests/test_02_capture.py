@@ -191,6 +191,31 @@ def test_scrolling_window(capture, lib, target):
     assert w >= (r - l) * 0.8 and h >= (b - t) * 0.6, (w, h)
 
 
+
+def pano_region(capture, target):
+    start_with(capture, presets.preset("e2e pano", "Panoramic", editor=False))
+    run_preset(capture, "e2e pano")
+    overlay()
+    l, t, _, _ = target.rect
+    win.drag([(l + 50, t + 60), (l + 350, t + 260)])
+    win.wait_window("SnapnabPanoBar", 10)            # the bar below the region, with the orange frame around it
+    win.wait_window("SnapnabPanoBorder", 5)
+
+
+def test_panoramic_without_scrolling_is_the_region(capture, lib, target):
+    pano_region(capture, target)
+    win.keys("{ENTER}")                               # Enter finishes
+    w, h = library.size(library.dump(lib.wait_new()[-1]))
+    assert near(w, 300, 2) and near(h, 200, 2), (w, h)
+    assert not win.find_window("SnapnabPanoBar", visible_only=True)
+
+
+def test_panoramic_esc_cancels(capture, logs, lib, target):
+    pano_region(capture, target)
+    win.keys("{ESC}")
+    wait_idle(logs)
+    assert not lib.new("*.snap")
+
 def test_menu_without_open_menu_falls_back_to_region(capture, logs):
     start_with(capture, presets.preset("e2e menu", "Menu", editor=False))
     run_preset(capture, "e2e menu")

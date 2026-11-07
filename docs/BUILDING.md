@@ -3,57 +3,59 @@
 ## Requirements
 
 - Windows 10 2004+ or Windows 11, x64
-- Visual Studio 2022 or later with the **Desktop development with C++** workload, which already includes:
-  MSVC, the Windows SDK and **C++ CMake tools for Windows** (CMake + Ninja)
+- [Rust](https://rustup.rs) (stable, `x86_64-pc-windows-msvc`, the rustup default on Windows)
+- The Visual Studio 2022+ C++ build tools (the *Desktop development with C++* workload or the *Build Tools for Visual
+  Studio*): the MSVC linker, `rc.exe` and the Windows SDK. Cargo finds them by itself.
 - To build the installer: [Inno Setup 6.5+](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`).
   Without it, `build.bat` produces only the folder and the zip.
 
-Almost everything uses Windows APIs (Win32, GDI+, WIC, Media Foundation, WASAPI, Windows.Media.Ocr, WinHTTP). Two small
-open-source libraries are downloaded by CMake (`FetchContent`, pinned versions with SHA-256 checks, see
-`cmake/Dependencies.cmake`) on the first configure, so that step needs internet access: **libwebp 1.5.0** (WebP, BSD)
-and **ZXing-C++ 2.2.1** (QR/barcode reading only, Apache-2.0). CMake 3.28 or later is required (the one included with
-Visual Studio is fine). Their licenses are in `THIRD-PARTY-NOTICES.txt`, installed next to the programs.
+Almost everything uses Windows APIs (Win32, GDI+, WIC, Media Foundation, WASAPI, Windows.Media.Ocr, WinHTTP, Direct3D
+through wgpu). Cargo downloads the crates pinned in `rust/Cargo.lock` on the first build, so that step needs internet
+access. The C runtime is linked statically (`rust/.cargo/config.toml`): the programs run without the Visual C++
+Redistributable. The licenses of what is compiled in are in `THIRD-PARTY-NOTICES.txt`, installed next to the programs.
 
 ## Command line
 
 ```bat
 build.bat            :: Release + product package in dist\
-build.bat test       :: Release + integration tests
-build.bat debug      :: Debug in out\build\debug\bin
-build.bat clean      :: deletes out\ and dist\
+build.bat test       :: Release + the workspace tests (cargo test)
+build.bat debug      :: Debug in rust\target\debug
+build.bat clean      :: deletes rust\target and dist\
 ```
 
-`build.bat` finds Visual Studio by itself (`vswhere`) and calls the CMake presets. In a *Developer Command Prompt*
-you can use CMake directly:
+Cargo works directly too:
 
 ```bat
-cmake --preset release
-cmake --build --preset release
-ctest --preset release
-cpack --preset release
+cargo build --release --workspace --manifest-path rust\Cargo.toml
+cargo test --release --workspace --manifest-path rust\Cargo.toml
 ```
 
-## Visual Studio / VS Code / CLion
+The end-to-end suite (`tests/e2e`, Python, pywinauto) drives the real programs; see `tests/e2e/README.md`.
 
-Open the repository folder (*File > Open > Folder*). `CMakePresets.json` is recognized and offers the
-**Release (x64)** and **Debug (x64)** configurations. To debug, pick `Snapnab.exe` or `SnapnabEditor.exe` as the startup item.
+## Editors
+
+Open the repository folder in VS Code (with rust-analyzer), RustRover or Visual Studio. To debug, run
+`rust\target\debug\Snapnab.exe` or `SnapnabEditor.exe` from the debugger.
 
 ## Where things go
 
 | Folder | What | Committed? |
 |---|---|---|
-| `out/build/<preset>/` | CMake build tree; executables in `bin/` | no |
-| `dist/Snapnab/` | the program as the user gets it (`Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll`, `lang/`, `README.txt`) | no |
+| `rust/target/` | Cargo build tree; `release/` has `Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll` and `SnapnabTool.exe` | no |
+| `dist/Snapnab/` | the program as the user gets it (`Snapnab.exe`, `SnapnabEditor.exe`, `SnapEx64.dll`, `lang/`, `help/`, `README.txt`) | no |
 | `dist/Snapnab-<version>-win-x64.zip` | portable package for distribution (for example, attached to a GitHub *release*) | no |
 | `dist/Snapnab-<version>-setup.exe` | installer (built when Inno Setup is installed) | no |
 | `dist/symbols/` | Release PDBs, to analyze crashes; not included in the package | no |
+
+`SnapnabTool.exe` is a helper for the tests and for debugging (`dump file.snap` prints a capture's document XML,
+`audio file.mp4` reads a recording's audio track); it is not part of the package.
 
 ## Installer
 
 `packaging/installer/Snapnab.iss` is an [Inno Setup 6](https://jrsoftware.org/isinfo.php) script that packages
 `dist\Snapnab\` into an installer (`dist\Snapnab-<version>-setup.exe`). `build.bat` compiles it automatically when it
-finds `ISCC.exe` (in `%LOCALAPPDATA%\Programs`, `Program Files` or on the `PATH`), passing the version from `CMakeLists.txt`.
-To compile it by hand after `build.bat`:
+finds `ISCC.exe` (in `%LOCALAPPDATA%\Programs`, `Program Files` or on the `PATH`), passing the version from
+`rust\Cargo.toml`. To compile it by hand after `build.bat`:
 
 ```bat
 ISCC.exe /DAppVersion=0.4.1 packaging\installer\Snapnab.iss
@@ -78,9 +80,11 @@ reputation; to sign it, use `SignTool` from the Windows SDK with a code signing 
 
 ## Version
 
-The version lives only in `project(VERSION …)` in `CMakeLists.txt` (`build.bat` passes it on to the installer). When
-changing it, update `CHANGELOG.md` too.
+The version lives only in `[workspace.package] version` in `rust/Cargo.toml`: the executables' version resources,
+`build.bat`, the package name and the installer read it from there. When changing it, update `CHANGELOG.md` too.
 
-## Icons
+## Icons and resources
 
-The icons in `src/resources/` are generated by `python scripts/make_icons.py` (no dependencies).
+The icons in `rust/resources/` are generated by `python scripts/make_icons.py` (no dependencies). Each executable's
+icon, manifest (per-monitor DPI v2, Common Controls 6, asInvoker) and version information come from
+`rust/resources/app.rc.in`, filled and compiled by the crates' `build.rs` (`embed-resource`, which runs `rc.exe`).

@@ -1,10 +1,10 @@
-"""Editor menus (src/editor/main.cpp): Image geometry and effects, object arrangement, clipboard, OCR, documents and
+"""Editor menus (rust/snapedit/src/app/commands.rs): Image geometry and effects, object arrangement, clipboard, OCR, documents and
 view commands. Results come from the saved .snap and from the composed image."""
 import pytest
 import win32con
 from PIL import Image
 
-from snapnab_e2e import apps, library, regs, win
+from snapnab_e2e import apps, library, regs, uia, win
 from snapnab_e2e.apps import EditorCmd as M
 from snapnab_e2e.editor import BLUE, GREEN, WHITE, EditorSession, close, make_picture
 from snapnab_e2e.library import LibraryWatcher
@@ -308,8 +308,7 @@ def test_delete_document_asks_and_recycles(s):
 def test_grab_text_ocr(s):
     s.post(M.M_OCR)
     tw = win.wait_until(lambda: s.popups("SnapnabTextWnd"), 20, what="recognized text window")[0]
-    edits = win.children(tw, "Edit")
-    text = " ".join(win.title(e) for e in edits) or win.title(tw)
+    text = uia.value(tw, "SnapnabTextWnd.Text")
     win.close_window(tw)
     assert "Snapnab" in text or "OCR" in text or "2026" in text, text
 
@@ -337,11 +336,9 @@ def test_layers_and_effects_panels(s):
     s.tool("Shape")
     s.drag((300, 300), (500, 450))
     s.cmd(M.M_SHOW_LAYERS)
-    layers = win.wait_until(lambda: [h for h in win.children(s.ed.hwnd, "SnapnabLayers") if win.is_visible(h)],
-                            what="layers panel")
-    assert layers
+    win.wait_until(lambda: uia.exists(s.ed.hwnd, "SnapnabLayers"), what="layers panel")
     s.cmd(M.M_SHOW_EFFECTS)
-    win.wait_until(lambda: win.is_visible(s.effects_panel()), what="effects panel")
+    win.wait_until(s.effects_panel_shown, what="effects panel")
 
 
 def test_library_view_toggle(s):

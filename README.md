@@ -103,7 +103,8 @@ Nothing is sent to the internet.
 
 ## Building from source
 
-With Visual Studio 2022+ (*Desktop development with C++* workload):
+With [Rust](https://rustup.rs) and the Visual Studio 2022+ C++ build tools (the MSVC linker, `rc.exe` and the Windows
+SDK):
 
 ```bat
 build.bat
@@ -115,13 +116,15 @@ installer are in [docs/BUILDING.md](docs/BUILDING.md).
 ## Repository layout
 
 ```text
-src/                    source code (C++20, Win32)
-  common/               library shared by both programs
-  capture/              Snapnab.exe — capture and recording
-  editor/               SnapnabEditor.exe — editor
+rust/                   source code (Rust workspace)
+  snapcore/             library shared by both programs (documents, library, images, effects, capture, video…)
+  snapui/               egui window host and shared windows and forms
+  snapnab/              Snapnab.exe — capture and recording
+  snapedit/             SnapnabEditor.exe — editor
   snapex/               SnapEx64.dll — extended window capture
-  resources/            icons and manifest
-tests/                  integration tests
+  snaptool/             SnapnabTool.exe — test and debugging helper (not shipped)
+  resources/            icons, manifest and version resources
+tests/                  end-to-end tests (tests/e2e) and the reference data of the Rust tests (tests/data)
 help/                   user manual (Snapnab-Manual.html, opened by Help › Snapnab Manual and F1)
 lang/                   interface translations (gettext: <language>.po and the snapnab.pot template)
 packaging/              package files and installer script

@@ -1,0 +1,33 @@
+[package]
+name = "snapui"
+version = "0.1.0"
+description = "Snapnab's user interface in egui (the capture app and the Editor), on top of snapcore"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+accesskit_winit = "0.34.0"
+egui = "0.37"
+egui-wgpu = "0.37"
+egui-winit = { version = "0.37", default-features = false, features = ["accesskit", "clipboard", "links"] }
+pollster = "1.0.1"
+snapcore = { path = "../snapcore" }
+wgpu = "30.0.1"
+winit = { version = "0.30.13", default-features = false, features = ["rwh_06"] }
+
+[dependencies.windows]
+version = "0.62.2"
+features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_Controls",
+    "Win32_UI_Controls_Dialogs",
+    "Win32_UI_HiDpi",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+]
+
+[dev-dependencies]
+egui_kittest = { version = "0.37", features = ["wgpu", "snapshot"] }

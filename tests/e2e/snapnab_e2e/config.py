@@ -9,8 +9,10 @@ E2E_DIR = Path(__file__).resolve().parents[1]
 APP_DIR = Path(os.environ.get("SNAPNAB_DIR", r"C:\Program Files\Snapnab"))
 CAPTURE_EXE = APP_DIR / "Snapnab.exe"
 EDITOR_EXE = APP_DIR / "SnapnabEditor.exe"
-# SnapnabTests.exe: engine tests + "dump file.snap" (prints the document XML), used as the oracle of the Editor tests
-TESTS_EXE = Path(os.environ.get("SNAPNAB_TESTS_EXE", REPO / "out" / "build" / "release" / "bin" / "SnapnabTests.exe"))
+# SnapnabTool.exe (rust/snaptool): "dump file.snap" prints the document XML, the oracle of the Editor tests, and
+# "audio file.mp4" reads a recording's audio track
+TOOL_EXE = Path(os.environ.get("SNAPNAB_TOOL_EXE", REPO / "rust" / "target" / "release" / "SnapnabTool.exe"))
+RUST_DIR = REPO / "rust"
 
 LOCALAPPDATA = Path(os.environ["LOCALAPPDATA"])
 DATA_DIR = LOCALAPPDATA / "Snapnab"
@@ -25,7 +27,7 @@ ARTIFACTS = E2E_DIR / "artifacts"
 LAUNCH_TIMEOUT = float(os.environ.get("SNAPNAB_LAUNCH_TIMEOUT", "20"))
 ACTION_TIMEOUT = float(os.environ.get("SNAPNAB_ACTION_TIMEOUT", "10"))
 
-# window classes and single-instance mutexes (src/common/Common.h)
+# window classes and single-instance mutexes (rust/snapcore/src/ipc.rs)
 CAPTURE_CLASS = "SnapnabUI"
 EDITOR_CLASS = "SnapnabEditor"
 CAPTURE_MUTEX = "Snapnab-Capture-{41F1BF9C-5A4E-4B6F-9C33-1D2E3F405A61}"
